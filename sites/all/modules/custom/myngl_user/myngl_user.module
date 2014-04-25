@@ -1,0 +1,33 @@
+<?php
+
+function myngl_user_init() {
+  global $user;
+
+  if ($user->uid == 0 && arg(0) != 'user') {
+    drupal_goto('user');
+  }
+}
+
+function myngl_user_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'user_login') {
+
+    $form['name']['#title'] = '';
+    $form['name']['#description'] = '';
+    
+    $form['pass']['#title'] = '';
+    $form['pass']['#description'] = '';
+
+    $form['facebook_signin'] = array (
+      '#markup' => '<img src="/sites/all/themes/myngl/images/facebook-signin.png" id="facebook-signin"/>',
+      '#weight' => -20
+    );
+    $form['create_account'] = array (
+      '#markup' => '<a href="/user/register" id="create-account">CREATE NEW ACCOUNT</a>',
+      '#weight' => 900
+    );
+    $form['forgot_password'] = array (
+      '#markup' => '<a href="/user/password" id="forgot-password">Forgot Password?</a>',
+      '#weight' => 1000
+    );
+  }
+}

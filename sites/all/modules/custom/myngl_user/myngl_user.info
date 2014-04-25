@@ -1,0 +1,4 @@
+name = MyNGL User
+package = MyNGL
+description = User logic and functionality
+core = 7.x 
