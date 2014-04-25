@@ -140,8 +140,3 @@ DirectoryIndex index.php index.html index.htm
     </FilesMatch>
   </IfModule>
 </IfModule>
-
-AuthType Basic
-AuthName "Authentication Required"
-AuthUserFile "/var/www/html/.htpasswd"
-Require valid-user
