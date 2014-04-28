@@ -1,0 +1,4 @@
+name = MyNGL Rewards
+package = MyNGL
+description = Sets up rewards functionality
+core = 7.x 

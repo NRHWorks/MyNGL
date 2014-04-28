@@ -2,7 +2,9 @@ name = MyNGL
 description = Custom Drupal 7 theme for MyNGL.
 core = 7.x
 
+stylesheets[all][] = css/reset.css
 stylesheets[all][] = css/global.css
+
 scripts[] = js/myngl.js
 
 regions[header] = Header

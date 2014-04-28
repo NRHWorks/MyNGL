@@ -1,0 +1,4 @@
+name = MyNGL Activities
+package = MyNGL
+description = Sets up activities functionality
+core = 7.x 

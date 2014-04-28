@@ -1,8 +1,3 @@
-<?php
-  //TODO: move this to template.php
-
-  $title = str_replace('User account', 'ACCOUNT LOGIN', $title);
-?>
   <div id="page-wrapper"><div id="page">
 
     <div id="header"><div class="section clearfix">
@@ -23,11 +18,14 @@
           <?php if ($title): ?><h1 class="title" id="page-title"><?php print $title; ?></h1><?php endif; ?>
         </div>
         <?php print render($title_suffix); ?>
-<?php /* ?>
-        <?php if ($tabs): ?><div class="tabs"><?php print render($tabs); ?></div><?php endif; ?>
-        <?php print render($page['help']); ?>
-        <?php if ($action_links): ?><ul class="action-links"><?php print render($action_links); ?></ul><?php endif; ?>
-<?php */ ?>
+
+        <?php if ((false) && ($_GET['nav'] == 1)) : //TODO: remove this before going live ?>
+        <?php //if (true) : //TODO: remove this before going live ?>
+          <?php if ($tabs): ?><div class="tabs"><?php print render($tabs); ?></div><?php endif; ?>
+          <?php print render($page['help']); ?>
+          <?php if ($action_links): ?><ul class="action-links"><?php print render($action_links); ?></ul><?php endif; ?>
+        <?php endif; ?>
+
         <?php print render($page['content']); ?>
         <?php print $feed_icons; ?>
       </div></div> <!-- /.section, /#content -->

@@ -4,30 +4,100 @@ function myngl_user_init() {
   global $user;
 
   if ($user->uid == 0 && arg(0) != 'user') {
-    drupal_goto('user');
+    if (!drupal_is_cli()) { //add to fix Drush bug
+      drupal_goto('user');
+    }
   }
 }
 
 function myngl_user_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'user_login') {
+//  print $form_id;
 
-    $form['name']['#title'] = '';
-    $form['name']['#description'] = '';
+  switch($form_id) {
+    case 'user_login' :
+      $form['name']['#description'] = '';
+      
+      $form['pass']['#description'] = '';
+
+      $form['facebook_signin'] = array (
+        '#markup' => '<img src="/sites/all/themes/myngl/images/facebook-signin.png" id="facebook-signin"/>',
+        '#weight' => -20
+      );
+      $form['create_account'] = array (
+        '#markup' => '<a href="/user/register" id="create-account" class="form-button">CREATE NEW ACCOUNT</a>',
+        '#weight' => 900
+      );
+      $form['forgot_password'] = array (
+        '#markup' => '<a href="/user/password" id="forgot-password">Forgot Password?</a>',
+        '#weight' => 1000
+      );
+      break;
+  
+    case 'user_pass' :
+      $form['cancel'] = array (
+        '#markup' => '<a href="/user" id="forgot-password-cancel">Cancel</a>',
+        '#weight' => 200
+      );
+      break;
     
-    $form['pass']['#title'] = '';
-    $form['pass']['#description'] = '';
+    case 'user_register_form' :
+      $form['actions']['submit']['#value'] = 'REGISTER';
+      
+      $form['facebook_signin'] = array (
+        '#markup' => '<div id="registration-facebook">
+                        <p class="form-button-text">Facebook user?</p>
+                        <img src="/sites/all/themes/myngl/images/facebook-signin.png" id="facebook-signin"/>
+                      </div>',
+        '#weight' => -20
+      );
+      
+      $form['create_account'] = array (
+        '#markup' => '<div class="form-button-wrapper">
+                        <p class="form-button-text">Already have an account?</p>
+                        <a href="/user" id="regiser-cancel" class="form-button">LOGIN HERE</a>
+                      </div>',
 
-    $form['facebook_signin'] = array (
-      '#markup' => '<img src="/sites/all/themes/myngl/images/facebook-signin.png" id="facebook-signin"/>',
-      '#weight' => -20
-    );
-    $form['create_account'] = array (
-      '#markup' => '<a href="/user/register" id="create-account">CREATE NEW ACCOUNT</a>',
-      '#weight' => 900
-    );
-    $form['forgot_password'] = array (
-      '#markup' => '<a href="/user/password" id="forgot-password">Forgot Password?</a>',
-      '#weight' => 1000
-    );
+        '#weight' => 900
+      );
+      break;
+    
+    case 'user_profile_form' :
+      $form['actions']['submit']['#value'] = 'SUBMIT CHANGES';
+      
+      $form['cancel'] = array (
+        '#markup' => '<a href="/user" id="edit-profile-cancel">Cancel</a>',
+        '#weight' => 200
+      );
+      break;
+  }
+}
+
+function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
+  if ($uid = $form['#user']->uid) {
+    $u = entity_metadata_wrapper('user', user_load($uid));
+    $profile = profile2_load_by_user($uid, 'profile');
+
+    if ($profile) {
+      $p = entity_metadata_wrapper('profile2', $profile);
+    }
+  }  
+
+  $form['profile_profile']['field_interests']['und']['#title'] = 'Let TheMyngl further personalize your experience based on your interests:';
+
+  $form['profile_profile']['field_picture']['und'][0]['#title'] = '';
+
+  $form['profile_profile']['field_city']['und'][0]['#prefix'] = ' <span class="profile-name">NAME: <strong>'.$u->field_first_name->value().' '.$u->field_last_name->value().'</strong></span><br />';  
+
+  if (isset($p)) {
+    $pic = $p->field_picture->value();
+  }
+
+  if (!isset($pic['uri'])) {
+    $form['profile_profile']['field_picture']['und']['#prefix'] = 
+      " <div id='default-image-wrapper'>" .
+        theme_image_style(array('style_name' => 'user_profile_circle_image', 'path' => 'public://default-user-profile.png', 'attributes' => array('class' => 'default-profile-pic'), 'height' => null, 'width' => null)) .
+      " <br /><a href='#!' class='link-small' onclick='jQuery(\"#default-image-wrapper\").hide();jQuery(\".image-widget\").show();'>Upload a profile picture</a>
+        <script>jQuery(document).ready(function () { jQuery('.image-widget').hide(); });</script>
+        </div>";
   }
 }

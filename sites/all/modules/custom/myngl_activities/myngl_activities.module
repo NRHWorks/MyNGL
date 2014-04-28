@@ -1,0 +1,85 @@
+<?php
+
+function myngl_activities_menu() {
+  $items['user/%user/activities'] = array(
+    'title' => 'ACTIVITY',
+    'page callback' => 'myngl_activities_page',
+    'page arguments' => array(2),
+    'access callback' => TRUE, 
+  );
+
+  return $items;
+}
+
+function myngl_activities_theme() {
+  $items['activities'] =  array(
+                          'template' => 'activities',
+                          'variables' => array('activities' => null),
+                        );
+  return $items;
+}
+
+function myngl_activities_page() {
+  $activities = array();
+
+  $activities[] = array(
+    'date' => '2014-04-28',
+    'day' => 'Today',
+    'description' => 'This is a test description',
+    'points' => '10'
+  );
+
+  $activities[] = array(
+    'date' => '2014-03-15',
+    'description' => 'This is a test description',
+    'points' => '75'
+  );
+
+  $activities[] = array(
+    'date' => '2014-02-09',
+    'description' => 'This is a test description',
+    'points' => '225'
+  );
+
+  $activities[] = array(
+    'date' => '2014-04-28',
+    'day' => 'Today',
+    'description' => 'This is a test description',
+    'points' => '10'
+  );
+
+  $activities[] = array(
+    'date' => '2014-03-15',
+    'description' => 'This is a test description',
+    'points' => '75'
+  );
+
+  $activities[] = array(
+    'date' => '2014-02-09',
+    'description' => 'This is a test description',
+    'points' => '225'
+  );
+
+  $activities[] = array(
+    'date' => '2014-04-28',
+    'day' => 'Today',
+    'description' => 'This is a test description',
+    'points' => '10'
+  );
+
+  $activities[] = array(
+    'date' => '2014-03-15',
+    'description' => 'This is a test description',
+    'points' => '75'
+  );
+
+  $activities[] = array(
+    'date' => '2014-02-09',
+    'description' => 'This is a test description',
+    'points' => '225'
+  );
+
+  $output = theme('activities', array('activities' => $activities));
+
+  return $output;
+}

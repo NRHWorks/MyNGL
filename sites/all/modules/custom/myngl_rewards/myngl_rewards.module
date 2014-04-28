@@ -1,0 +1,28 @@
+<?php
+
+function myngl_rewards_menu() {
+  $items['user/%user/rewards'] = array(
+    'title' => 'REWARDS',
+    'page callback' => 'myngl_rewards_page',
+    'page arguments' => array(2),
+    'access callback' => TRUE, 
+  );
+
+  return $items;
+}
+
+function myngl_rewards_theme() {
+  $items['rewards'] =  array(
+                          'template' => 'rewards',
+                          'variables' => array('points' => null),
+                        );
+  return $items;
+}
+
+function myngl_rewards_page() {
+  $rewards = rand(100,1000);
+
+  $output = theme('rewards', array('points' => $rewards));
+
+  return $output;
+}

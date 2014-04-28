@@ -1,0 +1,4 @@
+name = MyNGL Page Title
+package = MyNGL
+description = Allows Drupal page titles to be overridden
+core = 7.x 
