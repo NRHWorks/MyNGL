@@ -14,6 +14,14 @@ function myngl_myngl_menu() {
     'page arguments' => array(1),
     'access callback' => TRUE, 
   );
+ 
+ 
+  $items['myngl/%/rsvp/complete'] = array(
+    'title' => 'RSVP CONFIRMED!',
+    'page callback' => 'myngl_myngl_complete',
+    'page arguments' => array(1),
+    'access callback' => TRUE, 
+  );
 
   return $items;
 }
@@ -58,4 +66,25 @@ function myngl_myngl_brand_logo($nid) {
   $image = theme_image_style(array('style_name' => 'brand_logo', 'path' => $brand->field_brand_logo['und'][0]['uri'], 'height' => null, 'width' => null));
 
   return $image;
+}
+
+function myngl_myngl_complete($nid) {
+    global $user;
+    $email = $user->mail;
+    $myngl_node = node_load($nid);
+
+    foreach ($myngl_node->field_myngl_invitees['und'] as $i) {
+      $u = array_shift(entity_load('field_collection_item', array($i['value'])));
+
+      if ($u->field_invitee_email_address['und'][0]['safe_value'] == $email) {
+        $u->field_invitee_status['und'][0]['value'] = 'RSVP';
+        $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][0]['value'];
+        $u->field_invitee_user_account['und'][0]['uid'] = $account->uid;
+        $u->save(TRUE);
+
+        user_cookie_delete('rsvp');
+
+        drupal_goto("myngl/$nid/confirmed");        
+      }
+    }
 }

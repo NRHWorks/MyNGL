@@ -35,8 +35,6 @@ function myngl_user_user_login(&$edit, $account) {
 }
 
 function myngl_user_form_alter(&$form, &$form_state, $form_id) {
-//  print $form_id;
-
   switch($form_id) {
     case 'user_login' :
       $form['name']['#description'] = '';
