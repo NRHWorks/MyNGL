@@ -87,4 +87,6 @@ function myngl_myngl_complete($nid) {
         drupal_goto("myngl/$nid/confirmed");        
       }
     }
+
+    return 'Invitation Not Found';
 }
