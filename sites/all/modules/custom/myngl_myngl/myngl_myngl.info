@@ -1,0 +1,4 @@
+name = MyNGL MyNGL
+package = MyNGL
+description = Sets up functionality for managing myngls
+core = 7.x 

@@ -12,8 +12,8 @@ function myngl_rewards_menu() {
 }
 
 function myngl_rewards_theme() {
-  $items['rewards'] =  array(
-                          'template' => 'rewards',
+  $items['myngl_rewards'] =  array(
+                          'template' => 'myngl-rewards',
                           'variables' => array('points' => null),
                         );
   return $items;
@@ -22,7 +22,7 @@ function myngl_rewards_theme() {
 function myngl_rewards_page() {
   $rewards = rand(100,1000);
 
-  $output = theme('rewards', array('points' => $rewards));
+  $output = theme('myngl_rewards', array('points' => $rewards));
 
   return $output;
 }

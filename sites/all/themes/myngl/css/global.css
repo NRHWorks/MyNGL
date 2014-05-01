@@ -196,6 +196,41 @@
       font-size: 18px;
     }
   /* --- end activity page --- */
+    
+
+  /* --- rsvp page --- */
+    #rsvp-confirm-wrapper div#rsvp-confirm-title {
+      color: #957f57;
+      font-size: 34px;
+      text-transform: uppercase;
+    }
+
+    #rsvp-confirm-wrapper div#rsvp-confirm-date {
+      font-size: 28px;
+      font-family: Georgia;
+    }
+    
+    #rsvp-confirm-wrapper div#rsvp-confirm-description {
+      font-size: 16px; 
+    }
+    
+    #rsvp-confirm-wrapper div#rsvp-confirm-login {
+      font-size: 14px; 
+      color: #957f57;
+    }
+    
+    #rsvp-confirm-wrapper div#rsvp-confirm-login a {
+      font-size: 16px;
+    }
+  /* --- end rsvp page --- */
+  
+  /* --- rsvp confirm page --- */
+    #confirm-invite-wrapper #confirm-invite-details a {
+      font-size: 16px;
+      margin-left: 25px;
+    } 
+
+  /* --- end rsvp iconfirm page --- */
 
 /*  ----- END TYPOGRAPHY -------------------------------------------- */    
 
@@ -445,6 +480,67 @@
       margin-top: -40px;
     }
   /* --- end account form --- */
+  
+  /* --- rsvp page --- */
+    #rsvp-logos #rsvp-myngl-logo,
+    #rsvp-logos #rsvp-brand-logo {
+      background-color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 15px;
+      float: left;
+      width: 420px;
+      height: 175px;
+      text-align: center;
+      margin-top: 50px; 
+    }
+    
+    #rsvp-logos #rsvp-myngl-logo {
+      margin-right: 10px;
+    }
+    
+    #rsvp-logos #rsvp-myngl-logo img {
+      margin-top: 50px;
+    }
+  
+    #rsvp-logos {
+      width: 850px;
+      margin: 0 auto -55px auto;
+      overflow: auto;
+    }
+
+    #rsvp-confirm-wrapper div {
+      text-align: center;
+      margin-bottom: 25px;
+      width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  /* --- end rsvp page --- */
+  
+  /* --- rsvp confirmed page --- */
+    #confirm-invite-wrapper #confirm-invite-invite-graphic {
+      float: right;
+      height: 200px;
+    }
+
+    #confirm-invite-wrapper .content {
+      margin-bottom: 50px;
+      width: 400px;
+      padding-left: 25px;
+    }
+    
+    #confirm-invite-wrapper form {
+      width: 400px;
+    }
+
+    #confirm-invite-wrapper form #submit {
+      float: right;
+    }
+
+    #confirm-invite-wrapper #confirm-invite-share {
+      padding-top: 30px;
+      
+    }
+  /* --- end rsvp confirmed page --- */
 
 /*  ----- END LAYOUT------------------------------------------------- */    
 
@@ -545,5 +641,20 @@
       margin-right: 15px;
     }
   /* --- end rewards landing --- */
+  
+  /* --- rsvp page --- */
+    #rsvp-logos #rsvp-myngl-logo,
+    #rsvp-logos #rsvp-brand-logo {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  /* --- end rsvp page --- */
+  
+  /* --- rsvp confirmed page --- */
+    #confirm-invite-wrapper #confirm-invite-share {
+      border-top: 1px solid #999;
+      border-bottom: 1px solid #999;
+
+    }
+  /* --- end rsvp confirmed page --- */
 
 /*  ----- END STYLE ------------------------------------------------- */    

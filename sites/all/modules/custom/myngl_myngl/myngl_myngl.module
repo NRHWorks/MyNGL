@@ -1,0 +1,61 @@
+<?php
+
+function myngl_myngl_menu() {
+  $items['myngl/%/rsvp/%'] = array(
+    'title' => 'Event RSVP',
+    'page callback' => 'myngl_myngl_rsvp',
+    'page arguments' => array(1,3),
+    'access callback' => TRUE, 
+  );
+  
+  $items['myngl/%/confirmed'] = array(
+    'title' => 'RSVP CONFIRMED!',
+    'page callback' => 'myngl_myngl_confirmed',
+    'page arguments' => array(1),
+    'access callback' => TRUE, 
+  );
+
+  return $items;
+}
+
+
+function myngl_myngl_theme() {
+  $items['myngl_confirm'] =  array(
+                          'template' => 'myngl-confirm',
+                          'variables' => array ('node' => null),
+                        );
+  $items['myngl_confirm_invite'] =  array(
+                          'template' => 'myngl-confirm-invite',
+                          'variables' => array ('node' => null),
+                        );
+  return $items;
+}
+
+function myngl_myngl_rsvp($nid, $email) {
+  $cookie['rsvp'] = $nid;
+  user_cookie_save($cookie);
+
+  $node = node_load($nid);
+
+  $output = theme('myngl_confirm', array('node' => $node));
+
+  return $output;
+}
+
+function myngl_myngl_confirmed($nid) {
+  $node = node_load($nid);
+
+  $output = theme('myngl_confirm_invite', array('node' => $node));
+
+  return $output;
+}
+
+function myngl_myngl_brand_logo($nid) {
+  $node = node_load($nid);
+  
+  $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
+
+  $image = theme_image_style(array('style_name' => 'brand_logo', 'path' => $brand->field_brand_logo['und'][0]['uri'], 'height' => null, 'width' => null));
+
+  return $image;
+}

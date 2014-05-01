@@ -3,9 +3,33 @@
 function myngl_user_init() {
   global $user;
 
-  if ($user->uid == 0 && arg(0) != 'user') {
+  if (($user->uid == 0) && (arg(0) != 'user') && (!(arg(0) == 'myngl' && arg(2) == 'rsvp'))) {
     if (!drupal_is_cli()) { //add to fix Drush bug
       drupal_goto('user');
+    }
+  }
+}
+
+function myngl_user_user_login(&$edit, $account) {
+  $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']);
+
+  if (isset($myngl_nid)) {
+    $email = $account->mail;
+    $myngl_node = node_load($myngl_nid);
+
+    foreach ($myngl_node->field_myngl_invitees['und'] as $i) {
+      $u = array_shift(entity_load('field_collection_item', array($i['value'])));
+
+      if ($u->field_invitee_email_address['und'][0]['safe_value'] == $email) {
+        $u->field_invitee_status['und'][0]['value'] = 'RSVP';
+        $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][0]['value'];
+        $u->field_invitee_user_account['und'][0]['uid'] = $account->uid;
+        $u->save(TRUE);
+
+        user_cookie_delete('rsvp');
+
+        drupal_goto("myngl/$myngl_nid/confirmed");        
+      }
     }
   }
 }
