@@ -6,7 +6,9 @@ function myngl_page_title_init() {
   // change titles based on path
   switch (TRUE) {
     case ($path == 'user') :
-      $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']); 
+      if (isset($_COOKIE['Drupal_visitor_rsvp'])) {
+        $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']); 
+      }
 
       if (isset($myngl_nid)) {
         drupal_set_title('LOGIN TO COMPLETE RSVP');
@@ -22,6 +24,10 @@ function myngl_page_title_init() {
     
     case ($path == 'user/register') :
       $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']); 
+
+      if (isset($_COOKIE['Drupal_visitor_rsvp'])) {
+        $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']); 
+      }
 
       if (isset($myngl_nid)) {
         drupal_set_title('CREATE YOUR MYNGL ACCOUNT TO RSVP');
