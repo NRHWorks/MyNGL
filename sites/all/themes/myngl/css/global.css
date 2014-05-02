@@ -719,14 +719,14 @@
       font-weight: 100;
     }
 
-    .confirm-invite-invite-graphic {
+    .confirm-invite-points-graphic {
         background: #b5a065;
         width: 125px;
         height: 125px;
         position: relative;
         text-align: center;
     }
-    .confirm-invite-invite-graphic:before, .confirm-invite-invite-graphic:after {
+    .confirm-invite-points-graphic:before, .confirm-invite-points-graphic:after {
         content: "";
         position: absolute;
         top: 0;
@@ -735,26 +735,26 @@
         width: 125px;
         background: #b5a065;
     }
-    #confirm-invite-invite-graphic:before {
+    #confirm-invite-points-graphic:before {
         -webkit-transform: rotate(30deg);
            -moz-transform: rotate(30deg);
             -ms-transform: rotate(30deg);
              -o-transform: rotate(30deg);
     }
-    #confirm-invite-invite-graphic:after {
+    #confirm-invite-points-graphic:after {
         -webkit-transform: rotate(60deg);
            -moz-transform: rotate(60deg);
             -ms-transform: rotate(60deg);
              -o-transform: rotate(60deg);
     }
-    #confirm-invite-invite-graphic-2 {
+    #confirm-invite-points-graphic-2 {
         -webkit-transform: rotate(15deg);
            -moz-transform: rotate(15deg);
             -ms-transform: rotate(15deg);
              -o-transform: rotate(15deg);
     }
 
-    #confirm-invite-invite-graphic-2:before {
+    #confirm-invite-points-graphic-2:before {
         -webkit-transform: rotate(30deg);
            -moz-transform: rotate(30deg);
             -ms-transform: rotate(30deg);
