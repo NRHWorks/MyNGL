@@ -10,6 +10,7 @@
         <span>+30</span><br>
         Points per Invite
       </div>
+    </div>
     <div class="content">
       <p>
         You are now going to this Myngl event.  Do you want to invite your friends to come as well?  
