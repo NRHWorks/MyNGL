@@ -18,8 +18,8 @@
 </div>
 
 
-<div id="other-date-blockout" style="width:100%; height:100%; background-color:#000; position:absolute; top:0; left:0; z-index:100; opacity:.7; display:none;"></div>
-<div id="other-dates-form" style="padding: 20px;position:absolute; top:0; left:0; bottom:0; right:0; z-index:200; background-color:#FFF; width:400px; height:300px; display:none;margin:auto;">
+<div id="other-date-blockout" class="overlay-background"></div>
+<div id="other-dates-form" class="overlay">
   <h2>OTHER DATES</h2>
   <p>This Myngl will also run on the following dates.  Pick one that will work for you:</p>
   <form id="change-date-form" style="margin-top:30px;" 

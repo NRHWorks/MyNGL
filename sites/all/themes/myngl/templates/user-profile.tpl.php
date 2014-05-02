@@ -57,8 +57,7 @@
   </div>
   <div id="content-right">
     <center>
-    <h1>No MyNGLS</h1>
-    <p>(this part of the site hasn't been built yet)</p>
+    <?php print myngl_myngl_upcoming($user->uid); ?>
     </center>
   </div>
 </div>

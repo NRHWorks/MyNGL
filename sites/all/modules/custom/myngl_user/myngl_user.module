@@ -31,6 +31,11 @@ function myngl_user_user_login(&$edit, $account) {
         drupal_goto("myngl/$myngl_nid/confirmed");        
       }
     }
+  } 
+
+  global $user;
+  if (in_array('administrator', $user->roles)) {
+    drupal_goto('admin');
   }
 }
 
