@@ -1,6 +1,16 @@
 <div id="confirm-invite-wrapper">
   <div id="confirm-invite-invite">
-    <div id="confirm-invite-invite-graphic">Need PSD for this graphic.</div>
+    <div class="invite-graphic-container">
+      <div id="confirm-invite-invite-graphic" class="confirm-invite-invite-graphic">
+        <div id="confirm-invite-invite-graphic-2" class="confirm-invite-invite-graphic">
+        </div>
+      </div>
+      <div class="invite-graphic-text">
+        Earn
+        <span>+30</span><br>
+        Points per Invite
+      </div>
+    </div>
     <div class="content">
       <p>
         You are now going to this Myngl event.  Do you want to invite your friends to come as well?  
@@ -18,7 +28,7 @@
     </div>
   </div>
   <div id="confirm-invite-share">
-    <div id="confirm-invite-invite-graphic">Need PSD for these graphics.</div>
+    <div id=""></div>
     <div class="content">
       <p>Share theMyngl on your social networks and earn +30 points!</p>
     </div>

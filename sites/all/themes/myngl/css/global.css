@@ -1,7 +1,7 @@
 /* ---- PALETTE: -----
  
        gray: #999
-  dark gray: #555
+  dark gray: #3c4350
   
 */
 
@@ -11,7 +11,7 @@
 /**********************************************************************/
 
   body {
-    color: #555;
+    color: #3c4350;
     font: 300 14px 'Lato', 'sans-serif';
   }
 
@@ -21,7 +21,7 @@
 
   form input[type="text"],
   form input[type="password"] {
-    color: #555;
+    color: #3c4350;
     font-size: 18px;
   }
   
@@ -34,7 +34,7 @@
   form input[type="submit"] {
     font: 300 24px 'Lato', 'sans-serif';
     text-transform: uppercase;
-    color: #555;
+    color: #3c4350;
   }
  
   form label {
@@ -43,7 +43,7 @@
   }
  
   a {
-    color: #555;
+    color: #3c4350;
     font: 300 18px 'Lato', 'sans-serif';
     text-decoration: none;
   }
@@ -106,7 +106,7 @@
     
     form#user-profile-form .profile-name strong {
       font-size: 18px;
-      color: #555;
+      color: #3c4350;
       padding-left: 6px;
     }
   /* --- end profile form --- */
@@ -142,7 +142,7 @@
     }
 
     div.activity div.activity-date {
-      background-color: #555;
+      background-color: #3c4350;
       height: 100px;
       width: 100px;
       border-radius: 50px;
@@ -217,6 +217,7 @@
     #rsvp-confirm-wrapper div#rsvp-confirm-login {
       font-size: 14px; 
       color: #957f57;
+      margin-bottom: -20px;
     }
     
     #rsvp-confirm-wrapper div#rsvp-confirm-login a {
@@ -258,7 +259,7 @@
   form input[type="password"] {
     height: 25px;
     padding-left: 5px;
-    width: 400px;
+    width: 365px;
   }
 
   form input[type="submit"] {
@@ -296,8 +297,8 @@
   #page-wrapper {
     min-height: 500px;
     margin: 50px auto 0 auto;
-    padding: 25px;
-    width: 800px;
+    padding: 60px;
+    width: 730px;
   }
  
   #content-left, #content-right {
@@ -388,15 +389,16 @@
     }
   
     p.points {
-      padding-top: 14px;
+      padding-top: 25%;
     }
     
     div#profile-info {
-      margin-top: 50px;
+      margin-top: 20px;
     }
 
     div#profile-menu {
-      margin-top: 75px;
+      margin-top: auto;
+      margin-bottom: -15px;
     }
     
     div.border-bottom:first-child {
@@ -488,7 +490,7 @@
       margin-bottom: 15px;
       float: left;
       width: 420px;
-      height: 175px;
+      height: 160px;
       text-align: center;
       margin-top: 50px; 
     }
@@ -498,7 +500,7 @@
     }
     
     #rsvp-logos #rsvp-myngl-logo img {
-      margin-top: 50px;
+      margin-top: 55px;
     }
   
     #rsvp-logos {
@@ -519,7 +521,6 @@
   /* --- rsvp confirmed page --- */
     #confirm-invite-wrapper #confirm-invite-invite-graphic {
       float: right;
-      height: 200px;
     }
 
     #confirm-invite-wrapper .content {
@@ -580,11 +581,12 @@
 
   #content-left {
     border-right: 1px solid #999;
+    margin-bottom: 50px;
   }
 
   img.profile-pic,
   img.default-profile-pic {
-    border: 2px solid #555;
+    border: 2px solid #3c4350;
     border-radius: 50px;
   }
 
@@ -610,7 +612,7 @@
     }
 
     div#profile-points-total {
-      background-color: #555
+      background-color: #3c4350
     }
   /* --- end profile page --- */
 
@@ -620,7 +622,7 @@
     }
 
     form#user-profile-form div.image-preview img {
-      border: 2px solid #555;
+      border: 2px solid #3c4350;
       border-radius: 50px;
     }
   /* --- end profile form --- */
@@ -633,7 +635,7 @@
     div#rewards-dashboard #points-circle {
       height: 150px;
       width: 150px;
-      background-color: #555;
+      background-color: #3c4350;
       border-radius: 75px;
       text-align: center;
       float: left;
@@ -650,11 +652,84 @@
   /* --- end rsvp page --- */
   
   /* --- rsvp confirmed page --- */
-    #confirm-invite-wrapper #confirm-invite-share {
+
+
+    .confirm-invite-wrapper #confirm-invite-share {
       border-top: 1px solid #999;
       border-bottom: 1px solid #999;
 
     }
+
+    .invite-graphic-container {
+      position: relative;
+      float: right;
+      margin: 5%;
+    }
+
+    .comfirm-invite-invite-graphic, .invite-graphic-text {
+      position: absolute;
+    }
+
+    .invite-graphic-text {
+      color: #ffffff;
+      font-size: 16px;
+      text-align: center;
+      margin-top: 5%
+    }
+    .invite-graphic-text span {
+      font-family: Georgia;
+      font-size: 50px;
+      font-weight: 100;
+    }
+
+    .confirm-invite-invite-graphic {
+        background: #b5a065;
+        width: 125px;
+        height: 125px;
+        position: relative;
+        text-align: center;
+    }
+    .confirm-invite-invite-graphic:before, .confirm-invite-invite-graphic:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 125px;
+        width: 125px;
+        background: #b5a065;
+    }
+    #confirm-invite-invite-graphic:before {
+        -webkit-transform: rotate(30deg);
+           -moz-transform: rotate(30deg);
+            -ms-transform: rotate(30deg);
+             -o-transform: rotate(30deg);
+    }
+    #confirm-invite-invite-graphic:after {
+        -webkit-transform: rotate(60deg);
+           -moz-transform: rotate(60deg);
+            -ms-transform: rotate(60deg);
+             -o-transform: rotate(60deg);
+    }
+    #confirm-invite-invite-graphic-2 {
+        -webkit-transform: rotate(15deg);
+           -moz-transform: rotate(15deg);
+            -ms-transform: rotate(15deg);
+             -o-transform: rotate(15deg);
+    }
+
+    #confirm-invite-invite-graphic-2:before {
+        -webkit-transform: rotate(30deg);
+           -moz-transform: rotate(30deg);
+            -ms-transform: rotate(30deg);
+             -o-transform: rotate(30deg);
+    }
+    #confirm-invite-invite-graphic-2:after {
+        -webkit-transform: rotate(60deg);
+           -moz-transform: rotate(60deg);
+            -ms-transform: rotate(60deg);
+             -o-transform: rotate(60deg);
+    }
+
   /* --- end rsvp confirmed page --- */
 
 /*  ----- END STYLE ------------------------------------------------- */    
