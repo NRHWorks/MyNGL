@@ -325,6 +325,33 @@
     margin-top: 50px;
   }
 
+  div.overlay {
+    padding: 20px;
+    position:absolute;    
+    top:0; 
+    left:0; 
+    bottom:0; 
+    right:0;
+    z-index:200; 
+    background-color:#FFF; 
+    width:400px; 
+    height:300px; 
+    display:none;
+    margin:auto;
+  }
+
+  div.overlay-background {
+    width:100%; 
+    height:100%;  
+    background-color:#000; 
+    position:absolute; 
+    top:0; 
+    left:0; 
+    z-index:100; 
+    opacity:.7; 
+    display:none;
+  }
+
   /* --- user login form --- */
     form#user-login #create-account {
       float: right;
@@ -519,8 +546,18 @@
   /* --- end rsvp page --- */
   
   /* --- rsvp confirmed page --- */
+    #confirm-invite-wrapper #confirm-invite-points-graphic {
+      float: right;
+      height: 175px;
+      padding-top: 25px;
+    }
+
     #confirm-invite-wrapper #confirm-invite-invite-graphic {
       float: right;
+    }
+    
+    #confirm-invite-wrapper #confirm-invite-invite-graphic img {
+      margin-right: 20px;
     }
 
     #confirm-invite-wrapper .content {
