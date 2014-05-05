@@ -17,6 +17,13 @@
 
   h1.title {
     font: 300 26px 'Lato', 'sans-serif';
+    margin-left: 25px;
+  }
+
+  input {
+    font-family: Lato;
+    font-style: italic;
+    font-weight: 100;
   }
 
   form input[type="text"],
@@ -369,6 +376,16 @@
     float: right;
   }
 
+  .form-item .form-item {
+    margin: 0;
+  }
+
+  .form-item {
+    margin-top: 0;
+    margin-bottom: 5px;
+    margin-left: 30px;
+  }
+
   /* --- user login form --- */
     form#user-login #create-account {
       float: right;
@@ -377,6 +394,14 @@
 
     form#user-login #forgot-password {
       margin-left: 5px;
+    }
+
+    form#user-login #registration-facebook {
+      float: right;
+      margin: -50px 25px 0 0;
+      border-left: 1px solid #999999;
+      height: 405px;
+      padding-left: 20px;
     }
 
     form#user-login #facebook-signin {
@@ -390,6 +415,11 @@
       float: right;
       margin-top: -40px;
     }
+
+    div.password-confirm {
+      width: auto;
+      margin: 0;
+    }
   /* --- end user password form --- */
   
   /* --- user registration form --- */
@@ -399,12 +429,20 @@
 
     form#user-register-form input#edit-field-first-name-und-0-value {
       float: left;
-      margin-right: 20px;
-      width: 185px;
+      margin-right: 5px;
+      width: 195px;
+    }
+
+    form#user-register-form input[type="text"], form#user-register-form input[type="password"] {
+      width: 395px;
     }
     
     form#user-register-form input#edit-field-last-name-und-0-value {
       width: 185px;
+    }
+
+    form#user-register-form input#form-item {
+      width: 395px;
     }
     
     form#user-register-form #registration-facebook {
@@ -424,6 +462,7 @@
     form#user-register-form .password-strength {
       float: left;
       margin-bottom: 15px;
+      margin-top: 0;
     }
 
     #registration-facebook p span {
