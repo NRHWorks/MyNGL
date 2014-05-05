@@ -16,7 +16,7 @@
   }
 
   h1.title {
-    font: 300 32px 'Lato', 'sans-serif';
+    font: 300 26px 'Lato', 'sans-serif';
   }
 
   form input[type="text"],
@@ -82,6 +82,11 @@
   a.overlay-close {
     font-size: 18px;
     font-weight: bold;
+  }
+
+  #facebook-signin {
+    color: #2e64b0;
+    font-size: 1.8em;
   }
 
   /* --- profile page --- */
@@ -209,11 +214,14 @@
       color: #957f57;
       font-size: 34px;
       text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
     }
 
     #rsvp-confirm-wrapper div#rsvp-confirm-date {
       font-size: 28px;
       font-family: Georgia;
+      margin-bottom: 0;
     }
     
     #rsvp-confirm-wrapper div#rsvp-confirm-description {
@@ -304,8 +312,8 @@
   #page-wrapper {
     min-height: 500px;
     margin: 50px auto 0 auto;
-    padding: 60px;
-    width: 765px;
+    padding: 60px 60px 10px 60px;
+    width: 730px;
   }
  
   #content-left, #content-right {
@@ -401,7 +409,11 @@
     
     form#user-register-form #registration-facebook {
       float: right;
-      margin: -32px 25px 0 0;
+      margin: -50px 25px 0 0;
+      border-left: 1px solid #999999;
+      height: 405px;
+      padding-left: 20px;
+
     }
 
     form#user-register-form .form-button-wrapper {
@@ -412,6 +424,10 @@
     form#user-register-form .password-strength {
       float: left;
       margin-bottom: 15px;
+    }
+
+    #registration-facebook p span {
+      color: #2e64b0;
     }
   /* --- end user registration form --- */
   

@@ -4,8 +4,8 @@
   <div id="rsvp-confirm-title">WELCOME TO <?php print $node->title; ?></div>
   <div id="rsvp-confirm-date"><?php print date('m.d.Y @ g:i a',strtotime($node->field_myngl_dates['und'][0]['value'])); ?> EST</div>
   <div>
-    <span class="additional-dates" style="font-size:14px; color:#957f57">For additional dates 
-      <a href="#" onclick="return myngl.overlay('switch-date', 300, 400);" style="font-size:16px; color:#555;">Click Here</a>
+    <span class="additional-dates" style="font-size:14px; color:#957f57">Change date? 
+      <a href="#" onclick="return myngl.overlay('switch-date', 300, 400);" style="font-size:16px; color:#555;">Click here</a>
     </span>
   </div>
   <div id="rsvp-confirm-description"><?php print $node->field_myngl_description['und'][0]['safe_value']; ?></div>
