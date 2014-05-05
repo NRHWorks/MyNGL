@@ -31,6 +31,7 @@
     font-size: 18px;
   }
 
+  input[type="button"],
   form input[type="submit"] {
     font: 300 24px 'Lato', 'sans-serif';
     text-transform: uppercase;
@@ -76,6 +77,11 @@
 
   #toolbar a {
     font-size: 14px;
+  }
+  
+  a.overlay-close {
+    font-size: 18px;
+    font-weight: bold;
   }
 
   /* --- profile page --- */
@@ -262,6 +268,7 @@
     width: 365px;
   }
 
+  input[type="button"],
   form input[type="submit"] {
     padding: 15px 35px 0 0;
   }
@@ -298,7 +305,7 @@
     min-height: 500px;
     margin: 50px auto 0 auto;
     padding: 60px;
-    width: 730px;
+    width: 765px;
   }
  
   #content-left, #content-right {
@@ -334,13 +341,11 @@
     right:0;
     z-index:200; 
     background-color:#FFF; 
-    width:400px; 
-    height:300px; 
     display:none;
     margin:auto;
   }
 
-  div.overlay-background {
+  div#overlay-background {
     width:100%; 
     height:100%;  
     background-color:#000; 
@@ -350,6 +355,10 @@
     z-index:100; 
     opacity:.7; 
     display:none;
+  }
+
+  a.overlay-close {
+    float: right;
   }
 
   /* --- user login form --- */
@@ -577,6 +586,94 @@
       
     }
   /* --- end rsvp confirmed page --- */
+  
+  /* --- upcoming myngl overlay --- */
+  
+  #upcoming-myngls-landing h1.title {
+    border-bottom: 1px solid #3c4350;
+    margin-top: 0px;
+    font-size: 22px;
+  }
+ 
+  #upcoming-myngls .upcoming-myngl-wrapper {
+    float: left;
+    margin: 40px 16px 0 16px;
+    width: 217px;
+  }
+  
+  #upcoming-myngls .upcoming-myngl-wrapper .title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+    
+  #upcoming-myngls .upcoming-myngl-wrapper .date {
+    font-size: 12px;  
+  }
+  
+  #upcoming-myngls .upcoming-myngl-border {
+    border: 1px solid #EEE;
+    padding: 5px;
+    margin-top: 15px;
+  }
+  
+  #upcoming-myngls .upcoming-myngl-background {
+    height: 300px;
+    width: 205px;
+  }  
+  
+  #upcoming-myngls .upcoming-myngl-cover {
+    background-color: rgb(60, 67, 80);
+    /* RGBa with 0.6 opacity */
+    background-color: rgba(60, 67, 80, 0.8);
+    height: 125px;
+    width: 205px;
+    padding-top: 175px;       
+    display: none; 
+  }
+
+  #upcoming-myngls .upcoming-myngl-background:hover .upcoming-myngl-cover {
+    display: block; 
+  }
+
+  #upcoming-myngls .upcoming-myngl-link {
+    margin: 5px;
+    padding: 3px 3px 6px 3px;
+    border: 2px solid transparent;
+  }
+  
+  #upcoming-myngls .upcoming-myngl-link:hover {
+    border: 2px solid #FFF;
+  }
+
+  #upcoming-myngls .upcoming-myngl-link a {
+    color: #FFF;
+    font-size: 16px;
+    margin-left: 30px;
+  } 
+
+  #upcoming-myngls .upcoming-myngls-pane {
+    position: absolute;
+    background-color: #FFF;
+    width: 600px;
+    height: 530px;
+    left: 85px;
+    top: 20px;
+    box-shadow: 5px 5px 2px #EEE;
+    display: none;
+  } 
+
+  #upcoming-myngls .upcoming-myngls-pane-content {
+    background-color: #3c4350;
+    margin: 10px;
+    height: 410px;
+    color: #FFF;
+  }
+  
+  #upcoming-myngls .upcoming-myngls-pane-content a.overlay-close {
+    color: #FFF;
+  }
+
+  /* --- end upcoming myngl overlay --- */
 
 /*  ----- END LAYOUT------------------------------------------------- */    
 
@@ -590,6 +687,7 @@
     background-size: cover;
   }
 
+  input[type="button"],
   form input[type="submit"] {
     background: transparent url(../images/arrow-button.png) right 18px  no-repeat;
     border: 0px;
@@ -766,5 +864,28 @@
     }
 
   /* --- end rsvp confirmed page --- */
+
+/*  ----- ADD THIS ------------------------------------------------- */    
+/* AddThisEvent (add to your existing CSS) */
+  .addthisevent-drop            {display:inline-block;position:relative;z-index:999998;font-family:'Roboto',sans-serif;color:#fff!important;text-decoration:none;font-size:15px;text-decoration:none;}
+  .addthisevent-drop:hover        {color:#fff;font-size:15px;text-decoration:none;}
+  .addthisevent_dropdown          {position:relative;text-align:left;display:block!important;}
+  .addthisevent_dropdown span       {display:inline-block;position:relative;line-height:110%;background:#ebebeb url(../gfx/button-bg.png) repeat-x;text-decoration:none;font-size:14px;font-weight:300;color:#333;cursor:pointer;padding:7px 14px 8px 12px;border:1px solid #e1e1e1;margin:0px 6px 0px 0px;-moz-border-radius:4px;-webkit-border-radius:4px;}
+  .addthisevent_dropdown span:hover     {background:#f4f4f4;color:#000;text-decoration:none;font-size:14px;}
+  .addthisevent_dropdown span:active    {top:1px;}
+  .addthisevent_dropdown .ateoutlook    {border-top:3px solid #fa9d00;}
+  .addthisevent_dropdown .ategoogle     {border-top:3px solid #d53900;}
+  .addthisevent_dropdown .atehotmail    {border-top:3px solid #1473c5;}
+  .addthisevent_dropdown .ateyahoo    {border-top:3px solid #65106e;}
+  .addthisevent_dropdown .ateical     {border-top:3px solid #ab373a;}
+  .addthisevent span            {display:none!important;}
+  .addthisevent-drop ._url,.addthisevent-drop ._start,.addthisevent-drop ._end,.addthisevent-drop ._summary,.addthisevent-drop ._description,.addthisevent-drop ._location,.addthisevent-drop ._organizer,.addthisevent-drop ._organizer_email,.addthisevent-drop ._facebook_event,.addthisevent-drop ._all_day_event {display:none!important;}
+  .addthisevent_dropdown .copyx       {display:none;}
+  .addthisevent_dropdown .brx       {display:none;}
+  .addthisevent_dropdown .frs       {position:absolute;top:8px;cursor:pointer;right:13px;padding-left:10px;font-style:normal;font-weight:normal;text-align:right;z-index:101;line-height:110%;background:#fff;text-decoration:none;font-size:10px;color:#cacaca;}
+  .addthisevent_dropdown .frs:hover     {color:#6d84b4;}
+  .addthisevent               {visibility:hidden;}
+/*  ----- END ADD THIS ------------------------------------------------- */    
+
 
 /*  ----- END STYLE ------------------------------------------------- */    

@@ -5,7 +5,7 @@
   <div id="rsvp-confirm-date"><?php print date('m.d.Y @ g:i a',strtotime($node->field_myngl_dates['und'][0]['value'])); ?> EST</div>
   <div>
     <span class="additional-dates" style="font-size:14px; color:#957f57">For additional dates 
-      <a href="#" onclick="jQuery('#other-date-blockout').show();jQuery('#other-dates-form').show(); return false;" style="font-size:16px; color:#555;">Click Here</a>
+      <a href="#" onclick="return myngl.overlay('switch-date', 300, 400);" style="font-size:16px; color:#555;">Click Here</a>
     </span>
   </div>
   <div id="rsvp-confirm-description"><?php print $node->field_myngl_description['und'][0]['safe_value']; ?></div>
@@ -17,20 +17,21 @@
   <?php endif; ?>
 </div>
 
-
-<div id="other-date-blockout" class="overlay-background"></div>
-<div id="other-dates-form" class="overlay">
+<div id="switch-date" class="overlay">
+  <a href="#" onclick="return myngl.overlay_close();" class="overlay-close">X</a>
   <h2>OTHER DATES</h2>
   <p>This Myngl will also run on the following dates.  Pick one that will work for you:</p>
   <form id="change-date-form" style="margin-top:30px;" 
-    onsubmit="  jQuery('#other-date-blockout').hide();
-                jQuery('#other-dates-form').hide(); 
-                jQuery('#rsvp-confirm-date').html(jQuery('input:radio:checked').val()); 
+    onsubmit="  myngl.overlay_close();
+                jQuery.cookie('Drupal.visitor.rsvp_date', jQuery('input:radio:checked').val()); 
+                jQuery('#rsvp-confirm-date').html(jQuery('input:radio:checked').siblings('div').html()); 
                 return false;">
     <?php 
       foreach ($node->field_myngl_dates['und'] as $d) : 
-        print "<input type='radio' name='change-date-radio' value='".date('m.d.Y @ g:i a',strtotime($d['value']))." EST' style='margin-left:60px;margin-right:10px;'>";
-        print '<span style="font-size: 18px">'.date('m.d.Y @ g:i a',strtotime($d['value'])) . 'EST</span><br /><br />';
+        print "<div>";
+        print "<input type='radio' name='change-date-radio' value='".$d['value']." EST' style='margin-left:60px;margin-right:10px;'>";
+        print '<div style="font-size: 18px; display: inline;">' . myngl_long_date($d['value']) . 'EST</div><br /><br />';
+        print "</div>";
       endforeach; 
     ?>
     <input type="submit" value="SUBMIT" style="font-size:24px; margin-left: 240px;"/>

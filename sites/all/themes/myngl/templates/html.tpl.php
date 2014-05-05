@@ -16,5 +16,6 @@
   <?php print $page_top; ?>
   <?php print $page; ?>
   <?php print $page_bottom; ?>
+  <div id="overlay-background"></div>
 </body>
 </html>

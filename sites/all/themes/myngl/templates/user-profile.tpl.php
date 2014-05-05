@@ -48,7 +48,7 @@
         <a href="/user/logout" class="link-small-light">LOGOUT</a>
       </div>
       <div class="border-bottom">
-        <a href="#">MY UPCOMING MYNGLS</a>
+        <a href="#" onclick="return myngl.overlay('upcoming-myngls', 600, 750);">MY UPCOMING MYNGLS</a>
       </div>
       <div class="border-bottom">
         <a href="/user/<?php print $uid; ?>/activities">MY ACTIVITY WALL</a>
@@ -61,3 +61,8 @@
     </center>
   </div>
 </div>
+<?php print myngl_myngl_upcoming_overlay($user->uid); ?>
+
+<?php /* UNCOMMENT THIS TO SHOW UPCOMING MYNGLS WHEN PAGE LOADS - USEFUL FOR DEBUGGING ?>
+<script type="text/javascript"> jQuery(document).ready(function() { myngl.overlay('upcoming-myngls', 600, 750); }); </script>
+<?php*/ ?>
