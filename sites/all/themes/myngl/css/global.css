@@ -6,6 +6,25 @@
 */
 
 
+/*  Scroll Bars */
+body ::-webkit-scrollbar:horizontal {
+  display: none;
+}
+
+body ::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+body ::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: #b9b9b9;
+}
+ 
+body ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #3c4350;
+}
+
 /**********************************************************************/
 /*  ----- TYPOGRAPHY ------------------------------------------------ */    
 /**********************************************************************/
@@ -286,6 +305,7 @@
   input[type="button"],
   form input[type="submit"] {
     padding: 15px 35px 0 0;
+    cursor: pointer;
   }
 
   form label {
@@ -623,6 +643,29 @@
   /* --- end rsvp page --- */
   
   /* --- rsvp confirmed page --- */
+
+    #confirm-invite-share {
+      border-top: 1px solid #b9b9b9;
+      border-bottom: 1px solid #b9b9b9;
+    }
+
+    #confirm-invite-invite-graphic {
+      margin-right: 30px;
+      margin-top: -10px;
+    }
+
+    #confirm-invite-share #facebook-share, #confirm-invite-share #twitter-share {
+      font-size: 2.3em;
+    }
+
+    #confirm-invite-share #facebook-share {
+      color: #2e64b0;
+    }
+
+    #confirm-invite-share #twitter-share {
+      color: #56d2f1;
+    }
+
     #confirm-invite-wrapper #confirm-invite-points-graphic {
       float: right;
     }
@@ -630,15 +673,16 @@
     #confirm-invite-wrapper #confirm-invite-invite-graphic {
       float: right;
     }
-    
-    #confirm-invite-wrapper #confirm-invite-invite-graphic img {
-      margin-right: 20px;
+
+    #confirm-invite-share div p {
+      margin-left: 30px;
     }
+    
 
     #confirm-invite-wrapper .content {
       margin-bottom: 50px;
       width: 400px;
-      padding-left: 25px;
+      margin-left: 30px;
     }
     
     #confirm-invite-wrapper form {
@@ -650,8 +694,17 @@
     }
 
     #confirm-invite-wrapper #confirm-invite-share {
-      padding-top: 30px;
+      padding-top: 20px;
+      padding-bottom: 20px;
       
+    }
+
+    #confirm-invite-invite form {
+      margin-top: 0;
+    }
+
+    #confirm-invite-invite input[type="text"] {
+      width: 385px;
     }
   /* --- end rsvp confirmed page --- */
   
@@ -864,7 +917,7 @@
     .invite-graphic-container {
       position: relative;
       float: right;
-      margin: 5%;
+      margin: 50px 35px;
     }
 
     .comfirm-invite-invite-graphic, .invite-graphic-text {
@@ -873,14 +926,23 @@
 
     .invite-graphic-text {
       color: #ffffff;
-      font-size: 16px;
+      font-size: 17px;
       text-align: center;
-      margin-top: 5%
+      margin-top: 5%;
+      margin-left: 5px;
+      line-height: 30px;
     }
     .invite-graphic-text span {
       font-family: Georgia;
-      font-size: 50px;
+      font-size: 75px;
       font-weight: 100;
+    }
+
+    .invite-graphic-text span span{
+      font-size: 35px;
+      position: absolute;
+      top: 30px;
+      left: -10px;
     }
 
     .confirm-invite-points-graphic {

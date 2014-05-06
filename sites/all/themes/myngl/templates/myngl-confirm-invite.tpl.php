@@ -6,8 +6,8 @@
         </div>
       </div>
       <div class="invite-graphic-text">
-        Earn
-        <span>+30</span><br>
+        Earn<br>
+        <span><span>+</span>30</span><br>
         Points per Invite
       </div>
     </div>
@@ -30,10 +30,16 @@
   <div id="confirm-invite-share">
 
     <div id="confirm-invite-invite-graphic">
-      <img src="/<?php print path_to_theme(); ?>/images/facebook-icon.png" />
-      <img src="/<?php print path_to_theme(); ?>/images/twitter-icon.png" />
+      <span class="fa-stack fa-lg" id="facebook-share">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="fa-stack fa-lg" id="twitter-share">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
     </div>
-    <div class="content">
+    <div>
       <p>Share theMyngl on your social networks and earn +30 points!</p>
     </div>
   </div>
@@ -44,8 +50,8 @@
         with otehr attendees at the upcoming Myngl event.
       </p>
     </div>
-    <a href="#">VIEW EVENT DETAIL</a>
-    <a href="#">UPLOAD YOUR CONTENT TO THIS EVENT</a>
+    <a href="#"><i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;VIEW EVENT DETAIL</a>
+    <a href="#"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;UPLOAD YOUR CONTENT TO THIS EVENT</a>
     <br /><br />
     <br /><br />
   </div>
