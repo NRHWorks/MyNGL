@@ -136,7 +136,7 @@ function profile_feature_field_default_field_instances() {
     'entity_type' => 'profile2',
     'field_name' => 'field_gender',
     'label' => 'Gender',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
@@ -286,7 +286,7 @@ function profile_feature_field_default_field_instances() {
     'entity_type' => 'profile2',
     'field_name' => 'field_relationship_status',
     'label' => 'Relationship Status',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
