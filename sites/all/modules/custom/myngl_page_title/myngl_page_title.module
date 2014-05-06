@@ -23,8 +23,6 @@ function myngl_page_title_init() {
       break;
     
     case ($path == 'user/register') :
-      $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']); 
-
       if (isset($_COOKIE['Drupal_visitor_rsvp'])) {
         $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']); 
       }
