@@ -389,24 +389,28 @@
   /* --- user login form --- */
     form#user-login #create-account {
       float: right;
-      margin-top: -50px;
+      margin-top: -45px;
     }
 
     form#user-login #forgot-password {
-      margin-left: 5px;
+      margin-left: 30px;
     }
 
     form#user-login #registration-facebook {
       float: right;
       margin: -50px 25px 0 0;
       border-left: 1px solid #999999;
-      height: 405px;
+      height: 168px;
       padding-left: 20px;
     }
 
     form#user-login #facebook-signin {
       float: right;
       margin-right: 175px;
+    }
+
+    #edit-submit {
+      margin-left: 30px;
     }
   /* --- end user login form --- */
   
@@ -418,7 +422,16 @@
 
     div.password-confirm {
       width: auto;
-      margin: 0;
+      margin: -70px 0 0 275px;
+      float: left;
+
+    }
+
+    div.form-item div.password-suggestions {
+      width: 33em;
+    }
+    #edit-account.form-wrapper {
+      height: 268px;
     }
   /* --- end user password form --- */
   
@@ -456,7 +469,7 @@
 
     form#user-register-form .form-button-wrapper {
       float: right;
-      margin-top: -80px;
+      margin-top: -77px;
     }
     
     form#user-register-form .password-strength {
