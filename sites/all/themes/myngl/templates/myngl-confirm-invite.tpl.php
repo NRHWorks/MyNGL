@@ -12,6 +12,7 @@
       </div>
     </div>
     <div class="content">
+      <p>YOUR RSVP TO THIS EVENT HAS BEEN CONFIRMED!</p>
       <p>
         You are now going to this Myngl event.  Do you want to invite your friends to come as well?  
         You earn points everytime an invited person joins Myngl.
@@ -52,9 +53,8 @@
     </div>
     <a href="#"><i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;VIEW EVENT DETAIL</a>
     <a href="#"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;UPLOAD YOUR CONTENT TO THIS EVENT</a>
-    <br /><br />
-    <br /><br />
   </div>
+  <br>
   <div id="footer-links">
     <a href="/user/<?php global $user; print $user->uid; ?>" class="link-small">Go to your Dashboard</a>
   </div>

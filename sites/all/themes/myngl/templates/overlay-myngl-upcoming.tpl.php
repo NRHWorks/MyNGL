@@ -24,9 +24,20 @@ addthisevent.settings({
         <div class="upcoming-myngl-border">
           <div class="upcoming-myngl-background" style="background-image: url(<?php print image_style_url('myngl_upcoming_overlay', $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri']); ?>)">
             <div class="upcoming-myngl-cover">
-              <div class="upcoming-myngl-link upcoming-myngl-details"><a href="#" onclick="return myngl_upcoming.details(<?php print $k; ?>);">View Details</a></div>
-              <div class="upcoming-myngl-link upcoming-myngl-upload"><a href="#" onclick="return myngl_upcoming.upload_images(<?php print $k; ?>);">Upload Content</a></div>
-              <div class="upcoming-myngl-link upcoming-myngl-attendance"><a href="#" onclick="return myngl_upcoming.cancel_rsvp(<?php print arg(1); ?>, <?php print $k; ?>);">Cancel Attendance</a></div>
+              <div class="upcoming-myngl-link upcoming-myngl-details">
+                <a href="#" onclick="return myngl_upcoming.details(<?php print $k; ?>);">
+                  <i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;View Details
+                </a>
+              </div>
+              <div class="upcoming-myngl-link upcoming-myngl-upload">
+                <a href="#" onclick="return myngl_upcoming.upload_images(<?php print $k; ?>);">
+                  <i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;Upload Content
+                </a>
+              </div>
+              <div class="upcoming-myngl-link upcoming-myngl-attendance">
+                <a href="#" onclick="return myngl_upcoming.cancel_rsvp(<?php print arg(1); ?>, <?php print $k; ?>);">
+                  <i class="fa fa-times-circle"></i>&nbsp;&nbsp;&nbsp;Cancel Attendance</a>
+                </div>
             </div>
           </div>
         </div>

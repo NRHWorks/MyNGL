@@ -36,7 +36,7 @@ body ::-webkit-scrollbar-thumb {
 
   h1.title {
     font: 300 26px 'Lato', 'sans-serif';
-    margin-left: 25px;
+    margin-left: 30px;
   }
 
   input {
@@ -107,7 +107,6 @@ body ::-webkit-scrollbar-thumb {
   
   a.overlay-close {
     font-size: 18px;
-    font-weight: bold;
   }
 
   #facebook-signin {
@@ -268,8 +267,22 @@ body ::-webkit-scrollbar-thumb {
   /* --- rsvp confirm page --- */
     #confirm-invite-wrapper #confirm-invite-details a {
       font-size: 16px;
-      margin-left: 25px;
+      margin-left: 30px;
+    }
+
+    #confirm-invite-wrapper #footer-links {
+      border: none;
+    }
+
+    #confirm-invite-wrapper #footer-links a {
+      font-weight: normal;
+      text-decoration: underline;
+      margin-left: 20px;
     } 
+
+    #confirm-invite-invite p:first-of-type {
+      margin-top: .5em;
+    }
 
   /* --- end rsvp iconfirm page --- */
 
@@ -346,7 +359,12 @@ body ::-webkit-scrollbar-thumb {
   #content-left, #content-right {
     float: left;
     padding: 15px;
-    width: 350px;
+    width: 330px;
+  }
+
+  #content-left {
+    margin-left: 10px;
+    margin-right: -1px;
   }
 
   #content .profile {
@@ -378,7 +396,10 @@ body ::-webkit-scrollbar-thumb {
     background-color:#FFF; 
     display:none;
     margin:auto;
+    border: 5px double rgba(60,67,80,0.85);
+    outline: 10px solid #ffffff;
   }
+
 
   div#overlay-background {
     width:100%; 
@@ -438,6 +459,18 @@ body ::-webkit-scrollbar-thumb {
     form#user-pass #forgot-password-cancel {
       float: right;
       margin-top: -40px;
+    }
+
+    form#user-pass input#edit-name {
+      margin-top: 50px;
+    }
+
+    form#user-pass div.form-item {
+      border-right: 1px solid #b9b9b9;
+      height: 150px;
+      margin-top: -50px;
+      margin-bottom: -50px;
+      margin-right: 250px;
     }
 
     div.password-confirm {
@@ -506,14 +539,14 @@ body ::-webkit-scrollbar-thumb {
   /* --- profile page --- */
     div#profile-points-total {
       border-radius: 35px;
-      height: 70px;
+      height: 55px;
       margin-bottom: 5px;
       text-align: center;
-      width: 70px;
+      width: 55px;
     }
   
     p.points {
-      padding-top: 25%;
+      padding-top: 17%;
     }
     
     div#profile-info {
@@ -706,6 +739,10 @@ body ::-webkit-scrollbar-thumb {
     #confirm-invite-invite input[type="text"] {
       width: 385px;
     }
+
+    #confirm-invite-details .content {
+      margin-bottom: 30px;
+    }
   /* --- end rsvp confirmed page --- */
   
   /* --- upcoming myngl overlay --- */
@@ -769,7 +806,7 @@ body ::-webkit-scrollbar-thumb {
   #upcoming-myngls .upcoming-myngl-link a {
     color: #FFF;
     font-size: 16px;
-    margin-left: 30px;
+    margin-left: 5px;
   } 
 
   #upcoming-myngls .upcoming-myngls-pane {
@@ -835,7 +872,7 @@ body ::-webkit-scrollbar-thumb {
 
   #content-left {
     border-right: 1px solid #999;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
 
   img.profile-pic,
@@ -858,7 +895,9 @@ body ::-webkit-scrollbar-thumb {
   /* --- profile page --- */
     img.profile-pic {
       float: left;
-      margin-right: 75px;
+      margin-right: 30px;
+      height: 95px;
+      width: 95px;
     }
 
     div#profile-points {
@@ -887,14 +926,20 @@ body ::-webkit-scrollbar-thumb {
     }
 
     div#rewards-dashboard #points-circle {
-      height: 150px;
-      width: 150px;
+      height: 140px;
+      width: 140px;
       background-color: #3c4350;
       border-radius: 75px;
       text-align: center;
       float: left;
       margin-left: 25px;
       margin-right: 15px;
+    }
+
+    .profile #footer-links a {
+      font-weight: normal;
+      text-decoration: underline;
+      margin-right: 30px;
     }
   /* --- end rewards landing --- */
   
