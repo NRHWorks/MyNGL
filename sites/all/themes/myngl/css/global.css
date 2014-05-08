@@ -825,10 +825,15 @@ body ::-webkit-scrollbar-thumb {
     margin: 10px;
     height: 410px;
     color: #FFF;
+    padding: 40px;
   }
   
   #upcoming-myngls .upcoming-myngls-pane-content a.overlay-close {
     color: #FFF;
+  }
+
+  .upcoming-myngls-pane .title {
+    font-size: 2.5em;
   }
 
   /* --- end upcoming myngl overlay --- */

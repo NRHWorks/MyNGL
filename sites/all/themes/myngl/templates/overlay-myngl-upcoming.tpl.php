@@ -47,7 +47,7 @@ addthisevent.settings({
         <div class="upcoming-myngls-pane-content">
           <a href="#" onclick="return myngl_upcoming.close_pane();" class="overlay-close">X</a>
           More information on this Myngl<br>
-          <?php print $m['myngl']->title; ?><br>
+          <span class="title"><?php print $m['myngl']->title; ?></span><br>
           <?php print theme_image_style(array('style_name' => 'myngl_upcoming_overlay_small', 'path' => $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri'], 'height' => null, 'width' => null)); ?><br />
           <?php print myngl_long_date($m['date']); ?><br />
           Change Date<a href="#" onclick="return myngl_upcoming.change_date(<?php print $k; ?>)">Click Here</a><br />
