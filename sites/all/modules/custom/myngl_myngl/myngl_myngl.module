@@ -133,16 +133,22 @@ function myngl_myngl_complete($nid) {
 function myngl_myngl_upcoming($uid) {
   $invitee_id = db_query("SELECT entity_id FROM {field_data_field_invitee_user_account} WHERE field_invitee_user_account_uid = :uid LIMIT 1", array(':uid' => $uid))->fetchField();
 
-  //TODO: make sure this is getting the next scheduled myngl
-  $myngl_id = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = $invitee_id LIMIT 1")->fetchField();
+  if ($invitee_id != '') {
+    //TODO: make sure this is getting the next scheduled myngl
+    $myngl_id = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = $invitee_id LIMIT 1")->fetchField();
+  }
 
-  $node = node_load($myngl_id);
-  
-  $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
+  if (isset($myngl_id)) {
+    $node = node_load($myngl_id);
+    
+    $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
 
-  $output = theme('panel_myngl_upcoming', array('myngl' => $node, 'brand' => $brand));
+    $output = theme('panel_myngl_upcoming', array('myngl' => $node, 'brand' => $brand));
 
-  return $output;
+    return $output;
+  } else {
+    return 'No Upcoming Myngls'; 
+  }
 
 }
 
@@ -150,13 +156,13 @@ function myngl_myngl_upcoming_overlay($uid) {
   //find myngls for this user
   $result = db_query("SELECT entity_id FROM {field_data_field_invitee_user_account} WHERE field_invitee_user_account_uid = :uid", array(':uid' => $uid));
 
+  $myngls = array();
   foreach ($result as $r) {
     // based on invitee id get myngls
     $sub_result = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = :iid", array(':iid' => $r->entity_id));
  
     $invitee_collection = array_shift(entity_load('field_collection_item', array($r->entity_id)));  
   
-    $myngls = array();
     foreach ($sub_result as $s) {
       $myngl = node_load($s->entity_id);
 
