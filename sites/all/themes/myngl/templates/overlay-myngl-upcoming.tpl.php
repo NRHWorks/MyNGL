@@ -56,9 +56,9 @@ addthisevent.settings({
               <span class="info-header">SUMMARY</span><br>
               <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br><br>
               
-              <span class="info-header">SPONSORED BY</span<br>
-              <?php print $m['myngl']->field_myngl_sponsor['und'][0]['safe_value']; ?><br>
-            </div><br><br>
+              <span class="info-header">SPONSORED BY</span><br>
+              <?php print $m['myngl']->field_myngl_sponsor['und'][0]['safe_value']; ?>
+            </div><br>
 
             <span class="info-header">ADD TO CALENDAR</span><br><br>
             <a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
@@ -87,25 +87,27 @@ addthisevent.settings({
       </div>
 
       <div class="upcoming-myngls-pane" id="upcoming-myngls-pane-upload-images-<?php print $k; ?>">
-        <div class="upcoming-myngls-pane-content">
+        <div class="upcoming-myngls-pane-content upload-pane">
           <a href="#" onclick="return myngl_upcoming.close_pane();" class="overlay-close">X</a>
-          UPLOAD YOUR CONTENT<br />
-          <?php print $m['myngl']->title; ?><br /><br />
-          
-          SUMMARY<br />
-          <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br /><br />
-
-          <strong>IMAGES --icon--</strong></a>
-          <a href="#" onclick="return myngl_upcoming.upload_videos(<?php print $k; ?>);">VIDEO --icon--</a>
-          <a href="#" onclick="return myngl_upcoming.upload_doc(<?php print $k; ?>);">.DOC --icon--</a>
-          <br /><br />
-      
-          <form>
-            <input type="file" />
-            <input type="submit" value="Submit" />
-          </form>
-          Only file formats to upload: .jpg. .png, or .gif 
-          <a href="">+ Add Another</a>
+          <div class="upcoming-pane-details">
+            UPLOAD YOUR CONTENT<br />
+            <span class="title"><?php print $m['myngl']->title; ?></span><br><br>
+            
+            <span class="info-header">SUMMARY</span><br>
+            <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br /><br />
+            <hr>
+            <strong>IMAGES <i class="fa fa-picture-o"></i></strong></a>
+            <a href="#" onclick="return myngl_upcoming.upload_videos(<?php print $k; ?>);">VIDEO <i class="fa fa-film"></i></a>
+            <a href="#" onclick="return myngl_upcoming.upload_doc(<?php print $k; ?>);">.DOC <i class="fa fa-file-text"></i></a>
+            <br /><br />
+        
+            <form>
+              <input type="file" />
+              <input type="submit" value="Submit" />
+            </form>
+            Only file formats to upload: .jpg. .png, or .gif 
+            <br><a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
+          </div>
         </div>
         <div class="upcoming-myngls-pane-footer">
           <div class="upcoming-myngls-pane-footer-left">
@@ -118,25 +120,27 @@ addthisevent.settings({
       </div>
       
       <div class="upcoming-myngls-pane" id="upcoming-myngls-pane-upload-docs-<?php print $k; ?>">
-        <div class="upcoming-myngls-pane-content">
+        <div class="upcoming-myngls-pane-content upload-pane">
           <a href="#" onclick="return myngl_upcoming.close_pane();" class="overlay-close">X</a>
-          UPLOAD YOUR CONTENT<br />
-          <?php print $m['myngl']->title; ?><br /><br />
-          
-          SUMMARY<br />
-          <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br /><br />
-
-          <a href="#" onclick="return myngl_upcoming.upload_images(<?php print $k; ?>);">IMAGES --icon--</a>  
-          <a href="#" onclick="return myngl_upcoming.upload_videos(<?php print $k; ?>);">VIDEO --icon--</a>  
-          <strong>.DOC --icon--</strong> 
-          <br /><br />
-      
-          <form>
-            <input type="file" />
-            <input type="submit" value="Submit" />
-          </form>
-          Only file formats to upload: .doc. .docx, .txt 
-          <a href="">+ Add Another</a>
+          <div class="upcoming-pane-details">
+            UPLOAD YOUR CONTENT<br />
+             <span class="title"><?php print $m['myngl']->title; ?></span><br><br>
+            
+            <span class="info-header">SUMMARY</span><br>
+            <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br /><br />
+            <hr>
+            <a href="#" onclick="return myngl_upcoming.upload_images(<?php print $k; ?>);">IMAGES <i class="fa fa-picture-o"></i></a>  
+            <a href="#" onclick="return myngl_upcoming.upload_videos(<?php print $k; ?>);">VIDEO <i class="fa fa-film"></i></a>  
+            <strong>.DOC <i class="fa fa-file-text"></i></strong> 
+            <br /><br />
+        
+            <form>
+              <input type="file" />
+              <input type="submit" value="Submit" />
+            </form>
+            Only file formats to upload: .doc. .docx, .txt 
+           <br><a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
+          </div>
         </div>
         <div class="upcoming-myngls-pane-footer">
           <div class="upcoming-myngls-pane-footer-left">
@@ -149,25 +153,27 @@ addthisevent.settings({
       </div>
 
       <div class="upcoming-myngls-pane" id="upcoming-myngls-pane-upload-videos-<?php print $k; ?>">
-        <div class="upcoming-myngls-pane-content">
+        <div class="upcoming-myngls-pane-content upload-pane">
           <a href="#" onclick="return myngl_upcoming.close_pane();" class="overlay-close">X</a>
-          UPLOAD YOUR CONTENT<br />
-          <?php print $m['myngl']->title; ?><br /><br />
-          
-          SUMMARY<br />
-          <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br /><br />
-
-          <a href="#" onclick="return myngl_upcoming.upload_images(<?php print $k; ?>);">IMAGES --icon--</a>  
-          <strong>VIDEO --icon--</strong>  
-          <a href="#" onclick="return myngl_upcoming.upload_docs(<?php print $k; ?>);">.DOC --icon--</a> 
-          <br /><br />
-      
-          <form>
-            <input type="file" />
-            <input type="submit" value="Submit" />
-          </form>
-          YouTube Video only.  Include http:// 
-          <a href="#">+ Add Another</a>
+          <div class="upcoming-pane-details">
+            UPLOAD YOUR CONTENT<br />
+             <span class="title"><?php print $m['myngl']->title; ?></span><br><br>
+            
+            <span class="info-header">SUMMARY</span><br>
+            <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br /><br />
+            <hr>
+            <a href="#" onclick="return myngl_upcoming.upload_images(<?php print $k; ?>);">IMAGES <i class="fa fa-picture-o"></i></a>  
+            <strong>VIDEO <i class="fa fa-film"></i></strong>  
+            <a href="#" onclick="return myngl_upcoming.upload_docs(<?php print $k; ?>);">.DOC <i class="fa fa-file-text"></i></a> 
+            <br /><br />
+        
+            <form class="video-upload">
+              <input type="text" />
+              <input type="submit" value="Submit" />
+            </form>
+            YouTube Video only.  Include http:// 
+            <br><a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
+          </div>
         </div>
         <div class="upcoming-myngls-pane-footer">
           <div class="upcoming-myngls-pane-footer-left">
@@ -183,19 +189,23 @@ addthisevent.settings({
         <form>
         <div class="upcoming-myngls-pane-content">
           <a href="#" onclick="return myngl_upcoming.close_pane();" class="overlay-close">X</a>
-          More information on this Myngl<br>
-          <?php print $m['myngl']->title; ?><br>
-          <?php print theme_image_style(array('style_name' => 'myngl_upcoming_overlay_small', 'path' => $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri'], 'height' => null, 'width' => null)); ?><br />
-          <?php print myngl_long_date($m['date']); ?><br />
-          This Myngl will also run on the following dates.  Pick one that will work for you:
-          <?php 
-            foreach ($m['myngl']->field_myngl_dates['und'] as $d) : 
-              print "<div>";
-              print "<input type='radio' name='change-date-radio' value='".$d['value']." EST' style='margin-left:60px;margin-right:10px;'>";
-              print '<div style="font-size: 18px; display: inline;">' . myngl_long_date($d['value']) . 'EST</div><br /><br />';
-              print "</div>";
-            endforeach; 
-          ?>
+          <div class="upcoming-pane-details">
+            MORE INFORMATION ON THIS MYNGL<br>
+            <span class="title"><?php print $m['myngl']->title; ?></span><br>
+            <?php print theme_image_style(array('style_name' => 'myngl_upcoming_overlay_small', 'path' => $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri'], 'height' => null, 'width' => null)); ?><br />
+            <div class="upcoming-myngls-pane-info">  
+              <span class="date">Current <?php print myngl_long_date($m['date']); ?></span><br><br>
+              This Myngl will also run on the following dates.  Pick one that will work for you: <br><br>
+              <?php 
+                foreach ($m['myngl']->field_myngl_dates['und'] as $d) : 
+                  print "<div>";
+                  print "<input type='radio' name='change-date-radio' value='".$d['value']." EST' style='margin-left:60px;margin-right:10px;'>";
+                  print '<div style="font-size: 18px; display: inline;">' . myngl_long_date($d['value']) . 'EST</div><br /><br />';
+                  print "</div>";
+                endforeach; 
+              ?>
+            </div>
+          </div>
         </div>
         <div class="upcoming-myngls-pane-footer">
           <div class="upcoming-myngls-pane-footer-left">
