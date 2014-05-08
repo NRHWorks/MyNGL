@@ -46,33 +46,35 @@ addthisevent.settings({
       <div class="upcoming-myngls-pane" id="upcoming-myngls-pane-details-<?php print $k; ?>">
         <div class="upcoming-myngls-pane-content">
           <a href="#" onclick="return myngl_upcoming.close_pane();" class="overlay-close">X</a>
-          More information on this Myngl<br>
-          <span class="title"><?php print $m['myngl']->title; ?></span><br>
-          <?php print theme_image_style(array('style_name' => 'myngl_upcoming_overlay_small', 'path' => $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri'], 'height' => null, 'width' => null)); ?><br />
-          <?php print myngl_long_date($m['date']); ?><br />
-          Change Date<a href="#" onclick="return myngl_upcoming.change_date(<?php print $k; ?>)">Click Here</a><br />
-          SUMMARY<br />
-          <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br>
-          
-          SPONSORED BY<br />
-          <?php print $m['myngl']->field_myngl_sponsor['und'][0]['safe_value']; ?><br>
+          <div class="upcoming-pane-details">
+            MORE INFORMATION ON THIS MYNGL<br>
+            <span class="title"><?php print $m['myngl']->title; ?></span><br>
+            <?php print theme_image_style(array('style_name' => 'myngl_upcoming_overlay_small', 'path' => $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri'], 'height' => null, 'width' => null)); ?><br />
+            <div class="upcoming-myngls-pane-info">
+              <span class="date"><?php print myngl_long_date($m['date']); ?></span>&nbsp;
+              <a href="#" onclick="return myngl_upcoming.change_date(<?php print $k; ?>)">Select Another Date</a><br><br>
+              <span class="info-header">SUMMARY</span><br>
+              <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br><br>
+              
+              <span class="info-header">SPONSORED BY</span<br>
+              <?php print $m['myngl']->field_myngl_sponsor['und'][0]['safe_value']; ?><br>
+            </div><br><br>
 
-          ADD TO CALENDAR<br />
-          <a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
-            Add to Calendar
-            <span class="_start"><?php print myngl_addthis_date($m['date']); ?></span>
-            <span class="_end"><?php print myngl_addthis_end_date($m['date']); ?></span>
-            <span class="_zonecode">35</span>
-            <span class="_summary"><?php print $m['myngl']->title; ?></span>
-            <span class="_description"><?php print strip_tags($m['myngl']->field_myngl_description['und'][0]['safe_value']); ?></span>
-            <span class="_location"><?php print $m['brand']->title; ?>.myngl.com</span>
-            <span class="_organizer"><?php print $m['brand']->title; ?></span>
-            <span class="_organizer_email">admin@myngl.com</span>
-            <span class="_facebook_event">http://www.facebook.com/events/160427380695693</span>
-            <span class="_all_day_event">false</span>
-            <span class="_date_format">DD/MM/YYYY</span>
-          </a>
-
+            <span class="info-header">ADD TO CALENDAR</span><br><br>
+            <a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
+              <span class="_start"><?php print myngl_addthis_date($m['date']); ?></span>
+              <span class="_end"><?php print myngl_addthis_end_date($m['date']); ?></span>
+              <span class="_zonecode">35</span>
+              <span class="_summary"><?php print $m['myngl']->title; ?></span>
+              <span class="_description"><?php print strip_tags($m['myngl']->field_myngl_description['und'][0]['safe_value']); ?></span>
+              <span class="_location"><?php print $m['brand']->title; ?>.myngl.com</span>
+              <span class="_organizer"><?php print $m['brand']->title; ?></span>
+              <span class="_organizer_email">admin@myngl.com</span>
+              <span class="_facebook_event">http://www.facebook.com/events/160427380695693</span>
+              <span class="_all_day_event">false</span>
+              <span class="_date_format">DD/MM/YYYY</span>
+            </a>
+          </div>
         </div>
         <div class="upcoming-myngls-pane-footer">
           <div class="upcoming-myngls-pane-footer-left">

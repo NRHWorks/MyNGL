@@ -114,6 +114,11 @@ body ::-webkit-scrollbar-thumb {
     font-size: 1.8em;
   }
 
+  .fa-stack .fa-angle-right {
+    top: -1px;
+    left: 1px;
+  }
+
   /* --- profile page --- */
     div#profile-info {
       font-size: 18px;
@@ -130,6 +135,10 @@ body ::-webkit-scrollbar-thumb {
     
     div#profile-menu {
       color: #999;
+    }
+
+    .profile .fa-stack {
+      top: -2px;
     }
   /* --- end profile page --- */
   
@@ -173,8 +182,8 @@ body ::-webkit-scrollbar-thumb {
   /* --- activity page --- */
     div.activity {
       clear: both;
-      height: 150px;
-      margin-top: 25px;
+      height: 130px;
+      margin-top: 15px;
     }
 
     div.activity div.activity-date {
@@ -351,6 +360,7 @@ body ::-webkit-scrollbar-thumb {
 
   #page-wrapper {
     min-height: 500px;
+    max-height: 715px;
     margin: 50px auto 0 auto;
     padding: 60px 60px 10px 60px;
     width: 730px;
@@ -371,8 +381,9 @@ body ::-webkit-scrollbar-thumb {
     margin: 0 0;
   } 
 
-  div.border-bottom {
-    padding: 20px;
+  div.border-bottom a {
+    margin-left: 30px;
+    padding-top: 5px
   }
 
   div#spacer {
@@ -380,9 +391,10 @@ body ::-webkit-scrollbar-thumb {
   }
 
   div#scrollable-content {
-    height: 600px;
+    height: 450px;
     overflow: scroll;
     margin-top: 50px;
+    margin-bottom: 25px;
   }
 
   div.overlay {
@@ -560,6 +572,11 @@ body ::-webkit-scrollbar-thumb {
     
     div.border-bottom:first-child {
       padding-bottom: 10px;
+      text-align: center;
+    }
+
+    div.border-bottom:first-child a {
+      margin-left: 0;
     }
 
   /* --- end profile page --- */
@@ -812,8 +829,8 @@ body ::-webkit-scrollbar-thumb {
   #upcoming-myngls .upcoming-myngls-pane {
     position: absolute;
     background-color: #FFF;
-    width: 600px;
-    height: 530px;
+    width: 615px;
+    height: 565px;
     left: 85px;
     top: 20px;
     box-shadow: 5px 5px 2px #EEE;
@@ -825,15 +842,73 @@ body ::-webkit-scrollbar-thumb {
     margin: 10px;
     height: 410px;
     color: #FFF;
-    padding: 40px;
+    padding: 5px;
   }
+
+  #upcoming-myngls .upcoming-pane-details {
+    padding: 35px;
+  }
+
+
   
   #upcoming-myngls .upcoming-myngls-pane-content a.overlay-close {
     color: #FFF;
+    font-size: 18px;
+    margin-right: 2px;
   }
 
-  .upcoming-myngls-pane .title {
+  #upcoming-myngls .upcoming-myngls-pane-content img {
+    float: left;
+    height: 155px;
+    width: 100px;
+    margin-top: 20px;
+    margin-right: 15px;
+  }
+
+  #upcoming-myngls .upcoming-myngls-pane a {
+    color: #999999;
+    font-size: 15px;
+  }
+
+  .upcoming-myngls-pane-content ::-webkit-scrollbar-thumb {
+    background-color: #ffffff
+  }
+
+  .upcoming-myngls-pane-content .date {
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+
+  .upcoming-myngls-pane-content .title {
     font-size: 2.5em;
+    font-weight: 100;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .upcoming-myngls-pane-content .info-header {
+    color: #999999;
+    font-weight: bold;
+  }
+
+  .upcoming-myngls-pane-info {
+    max-height: 165px;
+    overflow: scroll;
+  }
+
+  .upcoming-myngls-pane-footer-left, .upcoming-myngls-pane-footer-right {
+    float:left;
+    width: 50%;
+    text-align: right;
+    padding-top: 25px;
+  }
+
+  .upcoming-myngls-pane-footer-left {
+    text-align: left;
+    margin-right: -20px;
+    margin-left: 20px;
+    text-decoration: underline;
+    padding-top: 50px;
   }
 
   /* --- end upcoming myngl overlay --- */
@@ -888,7 +963,8 @@ body ::-webkit-scrollbar-thumb {
 
   div.border-bottom {
     border-bottom: 1px solid #999;
-    padding: 20px;
+    margin-left: -30px;
+    margin-top : 6px;
   }
 
   div#footer-links {
