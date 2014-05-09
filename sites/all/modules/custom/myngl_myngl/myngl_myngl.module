@@ -462,7 +462,7 @@ function myngl_myngl_pre_questions_form($form, &$form_state, $myngl_id, $user_id
     '#type' => 'submit',
     '#value' => 'GO TO EVENT',
     '#title' => t('Submit'),
-    '#prefix' => '<div class="form-action">',
+    '#prefix' => '<div class="form-actions">',
     '#suffix' => '</div>',
   );
 
@@ -537,7 +537,7 @@ function myngl_myngl_post_questions_form($form, &$form_state, $myngl_id, $user_i
     '#type' => 'submit',
     '#value' => 'GO TO REWARDS',
     '#title' => t('Submit'),
-    '#prefix' => '<div class="form-action">',
+    '#prefix' => '<div class="form-actions">',
     '#suffix' => '</div>',
   );
 
