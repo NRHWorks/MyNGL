@@ -924,7 +924,8 @@ body ::-webkit-scrollbar-thumb {
     padding-top: 50px;
   }
 
-  .upcoming-myngls-pane-content .addthisevent_dropdown span, .upcoming-myngls-pane-content .video-upload input[type="submit"] {
+  .upcoming-myngls-pane-content .addthisevent_dropdown span,
+  .upcoming-myngls-pane-content .video-upload input[type="submit"] {
     background: transparent;
     color: #ffffff;
     border: 1px solid #ffffff;
@@ -937,11 +938,13 @@ body ::-webkit-scrollbar-thumb {
     margin-bottom: 15px;
   }
 
-  .upcoming-myngls-pane-content.upload-pane .upcoming-pane-details a:not(.upload-add), .upcoming-myngls-pane-content.upload-pane .upcoming-pane-details strong {
+  .upcoming-myngls-pane-content.upload-pane .upcoming-pane-details a:not(.upload-add), 
+  .upcoming-myngls-pane-content.upload-pane .upcoming-pane-details strong {
     margin-right: 60px;
   }
 
-  .upcoming-myngls-pane-content.upload-pane a:not(.upload-add) i,  .upcoming-myngls-pane-content.upload-pane .upcoming-pane-details strong i{
+  .upcoming-myngls-pane-content.upload-pane a:not(.upload-add) i, 
+  .upcoming-myngls-pane-content.upload-pane .upcoming-pane-details strong i{
     font-size: 3em;
     margin-left: 5px;
     vertical-align: middle;
@@ -969,9 +972,51 @@ body ::-webkit-scrollbar-thumb {
   /* --- end upcoming myngl overlay --- */
   
   /* --- pre and post questions --- */
+
+  #myngl-questions-logos {
+    text-align: center;
+  }
+
+  #myngl-questions-title {
+    font-size: 2em;
+    text-transform: uppercase;
+    padding: 10px;
+    border-bottom: 2px solid #a9a9a9;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  #myngl-questions-form span {
+    font-size: 1em;
+    font-weight: bold;
+    margin-left: 30px;
+  }
+
   #myngl-myngl-post-questions-form label,
   #myngl-myngl-pre-questions-form label {
     display: block;
+  }
+
+  #myngl-myngl-post-questions-form, #myngl-myngl-pre-questions-form {
+    margin-top: 0
+  }
+
+  #myngl-myngl-post-questions-form .form-item, #myngl-myngl-pre-questions-form .form-item {
+    margin-bottom: 15px;
+  }
+
+  #myngl-myngl-post-questions-form label.option,
+  #myngl-myngl-pre-questions-form label.option {
+    display: inline;
+  }
+ .form-radios .form-item,
+ .form-radios .form-item {
+    display: inline;
+  }
+
+  label[for="edit-tagline"] {
+    display: inline !important;
+    margin-right: 10px;
   }
   /* --- end of pre and post questions --- */
 /*  ----- END LAYOUT------------------------------------------------- */    
@@ -1018,7 +1063,7 @@ body ::-webkit-scrollbar-thumb {
 
   img.profile-pic,
   img.default-profile-pic {
-    border: 2px solid #3c4350;
+    border: 2px solid;
     border-radius: 50px;
   }
 

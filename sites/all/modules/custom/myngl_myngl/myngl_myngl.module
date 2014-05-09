@@ -455,7 +455,7 @@ function myngl_myngl_pre_questions_form($form, &$form_state, $myngl_id, $user_id
 
   $form['tagline'] = array(
     '#type' => 'textfield',
-    '#title' => t('Tagline for Event'),
+    '#title' => t('Tagline for Event:'),
   );
 
   $form['submit'] = array(

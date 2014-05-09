@@ -8,7 +8,7 @@
 </div>
 
 <div id="myngl-questions-form">
-  Before we go to the event, please answer these questions to help with your experience:<br /><br />
+  <span>Before we go to the event, please answer these questions to help with your experience:</span><br /><br />
   <?php print $form; ?>
 </div>
 
