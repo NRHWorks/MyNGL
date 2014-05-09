@@ -412,6 +412,7 @@ function myngl_myngl_youtube_embed_ajax_submit($form_id, &$form_state) {
 
   return 'Video Embedded';
 }
+
 function myngl_myngl_pre_questions($nid) {
   global $user;
 
@@ -461,6 +462,8 @@ function myngl_myngl_pre_questions_form($form, &$form_state, $myngl_id, $user_id
     '#type' => 'submit',
     '#value' => 'GO TO EVENT',
     '#title' => t('Submit'),
+    '#prefix' => '<div class="form-action">',
+    '#suffix' => '</div>',
   );
 
   return $form;
@@ -534,6 +537,8 @@ function myngl_myngl_post_questions_form($form, &$form_state, $myngl_id, $user_i
     '#type' => 'submit',
     '#value' => 'GO TO REWARDS',
     '#title' => t('Submit'),
+    '#prefix' => '<div class="form-action">',
+    '#suffix' => '</div>',
   );
 
   return $form;
