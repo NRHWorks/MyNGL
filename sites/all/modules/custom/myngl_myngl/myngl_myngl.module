@@ -28,6 +28,20 @@ function myngl_myngl_menu() {
     'page arguments' => array(1,3,4),
     'access callback' => TRUE, 
   );
+  
+  $items['myngl/%/pre-questions'] = array(
+    'title' => 'Pre Myngl Questions',
+    'page callback' => 'myngl_myngl_pre_questions',
+    'page arguments' => array(1),
+    'access callback' => TRUE, 
+  );
+
+  $items['myngl/%/post-questions'] = array(
+    'title' => 'Post Myngl Questions',
+    'page callback' => 'myngl_myngl_post_questions',
+    'page arguments' => array(1),
+    'access callback' => TRUE, 
+  );
 
   return $items;
 }
@@ -53,6 +67,17 @@ function myngl_myngl_theme() {
                           'template' => 'overlay-myngl-upcoming',
                           'variables' => array ('myngls' => null),
                         );
+  
+  $items['myngl_pre_questions_fix'] =  array(
+                          'template' => 'myngl-pre-questions-fix',
+                          'variables' => array ('user_id' => null, 'myngl' => null, 'brand' => null,  'form' => null),
+                        );
+  
+  $items['myngl_post_questions_fix'] =  array(
+                          'template' => 'myngl-post-questions-fix',
+                          'variables' => array ('user_id' => null, 'myngl' => null, 'brand' => null,  'form' => null),
+                        );
+
   return $items;
 }
 
@@ -387,6 +412,155 @@ function myngl_myngl_youtube_embed_ajax_submit($form_id, &$form_state) {
 
   return 'Video Embedded';
 }
+function myngl_myngl_pre_questions($nid) {
+  global $user;
+
+  $myngl = node_load($nid);
+  $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
+
+  $output = theme('myngl_pre_questions_fix', array('user_id' => $user->uid, 'myngl' => $myngl, 'brand' => $brand, 'form' => render(drupal_get_form('myngl_myngl_pre_questions_form', $myngl->nid, $user->uid))));
+
+  return $output;
+}
+
+
+function myngl_myngl_pre_questions_form($form, &$form_state, $myngl_id, $user_id) {
+  $myngl = node_load($myngl_id);
+  
+  $form['myngl_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $myngl_id
+  );
+
+  $form['user_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $user_id
+  );
+
+  foreach ($myngl->field_pre_myngl_questions['und'] as $k => $v) {
+    $fc = array_shift(entity_load('field_collection_item', array($v['value']))); 
+
+    $answers = array();
+    foreach ($fc->field_answer['und'] as $a) {
+      $answers[$a['value']] = $a['value'];
+    }
+
+    $form['question-' . $k] = array(
+      '#type' => 'radios',
+      '#title' => t('Question ' . ($k+1) . ': '. $fc->field_question['und'][0]['safe_value']),
+      '#options' => $answers,
+    );
+  }
+
+  $form['tagline'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Tagline for Event'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'GO TO EVENT',
+    '#title' => t('Submit'),
+  );
+
+  return $form;
+}
+
+function myngl_myngl_pre_questions_form_submit($form, &$form_state) {
+
+  $v = $form_state['values'];
+
+  $q_arr = array();
+  foreach ($v as $k => $val) {
+    if (preg_match('/question/',$k)) {
+      $q_arr[$k] = $val;
+    }
+  }
+
+  $answers_for_user = serialize($q_arr);
+
+  $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
+
+  $invitee->field_myngl_tagline['und'][0]['value'] = $v['tagline'];
+
+  $invitee->field_pre_question_answers['und'][0]['value'] = $answers_for_user;
+
+  $invitee->save();
+
+  drupal_goto("myngl/".$v['myngl_id']."/event");
+}
+
+function myngl_myngl_post_questions($nid) {
+  global $user;
+
+  $myngl = node_load($nid);
+  $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
+
+  $output = theme('myngl_post_questions_fix', array('user_id' => $user->uid, 'myngl' => $myngl, 'brand' => $brand, 'form' => render(drupal_get_form('myngl_myngl_post_questions_form', $myngl->nid, $user->uid))));
+
+  return $output;
+}
+
+
+function myngl_myngl_post_questions_form($form, &$form_state, $myngl_id, $user_id) {
+  $myngl = node_load($myngl_id);
+  
+  $form['myngl_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $myngl_id
+  );
+
+  $form['user_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $user_id
+  );
+
+  foreach ($myngl->field_post_myngl_questions['und'] as $k => $v) {
+    $fc = array_shift(entity_load('field_collection_item', array($v['value']))); 
+
+    $answers = array();
+    foreach ($fc->field_answer['und'] as $a) {
+      $answers[$a['value']] = $a['value'];
+    }
+
+    $form['question-' . $k] = array(
+      '#type' => 'radios',
+      '#title' => t('Question ' . ($k+1) . ': '. $fc->field_question['und'][0]['safe_value']),
+      '#options' => $answers,
+    );
+  }
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'GO TO REWARDS',
+    '#title' => t('Submit'),
+  );
+
+  return $form;
+}
+
+function myngl_myngl_post_questions_form_submit($form, &$form_state) {
+
+  $v = $form_state['values'];
+
+  $q_arr = array();
+  foreach ($v as $k => $val) {
+    if (preg_match('/question/',$k)) {
+      $q_arr[$k] = $val;
+    }
+  }
+
+  $answers_for_user = serialize($q_arr);
+
+  $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
+
+  $invitee->field_post_question_answer['und'][0]['value'] = $answers_for_user;
+
+  $invitee->save();
+
+  drupal_goto("myngl/".$v['myngl_id']."/rewards");
+}
+
 
 
 function _myngl_myngl_get_invitee_id($myngl_id, $user_id) {

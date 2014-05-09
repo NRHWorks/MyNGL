@@ -967,7 +967,13 @@ body ::-webkit-scrollbar-thumb {
   }
 
   /* --- end upcoming myngl overlay --- */
-
+  
+  /* --- pre and post questions --- */
+  #myngl-myngl-post-questions-form label,
+  #myngl-myngl-pre-questions-form label {
+    display: block;
+  }
+  /* --- end of pre and post questions --- */
 /*  ----- END LAYOUT------------------------------------------------- */    
 
 

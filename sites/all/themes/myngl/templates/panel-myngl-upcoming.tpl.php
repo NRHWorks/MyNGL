@@ -6,6 +6,6 @@ print theme_image_style(array('style_name' => 'brand_logo', 'path' => $brand->fi
 
 print $myngl->field_myngl_dates['und'][0]['value'].'<br><br>';
 
-print "Link to Myngl: ".l('GO >', 'node/'.$myngl->nid);
+print "Link to Myngl: ".l('GO >', 'myngl/' . $myngl->nid . '/pre-questions');
 
 ?>
