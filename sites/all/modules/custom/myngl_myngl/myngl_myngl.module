@@ -181,3 +181,223 @@ function myngl_myngl_upcoming_overlay($uid) {
 
   return $output;
 }
+
+function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $user_id) {
+  $form['#attributes'] = array('enctype' => "multipart/form-data");
+
+  $form['myngl_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $myngl_id
+  );
+
+  $form['user_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $user_id
+  );
+
+  $invitee = _myngl_myngl_get_invitee_id($myngl_id, $user_id);
+
+  $myngl = node_load($myngl_id);
+
+  $dates = array();
+
+  foreach ($myngl->field_myngl_dates['und'] as $d) :
+    $dates[$d['value']] = myngl_long_date($d['value']); 
+  endforeach;
+
+  $form['date'] = array(
+    '#type' => 'radios',
+    '#title' => t('Change Date'),
+    '#default_value' => $invitee->field_invitee_rsvp_date['und'][0]['value'],
+    '#options' => $dates,
+    '#description' => t('Choose new date.'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Confirm',
+    '#title' => t('Submit'),
+    '#ajax' => array(
+        'callback' => 'myngl_myngl_overlay_change_date_ajax_submit',
+        'wrapper' => 'upcoming-myngls-pane-info-' . $k,
+        'method' => 'replace',
+        'effect' => 'fade',
+    ),
+  );
+
+  return $form;
+}
+
+function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
+  $v = $form_state['values'];
+  $myngl = node_load($v['myngl_id']);
+  $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
+  $invitee->field_invitee_rsvp_date['und'][0]['value'] = $v['date'];
+  $invitee->save();
+
+  return  '<span class="date">Current '.myngl_long_date($v['date']).'</span><br><br>
+           This Myngl will also run on the following dates.  Pick one that will work for you: <br><br>
+           <strong>Date Updated</strong?>';
+}
+
+function myngl_myngl_image_upload($form, &$form_state, $k, $myngl_id, $user_id) {
+  $form['#attributes'] = array('enctype' => "multipart/form-data");
+
+  $form['myngl_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $myngl_id
+  );
+
+  $form['user_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $user_id
+  );
+
+  $form['file'] = array(
+    '#type' => 'file',
+    '#title' => t('Image'),
+    '#description' => t('Upload a file, allowed extensions: jpg, jpeg, png, & gif'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#title' => t('Submit'),
+    '#ajax' => array(
+        'callback' => 'myngl_myngl_image_upload_ajax_submit',
+        'wrapper' => 'myngl-myngl-image-upload-wrapper-' . $k,
+        'method' => 'replace',
+        'effect' => 'fade',
+    ),
+  );
+
+  return $form;
+}
+
+function myngl_myngl_image_upload_ajax_submit($form_id, &$form_state) {
+  $v = $form_state['values'];
+  $myngl = node_load($v['myngl_id']);
+  $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
+
+  if ($_FILES['files']['tmp_name']['file']) {
+    $file_data = file_get_contents($_FILES['files']['tmp_name']['file']);
+    $file = file_save_data($file_data, 'public://' . $_FILES['files']['name']['file'], FILE_EXISTS_RENAME);
+    $file->display = 1;
+ 
+    $invitee->field_image_upload['und'][] = (array) $file;
+    $invitee->save();
+  }
+
+  return 'File Uploaded';
+}
+
+function myngl_myngl_doc_upload($form, &$form_state, $k, $myngl_id, $user_id) {
+  $form['#attributes'] = array('enctype' => "multipart/form-data");
+
+  $form['myngl_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $myngl_id
+  );
+
+  $form['user_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $user_id
+  );
+
+  $form['file'] = array(
+    '#type' => 'file',
+    '#title' => t('Image'),
+    '#description' => t('Upload a file, allowed extensions: txt, doc, & pdf'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#title' => t('Submit'),
+    '#ajax' => array(
+        'callback' => 'myngl_myngl_doc_upload_ajax_submit',
+        'wrapper' => 'myngl-myngl-doc-upload-wrapper-' . $k,
+        'method' => 'replace',
+        'effect' => 'fade',
+    ),
+  );
+
+  return $form;
+}
+
+function myngl_myngl_doc_upload_ajax_submit($form_id, &$form_state) {
+  $v = $form_state['values'];
+  $myngl = node_load($v['myngl_id']);
+  $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
+
+  if ($_FILES['files']['tmp_name']['file']) {
+    $file_data = file_get_contents($_FILES['files']['tmp_name']['file']);
+    $file = file_save_data($file_data, 'public://' . $_FILES['files']['name']['file'], FILE_EXISTS_RENAME);
+    $file->display = 1;
+ 
+    $invitee->field_document_upload['und'][] = (array) $file;
+    $invitee->save();
+  }
+
+  return 'File Uploaded';
+}
+
+function myngl_myngl_youtube_embed($form, &$form_state, $k, $myngl_id, $user_id) {
+  $form['#attributes'] = array('enctype' => "multipart/form-data");
+
+  $form['myngl_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $myngl_id
+  );
+
+  $form['user_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $user_id
+  );
+
+  $form['youtube'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Youtube'),
+    '#description' => t('Enter url of youtube video.  For example: https://www.youtube.com/watch?v=GkBDRUO8hAo'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#title' => t('Submit'),
+    '#ajax' => array(
+        'callback' => 'myngl_myngl_youtube_embed_ajax_submit',
+        'wrapper' => 'myngl-myngl-youtube-embed-wrapper-' . $k,
+        'method' => 'replace',
+        'effect' => 'fade',
+    ),
+  );
+
+  return $form;
+}
+
+function myngl_myngl_youtube_embed_ajax_submit($form_id, &$form_state) {
+  $v = $form_state['values'];
+  $myngl = node_load($v['myngl_id']);
+  $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
+
+  $invitee->field_video_upload['und'][] = array(  'input' => $v['youtube'], 
+                                                  'video_id' => str_replace('https://www.youtube.com/watch?v=','',$v['youtube']));
+  $invitee->save();
+
+  return 'Video Embedded';
+}
+
+
+function _myngl_myngl_get_invitee_id($myngl_id, $user_id) {
+  $myngl = node_load($myngl_id);
+
+  foreach ($myngl->field_myngl_invitees['und'] as $v) {
+    $fc = array_shift(entity_load('field_collection_item', array($v['value']))); 
+
+    if ($fc->field_invitee_user_account['und'][0]['uid'] == $user_id) {
+      return $fc;
+    }
+  }
+}
+

@@ -294,6 +294,14 @@ body ::-webkit-scrollbar-thumb {
     }
 
   /* --- end rsvp iconfirm page --- */
+  
+  /* --- overlay date form --- */
+  .form-item-date label {
+    color: #FFF;
+    font-size: 16px;
+    line-height: 30px;
+  }
+  /* --- end overlay date form --- */
 
 /*  ----- END TYPOGRAPHY -------------------------------------------- */    
 

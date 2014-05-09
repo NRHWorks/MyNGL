@@ -81,6 +81,6 @@
 </div>
 <?php print myngl_myngl_upcoming_overlay($user->uid); ?>
 
-<?php /* UNCOMMENT THIS TO SHOW UPCOMING MYNGLS WHEN PAGE LOADS - USEFUL FOR DEBUGGING ?>
-<script type="text/javascript"> jQuery(document).ready(function() { myngl.overlay('upcoming-myngls', 600, 750); }); </script>
-<?php*/ ?>
+<?php /* Uncomment for debugging ?>
+<script type="text/javascript"> jQuery(document).ready(function() { myngl.overlay('upcoming-myngls', 600, 750); myngl_upcoming.upload_images(0); }); </script>
+</php */ ?>

@@ -1,3 +1,4 @@
+<?php global $user; ?>
 <script type="text/javascript" src="http://js.addthisevent.com/atemay.js"></script>
 
 <script type="text/javascript">
@@ -100,12 +101,11 @@ addthisevent.settings({
             <a href="#" onclick="return myngl_upcoming.upload_videos(<?php print $k; ?>);">VIDEO <i class="fa fa-film"></i></a>
             <a href="#" onclick="return myngl_upcoming.upload_doc(<?php print $k; ?>);">.DOC <i class="fa fa-file-text"></i></a>
             <br /><br />
-        
-            <form>
-              <input type="file" />
-              <input type="submit" value="Submit" />
-            </form>
-            Only file formats to upload: .jpg. .png, or .gif 
+      
+            <div id="myngl-myngl-image-upload-wrapper-<?php print $k; ?>"> 
+              <?php print render(drupal_get_form('myngl_myngl_image_upload', $k, $m['myngl']->nid, $user->uid)); ?>
+            </div> 
+
             <br><a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
           </div>
         </div>
@@ -134,11 +134,10 @@ addthisevent.settings({
             <strong>.DOC <i class="fa fa-file-text"></i></strong> 
             <br /><br />
         
-            <form>
-              <input type="file" />
-              <input type="submit" value="Submit" />
-            </form>
-            Only file formats to upload: .doc. .docx, .txt 
+            <div id="myngl-myngl-doc-upload-wrapper-<?php print $k; ?>"> 
+              <?php print render(drupal_get_form('myngl_myngl_doc_upload', $k, $m['myngl']->nid, $user->uid)); ?>
+            </div> 
+
            <br><a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
           </div>
         </div>
@@ -166,12 +165,11 @@ addthisevent.settings({
             <strong>VIDEO <i class="fa fa-film"></i></strong>  
             <a href="#" onclick="return myngl_upcoming.upload_docs(<?php print $k; ?>);">.DOC <i class="fa fa-file-text"></i></a> 
             <br /><br />
-        
-            <form class="video-upload">
-              <input type="text" />
-              <input type="submit" value="Submit" />
-            </form>
-            YouTube Video only.  Include http:// 
+
+            <div id="myngl-myngl-youtube-embed-wrapper-<?php print $k; ?>"> 
+              <?php print render(drupal_get_form('myngl_myngl_youtube_embed', $k, $m['myngl']->nid, $user->uid)); ?>
+            </div> 
+       
             <br><a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
           </div>
         </div>
@@ -193,17 +191,13 @@ addthisevent.settings({
             MORE INFORMATION ON THIS MYNGL<br>
             <span class="title"><?php print $m['myngl']->title; ?></span><br>
             <?php print theme_image_style(array('style_name' => 'myngl_upcoming_overlay_small', 'path' => $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri'], 'height' => null, 'width' => null)); ?><br />
-            <div class="upcoming-myngls-pane-info">  
+            <div id="upcoming-myngls-pane-info-<?php print $k; ?>">  
               <span class="date">Current <?php print myngl_long_date($m['date']); ?></span><br><br>
               This Myngl will also run on the following dates.  Pick one that will work for you: <br><br>
-              <?php 
-                foreach ($m['myngl']->field_myngl_dates['und'] as $d) : 
-                  print "<div>";
-                  print "<input type='radio' name='change-date-radio' value='".$d['value']." EST' style='margin-left:60px;margin-right:10px;'>";
-                  print '<div style="font-size: 18px; display: inline;">' . myngl_long_date($d['value']) . 'EST</div><br /><br />';
-                  print "</div>";
-                endforeach; 
-              ?>
+            
+              <div id="myngl-myngl-change-date-wrapper-<?php print $k; ?>"> 
+                <?php print render(drupal_get_form('myngl_myngl_overlay_change_date', $k, $m['myngl']->nid, $user->uid)); ?>
+              </div> 
             </div>
           </div>
         </div>

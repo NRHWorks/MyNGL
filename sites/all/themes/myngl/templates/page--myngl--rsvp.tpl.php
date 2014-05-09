@@ -1,3 +1,5 @@
+
+
 <div id="rsvp-logos">
   <div id="rsvp-myngl-logo">
     <img src="/<? print path_to_theme(); ?>/images/logo.png" /> 
@@ -18,5 +20,5 @@
       </div></div> <!-- /.section, /#content -->
 
     </div></div> <!-- /#main, /#main-wrapper -->
-
+    
   </div></div> <!-- /#page, /#page-wrapper -->
