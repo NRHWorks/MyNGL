@@ -1,0 +1,4 @@
+name = MyNGL Events
+package = MyNGL
+description = Sets up functionality for myngl events pages
+core = 7.x 

@@ -184,7 +184,6 @@ addthisevent.settings({
       </div>
       
       <div class="upcoming-myngls-pane" id="upcoming-myngls-pane-change-date-<?php print $k; ?>">
-        <form>
         <div class="upcoming-myngls-pane-content">
           <a href="#" onclick="return myngl_upcoming.close_pane();" class="overlay-close">X</a>
           <div class="upcoming-pane-details">
@@ -209,7 +208,6 @@ addthisevent.settings({
             <input type="submit" value="Confirm" />
           </div>
         </div>
-        </form>
       </div>
     <?php endforeach; ?>
   </div>
