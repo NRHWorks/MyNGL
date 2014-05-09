@@ -56,19 +56,13 @@
       <div class="border-bottom">
         <a href="#" class="myngl-profile-buttons" onclick="return myngl.overlay('upcoming-myngls', 600, 750);">
             MY UPCOMING MYNGLS&nbsp;
-            <span class="fa-stack fa-lg">
-              <i class="fa fa-circle fa-stack-1x"></i>
-              <i class="fa fa-angle-right fa-stack-1x fa-inverse"></i>
-            </span>
+            <img src="<?php print base_path() . path_to_theme(); ?>/images/arrow-button.png">
         </a>
       </div>
       <div class="border-bottom">
         <a href="/user/<?php print $uid; ?>/activities" class="myngl-profile-buttons">
           MY ACTIVITY WALL&nbsp;
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-1x"></i>
-            <i class="fa fa-angle-right fa-stack-1x fa-inverse"></i>
-          </span>
+          <img src="<?php print base_path() . path_to_theme(); ?>/images/arrow-button.png">
         </a>
       </div>
     </div>

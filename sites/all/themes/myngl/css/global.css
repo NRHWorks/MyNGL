@@ -580,6 +580,7 @@ body ::-webkit-scrollbar-thumb {
     
     div.border-bottom:first-child {
       padding-bottom: 10px;
+      padding-top: auto;
       text-align: center;
     }
 
@@ -1018,6 +1019,13 @@ body ::-webkit-scrollbar-thumb {
     display: inline !important;
     margin-right: 10px;
   }
+
+  #myngl-questions-below-form {
+    text-decoration: underline;
+    float: right;
+    margin-right: 30px;
+    margin-top: -40px;
+  }
   /* --- end of pre and post questions --- */
 /*  ----- END LAYOUT------------------------------------------------- */    
 
@@ -1071,6 +1079,8 @@ body ::-webkit-scrollbar-thumb {
     border-bottom: 1px solid #999;
     margin-left: -30px;
     margin-top : 6px;
+    padding-bottom: 15px;
+    padding-top: 10px;
   }
 
   div#footer-links {
@@ -1093,6 +1103,12 @@ body ::-webkit-scrollbar-thumb {
 
     div#profile-points-total {
       background-color: #3c4350
+    }
+
+    #profile-menu .border-bottom img {
+      float: right;
+      margin-right: 10px;
+      margin-top: -2px;
     }
   /* --- end profile page --- */
 
