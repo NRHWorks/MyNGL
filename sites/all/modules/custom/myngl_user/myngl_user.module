@@ -11,7 +11,9 @@ function myngl_user_init() {
 }
 
 function myngl_user_user_login(&$edit, $account) {
-  $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']);
+  if (isset($_COOKIE['Drupal_visitor_rsvp'])) {
+    $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']);
+  }
 
   if (isset($myngl_nid)) {
     $email = $account->mail;
