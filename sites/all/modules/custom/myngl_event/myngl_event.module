@@ -14,6 +14,13 @@ function myngl_event_menu() {
     'page arguments' => array(1),
     'access callback' => TRUE, 
   );
+  
+  $items['myngl-event/%/ajax/message'] = array(
+    'title' => 'MyNGL Lobby',
+    'page callback' => 'myngl_event_social_area_ajax_message',
+    'page arguments' => array(1),
+    'access callback' => TRUE, 
+  );
 
   return $items;
 }
@@ -22,12 +29,12 @@ function myngl_event_menu() {
 function myngl_event_theme() {
   $items['myngl_event_lobby'] =  array(
                           'template' => 'myngl-event-lobby',
-                          'variables' => array ('myngl' => null, 'brand' => NULL),
+                          'variables' => array ('myngl' => NULL, 'brand' => NULL),
                         );
   
   $items['myngl_event_social_area'] =  array(
                           'template' => 'myngl-event-social-area',
-                          'variables' => array ('myngl' => null, 'brand' => NULL),
+                          'variables' => array ('myngl' => NULL, 'brand' => NULL, 'invitees' => NULL),
                         );
   
   return $items;
@@ -43,9 +50,35 @@ function myngl_event_lobby($nid) {
 
 
 function myngl_event_social_area($nid) {
+  drupal_add_js(path_to_theme().'/js/social-area.js');
+  drupal_add_js(array('myngl_id' => $nid), 'setting');
+
   $myngl = node_load($nid);
   
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
-  return theme('myngl_event_social_area', array('myngl' => $myngl, 'brand' => $brand));
+  $invitees = array();
+  
+  foreach ($myngl->field_myngl_invitees['und'] as $i) {
+    $ic = array_shift(entity_load('field_collection_item', array($i['value'])));  
+    $u = user_load($ic->field_invitee_user_account['und'][0]['uid']);
+    $p = profile2_load_by_user($u->uid, 'profile');
+
+
+    for ($x=1;$x<30;$x+=1) {
+    $invitees[] = array (
+                  'name' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
+                  'pic' => theme_image_style(array('style_name' => 'user_profile_circle_image', 'path' => $p->field_picture['und'][0]['uri'], 'attributes' => array('class' => 'myngl-event-profile-pic'), 'height' => null, 'width' => null)),
+                  'fb_friends' => array(),
+                );
+    }
+  }
+
+
+  return theme('myngl_event_social_area', array('myngl' => $myngl, 'brand' => $brand, 'invitees' => $invitees));
+}
+
+function myngl_event_social_area_ajax_message($nid) {
+  $message['message'] = db_query('SELECT field_myngl_message_value FROM {field_data_field_myngl_message} WHERE entity_id = :eid', array(':eid' => $nid))->fetchField();
+  drupal_json_output($message);
 }
