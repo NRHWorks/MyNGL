@@ -19,7 +19,7 @@ Variables available in Page Template:<br />
   <footer>
     <div id="myngl-event-menu">
       <ul>
-        <li><a href="#">Social Area</a></li>
+        <li><a href="/myngl-event/<?php print $myngl->nid; ?>/social-area">Social Area</a></li>
         <li><a href="#">Theater</a></li>
         <li><a href="#">Activity Room</a></li>
         <li><a href="#">Gifting Suite</a></li>
