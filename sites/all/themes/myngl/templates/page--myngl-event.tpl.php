@@ -16,7 +16,7 @@ Variables available in Page Template:<br />
   print "SECONDARY COLOR: ".$brand->field_brand_secondary_color['und'][0]['rgb']."<br>";
 ?>
 
-
+  <footer>
     <div id="myngl-event-menu">
       <ul>
         <li><a href="/myngl-event/<?php print $myngl->nid; ?>/social-area">Social Area</a></li>
@@ -25,8 +25,9 @@ Variables available in Page Template:<br />
         <li><a href="#">Gifting Suite</a></li>
         <li><a href="#">Exit</a></li>
         <li><a href="#">?</a></li>
-        <li><a href="#"><equal graphic></a></li>
+        <li><a href="#"><i class="fa fa-pause"></i></a></li>
         <li><a href="#">The Myngl</a></li>
       <ul>
     </div>
+  <footer>
 </div>
