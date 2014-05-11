@@ -1046,6 +1046,44 @@ body ::-webkit-scrollbar-thumb {
     margin-top: -40px;
   }
   /* --- end of pre and post questions --- */
+
+  /* --- lobby event --- */
+
+  #myngl-event-menu {
+    background-color: #333333;
+    color: #999999;
+    bottom: 0;
+    margin-bottom: 0;
+    border-width: 1px 0 0;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    width: 100%;
+  }
+
+  #myngl-event-menu ul {
+    margin: 0;
+    text-align: center;
+    padding: 0;
+  }
+
+  #myngl-event-menu ul li {
+    float: left;
+    text-align: center;
+    display: inline-block;
+    width: 12.5%;
+  }
+
+  #myngl-event-menu ul li a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    border-right: 1px solid #999999;
+    color: #999999;
+  }
+
+
 /*  ----- END LAYOUT------------------------------------------------- */    
 
 
