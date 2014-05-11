@@ -970,6 +970,25 @@ body ::-webkit-scrollbar-thumb {
     color: #3c4350;
   }
 
+  .upcoming-pane-details input[type="submit"] {
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    float: right;
+    background-image: none;
+    padding: 5px;
+    margin-top: -45px;
+
+  }
+
+  .upcoming-pane-details input[type="submit"]:hover {
+    color: #3c4350;
+    background: #ffffff;
+  }
+
+  a.upload-add {
+    margin-left: 30px;
+  }
+
   /* --- end upcoming myngl overlay --- */
   
   /* --- pre and post questions --- */

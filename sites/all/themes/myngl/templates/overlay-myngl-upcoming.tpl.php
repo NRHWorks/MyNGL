@@ -106,7 +106,7 @@ addthisevent.settings({
               <?php print render(drupal_get_form('myngl_myngl_image_upload', $k, $m['myngl']->nid, $user->uid)); ?>
             </div> 
 
-            <br><a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
+           <a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
           </div>
         </div>
         <div class="upcoming-myngls-pane-footer">
@@ -138,7 +138,7 @@ addthisevent.settings({
               <?php print render(drupal_get_form('myngl_myngl_doc_upload', $k, $m['myngl']->nid, $user->uid)); ?>
             </div> 
 
-           <br><a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
+           <a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
           </div>
         </div>
         <div class="upcoming-myngls-pane-footer">
@@ -170,7 +170,7 @@ addthisevent.settings({
               <?php print render(drupal_get_form('myngl_myngl_youtube_embed', $k, $m['myngl']->nid, $user->uid)); ?>
             </div> 
        
-            <br><a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
+            <a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
           </div>
         </div>
         <div class="upcoming-myngls-pane-footer">
