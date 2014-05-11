@@ -3,7 +3,14 @@
 drupal_add_library('system', 'jquery.cookie');
 
 function myngl_preprocess_page(&$vars) {
-  return;
+  if (arg(0) == 'myngl-event') {
+    $myngl = node_load(arg(1));
+    $vars['myngl'] = $myngl;
+
+    $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
+    $vars['brand'] = $brand;
+
+  }
 }
 
 function myngl_long_date($date) {

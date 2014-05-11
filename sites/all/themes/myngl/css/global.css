@@ -1053,10 +1053,14 @@ body ::-webkit-scrollbar-thumb {
 /*  ----- STYLE ----------------------------------------------------- */    
 /**********************************************************************/
 
-  html {
+  body {
     background: url(../images/background.png) center center no-repeat;
     background-size: cover;
   }
+
+  body.page-myngl-event {
+    background-image: none;
+  } 
 
   input[type="button"],
   form input[type="submit"] {

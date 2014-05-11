@@ -1,7 +1,7 @@
 <?php
 
 function myngl_event_menu() {
-  $items['myngl/%/lobby'] = array(
+  $items['myngl-event/%/lobby'] = array(
     'title' => 'MyNGL Lobby',
     'page callback' => 'myngl_event_lobby',
     'page arguments' => array(1),
