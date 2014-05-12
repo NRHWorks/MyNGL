@@ -1047,11 +1047,16 @@ body ::-webkit-scrollbar-thumb {
   }
   /* --- end of pre and post questions --- */
 
-  /* --- lobby event --- */
+  /* --- event shared classes --- */
+
+  .branded.event-logo {
+    width: 100px;
+    height: 80px;
+    margin: 0 10px 100px 40px;
+    float: left;
+  }
 
   #myngl-event-menu {
-    background-color: #333333;
-    color: #999999;
     bottom: 0;
     margin-bottom: 0;
     border-width: 1px 0 0;
@@ -1079,20 +1084,28 @@ body ::-webkit-scrollbar-thumb {
     position: relative;
     display: block;
     padding: 10px 15px;
-    border-right: 1px solid #999999;
-    color: #999999;
     padding-left: 2em;
     padding-right: 2em;
+    font-family: Georgia;
+    text-transform: uppercase;
   }
 
-  #myngl-event-menu ul li a:hover {
-    background-color: #999999;
-    color: #333333;
-  }
 
   #myngl-event-menu ul li:last-of-type a {
     border: none;
   }
+
+  /* --- lobby event --- */
+
+  #page-myngl-event-wrapper .video-container div {
+    text-align: center;
+    background-color: rgba(100,100,100,0.1);
+    padding: 10px;
+    max-width: 700px;
+    margin: auto;
+  }
+
+  
 
 
 

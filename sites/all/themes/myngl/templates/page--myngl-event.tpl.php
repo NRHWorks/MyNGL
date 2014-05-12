@@ -1,5 +1,8 @@
 <div id="page-myngl-event-wrapper">
-    <?php print $messages; ?>
+      <?php print $messages; ?>
+      <div class="branded event-logo">
+        <img src="<?php echo file_create_url($brand->field_event_logo['und'][0]['uri']); ?>">
+      </div>
 
     <div id="main-wrapper"><div id="main" class="clearfix">
 
@@ -10,14 +13,9 @@
     </div></div> <!-- /#main, /#main-wrapper -->
 
 <br /><br /><br />
-Variables available in Page Template:<br />
-<?php
-  print "PRIMARY COLOR: ".$brand->field_brand_primary_color['und'][0]['rgb']."<br>";
-  print "SECONDARY COLOR: ".$brand->field_brand_secondary_color['und'][0]['rgb']."<br>";
-?>
 
   <footer>
-    <div id="myngl-event-menu">
+    <div id="myngl-event-menu" class="branded">
       <ul>
         <li><a href="/myngl-event/<?php print $myngl->nid; ?>/social-area">Social Area</a></li>
         <li><a href="#">Theater</a></li>
@@ -31,3 +29,4 @@ Variables available in Page Template:<br />
     </div>
   <footer>
 </div>
+

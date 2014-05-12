@@ -6,8 +6,6 @@
 
 <div id="myngl-event-social-area">
   <div id=="myngl-event-social-area-logo" style="float:left;">
-    <img src="<?php print file_create_url($brand->field_event_logo['und'][0]['uri']); ?>" align="left" />
-
     <div id="myngl-event-social-area--message" style="float:left; display:none; font-weight:bold; padding:10px; height:65px;background-color:<?php print $secondary_color; ?>;color:<?php print $primary_color; ?>;">
     </div>
   </div>
