@@ -1063,16 +1063,16 @@ body ::-webkit-scrollbar-thumb {
   }
 
   #myngl-event-menu ul {
-    margin: 0;
+    margin: 0 auto;
     text-align: center;
     padding: 0;
+    min-width: 1080px;
   }
 
   #myngl-event-menu ul li {
     float: left;
     text-align: center;
     display: inline-block;
-    width: 12.5%;
   }
 
   #myngl-event-menu ul li a {
@@ -1081,7 +1081,19 @@ body ::-webkit-scrollbar-thumb {
     padding: 10px 15px;
     border-right: 1px solid #999999;
     color: #999999;
+    padding-left: 2em;
+    padding-right: 2em;
   }
+
+  #myngl-event-menu ul li a:hover {
+    background-color: #999999;
+    color: #333333;
+  }
+
+  #myngl-event-menu ul li:last-of-type a {
+    border: none;
+  }
+
 
 
 /*  ----- END LAYOUT------------------------------------------------- */    
