@@ -74,7 +74,3 @@
   </div>
 </div>
 <?php print myngl_myngl_upcoming_overlay($user->uid); ?>
-
-<?php /* Uncomment for debugging ?>
-<script type="text/javascript"> jQuery(document).ready(function() { myngl.overlay('upcoming-myngls', 600, 750); myngl_upcoming.upload_images(0); }); </script>
-</php */ ?>

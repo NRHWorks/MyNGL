@@ -1,11 +1,83 @@
 (function ($) {
   $(document).ready( function() {
     setInterval(function() { social_area.message(); }, 2000); 
+    
+    $('#overlay-background').bind('click', function() {
+      $('#myngl-event-chat-button-invitees').delay(200).fadeIn(500);
+    });
+
+
+    $("input[name='filter']").change(function(){
+      if ($("input[@name='filter']:checked").val() == 'fb-friends'){
+        social_area.show_fb_friends();
+      } else if ($("input[@name='filter']:checked").val() == 'in-room') {
+        social_area.show_in_room();
+      } else if ($("input[@name='filter']:checked").val() == 'all') {
+        social_area.show_all_invitees();
+      } 
+    });
+
+
   });
 })(jQuery);
 
 var social_area = (function ($) {
   return {
+    show_fb_friends : function() {
+      $('#close-invitee').hide();
+      $('#invitees-thumbs').css('height', '150px').css('margin-top','0px');
+      $('.invitee').hide();
+      $('.fb').show();
+      return false;
+    },
+    show_in_room : function() {
+      $('#close-invitee').hide();
+      $('#invitees-thumbs').css('height', '150px').css('margin-top','0px');
+      $('.invitee').hide();
+      $('.in_room').show();
+      return false;
+    },
+    show_all_invitees : function() {
+      $('#close-invitee').show();
+      $('#invitees-thumbs').css('height', '450px').css('margin-top','-300px');
+      $('.invitee').show();
+      return false;
+    },
+    close_invitees : function() {
+      $('#close-invitee').hide();
+      $('.invitee').show();
+      $('#invitees-thumbs').css('height', '150px').css('margin-top','0px');
+
+      $("input:radio").attr('checked', false);
+
+      return false;
+    },
+    show_search : function() {
+      console.log('show search');
+      return false;
+    },
+    open_pov: function() {
+      $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
+        myngl.overlay('myngl-event-pov', 450, 350);  
+      });
+      return false;
+    },
+    open_ucg: function() {
+      $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
+        myngl.overlay('myngl-event-ugc', 500, 900);  
+      });
+      return false;
+    },
+    ugc_show : function(id) {
+      $("#myngl-event-ugc-thumbs").hide();
+      $("#myngl-event-ugc-content-" + id).fadeIn(500);
+      return false;
+    },
+    ugc_hide : function() {
+      $('.myngl-event-ugc-content').hide();
+      $("#myngl-event-ugc-thumbs").fadeIn(500);
+      return false;
+    },
     message: function() {
       var myngl_id = Drupal.settings.myngl_id;
 
@@ -22,7 +94,6 @@ var social_area = (function ($) {
           }
         }
       });
-
     }
   }
 }(jQuery));
