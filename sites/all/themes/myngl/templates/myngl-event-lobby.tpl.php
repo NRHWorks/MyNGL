@@ -13,6 +13,13 @@
   </div>
 </div>
 
-<div class="event-lobby-background">
+<div class="event-lobby-background" style="background-image: url(<?php echo file_create_url($brand->field_lobby_background_graphic['und'][0]['uri']) ?>);
+width: 100%;
+min-height: 650px;
+position: absolute;
+top: 0;
+z-index: -9999;
+left: 0;
+}">
   <img src="<?php echo file_create_url($brand->field_lobby_background_graphic['und'][0]['uri']) ?>">
 </dv>

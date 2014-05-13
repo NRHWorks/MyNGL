@@ -32,6 +32,7 @@ body ::-webkit-scrollbar-thumb {
   body {
     color: #3c4350;
     font: 300 14px 'Lato', 'sans-serif';
+    margin: 0;
   }
 
   h1.title {
@@ -1053,7 +1054,7 @@ body ::-webkit-scrollbar-thumb {
     width: 100px;
     height: 80px;
     margin: 0 10px 100px 40px;
-    float: left;
+    
   }
 
   #myngl-event-menu {
@@ -1105,6 +1106,11 @@ body ::-webkit-scrollbar-thumb {
     margin: auto;
   }
 
+  /* --- Social Area --- */
+
+  .myngl-event-profile-pic {
+    border-radius: 100%;
+  }
   
 
 
