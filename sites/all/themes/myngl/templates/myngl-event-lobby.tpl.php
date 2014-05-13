@@ -7,7 +7,7 @@
 
     //print '<pre>'; print_r($myngl); exit;
 
-    print theme('youtube_video', array('video_id' => $myngl->field_welcome_video['und'][0]['video_id']));
+    print theme('youtube_video', array('video_id' => $myngl->field_welcome_video['und'][0]['video_id'], 'size' => 'custom', 'height' => '350px', 'width' => '650px'));
 
     ?>
   </div>

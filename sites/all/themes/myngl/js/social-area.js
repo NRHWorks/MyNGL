@@ -1,6 +1,6 @@
 (function ($) {
   $(document).ready( function() {
-    setInterval(function() { social_area.message(); }, 5000); 
+    setInterval(function() { social_area.message(); }, 30000); 
     setInterval(function() { social_area.question(); }, 3000); 
     setInterval(function() { social_area.pov_message(); }, 1000); 
     
@@ -88,10 +88,12 @@ var social_area = (function ($) {
         url: "/myngl-event/" + myngl_id + "/ajax/message",
         success: function(data) {
           if (data.message == '') {
-            $("#myngl-event-message").fadeOut(200);
+            $("#myngl-event-message").animate({"height": "0"}, 200);
           } else {
             if ($("#myngl-event-message").html() != data.message) {
-              $("#myngl-event-message").fadeOut(200, function() { $(this).html(data.message).fadeIn(1000) });
+              $("#myngl-event-message").animate({"height": "0"}, 200, function() { 
+                $(this).html('<span>' + data.message + '</span>').animate({"height": "90px"}, 1000); 
+              });
             } 
           }
         }

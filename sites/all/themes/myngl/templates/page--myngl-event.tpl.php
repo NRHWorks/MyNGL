@@ -2,7 +2,7 @@
       <?php print $messages; ?>
       <div class="event-logo">
         <img src="<?php echo file_create_url($brand->field_event_logo['und'][0]['uri']); ?>">
-        <div id="myngl-event-message" style="float:left; display:none; font-weight:bold; padding:10px; height:65px; background-color: rgba(200,200,150,0.5); ?>;">
+        <div id="myngl-event-message">
     </div>
       </div>
 
@@ -14,7 +14,7 @@
 
     </div></div> <!-- /#main, /#main-wrapper -->
 
-<br /><br /><br />
+
 
   <footer>
     <div id="myngl-event-menu" class="branded">
