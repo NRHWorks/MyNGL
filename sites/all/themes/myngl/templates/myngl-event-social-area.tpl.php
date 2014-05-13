@@ -13,11 +13,11 @@
   </div>
   
   <div id="myngl-event-ugc-button" style="clear:both;">
-    <a href="#" onclick="return social_area.open_ucg();">UGC</a>
+    <a href="#" onclick="return social_area.open_ucg();"><span>UGC</span></a>
   </div>
 
   <div id="myngl-event-pov-button">
-    <a href="#" onclick="return social_area.open_pov();">POV</a>
+    <a href="#" onclick="return social_area.open_pov();"><span>POV</span></a>
   </div>
 
   <div id="myngl-event-chat-button-invitees" style="clear:both; padding-top:300px;">
@@ -51,7 +51,8 @@
 </div>
 
 
-<div id="myngl-event-ugc" class="overlay" style="display:none;height:500px; width:900px;background-color:<?php print $background_color; ?>;position:absolute; margin:auto;z-index:200;top:0;bottom:0;left:0;right:0">  
+<div id="myngl-event-ugc" class="overlay" style="display:none;height:500px; width:900px;background-color:<?php print $background_color; ?>;position:absolute; margin:auto;z-index:200;top:0;bottom:0;left:0;right:0">
+  <a href="#" onclick="return myngl.overlay_close();" class="overlay-close">X</a>  
   <div id="myngl-event-ugc-box" style="height:500px;width:900px;">
 
     <div id="myngl-event-ugc-thumbs" style="height:500px;width:auto;overflow:hidden">
@@ -72,6 +73,7 @@
 </div>
 
 <div id="myngl-event-pov" class="overlay" style="width:350px; height:450px;">
+  <a href="#" onclick="return myngl.overlay_close();" class="overlay-close">X</a>
   <div id="myngl-event-pov-question" style="height:100px;"></div>
   <div id="myngl-event-pov-wall" style="height:275px; overflow:scroll;">
   </div>
@@ -84,3 +86,4 @@
   </div>
 </div> 
 
+<div class="social-bg" style="background-image: url(<?php print base_path() . 'sites/default/files/styles/godivaroom.jpg' ?>);"> </div>

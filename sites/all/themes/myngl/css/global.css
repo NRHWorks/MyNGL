@@ -1102,7 +1102,7 @@ body ::-webkit-scrollbar-thumb {
     width: auto;
     font-weight:bold;
     height:0px;
-    background-color: rgba(200,200,150,0.5);
+    background-color: rgba(200,200,150,0.9);
   }
 
   #myngl-event-message span {
@@ -1127,9 +1127,19 @@ body ::-webkit-scrollbar-thumb {
 
   /* --- Social Area --- */
 
+
   .myngl-event-profile-pic {
     border-radius: 100%;
     box-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+  }
+
+  .social-bg {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: -999;
+    top: 0;
+    background-size: contain;
   }
 
   .point-badge {
@@ -1204,6 +1214,21 @@ body ::-webkit-scrollbar-thumb {
     font-weight: bold;
     float: right;
     padding: 15px;
+  }
+
+  #myngl-event-ugc-button, #myngl-event-pov-button {
+    float: left;
+  }
+
+  #myngl-event-ugc-button {
+    margin-left: 35%;
+  }
+
+  #myngl-event-ugc-button a, #myngl-event-pov-button a{
+    padding: 20px 13px 20px 13px;
+    background: rgba(226,226,216,0.4);
+    border-radius: 100%;
+    margin: 28px;
   }
 
 

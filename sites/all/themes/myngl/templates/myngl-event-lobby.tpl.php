@@ -22,5 +22,4 @@ z-index: -9999;
 left: 0;
 height: 100%;
 }">
-  <img src="<?php echo file_create_url($brand->field_lobby_background_graphic['und'][0]['uri']) ?>">
-</dv>
+</div>
