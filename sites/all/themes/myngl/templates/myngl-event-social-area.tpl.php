@@ -5,7 +5,9 @@
 ?>
 
 <div id="myngl-event-social-area">
- 
+  <div class="branded-secondary point-badge">
+    <p>45</p>
+  </div>
   <div class="btn-branded" id="myngl-event-chat-button" >  
     <a href="#"><i class="fa fa-comment-o fa-2x"></i></a>
   </div>
@@ -19,18 +21,20 @@
   </div>
 
   <div id="myngl-event-chat-button-invitees" style="clear:both; padding-top:300px;">
-    <div id="invitees-thumbs" style="border: 1px solid black; height: 150px; overflow: hidden;">
-      <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
-      <?php foreach ($invitees as $k => $i) : ?>
-      <div id="invitee-thumb-<?php print $k; ?>" style="float:left; text-align: center; width: 180px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
-        <?php print $i['pic']; ?><br />
-        <?php print $i['name']; ?> <br />(<?php if ($i['fb']) { print ' FB ';} ?> | <?php if ($i['room']) { print ' In Room ';} ?>)
+    <div style="position: relative;">
+      <div id="invitees-thumbs" style="height: 140px; overflow: hidden;">
+        <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
+        <?php foreach ($invitees as $k => $i) : ?>
+        <div id="invitee-thumb-<?php print $k; ?>" style="float:left; text-align: center; width: 180px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
+          <?php print $i['pic']; ?><br />
+          <?php print $i['name']; ?> <br />(<?php if ($i['fb']) { print ' FB ';} ?> | <?php if ($i['room']) { print ' In Room ';} ?>)
+        </div>
+        <?php endforeach; ?> 
       </div>
-      <?php endforeach; ?> 
+      <div class="thumb-background"></div>
     </div>
-
-    <div id="invitee-filters" style="border: 1px solid black; clear:both;">
-      99 People Total / 100 In This Room
+    <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
+      99 PEOPLE TOTAL / 100 IN THIS ROOM
       <form>  
         <input type="radio" name="filter" value="fb-friends" /> FB Friends
         <input type="radio" name="filter" value="in-room" /> People in this Room
@@ -39,7 +43,7 @@
       </form>
       <form>
         <input type="text" />
-        <input type="submit" value="Search" />
+        <!--<input type="submit" value="Search" />-->
       </form>
     </div>
   </div>

@@ -26,7 +26,7 @@
 
     .branded ul li a {
      color: #a38d50;
-     border-right: 1px solid #a38d50;
+     border-right: 1px groove #a38d50;
     }
 
     .branded ul li a:hover {
