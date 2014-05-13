@@ -72,14 +72,15 @@
 </div>
 
 <div id="myngl-event-pov" class="overlay" style="width:350px; height:450px;">
-  <div id="myngl-event-pov-question" style="height:100px;">
-    Enter Questions Here
-  </div>
-  <div id="myngl-event-pov-wall" style="height:275px;">
-    Wall of questions 
+  <div id="myngl-event-pov-question" style="height:100px;"></div>
+  <div id="myngl-event-pov-wall" style="height:275px; overflow:scroll;">
   </div>
   <div id="myngl-event-pov-messages" style="height:75px;">
-    Type Message Here
+    <form action="#" onsubmit="return social_area.submit_message();">
+      <label>Enter Message</label>
+      <input type="text" id="message-input" name="message-input" size="40" style="width:200px !important;" />
+      <input type="submit" value="Send" />
+    </form>
   </div>
 </div> 
 

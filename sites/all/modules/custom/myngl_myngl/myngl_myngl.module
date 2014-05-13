@@ -51,6 +51,13 @@ function myngl_myngl_menu() {
     'type' => MENU_LOCAL_TASK,
   );
   
+  $items['node/%/question'] = array(
+    'title' => 'Edit POV Question',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('myngl_myngl_edit_question', 1),
+    'access callback' => TRUE, 
+    'type' => MENU_LOCAL_TASK,
+  );
 
   return $items;
 }
@@ -620,11 +627,45 @@ function myngl_myngl_edit_message_submit($form, &$form_state) {
   $myngl->field_myngl_message['und'][0]['value'] = $v['message'];
   node_save($myngl);
 
-  drupal_set_message('Messge Updates.  It will appear in the Myngl in a few seconds.');
+  drupal_set_message('Messge Updated.  It will appear in the Myngl in a few seconds.');
+}
+
+function myngl_myngl_edit_question($form, &$form_state, $nid) {
+  $myngl = node_load($nid);
+
+  $form['myngl_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $myngl->nid,
+  );
+
+  $form['question'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Update Question'),
+    '#default_value' => $myngl->field_pov_question['und'][0]['value'],
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#title' => t('Submit'),
+  );
+
+  return $form;
+}
+
+function myngl_myngl_edit_question_submit($form, &$form_state) {
+  $v = $form_state['values'];
+
+  $myngl = node_load($v['myngl_id']);
+  $myngl->field_pov_question['und'][0]['value'] = $v['question'];
+  node_save($myngl);
+
+  drupal_set_message('Question Updated.  It will appear in the Myngl in a few seconds.');
 }
 
 function myngl_myngl_admin_paths() {
   return array(
     'node/*/message' => TRUE,
+    'node/*/question' => TRUE,
   );
 }

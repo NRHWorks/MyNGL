@@ -22,6 +22,27 @@ function myngl_event_menu() {
     'access callback' => TRUE, 
   );
 
+  $items['myngl-event/%/ajax/question'] = array(
+    'title' => 'MyNGL Lobby',
+    'page callback' => 'myngl_event_social_area_ajax_question',
+    'page arguments' => array(1),
+    'access callback' => TRUE, 
+  );
+
+  $items['myngl-event/%/ajax/pov_message'] = array(
+    'title' => 'MyNGL Lobby',
+    'page callback' => 'myngl_event_social_area_ajax_pov_message',
+    'page arguments' => array(1),
+    'access callback' => TRUE, 
+  );
+  
+  $items['myngl-event/%/ajax/post-pov-message'] = array(
+    'title' => 'MyNGL Lobby',
+    'page callback' => 'myngl_event_social_area_ajax_post_pov_message',
+    'page arguments' => array(1),
+    'access callback' => TRUE, 
+  );
+
   return $items;
 }
 
@@ -110,4 +131,27 @@ function myngl_event_social_area($nid) {
 function myngl_event_social_area_ajax_message($nid) {
   $message['message'] = db_query('SELECT field_myngl_message_value FROM {field_data_field_myngl_message} WHERE entity_id = :eid', array(':eid' => $nid))->fetchField();
   drupal_json_output($message);
+}
+
+function myngl_event_social_area_ajax_question($nid) {
+  $message['question'] = 'Question: '.db_query('SELECT field_pov_question_value FROM {field_data_field_pov_question} WHERE entity_id = :eid', array(':eid' => $nid))->fetchField();
+  drupal_json_output($message);
+}
+
+function myngl_event_social_area_ajax_post_pov_message($nid) {
+  $node = node_load($nid);
+    
+  $node->field_pov_messages['und'][] = array('value' => $_POST['pov_message']);
+
+  node_save($node); 
+}
+
+function myngl_event_social_area_ajax_pov_message($nid) {
+  $result = db_query('SELECT field_pov_messages_value FROM {field_data_field_pov_messages} WHERE entity_id = :eid ORDER BY delta DESC', array(':eid' => $nid));
+
+  foreach ($result as $r) {
+    $messages[] = $r->field_pov_messages_value;
+  }
+
+  drupal_json_output($messages);
 }
