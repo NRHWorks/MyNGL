@@ -12,6 +12,12 @@
 
     div.branded {
       background-color: #53302a;
+      color: #a38d50;
+    }
+
+    div.branded-secondary {
+      background-color:#a38d50;
+      color: #53302a;
     }
 
     .branded ul li:hover {
@@ -24,6 +30,16 @@
     }
 
     .branded ul li a:hover {
+      color: #53302a;
+    }
+
+    .btn-branded a {
+      background-color: #53302a;
+      color: #a38d50;
+    }
+
+    .btn-branded a:hover {
+      background-color: #a38d50;
       color: #53302a;
     }
   </style>

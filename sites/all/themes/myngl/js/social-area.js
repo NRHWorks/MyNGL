@@ -88,10 +88,10 @@ var social_area = (function ($) {
         url: "/myngl-event/" + myngl_id + "/ajax/message",
         success: function(data) {
           if (data.message == '') {
-            $("#myngl-event-social-area--message").fadeOut(200);
+            $("#myngl-event-message").fadeOut(200);
           } else {
-            if ($("#myngl-event-social-area--message").html() != data.message) {
-              $("#myngl-event-social-area--message").fadeOut(200, function() { $(this).html(data.message).fadeIn(1000) });
+            if ($("#myngl-event-message").html() != data.message) {
+              $("#myngl-event-message").fadeOut(200, function() { $(this).html(data.message).fadeIn(1000) });
             } 
           }
         }

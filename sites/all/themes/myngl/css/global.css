@@ -1050,11 +1050,15 @@ body ::-webkit-scrollbar-thumb {
 
   /* --- event shared classes --- */
 
-  .branded.event-logo {
+  .event-logo {
     width: 100px;
     height: 80px;
+    display: inline;
+  }
+
+  .event-logo img {
+    float:left;
     margin: 0 10px 100px 40px;
-    
   }
 
   #myngl-event-menu {
@@ -1100,8 +1104,9 @@ body ::-webkit-scrollbar-thumb {
 
   #page-myngl-event-wrapper .video-container div {
     text-align: center;
-    background-color: rgba(100,100,100,0.1);
-    padding: 10px;
+    background-color: rgba(200,200,150,0.5);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    padding: 20px;
     max-width: 700px;
     margin: auto;
   }
@@ -1111,7 +1116,13 @@ body ::-webkit-scrollbar-thumb {
   .myngl-event-profile-pic {
     border-radius: 100%;
   }
-  
+
+  #myngl-event-chat-button a {
+    border-radius: 100%;
+    font-weight: bold;
+    float: right;
+    padding: 15px;
+  }
 
 
 

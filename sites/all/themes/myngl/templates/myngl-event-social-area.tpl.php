@@ -5,13 +5,9 @@
 ?>
 
 <div id="myngl-event-social-area">
-  <div id=="myngl-event-social-area-logo" style="float:left;">
-    <div id="myngl-event-social-area--message" style="float:left; display:none; font-weight:bold; padding:10px; height:65px;background-color:<?php print $secondary_color; ?>;color:<?php print $primary_color; ?>;">
-    </div>
-  </div>
-
-  <div id="myngl-event-chat-button" style="background-color:<?php print $primary_color; ?>;height:60px;width:60px;border-radius:30px;float:right;">  
-    <a href="#" style="color:<?php print $secondary_color; ?>; font-weight:bold;">Chat</a>
+ 
+  <div class="btn-branded" id="myngl-event-chat-button" >  
+    <a href="#"><i class="fa fa-comment-o fa-2x"></i></a>
   </div>
   
   <div id="myngl-event-ugc-button" style="clear:both;">
