@@ -8,8 +8,8 @@
   <div class="branded-secondary point-badge">
     <p>45</p>
   </div>
-  <div class="btn-branded" id="myngl-event-chat-button" >  
-    <a href="#"><i class="fa fa-comment-o fa-2x"></i></a>
+  <div class="btn-branded" id="myngl-event-chat-button" border="1px solid red;">  
+    <a href="#" onclick="return social_area.open_chat();"><i class="fa fa-comment-o fa-2x"></i></a>
   </div>
   
   <div id="myngl-event-ugc-button" style="clear:both;">
@@ -78,6 +78,18 @@
   <div id="myngl-event-pov-wall" style="height:275px; overflow:scroll;"></div>
   <div id="myngl-event-pov-messages" style="height:75px;">
     <form action="#" onsubmit="return social_area.submit_message();">
+      <label>Enter Message</label>
+      <input type="text" id="message-input" name="message-input" size="40" style="width:200px !important;" />
+      <input type="submit" value="Send" />
+    </form>
+  </div>
+</div> 
+
+  <div id="myngl-event-chat" class="overlay" style="width:350px; height:450px;">
+  <a href="#" onclick="return myngl.overlay_close();" class="overlay-close">X</a>
+  <div id="myngl-event-chat-messages" style="height:275px; overflow:scroll;"></div>
+  <div id="myngl-event-chat-form" style="height:75px;">
+    <form action="#" onsubmit="return social_area.submit_chat();">
       <label>Enter Message</label>
       <input type="text" id="message-input" name="message-input" size="40" style="width:200px !important;" />
       <input type="submit" value="Send" />

@@ -155,6 +155,9 @@ var social_area = (function ($) {
           }
         });
       }
+    },
+    open_chat: function() {
+      alert('BOOM');
     }
   }
 }(jQuery));
