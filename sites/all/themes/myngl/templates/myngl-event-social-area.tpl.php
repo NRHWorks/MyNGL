@@ -25,7 +25,7 @@
       <div id="invitees-thumbs" style="height: 140px; overflow: hidden;">
         <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
         <?php foreach ($invitees as $k => $i) : ?>
-        <div id="invitee-thumb-<?php print $k; ?>" style="float:left; text-align: center; width: 180px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
+        <div id="invitee-thumb-<?php print $k; ?>" style="float:left; text-align: center; width: 130px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
           <?php print $i['pic']; ?><br />
           <?php print $i['name']; ?> <br />(<?php if ($i['fb']) { print ' FB ';} ?> | <?php if ($i['room']) { print ' In Room ';} ?>)
         </div>
@@ -75,8 +75,7 @@
 <div id="myngl-event-pov" class="overlay" style="width:350px; height:450px;">
   <a href="#" onclick="return myngl.overlay_close();" class="overlay-close">X</a>
   <div id="myngl-event-pov-question" style="height:100px;"></div>
-  <div id="myngl-event-pov-wall" style="height:275px; overflow:scroll;">
-  </div>
+  <div id="myngl-event-pov-wall" style="height:275px; overflow:scroll;"></div>
   <div id="myngl-event-pov-messages" style="height:75px;">
     <form action="#" onsubmit="return social_area.submit_message();">
       <label>Enter Message</label>
