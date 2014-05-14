@@ -6,6 +6,7 @@ stylesheets[all][] = css/reset.css
 stylesheets[all][] = css/global.css
 
 scripts[] = js/myngl.js
+scripts[] = js/isotope.pkgd.min.js
 
 regions[header] = Header
 regions[highlighted] = Highlighted
