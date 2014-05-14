@@ -2,6 +2,7 @@
   $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
   $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
   $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
+  $tertiary_color = "#e2dbd2";
 ?>
 
 <div id="myngl-event-social-area">
@@ -51,13 +52,13 @@
 </div>
 
 
-<div id="myngl-event-ugc" class="overlay" style="display:none;height:500px; width:900px;background-color:<?php print $background_color; ?>;position:absolute; margin:auto;z-index:200;top:0;bottom:0;left:0;right:0">
-  <a href="#" onclick="return myngl.overlay_close();" class="overlay-close">X</a>  
-  <div id="myngl-event-ugc-box" style="height:500px;width:900px;">
+<div id="myngl-event-ugc" class="overlay branded" style="display:none;height:500px; width:900px; ?>;position:absolute; margin:auto;z-index:200;top:0;bottom:0;left:0;right:0">
+  <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>  
+  <div id="myngl-event-ugc-box"class="branded-tertiary">
 
-    <div id="myngl-event-ugc-thumbs" style="height:500px;width:auto;overflow:hidden">
+    <div id="myngl-event-ugc-thumbs">
       <?php foreach ($ucg as $k => $u) : ?>
-        <div style="float: left; margin: 5px;"><a href="#" onclick="return social_area.ugc_show(<?php print $k; ?>)"><?php print $u['thumb']; ?></a></div>
+        <div class="event-ugc-thumb"><a href="#" onclick="return social_area.ugc_show(<?php print $k; ?>)"><?php print $u['thumb']; ?></a></div>
       <?php endforeach; ?>
     </div>
 
@@ -72,21 +73,22 @@
   </div>
 </div>
 
-<div id="myngl-event-pov" class="overlay" style="width:350px; height:450px;">
-  <a href="#" onclick="return myngl.overlay_close();" class="overlay-close">X</a>
-  <div id="myngl-event-pov-question" style="height:100px;"></div>
-  <div id="myngl-event-pov-wall" style="height:275px; overflow:scroll;"></div>
-  <div id="myngl-event-pov-messages" style="height:75px;">
-    <form action="#" onsubmit="return social_area.submit_message();">
-      <label>Enter Message</label>
-      <input type="text" id="message-input" name="message-input" size="40" style="width:200px !important;" />
+<div id="myngl-event-pov" class="overlay branded">
+  <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>
+  <div id="myngl-event-pov-question" class="branded-tertiary"></div>
+  <hr>
+  <div id="myngl-event-pov-wall" class="branded-tertiary" style="border-right: 5px solid <?php echo $tertiary_color; ?>;"></div>
+  <div id="myngl-event-pov-messages" >
+    <form class="branded" action="#" onsubmit="return social_area.submit_message();">
+      <label>TYPE MESSAGE HERE.</label>
+      <input type="text" class="branded-tertiary" id="message-input" name="message-input" size="40" />
       <input type="submit" value="Send" />
     </form>
   </div>
 </div> 
 
   <div id="myngl-event-chat" class="overlay" style="width:350px; height:450px;">
-  <a href="#" onclick="return myngl.overlay_close();" class="overlay-close">X</a>
+  <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>
   <div id="myngl-event-chat-messages" style="height:275px; overflow:scroll;"></div>
   <div id="myngl-event-chat-form" style="height:75px;">
     <form action="#" onsubmit="return social_area.submit_chat();">

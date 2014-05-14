@@ -417,8 +417,6 @@ body ::-webkit-scrollbar-thumb {
     background-color:#FFF; 
     display:none;
     margin:auto;
-    border: 5px double rgba(60,67,80,0.85);
-    outline: 10px solid #ffffff;
   }
 
 
@@ -784,6 +782,11 @@ body ::-webkit-scrollbar-thumb {
     float: left;
     margin: 40px 16px 0 16px;
     width: 217px;
+  }
+
+  #upcoming-myngls.overlay {
+    border: 5px double rgba(60,67,80,0.85);
+    outline: 10px solid #ffffff;
   }
   
   #upcoming-myngls .upcoming-myngl-wrapper .title {
@@ -1231,6 +1234,107 @@ body ::-webkit-scrollbar-thumb {
     background: rgba(226,226,216,0.4);
     border-radius: 100%;
     margin: 28px;
+  }
+
+  /* --- social overlays --- */
+
+  .overlay.branded .overlay-close {
+    color: inherit;
+  }
+
+  #myngl-event-pov.overlay {
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  #myngl-event-pov #myngl-event-pov-question {
+    margin-top: 30px;
+    margin-bottom: 12px;
+    padding: 15px;
+    box-shadow: inset 1px -1px 2px #b9b9b9;
+    text-align: center;
+  }
+
+  #myngl-event-pov hr {
+    border: none;
+    border-top: 1px groove #b9b9b9;
+    margin-left: -12px;
+    margin-right: -12px;
+  }
+
+  #myngl-event-pov #myngl-event-pov-wall {
+    margin-top: 12px;
+    overflow: scroll;
+    height: 275px;
+    box-shadow: inset 1px -1px 2px #b9b9b9;
+    padding-right: 12px;
+    padding-left: 12px;
+    padding-top: 12px;
+  }
+
+  #myngl-event-pov #myngl-event-pov-messages form {
+    margin-top: 5px;
+  }
+
+  #myngl-event-pov #myngl-event-pov-messages form input[type="submit"] {
+    float: right;
+    margin-right: 5px;
+    background-image: none;
+    font-family: Georgia;
+    font-size: 1.35em;
+    color: inherit;
+    padding: 5px;
+  }
+ 
+  #myngl-event-pov form input[type="text"] {
+    box-shadow: inset 1px -1px 2px #b9b9b9;
+    width:394px !important; 
+    height: 50px; 
+    border:none;
+  }
+
+
+  #myngl-event-pov ::-webkit-scrollbar-thumb {
+    background-color: #999999;
+  }
+
+  #myngl-event-pov ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+
+
+  #myngl-event-ugc {
+    padding: 30px 25px 30px 25px;
+  }
+
+  #myngl-event-ugc .overlay-close {
+    margin-top: -25px;
+    margin-left: -20px
+  }
+
+  #myngl-event-ugc-box {
+    padding: 15px;
+    overflow: hidden;
+    height: 470px;
+  }
+
+  #myngl-event-ugc-thumbs {
+    overflow-x: scroll;
+    white-space: nowrap;
+    width: auto;
+  }
+
+  body #myngl-event-ugc-thumbs ::-webkit-scrollbar:horizontal {
+    display: block;
+  }
+
+
+  .event-ugc-thumb {
+    float: left;
+    display: inline-block;
+    padding: 5px;
   }
 
 

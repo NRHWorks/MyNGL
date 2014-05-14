@@ -42,6 +42,16 @@
       background-color: #a38d50;
       color: #53302a;
     }
+
+    .branded-background {
+      background-color: #d8c696;
+      color: #53302a;
+    } 
+
+    .branded-tertiary {
+      background-color: #e2dbd2;
+      color: #53302a;
+    }
   </style>
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>

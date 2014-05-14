@@ -60,7 +60,7 @@ var social_area = (function ($) {
     },
     open_pov: function() {
       $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
-        myngl.overlay('myngl-event-pov', 450, 350);  
+        myngl.overlay('myngl-event-pov', 500, 400);  
       });
       return false;
     },

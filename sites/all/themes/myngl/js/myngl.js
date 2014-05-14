@@ -46,10 +46,14 @@ var myngl = (function($) {
       return false;
     },
 
-    overlay_close: function() {
+    overlay_close: function(show) {
       $('#overlay-background').fadeOut(500);
       $('.overlay').fadeOut(100);
+      if(show == true) {
+        $('#myngl-event-chat-button-invitees').delay(200).fadeIn(500);
+      }
       return false;
+
     }
   }
 
