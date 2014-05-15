@@ -1125,7 +1125,7 @@ body ::-webkit-scrollbar-thumb {
     max-width: 650px;
     margin: auto;
     position: relative;
-    top: 170px;
+    top: 21.25vh;
   }
 
   /* --- Social Area --- */
@@ -1321,20 +1321,50 @@ body ::-webkit-scrollbar-thumb {
   }
 
   #myngl-event-ugc-box {
-    padding: 15px;
-    overflow: hidden;
-    height: 470px;
+    padding: 35px;
+    height: 435px;
   }
 
   #myngl-event-ugc-thumbs {
     width: auto;
-    height: 500px;
+    height: 470px;
   }
 
-  body #myngl-event-ugc-thumbs ::-webkit-scrollbar:horizontal {
-    display: block;
-  }
+  .halfCircleRight{
+     border-radius: 0 70px 70px 0;
+     -moz-border-radius: 0 70px 70px 0;
+     -webkit-border-radius:  0 70px 70px 0;
+     bottom: 285px;
+     left: -15px;
+   }
 
+   .halfCircleRight, .halfCircleLeft {
+      height:70px;
+     width:35px;
+     cursor: pointer;
+     position: relative;
+     -moz-user-select: none; 
+    -ms-user-select: none; 
+    -webkit-user-select: none; 
+    -o-user-select: none; 
+   }
+
+   .halfCircleRight i, .halfCircleLeft i {
+    font-size: 3em;
+    margin: 13px;
+   }
+
+   .halfCircleRight i {
+    margin-left: 9px;
+   }
+
+   .halfCircleLeft{
+     border-radius: 70px 0 0 70px;
+     -moz-border-radius: 70px 0 0 70px;
+     -webkit-border-radius: 70px 0 0 70px;
+     bottom: 350px;
+     left: 880px;
+  }
 
   .event-ugc-thumb {
 

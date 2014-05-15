@@ -1,3 +1,4 @@
+    var ugcScrollPosition = 0;
 (function ($) {
   $(document).ready( function() {
     setInterval(function() { social_area.message(); }, 3000); 
@@ -18,20 +19,28 @@
         social_area.show_all_invitees();
       } 
     });
-
-    var container = $('#myngl-event-ugc-thumbs').imagesLoaded( function() {
-      container.isotope({
-    "layoutMode": "fitRows", 
-    "itemSelector": ".item" 
-  });
-});
-
+  
+  var $container = $('#myngl-event-ugc-thumbs').imagesLoaded( function() {
+      $container.isotope({
+        containerStyle: { 'overflow-x' :'scroll', 'overflow-y' : 'hidden', position: 'relative'},
+        resizesContainer: false,
+        layoutMode: 'masonryHorizontal',
+        masonryHorizontal: {
+          rowHeight: 150
+        }
+      });
+    });
 
   });
 })(jQuery);
 
 var social_area = (function ($) {
   return {
+    ugcScroll : function (value) {
+      ugcScrollPosition += value;
+      $('#myngl-event-ugc-thumbs').scrollLeft(ugcScrollPosition);
+      return false;
+    },
     show_fb_friends : function() {
       $('#close-invitee').hide();
       $('#invitees-thumbs').css('height', '150px').css('margin-top','0px');

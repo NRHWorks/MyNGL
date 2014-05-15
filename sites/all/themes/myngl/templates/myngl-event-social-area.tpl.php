@@ -57,7 +57,7 @@
   <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>  
   <div id="myngl-event-ugc-box"class="branded-tertiary">
 
-    <div id="myngl-event-ugc-thumbs" class="isotope js-isotope" data-isotope-options='{ "layoutMode": "fitRows", "itemSelector": ".item" }'>
+    <div id="myngl-event-ugc-thumbs" class="isotope js-isotope" >
       <?php foreach ($ucg as $k => $u) : ?>
         <div class="event-ugc-thumb item" ><a href="#" onclick="return social_area.ugc_show(<?php print $k; ?>)"><?php print $u['thumb']; ?></a></div>
       <?php endforeach; ?>
@@ -71,6 +71,8 @@
       </div>
     <?php endforeach; ?>
   </div>
+  <div onclick="social_area.ugcScroll(-150)" class="halfCircleRight branded"><i class="fa fa-angle-left"></i></div>
+  <div onclick="social_area.ugcScroll(150)" class="halfCircleLeft branded"><i class="fa fa-angle-right"></i></div>
 </div>
 
 <div id="myngl-event-pov" class="overlay branded">
@@ -122,4 +124,6 @@
     </div> 
   <?php endif;  ?>
 <?php endforeach; ?> 
+
+
 
