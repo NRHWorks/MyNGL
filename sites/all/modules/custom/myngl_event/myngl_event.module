@@ -71,7 +71,11 @@ function myngl_event_lobby($nid) {
 
 
 function myngl_event_social_area($nid) {
+  global $user;
+
+  drupal_add_library('system', 'ui.draggable');
   drupal_add_js(path_to_theme().'/js/social-area.js');
+  drupal_add_js(path_to_theme().'/js/chat.js');
   drupal_add_js(array('myngl_id' => $nid), 'setting');
 
   $myngl = node_load($nid);
@@ -81,49 +85,44 @@ function myngl_event_social_area($nid) {
   $invitees = array();
   $ucg = array();  
 
-  foreach ($myngl->field_myngl_invitees['und'] as $i) {
+  foreach ($myngl->field_myngl_invitees['und'] as $x => $i) {
     $ic = array_shift(entity_load('field_collection_item', array($i['value'])));  
     $u = user_load($ic->field_invitee_user_account['und'][0]['uid']);
     $p = profile2_load_by_user($u->uid, 'profile');
 
-    // adding lots of users to have test content to theme
-    for ($x=1;$x<19;$x+=1) {
-      $fb = false;
-      if($x % 4 == 0) {
-        $fb = true;
-      }
-      
-      $room = false;
-      if($x % 3 == 0) {
-        $room = true;
-      }
+    $fb = false;
+    $room = false;
 
+    $invitees[] = array (
+                  'uid' => $u->uid,
+                  'name' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
+                  'pic' => theme_image_style(array('style_name' => 'user_profile_circle_image', 'path' => $p->field_picture['und'][0]['uri'], 'attributes' => array('class' => 'myngl-event-profile-pic'), 'height' => null, 'width' => null)),
+                  'fb' => $fb,
+                  'room' => $room,
+                );
 
-      $invitees[] = array (
-                    'name' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'] . '#' .$x,
-                    'pic' => theme_image_style(array('style_name' => 'user_profile_circle_image', 'path' => $p->field_picture['und'][0]['uri'], 'attributes' => array('class' => 'myngl-event-profile-pic'), 'height' => null, 'width' => null)),
-                    'fb' => $fb,
-                    'room' => $room,
-                  );
-
-      foreach ($ic->field_image_upload['und'] as $image) {
-        $ucg[] = array( 
-          'thumb' => theme_image_style(array('style_name' => 'user_generated_content_thumbs', 'path' => $image['uri'], 'attributes' => array('class' => 'myngl-event-profile-pic'), 'height' => null, 'width' => null)),
-          'content' => theme_image_style(array('style_name' => 'user_generated_content_images', 'path' => $image['uri'], 'attributes' => array('class' => 'myngl-event-profile-pic'), 'height' => null, 'width' => null)),
-          'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
-        );
+    for ($x=1;$x<=10;$x+=1) {
+      if (isset($ic->field_image_upload['und'])) {
+        foreach ($ic->field_image_upload['und'] as $image) {
+          $ucg[] = array( 
+            'thumb' => theme_image_style(array('style_name' => 'user_generated_content_thumbs', 'path' => $image['uri'], 'attributes' => array('class' => 'myngl-event-profile-pic'), 'height' => null, 'width' => null)),
+            'content' => theme_image_style(array('style_name' => 'user_generated_content_images', 'path' => $image['uri'], 'attributes' => array('class' => 'myngl-event-profile-pic'), 'height' => null, 'width' => null)),
+            'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
+          );
+        }
       }
 
-      foreach ($ic->field_video_upload['und'] as $video) {
-        $ucg[] = array (
-          'thumb' => theme('youtube_thumbnail', array('image_style' => 'user_generated_content_videos', 'video_id' => $video['video_id'])),
-          'content' => theme('youtube_video', array('video_id' => $video['video_id'], 'size' => 'custom', 'height' => '400px', 'width' => '600px')),
-          'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
-        );
+      if (isset($ic->field_video_upload['und'])) {
+        foreach ($ic->field_video_upload['und'] as $video) {
+          $ucg[] = array (
+            'thumb' => theme('youtube_thumbnail', array('image_style' => 'user_generated_content_videos', 'video_id' => $video['video_id'])),
+            'content' => theme('youtube_video', array('video_id' => $video['video_id'], 'size' => 'custom', 'height' => '400px', 'width' => '600px')),
+            'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
+          );
+        }
       }
     }
   }
-
 
   return theme('myngl_event_social_area', array('myngl' => $myngl, 'brand' => $brand, 'invitees' => $invitees, 'ucg' => $ucg));
 }

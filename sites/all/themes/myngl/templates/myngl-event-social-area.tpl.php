@@ -1,4 +1,5 @@
 <?php
+  global $user;
   $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
   $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
   $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
@@ -10,7 +11,7 @@
     <p>45</p>
   </div>
   <div class="btn-branded" id="myngl-event-chat-button" border="1px solid red;">  
-    <a href="#" onclick="return social_area.open_chat();"><i class="fa fa-comment-o fa-2x"></i></a>
+    <a href="#" onclick="return chat.open_chat();"><i class="fa fa-comment-o fa-2x"></i></a>
   </div>
   
   <div id="myngl-event-ugc-button" style="clear:both;">
@@ -26,9 +27,9 @@
       <div id="invitees-thumbs" style="height: 140px; overflow: hidden;">
         <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
         <?php foreach ($invitees as $k => $i) : ?>
-        <div id="invitee-thumb-<?php print $k; ?>" style="float:left; text-align: center; width: 130px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
-          <?php print $i['pic']; ?><br />
-          <?php print $i['name']; ?> <br />(<?php if ($i['fb']) { print ' FB ';} ?> | <?php if ($i['room']) { print ' In Room ';} ?>)
+        <div id="invitee-thumb-<?php print $i['uid']; ?>" style="<?php if ($user->uid == $i['uid']) { print ' display:none; '; } ?>float:left; text-align: center; width: 130px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
+          <a href="#" onclick="return chat.show_solo_chat(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
+          <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
         </div>
         <?php endforeach; ?> 
       </div>
@@ -61,7 +62,6 @@
         <div class="event-ugc-thumb"><a href="#" onclick="return social_area.ugc_show(<?php print $k; ?>)"><?php print $u['thumb']; ?></a></div>
       <?php endforeach; ?>
     </div>
-
     
     <?php foreach ($ucg as $k => $u) : ?>
       <div id="myngl-event-ugc-content-<?php print $k; ?>" class="myngl-event-ugc-content" style="display:none;">
@@ -87,16 +87,38 @@
   </div>
 </div> 
 
-  <div id="myngl-event-chat" class="overlay" style="width:350px; height:450px;">
+<div id="myngl-event-chat" class="overlay" style="width:500px; height:450px;">
   <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>
-  <div id="myngl-event-chat-messages" style="height:275px; overflow:scroll;"></div>
-  <div id="myngl-event-chat-form" style="height:75px;">
-    <form action="#" onsubmit="return social_area.submit_chat();">
+  <div id="myngl-event-chat-messages" style="height:430px; overflow:scroll; border:1px solid #3c4350 "></div>
+  <div id="myngl-event-chat-form" style="height:40px;">
+    <form action="#" onsubmit="return chat.send_message();" style="margin-top:10px;">
       <label>Enter Message</label>
-      <input type="text" id="message-input" name="message-input" size="40" style="width:200px !important;" />
+      <input type="hidden" id="chat-uid" name="chat-uid" value="<?php global $user; print $user->uid; ?>" />
+      <input type="text" id="chat-message-input" name="message-input" size="40" style="width:200px !important;" />
       <input type="submit" value="Send" />
     </form>
   </div>
 </div> 
 
 <div class="social-bg" style="background-image: url(<?php print base_path() . 'sites/default/files/styles/godivaroom.jpg' ?>);"> </div>
+        
+<?php foreach ($invitees as $k => $i) : ?>
+  <?php if ($user->uid != $i['uid']) : ?> 
+    <div id="myngl-event-solo-chat-<?php print $i['uid']; ?>" class="myngl-event-solo-chat" style="width:325px; height:325px; border: 3px solid black; clear:both; display:none; position:absolute; background-color:#F0F0F0;">
+      <div class="myngl-event-solo-chat-intro" style="height: 25px;">
+        <a href="#" onclick="jQuery(this).parent().parent().hide();" class="overlay-close">X</a>
+        Chat with <?php print $i['name']; ?>:
+      </div>
+      <div id="myngl-event-solo-chat-messages" style="height:210px; overflow:scroll; border:1px solid #3c4350;"></div>
+      <div id="myngl-event-solo-chat-form" style="height:40px;">
+        <form action="#" onsubmit="return chat.send_solo_message(<?php global $user; print $i['uid']; ?>);" style="margin-top:10px;">
+          <label>Enter Message</label>
+          <input type="hidden" id="chat-from-uid" name="chat-uid" value="<?php global $user; print $user->uid; ?>" />
+          <input type="hidden" id="chat-to-uid" name="chat-uid" value="<?php global $user; print $i['uid']; ?>" />
+          <input type="text" id="solo-chat-message-input" name="message-input" size="40" style="width:200px !important;" />
+          <input type="submit" value="Send" />
+        </form>
+      </div>
+    </div> 
+  <?php endif;  ?>
+<?php endforeach; ?> 

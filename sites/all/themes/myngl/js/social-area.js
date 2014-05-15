@@ -1,6 +1,6 @@
 (function ($) {
   $(document).ready( function() {
-    setInterval(function() { social_area.message(); }, 30000); 
+    setInterval(function() { social_area.message(); }, 3000); 
     setInterval(function() { social_area.question(); }, 3000); 
     setInterval(function() { social_area.pov_message(); }, 1000); 
     
@@ -90,9 +90,9 @@ var social_area = (function ($) {
           if (data.message == '') {
             $("#myngl-event-message").animate({"height": "0"}, 200);
           } else {
-            if ($("#myngl-event-message").html() != data.message) {
+            if ($("#message-span").html() != data.message) {
               $("#myngl-event-message").animate({"height": "0"}, 200, function() { 
-                $(this).html('<span>' + data.message + '</span>').animate({"height": "90px"}, 1000); 
+                $(this).html('<span id="message-span">' + data.message + '</span>').animate({"height": "90px"}, 1000); 
               });
             } 
           }
@@ -127,19 +127,6 @@ var social_area = (function ($) {
       return false;  
     },
     pov_message: function() {
-      var myngl_id = Drupal.settings.myngl_id;
-
-      $.ajax({
-        type: "GET",
-        url: "/myngl-event/" + myngl_id + "/ajax/pov_message",
-        success: function(data) {
-            if ($("#myngl-event-pov-question").html() != data.question) {
-              $("#myngl-event-pov-question").html(data.question); 
-            } 
-          }
-      });
-    },
-    pov_message: function() {
       if ($("#myngl-event-pov").is(':visible')) {
         var myngl_id = Drupal.settings.myngl_id;
 
@@ -149,15 +136,11 @@ var social_area = (function ($) {
           success: function(data) {
             $("#myngl-event-pov-wall").html('');
             data.forEach(function(entry) {
-              console.log(entry);
               $("#myngl-event-pov-wall").append(entry + '<br /><br />');
             });
           }
         });
       }
-    },
-    open_chat: function() {
-      alert('BOOM');
     }
   }
 }(jQuery));

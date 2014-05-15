@@ -1135,6 +1135,12 @@ body ::-webkit-scrollbar-thumb {
     border-radius: 100%;
     box-shadow: 1px 1px rgba(0, 0, 0, 0.5);
   }
+  
+  .myngl-event-profile-pic.chat {
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+   }
 
   .social-bg {
     height: 100%;

@@ -506,7 +506,7 @@ function myngl_myngl_pre_questions_form_submit($form, &$form_state) {
 
   $invitee->save();
 
-  drupal_goto("myngl/".$v['myngl_id']."/event");
+  drupal_goto("myngl-event/".$v['myngl_id']."/lobby");
 }
 
 function myngl_myngl_post_questions($nid) {
