@@ -1,0 +1,4 @@
+name = MyNGL Chat
+package = MyNGL
+description = Sets up functionality for myngl event chats
+core = 7.x 

@@ -1,0 +1,62 @@
+<?php
+function myngl_chat_schema() {
+  $schema['myngl_chat'] = array(
+    'description' => 'Table for main myngl chat.',
+    'fields' => array(
+      'mcid' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'myngl_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'user_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'message' => array(
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => FALSE,
+      ),
+      'date' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('mcid'),
+  );
+  $schema['myngl_solo_chat'] = array(
+    'description' => 'Table for individual myngl chats.',
+    'fields' => array(
+      'mcsid' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'myngl_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'from_user_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'to_user_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'message' => array(
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => FALSE,
+      ),
+      'date' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('mcsid'),
+  );
+  return $schema;
+}

@@ -1,0 +1,66 @@
+
+<?php
+
+function myngl_chat_menu() {
+  $items['myngl-chat/get-message/%'] = array(
+    'title' => 'MyNGL Lobby',
+    'page callback' => 'myngl_chat_get_message',
+    'page arguments' => array(2),
+    'access callback' => TRUE, 
+  );
+
+  $items['myngl-chat/send-message/%/%'] = array(
+    'title' => 'MyNGL Lobby',
+    'page callback' => 'myngl_chat_send_message',
+    'page arguments' => array(2,3),
+    'access callback' => TRUE, 
+  );
+
+  $items['myngl-chat/get-solo-message/%/%/%'] = array(
+    'title' => 'MyNGL Lobby',
+    'page callback' => 'myngl_chat_get_solo_message',
+    'page arguments' => array(2,3,4),
+    'access callback' => TRUE, 
+  );
+
+  $items['myngl-chat/send-solo-message/%/%/%'] = array(
+    'title' => 'MyNGL Lobby',
+    'page callback' => 'myngl_chat_send_solo_messages',
+    'page arguments' => array(2,3,4),
+    'access callback' => TRUE, 
+  );
+
+  return $items;
+}
+
+
+//TODO.. pass in last date here
+function myngl_chat_get_message($myngl_id) {
+  $result = db_query("SELECT * FROM myngl_chat WHERE myngl_id = :myngl_id ORDER BY mcid DESC LIMIT 10", array(':myngl_id' => $myngl_id));
+
+  $messages = array();
+  foreach ($result as $r) {
+    $message = array(
+      'message' => $r->message,
+      'user_id' => $r->user_id,
+      'mcid' => $r->mcid,
+    );
+
+    $messages[] = $message;
+  }
+
+  drupal_json_output($messages);
+}
+
+function myngl_chat_send_message($myngl_id, $user_id) {
+  db_query("INSERT INTO {myngl_chat} (myngl_id, user_id, message, date) VALUES (:myngl_id, :user_id, :message, ".time().") ", array(':myngl_id'=>$myngl_id,':user_id'=>$user_id,'message'=>$_POST['message']));
+  return;
+}
+
+function myngl_chat_get_solo_message($myngl_id, $from_user_id, $to_user_id) {
+  return "Myngl ID: $myngl_id";
+}
+
+function myngl_chat_send_solo_message($myngl_id, $from_user_id, $to_user_id) {
+  return "Myngl ID: $myngl_id";
+}

@@ -1327,9 +1327,8 @@ body ::-webkit-scrollbar-thumb {
   }
 
   #myngl-event-ugc-thumbs {
-    overflow-x: scroll;
-    white-space: nowrap;
     width: auto;
+    height: 500px;
   }
 
   body #myngl-event-ugc-thumbs ::-webkit-scrollbar:horizontal {
@@ -1338,11 +1337,34 @@ body ::-webkit-scrollbar-thumb {
 
 
   .event-ugc-thumb {
-    float: left;
-    display: inline-block;
+
     padding: 5px;
   }
 
+.isotope {
+  background: #DDD;
+  max-width: 1200px;
+  max-height: 500px;
+}
+
+/* clear fix */
+.isotope:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .item ---- */
+
+.item {
+  float: left;
+  width: 140px;
+  height: 140px;
+}
+
+.width2 {
+  width: 240px;
+}
 
 
 

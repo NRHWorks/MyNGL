@@ -22,7 +22,7 @@
     <a href="#" onclick="return social_area.open_pov();"><span>POV</span></a>
   </div>
 
-  <div id="myngl-event-chat-button-invitees" style="clear:both; padding-top:300px;">
+  <div id="myngl-event-chat-button-invitees" style="clear:both; margin-top: 300px;">
     <div style="position: relative;">
       <div id="invitees-thumbs" style="height: 140px; overflow: hidden;">
         <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
@@ -57,9 +57,9 @@
   <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>  
   <div id="myngl-event-ugc-box"class="branded-tertiary">
 
-    <div id="myngl-event-ugc-thumbs">
+    <div id="myngl-event-ugc-thumbs" class="isotope js-isotope" data-isotope-options='{ "layoutMode": "fitRows", "itemSelector": ".item" }'>
       <?php foreach ($ucg as $k => $u) : ?>
-        <div class="event-ugc-thumb"><a href="#" onclick="return social_area.ugc_show(<?php print $k; ?>)"><?php print $u['thumb']; ?></a></div>
+        <div class="event-ugc-thumb item" ><a href="#" onclick="return social_area.ugc_show(<?php print $k; ?>)"><?php print $u['thumb']; ?></a></div>
       <?php endforeach; ?>
     </div>
     
@@ -122,3 +122,13 @@
     </div> 
   <?php endif;  ?>
 <?php endforeach; ?> 
+
+
+<script>
+  var $container = jQuery('#myngl-event-ugc-thumbs').imagesLoaded( function() {
+  $container.isotope({
+    "layoutMode": "fitRows", 
+    "itemSelector": ".item" 
+  });
+});
+</script>
