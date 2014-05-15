@@ -123,12 +123,3 @@
   <?php endif;  ?>
 <?php endforeach; ?> 
 
-
-<script>
-  var $container = jQuery('#myngl-event-ugc-thumbs').imagesLoaded( function() {
-  $container.isotope({
-    "layoutMode": "fitRows", 
-    "itemSelector": ".item" 
-  });
-});
-</script>
