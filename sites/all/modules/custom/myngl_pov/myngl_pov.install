@@ -1,0 +1,37 @@
+<?php
+function myngl_pov_schema() {
+  $schema['myngl_pov'] = array(
+    'description' => 'Table for myngl pov.',
+    'fields' => array(
+      'mpovid' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'myngl_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'user_id' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'question' => array(
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => FALSE,
+      ),
+      'message' => array(
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => FALSE,
+      ),
+      'date' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('mpovid'),
+  );
+
+  return $schema;
+}

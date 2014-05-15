@@ -1,9 +1,7 @@
-    var ugcScrollPosition = 0;
+var ugcScrollPosition = 0;
 (function ($) {
   $(document).ready( function() {
     setInterval(function() { social_area.message(); }, 3000); 
-    setInterval(function() { social_area.question(); }, 3000); 
-    setInterval(function() { social_area.pov_message(); }, 1000); 
     
     $('#overlay-background').bind('click', function() {
       $('#myngl-event-chat-button-invitees').delay(200).fadeIn(500);
@@ -19,8 +17,9 @@
         social_area.show_all_invitees();
       } 
     });
-  
-  var $container = $('#myngl-event-ugc-thumbs').imagesLoaded( function() {
+ 
+/* 
+    var $container = $('#myngl-event-ugc-thumbs').imagesLoaded( function() {
       $container.isotope({
         containerStyle: { 'overflow-x' :'scroll', 'overflow-y' : 'hidden', position: 'relative'},
         resizesContainer: false,
@@ -30,6 +29,7 @@
         }
       });
     });
+*/
 
   });
 })(jQuery);
@@ -74,12 +74,6 @@ var social_area = (function ($) {
       console.log('show search');
       return false;
     },
-    open_pov: function() {
-      $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
-        myngl.overlay('myngl-event-pov', 500, 400);  
-      });
-      return false;
-    },
     open_ucg: function() {
       $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
         myngl.overlay('myngl-event-ugc', 500, 900);  
@@ -114,7 +108,8 @@ var social_area = (function ($) {
           }
         }
       });
-    },
+    }
+/*
     question: function() {
       var myngl_id = Drupal.settings.myngl_id;
 
@@ -128,6 +123,7 @@ var social_area = (function ($) {
           }
       });
     },
+
     submit_message: function() {
       var myngl_id = Drupal.settings.myngl_id;
       
@@ -158,5 +154,6 @@ var social_area = (function ($) {
         });
       }
     }
+*/
   }
 }(jQuery));

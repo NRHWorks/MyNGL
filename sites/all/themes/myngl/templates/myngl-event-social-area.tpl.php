@@ -19,7 +19,7 @@
   </div>
 
   <div id="myngl-event-pov-button">
-    <a href="#" onclick="return social_area.open_pov();"><span>POV</span></a>
+    <a href="#" onclick="return pov.open();"><span>POV</span></a>
   </div>
 
   <div id="myngl-event-chat-button-invitees" style="clear:both; margin-top: 300px;">
@@ -81,9 +81,9 @@
   <hr>
   <div id="myngl-event-pov-wall" class="branded-tertiary" style="border-right: 5px solid <?php echo $tertiary_color; ?>;"></div>
   <div id="myngl-event-pov-messages" >
-    <form class="branded" action="#" onsubmit="return social_area.submit_message();">
+    <form class="branded" action="#" onsubmit="return pov.post(<?php print $user->uid; ?>);">
       <label>TYPE MESSAGE HERE.</label>
-      <input type="text" class="branded-tertiary" id="message-input" name="message-input" size="40" />
+      <input type="text" class="branded-tertiary" id="pov-message" name="pov-message" size="40" />
       <input type="submit" value="Send" />
     </form>
   </div>

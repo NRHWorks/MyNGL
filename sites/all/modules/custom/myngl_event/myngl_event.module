@@ -76,6 +76,7 @@ function myngl_event_social_area($nid) {
   drupal_add_library('system', 'ui.draggable');
   drupal_add_js(path_to_theme().'/js/social-area.js');
   drupal_add_js(path_to_theme().'/js/chat.js');
+  drupal_add_js(path_to_theme().'/js/pov.js');
   drupal_add_js(array('myngl_id' => $nid), 'setting');
 
   $myngl = node_load($nid);
@@ -132,10 +133,6 @@ function myngl_event_social_area_ajax_message($nid) {
   drupal_json_output($message);
 }
 
-function myngl_event_social_area_ajax_question($nid) {
-  $message['question'] = 'Question: '.db_query('SELECT field_pov_question_value FROM {field_data_field_pov_question} WHERE entity_id = :eid', array(':eid' => $nid))->fetchField();
-  drupal_json_output($message);
-}
 
 function myngl_event_social_area_ajax_post_pov_message($nid) {
   $node = node_load($nid);

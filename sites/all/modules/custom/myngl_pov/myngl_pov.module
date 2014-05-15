@@ -1,0 +1,63 @@
+
+<?php
+
+function myngl_pov_menu() {
+  $items['myngl-pov/fetch/%/%'] = array(
+    'title' => 'fetch pov',
+    'page callback' => 'myngl_pov_fetch',
+    'page arguments' => array(2,3),
+    'access callback' => TRUE, 
+  );
+
+  $items['myngl-pov/post/%/%'] = array(
+    'title' => 'post pov',
+    'page callback' => 'myngl_pov_post',
+    'page arguments' => array(2,3),
+    'access callback' => TRUE, 
+  );
+  
+  $items['myngl-pov/question/%'] = array(
+    'title' => 'pov question',
+    'page callback' => 'myngl_pov_question',
+    'page arguments' => array(2,3),
+    'access callback' => TRUE, 
+  );
+
+  return $items;
+}
+
+
+function myngl_pov_fetch($myngl_id, $mpovid) {
+
+  $result = db_query("SELECT * FROM myngl_pov WHERE myngl_id = :myngl_id AND mpovid > :mpovid ORDER BY mpovid DESC LIMIT 10", array(':myngl_id' => $myngl_id, ':mpovid' => $mpovid));
+
+  $messages = array();
+  foreach ($result as $r) {
+    $message = array(
+      'message' => $r->message,
+      'user_id' => $r->user_id,
+      'mpovid' => $r->mpovid,
+    );
+
+    $messages[] = $message;
+  }
+
+  drupal_json_output($messages);
+}
+
+function myngl_pov_post($myngl_id, $user_id) {
+  $question = db_query("SELECT field_pov_question_value FROM {field_data_field_pov_question} WHERE entity_id = :eid", array(':eid' => $myngl_id))->fetchField();
+
+  db_query("  INSERT INTO {myngl_pov} 
+              (myngl_id, user_id, question, message, date) 
+              VALUES (:myngl_id, :user_id, :question, :message, ".time().") ", 
+              array(':myngl_id'=>$myngl_id, ':user_id'=>$user_id, ':question'=>$question, ':message'=>$_POST['message']));
+  return;
+}
+
+function myngl_pov_question($myngl_id) {
+  $message['question'] = 'Question: '.db_query('SELECT field_pov_question_value FROM {field_data_field_pov_question} WHERE entity_id = :eid', array(':eid' => $myngl_id))->fetchField();
+  drupal_json_output($message);
+}
+
+

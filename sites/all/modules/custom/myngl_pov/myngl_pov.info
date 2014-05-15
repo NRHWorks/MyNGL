@@ -1,0 +1,4 @@
+name = MyNGL POV
+package = MyNGL
+description = Sets up functionality for myngl pov
+core = 7.x 
