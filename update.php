@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Defines the root directory of the Drupal installation.
  */
