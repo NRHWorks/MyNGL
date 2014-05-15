@@ -19,6 +19,13 @@
       } 
     });
 
+    var container = $('#myngl-event-ugc-thumbs').imagesLoaded( function() {
+      container.isotope({
+    "layoutMode": "fitRows", 
+    "itemSelector": ".item" 
+  });
+});
+
 
   });
 })(jQuery);
