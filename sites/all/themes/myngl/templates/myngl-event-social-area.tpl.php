@@ -89,7 +89,7 @@
   </div>
 </div> 
 
-<div id="myngl-event-chat" class="overlay" style="width:500px; height:450px;">
+<div id="myngl-event-chat" class="overlay branded" style="width:500px; height:450px;">
   <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>
   <div id="myngl-event-chat-messages" style="height:430px; overflow:scroll; border:1px solid #3c4350 "></div>
   <div id="myngl-event-chat-form" style="height:40px;">
@@ -106,18 +106,18 @@
         
 <?php foreach ($invitees as $k => $i) : ?>
   <?php if ($user->uid != $i['uid']) : ?> 
-    <div id="myngl-event-solo-chat-<?php print $i['uid']; ?>" class="myngl-event-solo-chat" style="width:325px; height:325px; border: 3px solid black; clear:both; display:none; position:absolute; background-color:#F0F0F0;">
+    <div id="myngl-event-solo-chat-<?php print $i['uid']; ?>" class="myngl-event-solo-chat myngl-chat branded" style="width:325px; height:325px; clear:both; display:none; position:absolute; ">
       <div class="myngl-event-solo-chat-intro" style="height: 25px;">
         <a href="#" onclick="jQuery(this).parent().parent().hide();" class="overlay-close">X</a>
         Chat with <?php print $i['name']; ?>:
       </div>
-      <div id="myngl-event-solo-chat-messages" style="height:210px; overflow:scroll; border:1px solid #3c4350;"></div>
-      <div id="myngl-event-solo-chat-form" style="height:40px;">
+      <div class="myngl-event-solo-chat-messages"style="height:210px; overflow:scroll; border:1px solid #3c4350;"></div>
+      <div class="myngl-event-solo-chat-form" style="height:40px;">
         <form action="#" onsubmit="return chat.send_solo_message(<?php global $user; print $i['uid']; ?>);" style="margin-top:10px;">
           <label>Enter Message</label>
-          <input type="hidden" id="chat-from-uid" name="chat-uid" value="<?php global $user; print $user->uid; ?>" />
-          <input type="hidden" id="chat-to-uid" name="chat-uid" value="<?php global $user; print $i['uid']; ?>" />
-          <input type="text" id="solo-chat-message-input" name="message-input" size="40" style="width:200px !important;" />
+          <input type="hidden" class="chat-from-uid" name="chat-uid" value="<?php global $user; print $user->uid; ?>" />
+          <input type="hidden" class="chat-to-uid" name="chat-uid" value="<?php global $user; print $i['uid']; ?>" />
+          <input type="text" class="solo-chat-message-input" name="message-input" size="40" style="width:200px !important;" />
           <input type="submit" value="Send" />
         </form>
       </div>
