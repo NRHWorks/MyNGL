@@ -17,10 +17,9 @@ var ugcScrollPosition = 0;
         social_area.show_all_invitees();
       } 
     });
- 
-/* 
     var $container = $('#myngl-event-ugc-thumbs').imagesLoaded( function() {
       $container.isotope({
+        itemSelector : '.item',
         containerStyle: { 'overflow-x' :'scroll', 'overflow-y' : 'hidden', position: 'relative'},
         resizesContainer: false,
         layoutMode: 'masonryHorizontal',
@@ -29,8 +28,6 @@ var ugcScrollPosition = 0;
         }
       });
     });
-*/
-
   });
 })(jQuery);
 
@@ -78,6 +75,18 @@ var social_area = (function ($) {
       $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
         myngl.overlay('myngl-event-ugc', 500, 900);  
       });
+      setTimeout(function() {
+        $('#myngl-event-ugc-thumbs').isotope({
+          itemSelector : '.item',
+          containerStyle: { 'overflow-x' :'scroll', 'overflow-y' : 'hidden', position: 'relative'},
+          resizesContainer: false,
+          layoutMode: 'masonryHorizontal',
+          masonryHorizontal: {
+            rowHeight: 150
+          }
+        });
+        console.log("CHANGE");
+      }, 250);
       return false;
     },
     ugc_show : function(id) {

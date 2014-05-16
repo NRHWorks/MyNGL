@@ -1244,7 +1244,8 @@ body ::-webkit-scrollbar-thumb {
 
   /* --- social overlays --- */
 
-  .overlay.branded .overlay-close {
+  .overlay.branded .overlay-close, 
+  .branded.ui-draggable .overlay-close {
     color: inherit;
   }
 
@@ -1252,6 +1253,7 @@ body ::-webkit-scrollbar-thumb {
     padding-top: 5px;
     padding-right: 10px;
     padding-left: 10px;
+    box-shadow: 1px 1px 3px #333333;
   }
 
   #myngl-event-pov #myngl-event-pov-question {
@@ -1283,7 +1285,8 @@ body ::-webkit-scrollbar-thumb {
     margin-top: 5px;
   }
 
-  #myngl-event-pov #myngl-event-pov-messages form input[type="submit"] {
+  #myngl-event-pov #myngl-event-pov-messages form input[type="submit"],
+  .myngl-chat-form form input[type="submit"] {
     float: right;
     margin-right: 5px;
     background-image: none;
@@ -1292,12 +1295,59 @@ body ::-webkit-scrollbar-thumb {
     color: inherit;
     padding: 5px;
   }
+
+
+  div.myngl-chat {
+    padding: 15px;
+    box-shadow: 1px 1px 3px #b9b9b9;
+  }
+
+  .myngl-event-solo-chat-intro {
+    height: 35px;
+    font-size: 1.2em;
+  }
+
+  .myngl-chat-form form input[type="submit"] {
+    margin-right: 0;
+    font-size: 1.3em;
+  }
  
-  #myngl-event-pov form input[type="text"] {
+  #myngl-event-pov form input[type="text"]  {
     box-shadow: inset 1px -1px 2px #b9b9b9;
     width:394px !important; 
     height: 50px; 
     border:none;
+  }
+
+  .myngl-chat-form form input[type="text"] {
+    height: 50px; 
+    border:none;
+    box-shadow: inset 1px -1px 2px #b9b9b9;
+    width: 317px !important; 
+    margin-left: 1px;
+  }
+
+  .myngl-chat-messages {
+    box-shadow: inset 1px -1px 2px #b9b9b9;
+  }
+
+  .myngl-chat-circles {
+    float:left; 
+    text-align: center; 
+    width: 50px;
+    height: 50px;
+    margin-top: 15px;
+    margin-right: 10px;
+
+  }
+
+  .myngl-chat-circles a {
+    padding: 0 !important;
+  }
+
+  .myngl-chat-circles img {
+    max-height: 100%;
+    max-width: 100%;
   }
 
 
@@ -1313,6 +1363,7 @@ body ::-webkit-scrollbar-thumb {
 
   #myngl-event-ugc {
     padding: 30px 25px 30px 25px;
+    box-shadow: 2px 2px 3px #333333
   }
 
   #myngl-event-ugc .overlay-close {
@@ -1323,6 +1374,7 @@ body ::-webkit-scrollbar-thumb {
   #myngl-event-ugc-box {
     padding: 35px;
     height: 435px;
+    box-shadow: 1px 1px 0 #b9b9b9;
   }
 
   #myngl-event-ugc-thumbs {
@@ -1366,10 +1418,6 @@ body ::-webkit-scrollbar-thumb {
      left: 880px;
   }
 
-  .event-ugc-thumb {
-
-    padding: 5px;
-  }
 
 .isotope {
   background: #DDD;
@@ -1388,8 +1436,9 @@ body ::-webkit-scrollbar-thumb {
 
 .item {
   float: left;
-  width: 140px;
   height: 140px;
+  width: 140;
+  margin: 5px;
 }
 
 .width2 {
