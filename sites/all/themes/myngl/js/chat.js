@@ -63,7 +63,8 @@ var chat = (function ($) {
           return false;  
         }
       },
-      show_solo_chat : function(uid) {
+      show_solo_chat_bottom : function(uid) {
+        $("#myngl-event-invitee-info-" + uid).fadeOut(100);
         $("#myngl-event-solo-chat-" + uid).fadeIn(100);
         
         $("#myngl-event-solo-chat-" + uid).draggable();
@@ -74,7 +75,38 @@ var chat = (function ($) {
         $("#myngl-event-solo-chat-" + uid).css('left', o.left + 'px');
 
         return false;
+     },
+      show_invitee_info : function(uid) {
+        $("#myngl-event-invitee-info-" + uid).fadeIn(100);
+
+        var o = $("#invitee-thumb-" + uid).offset();
+
+        $("#myngl-event-invitee-info-" + uid).css('top', (o.top - 200) + 'px');
+        $("#myngl-event-invitee-info-" + uid).css('left', o.left + 'px');
+
+        return false;
+     },
+     show_solo_chat_top : function(uid) {
+      if (!$("#myngl-event-solo-chat-" + uid).is(':visible')) {
+          $("#myngl-event-solo-chat-" + uid).fadeIn(100);
+          
+          $("#myngl-event-solo-chat-" + uid).draggable();
+
+          var left = 25;
+          $(".myngl-event-solo-chat").each( function() {
+            var o = $(this).offset();
+
+            if ($(this).is(':visible') && ($(this).attr('id') != "myngl-event-solo-chat-" + uid)) {
+              left = o.left + 350;
+            }
+          });
+
+          $("#myngl-event-solo-chat-" + uid).css('top', 300 + 'px');
+          $("#myngl-event-solo-chat-" + uid).css('left', left + 'px');
+        }
+        return false;
      }
+
     }
   
 }(jQuery));

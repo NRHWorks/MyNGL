@@ -10,8 +10,15 @@
   <div class="branded-secondary point-badge">
     <p>45</p>
   </div>
-  <div class="btn-branded" id="myngl-event-chat-button" border="1px solid red;">  
-    <a href="#" onclick="return chat.open_chat();"><i class="fa fa-comment-o fa-2x"></i></a>
+  <div class="btn-branded" id="myngl-event-chat-button">  
+    <a href="#" onclick="jQuery('#invitee-chat-icons').toggle(); return false;"><i class="fa fa-comment-o fa-2x"></i></a>
+    <div id="invitee-chat-icons" style="display:none; float:right;">
+        <?php foreach ($invitees as $k => $i) : ?>
+        <div id="invitee-chat-thumb-<?php print $i['uid']; ?>" style="<?php if ($user->uid == $i['uid']) { print ' display:none; '; } ?>float:left; text-align: center; width: 130px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
+          <a href="#" onclick="return chat.show_solo_chat_top(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
+        </div>
+        <?php endforeach; ?> 
+    </div>
   </div>
   
   <div id="myngl-event-ugc-button" style="clear:both;">
@@ -28,7 +35,7 @@
         <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
         <?php foreach ($invitees as $k => $i) : ?>
         <div id="invitee-thumb-<?php print $i['uid']; ?>" style="<?php if ($user->uid == $i['uid']) { print ' display:none; '; } ?>float:left; text-align: center; width: 130px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
-          <a href="#" onclick="return chat.show_solo_chat(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
+          <a href="#" onclick="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
           <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
         </div>
         <?php endforeach; ?> 
@@ -122,6 +129,10 @@
         </form>
       </div>
     </div> 
+    <div id="myngl-event-invitee-info-<?php print $i['uid']; ?>" style="background-color: #FFF; border: 1px solid black; height:200px; width:200px; position:absolute; display:none;" >
+      <?php print $i['name'].': Need to add tagline and info here'; ?>
+      <a href="#" onclick="return chat.show_solo_chat_bottom(<?php print $i['uid']; ?>)">Start Chat</a>
+    </div>
   <?php endif;  ?>
 <?php endforeach; ?> 
 
