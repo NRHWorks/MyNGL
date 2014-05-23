@@ -21,12 +21,10 @@
     </div>
   </div>
   
-  <div id="myngl-event-ugc-button" style="clear:both;">
-    <a href="#" onclick="return social_area.open_ucg(); container();"><span>UGC</span></a>
+  <div id="myngl-event-ugc-button"  onclick="return social_area.open_ucg(); container();">
   </div>
 
-  <div id="myngl-event-pov-button">
-    <a href="#" onclick="return pov.open();"><span>POV</span></a>
+  <div id="myngl-event-pov-button" onclick="return pov.open();">
   </div>
 
   <div id="myngl-event-chat-button-invitees" style="clear:both; margin-top: 300px;">

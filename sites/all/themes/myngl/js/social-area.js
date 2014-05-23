@@ -7,6 +7,16 @@ var ugcScrollPosition = 0;
       $('#myngl-event-chat-button-invitees').delay(200).fadeIn(500);
     });
 
+    /*
+    $( window ).resize(function() {
+      if (($( window ).width() / $( window ).height()) > 1) {
+        console.log('tall');
+      } else {
+        console.log('wide');
+      }
+    });
+    */
+
 
     $("input[name='filter']").change(function(){
       if ($("input[@name='filter']:checked").val() == 'fb-friends'){
@@ -118,51 +128,5 @@ var social_area = (function ($) {
         }
       });
     }
-/*
-    question: function() {
-      var myngl_id = Drupal.settings.myngl_id;
-
-      $.ajax({
-        type: "GET",
-        url: "/myngl-event/" + myngl_id + "/ajax/question",
-        success: function(data) {
-            if ($("#myngl-event-pov-question").html() != data.question) {
-              $("#myngl-event-pov-question").html(data.question); 
-            } 
-          }
-      });
-    },
-
-    submit_message: function() {
-      var myngl_id = Drupal.settings.myngl_id;
-      
-      $.ajax({
-        type: "POST",
-        url: "/myngl-event/" + myngl_id + "/ajax/post-pov-message",
-        data: {'pov_message' : $('#message-input').val()}
-      });
-      
-      $('#message-input').val('Enter Message');
-      $('#message-input').addClass('form-light');    
-
-      return false;  
-    },
-    pov_message: function() {
-      if ($("#myngl-event-pov").is(':visible')) {
-        var myngl_id = Drupal.settings.myngl_id;
-
-        $.ajax({
-          type: "GET",
-          url: "/myngl-event/" + myngl_id + "/ajax/pov_message",
-          success: function(data) {
-            $("#myngl-event-pov-wall").html('');
-            data.forEach(function(entry) {
-              $("#myngl-event-pov-wall").append(entry + '<br /><br />');
-            });
-          }
-        });
-      }
-    }
-*/
   }
 }(jQuery));

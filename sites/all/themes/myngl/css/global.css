@@ -1446,7 +1446,29 @@ body ::-webkit-scrollbar-thumb {
 }
 
 
+/* -- quick fixes */
 
+#myngl-event-ugc-button {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -250px;
+  margin-left: -550px;
+  cursor: pointer;
+}
+
+#myngl-event-pov-button {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: -200px;
+  margin-left: -300px;
+  cursor: pointer;
+}
 
 /*  ----- END LAYOUT------------------------------------------------- */    
 
@@ -1461,7 +1483,8 @@ body ::-webkit-scrollbar-thumb {
   }
 
   body.page-myngl-event {
-    background-image: none;
+    background: url(../images/myngl-godiva-bg.png) center center no-repeat;
+    background-size: cover;
   } 
 
   input[type="button"],
