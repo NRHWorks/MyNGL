@@ -1139,8 +1139,18 @@ body ::-webkit-scrollbar-thumb {
   .myngl-event-profile-pic.chat {
     height: 50px;
     width: 50px;
-    margin: 10px;
+    margin: 10px 10px -20px 10px;
    }
+  
+  .myngl-event-profile-pic.solo-chat {
+    height: 30px;
+    width: 30px;
+    margin: 10px 5px -10px 10px;
+   }
+
+  .solo-message {
+    margin-bottom: 15px;
+  }
 
   .social-bg {
     height: 100%;
@@ -1242,6 +1252,22 @@ body ::-webkit-scrollbar-thumb {
     margin: 28px;
   }
 
+  #myngl-event-ugc-box {
+    overflow: hidden;
+  }
+  
+  #myngl-event-ugc-box-inside {
+    overflow: hidden;
+  }
+  
+  #myngl-event-ugc-box-slider {
+    margin-left: -200px;
+  }
+
+  .myngl-event-ugc-content {
+    text-align: center;
+  }
+
   /* --- social overlays --- */
 
   .overlay.branded .overlay-close, 
@@ -1279,6 +1305,10 @@ body ::-webkit-scrollbar-thumb {
     padding-right: 12px;
     padding-left: 12px;
     padding-top: 12px;
+  }
+
+  #myngl-event-pov .pov-message {
+    margin-bottom: 20px;
   }
 
   #myngl-event-pov #myngl-event-pov-messages form {

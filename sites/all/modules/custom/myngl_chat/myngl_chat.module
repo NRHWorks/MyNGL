@@ -16,16 +16,16 @@ function myngl_chat_menu() {
     'access callback' => TRUE, 
   );
 
-  $items['myngl-chat/get-solo-message/%/%/%'] = array(
+  $items['myngl-chat/solo-fetch/%/%'] = array(
     'title' => 'MyNGL Lobby',
-    'page callback' => 'myngl_chat_get_solo_message',
-    'page arguments' => array(2,3,4),
+    'page callback' => 'myngl_chat_solo_fetch',
+    'page arguments' => array(2,3),
     'access callback' => TRUE, 
   );
 
-  $items['myngl-chat/send-solo-message/%/%/%'] = array(
+  $items['myngl-chat/solo-post/%/%/%'] = array(
     'title' => 'MyNGL Lobby',
-    'page callback' => 'myngl_chat_send_solo_messages',
+    'page callback' => 'myngl_chat_solo_post',
     'page arguments' => array(2,3,4),
     'access callback' => TRUE, 
   );
@@ -57,10 +57,38 @@ function myngl_chat_send_message($myngl_id, $user_id) {
   return;
 }
 
-function myngl_chat_get_solo_message($myngl_id, $from_user_id, $to_user_id) {
-  return "Myngl ID: $myngl_id";
+function myngl_chat_solo_fetch($myngl_id, $user_id, $latest) {
+  $result = db_query("SELECT * FROM {myngl_solo_chat} WHERE mcsid > :mcsid AND (from_user_id = :user_id OR to_user_id = :user_id) ORDER BY mcsid DESC", array(':mcsid' => $latest, ':user_id' => $user_id));
+
+  $data = array();
+  foreach ($result as $r) {
+    $chat = array(
+      'mcsid' => $r->mcsid,
+      'from_user_id' => $r->from_user_id,
+      'to_user_id' => $r->to_user_id,
+      'message' => $r->message,
+    );
+
+    $data[] = $chat;
+  }
+
+  return drupal_json_output($data);
 }
 
-function myngl_chat_send_solo_message($myngl_id, $from_user_id, $to_user_id) {
-  return "Myngl ID: $myngl_id";
+function myngl_chat_solo_post($myngl_id, $from_user_id, $to_user_id) {
+  print 'here';
+
+  db_query("  INSERT INTO {myngl_solo_chat} 
+              (myngl_id, from_user_id, to_user_id, message, date) 
+              VALUES 
+              (:myngl_id, :from_user_id, :to_user_id, :message, ".time().")", 
+              array(  ':myngl_id'     => $myngl_id,
+                      ':from_user_id' => $from_user_id,
+                      ':to_user_id'   => $to_user_id,
+                      'message'       => $_POST['message'])
+  );
+
+  print '?????';
+
+  return;
 }

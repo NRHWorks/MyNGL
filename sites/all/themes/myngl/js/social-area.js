@@ -7,16 +7,6 @@ var ugcScrollPosition = 0;
       $('#myngl-event-chat-button-invitees').delay(200).fadeIn(500);
     });
 
-    /*
-    $( window ).resize(function() {
-      if (($( window ).width() / $( window ).height()) > 1) {
-        console.log('tall');
-      } else {
-        console.log('wide');
-      }
-    });
-    */
-
 
     $("input[name='filter']").change(function(){
       if ($("input[@name='filter']:checked").val() == 'fb-friends'){
@@ -27,6 +17,29 @@ var ugcScrollPosition = 0;
         social_area.show_all_invitees();
       } 
     });
+
+    var ugc_width = 0;
+    $('.event-ugc-thumb').each( function() {
+      ugc_width += $(this).children('a').children('img').width();
+      ugc_width += 20;
+    });
+
+    ugc_width = Math.floor(ugc_width / 3);
+
+    $("#myngl-event-ugc-thumbs").css('width', ugc_width + 'px');
+
+
+/*
+    $( window ).resize(function() {
+      if (($( window ).width() / $( window ).height()) > 1) {
+        console.log('tall');
+      } else {
+        console.log('wide');
+      }
+    });
+*/
+
+/*
     var $container = $('#myngl-event-ugc-thumbs').imagesLoaded( function() {
       $container.isotope({
         itemSelector : '.item',
@@ -38,14 +51,33 @@ var ugcScrollPosition = 0;
         }
       });
     });
+*/
+
   });
 })(jQuery);
 
 var social_area = (function ($) {
   return {
-    ugcScroll : function (value) {
-      ugcScrollPosition += value;
-      $('#myngl-event-ugc-thumbs').scrollLeft(ugcScrollPosition);
+    ugc_left : function (value) {
+      ugcScrollPosition += $('#myngl-event-ugc-box-inside').width();
+
+      if (ugcScrollPosition > 0) {
+        ugcScrollPosition = 0;
+      }
+
+      $('#myngl-event-ugc-box-slider').animate({'margin-left': ugcScrollPosition});
+
+      return false;
+    },
+    ugc_right : function (value) {
+      ugcScrollPosition -= $('#myngl-event-ugc-box-inside').width();
+
+      if (ugcScrollPosition < (($("#myngl-event-ugc-thumbs").width() - $('#myngl-event-ugc-box-inside').width()) * -1)) {
+        ugcScrollPosition = ($("#myngl-event-ugc-thumbs").width() - $('#myngl-event-ugc-box-inside').width()) * -1;
+      }
+      
+      $('#myngl-event-ugc-box-slider').animate({'margin-left': ugcScrollPosition});
+
       return false;
     },
     show_fb_friends : function() {
@@ -85,6 +117,7 @@ var social_area = (function ($) {
       $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
         myngl.overlay('myngl-event-ugc', 500, 900);  
       });
+      /*
       setTimeout(function() {
         $('#myngl-event-ugc-thumbs').isotope({
           itemSelector : '.item',
@@ -97,6 +130,7 @@ var social_area = (function ($) {
         });
         console.log("CHANGE");
       }, 250);
+      */
       return false;
     },
     ugc_show : function(id) {

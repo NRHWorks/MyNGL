@@ -78,6 +78,7 @@ function myngl_event_social_area($nid) {
   drupal_add_js(path_to_theme().'/js/chat.js');
   drupal_add_js(path_to_theme().'/js/pov.js');
   drupal_add_js(array('myngl_id' => $nid), 'setting');
+  drupal_add_js(array('user_id' => $user->uid), 'setting');
 
   $myngl = node_load($nid);
   
@@ -100,6 +101,7 @@ function myngl_event_social_area($nid) {
                   'pic' => theme_image_style(array('style_name' => 'user_profile_circle_image', 'path' => $p->field_picture['und'][0]['uri'], 'attributes' => array('class' => 'myngl-event-profile-pic'), 'height' => null, 'width' => null)),
                   'fb' => $fb,
                   'room' => $room,
+                  'tagline' =>  $ic->field_myngl_tagline['und'][0]['value'],  
                 );
 
     for ($x=1;$x<=10;$x+=1) {

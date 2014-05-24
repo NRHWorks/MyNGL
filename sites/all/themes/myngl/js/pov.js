@@ -25,7 +25,7 @@ var pov = (function ($) {
 
             $("#myngl-event-pov-wall").html('');
             data.forEach(function(entry) {
-              $("#myngl-event-pov-wall").append('  <div id="pov-message - ' + entry.mpovid + '" class="pov-message"> <img src="' + $("#invitee-thumb-" + entry.user_id  + " img").attr('src') + '" class="chat myngl-event-profile-pic"  /> <strong>' + $("#invitee-name-" + entry.user_id).html()  + ':</strong>  ' +  entry.message + '</div>');
+              $("#myngl-event-pov-wall").append('  <div id="pov-message-' + entry.mpovid + '" class="pov-message"> <img src="' + $("#invitee-thumb-" + entry.user_id  + " img").attr('src') + '" class="chat myngl-event-profile-pic"  /> <strong>' + $("#invitee-name-" + entry.user_id).html()  + ':</strong>  ' +  entry.message + '</div>');
             });
           }
         });
@@ -59,23 +59,7 @@ var pov = (function ($) {
             }
         });
       } 
-
-    /* 
-      if ($('#chat-message-input').val() != 'Enter Message') { 
-          $.ajax({
-            type: "POST",
-            url: "/myngl-chat/send-message/" + myngl_id + "/" + $("#chat-uid").val(),
-            data: {'message' : $('#chat-message-input').val()}
-          });
-        
-          $('#chat-message-input').val('Enter Message');
-          $('#chat-message-input').addClass('form-light');    
-
-          return false;  
-        }
-*/
-      }
     }
-  
+  }
 }(jQuery));
 

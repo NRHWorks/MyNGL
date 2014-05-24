@@ -20,8 +20,10 @@
 
     $('form').submit( function () {
       $(':text').each( function () {
-        if ($(this).val() == $(this).siblings('label').html().replace(/<span.*/,'')) {
-          $(this).val('');
+        if ($(this).siblings('label').html()) {
+          if ($(this).val() == $(this).siblings('label').html().replace(/<span.*/,'')) {
+            $(this).val('');
+          }
         }
       });
     });
