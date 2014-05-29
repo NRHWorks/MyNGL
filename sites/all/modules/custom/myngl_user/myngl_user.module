@@ -69,6 +69,10 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
       break;
   
     case 'user_pass' :
+      $form['message'] = array (
+        '#markup' => '<p>Forgot your password for theMyngl?  No problem.  Enter your Email address and we’ll send it to you.  </p>',
+        '#weight' => 0,
+      );
       $form['cancel'] = array (
         '#markup' => '<a href="/user" id="forgot-password-cancel">Cancel</a>',
         '#weight' => 200
