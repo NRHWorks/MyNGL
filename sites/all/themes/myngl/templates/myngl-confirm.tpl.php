@@ -20,7 +20,7 @@
 <div id="switch-date" class="overlay">
   <a href="#" onclick="return myngl.overlay_close();" class="overlay-close">X</a>
   <h2>OTHER DATES</h2>
-  <p>This Myngl will also run on the following dates.  Pick one that will work for you:</p>
+  <p><strong><?php print $node->title; ?></strong> will also be presented on the following dates. Please select the date that works best for you:</p>
   <form id="change-date-form" style="margin-top:30px;" 
     onsubmit="  myngl.overlay_close();
                 jQuery.cookie('Drupal.visitor.rsvp_date', jQuery('input:radio:checked').val()); 
