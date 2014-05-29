@@ -13,5 +13,5 @@
 </div>
 
 <div id="myngl-questions-below-form">
-  <a href="/myngl/<?php print $myngl->nid; ?>/event">Skip</a>
+  <a href="/myngl-event/<?php print $myngl->nid; ?>/lobby">Skip</a>
 </div>
