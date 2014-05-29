@@ -16,15 +16,12 @@
 <p>RSVP CONFIRMED!</p>
 <p>We look forward to seeing you at “<?php print $node->title; ?>”.
 <p>Now, here’s a chance to invite your friends. And…your first chance to begin earning valuable reward Myngl Points to redeem for great gifts at theMyngl.
-<br />
 <p>Invite your friends to the “Godiva Chocolate & Fashion Myngl” via email:<br />
 (Earn 10 MynglPoints per invite)
 </p>
-<br />
 <p>Share this event on your social networks.<br />
 (Earn 5 Myngl  Points per post)
 </p>
-<br />
 <p>We want you to be part of theMyngl!  Be creative! Share your videos and photos to be shown at the event by uploading here.<br />
 (Earn 20 Myngl Points per submission)
 </p>
