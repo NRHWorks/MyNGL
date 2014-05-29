@@ -11,7 +11,7 @@
     <p>45</p>
   </div>
   <div class="btn-branded" id="myngl-event-chat-button">  
-    <a href="#" onclick="jQuery('#invitee-chat-icons').toggle(); return false;"><i class="fa fa-comment-o fa-2x"></i></a>
+    <a href="#" onclick="jQuery('#invitee-chat-selector').toggle(); return false;"><i class="fa fa-comment-o fa-2x"></i></a>
     <div id="invitee-chat-icons" style="display:none; float:right;">
         <?php foreach ($invitees as $k => $i) : ?>
         <div id="invitee-chat-thumb-<?php print $i['uid']; ?>" style="<?php if ($user->uid == $i['uid']) { print ' display:none; '; } ?>" class="myngl-chat-circles invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
@@ -19,6 +19,17 @@
         </div>
         <?php endforeach; ?> 
     </div>
+  </div>
+    
+  <div id="invitee-chat-selector" style="float:right;">
+    <div id="invitee-chat-selector-search">SEARCH USERNAME</div>
+    <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
+      <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)">
+        <?php print $i['pic']; ?>
+        <?php print $i['name']; ?>
+      </a>
+    <?php endif; endforeach; ?> 
+    <br /><br />
   </div>
   
   <div id="myngl-event-ugc-button"  onclick="return social_area.open_ucg(); container();">

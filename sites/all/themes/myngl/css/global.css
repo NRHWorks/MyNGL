@@ -1744,4 +1744,43 @@ body ::-webkit-scrollbar-thumb {
 /*  ----- END ADD THIS ------------------------------------------------- */    
 
 
+/* --- sort these out --- */
+
+#invitee-chat-selector {
+  border: 15px  solid #53302a;
+  background-color: #e2dbd2;
+  float: right;
+  clear: right;
+  margin-right: 50px;
+  margin-top: 25px;
+  display: none;
+}
+
+#invitee-chat-selector a {
+  color: #666;
+  padding-left: 20px;
+  display: block;
+  width: 220px;
+  height: 75px;
+}
+
+#invitee-chat-selector a:hover {
+  background-color: #cecac2;
+}
+
+#invitee-chat-selector img {
+  height: 40px;
+  width: 40px;
+  margin-right: 5px;
+  margin-bottom: -15px;
+  margin-top: 20px;
+}
+
+#invitee-chat-selector-search {
+  color: #666;
+  border: 2px solid #b9b9b9;
+  padding: 5px;
+  font-size: 18px;
+  margin: 20px;
+}
 /*  ----- END STYLE ------------------------------------------------- */    
