@@ -1,0 +1,32 @@
+<?php
+
+function myngl_theater_menu() {
+  $items['myngl-event/%/theater'] = array(
+    'title' => 'MyNGL Theater',
+    'page callback' => 'myngl_theater_theater',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+
+  return $items;
+}
+
+
+function myngl_theater_theme() {
+  $items['myngl_theater_theater'] =  array(
+                          'template' => 'myngl-theater-theater',
+                          'variables' => array ('myngl' => NULL, 'brand' => NULL),
+                        );
+
+
+  return $items;
+}
+
+function myngl_theater_theater($nid) {
+  $myngl = node_load($nid);
+
+  $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
+
+  return theme('myngl_theater_theater', array('myngl' => $myngl, 'brand' => $brand));
+}

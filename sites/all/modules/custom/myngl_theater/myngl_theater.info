@@ -1,0 +1,4 @@
+name = MyNGL Theater
+package = MyNGL
+description = Sets up functionality for myngl event theater page
+core = 7.x
