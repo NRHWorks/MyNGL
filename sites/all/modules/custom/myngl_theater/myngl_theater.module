@@ -9,6 +9,13 @@ function myngl_theater_menu() {
   );
 
 
+  $items['myngl-event/theater/question/%/%'] = array(
+    'title' => 'MyNGL Lobby',
+    'page callback' => 'myngl_theater_question_post',
+    'page arguments' => array(3,4),
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
 
@@ -24,9 +31,32 @@ function myngl_theater_theme() {
 }
 
 function myngl_theater_theater($nid) {
+  global $user;
+
+  drupal_add_js(path_to_theme().'/js/theater.js');
+  drupal_add_js(array('myngl_id' => $nid), 'setting');
+  drupal_add_js(array('user_id' => $user->uid), 'setting');
+
   $myngl = node_load($nid);
 
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
   return theme('myngl_theater_theater', array('myngl' => $myngl, 'brand' => $brand));
+}
+
+
+
+function myngl_theater_question_post($myngl_id, $from_user_id) {
+
+
+  $k = db_insert('myngl_theater_question')->fields(
+    array(
+     'myngl_id' => $myngl_id,
+     'user_id'  => $from_user_id,
+     'question' => $_POST['question'],
+     'question_date'     =>time(),
+    )
+  )->execute();
+
+  return;
 }

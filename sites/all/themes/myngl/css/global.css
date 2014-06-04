@@ -1,8 +1,8 @@
 /* ---- PALETTE: -----
- 
+
        gray: #999
   dark gray: #3c4350
-  
+
 */
 
 
@@ -14,19 +14,19 @@ body ::-webkit-scrollbar:horizontal {
 body ::-webkit-scrollbar {
     width: 8px;
 }
- 
+
 body ::-webkit-scrollbar-track {
     border-radius: 5px;
     background-color: #b9b9b9;
 }
- 
+
 body ::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background-color: #3c4350;
 }
 
 /**********************************************************************/
-/*  ----- TYPOGRAPHY ------------------------------------------------ */    
+/*  ----- TYPOGRAPHY ------------------------------------------------ */
 /**********************************************************************/
 
   body {
@@ -51,7 +51,7 @@ body ::-webkit-scrollbar-thumb {
     color: #3c4350;
     font-size: 18px;
   }
-  
+
   form input[type="text"].form-light,
   form input[type="password"].form-light {
     color: #AAA;
@@ -64,12 +64,12 @@ body ::-webkit-scrollbar-thumb {
     text-transform: uppercase;
     color: #3c4350;
   }
- 
+
   form label {
     font: bold 16px 'Lato', 'sans-serif';
     color: #000;
   }
- 
+
   a {
     color: #3c4350;
     font: 300 18px 'Lato', 'sans-serif';
@@ -86,7 +86,7 @@ body ::-webkit-scrollbar-thumb {
     font-weight: bold;
     font-size: 14px;
   }
-  
+
   a.link-small-light {
     font-weight: normal;
     font-size: 12px;
@@ -105,7 +105,7 @@ body ::-webkit-scrollbar-thumb {
   #toolbar a {
     font-size: 14px;
   }
-  
+
   a.overlay-close {
     font-size: 18px;
   }
@@ -125,15 +125,15 @@ body ::-webkit-scrollbar-thumb {
       font-size: 18px;
       line-height: 36px;
     }
-    
+
     div#profile-info .label {
       font-size: 16px;
     }
-    
+
     div#profile-info .interests {
       font-size: 14px;
     }
-    
+
     div#profile-menu {
       color: #999;
     }
@@ -142,14 +142,14 @@ body ::-webkit-scrollbar-thumb {
       top: -2px;
     }
   /* --- end profile page --- */
-  
+
   /* --- profile form --- */
     form#user-profile-form .profile-name {
       font-size: 14px;
       color: #999;
       font-weight: bold;
     }
-    
+
     form#user-profile-form .profile-name strong {
       font-size: 18px;
       color: #3c4350;
@@ -161,18 +161,18 @@ body ::-webkit-scrollbar-thumb {
     div#rewards-dashboard .title {
       font-size: 18px;
     }
-    
+
     div#rewards-dashboard .intro {
       font-size: 16px;
       font-weight: bold;
     }
-    
+
     div#rewards-dashboard #points-circle {
       color: #FFF;
       font: 42px 'Georgia';
       line-height: 125px;
     }
-    
+
     div#rewards-dashboard .points {
       font-size: 20px;
       font-weight: bold;
@@ -208,7 +208,7 @@ body ::-webkit-scrollbar-thumb {
       color: #FFF;
       font: 32px 'Georgia';
     }
-    
+
     div.activity div.activity-details {
       float: left;
       width: 300px;
@@ -242,7 +242,7 @@ body ::-webkit-scrollbar-thumb {
       font-size: 18px;
     }
   /* --- end activity page --- */
-    
+
 
   /* --- rsvp page --- */
     #rsvp-confirm-wrapper div#rsvp-confirm-title {
@@ -258,22 +258,22 @@ body ::-webkit-scrollbar-thumb {
       font-family: Georgia;
       margin-bottom: 0;
     }
-    
+
     #rsvp-confirm-wrapper div#rsvp-confirm-description {
-      font-size: 16px; 
+      font-size: 16px;
     }
-    
+
     #rsvp-confirm-wrapper div#rsvp-confirm-login {
-      font-size: 14px; 
+      font-size: 14px;
       color: #957f57;
       margin-bottom: -20px;
     }
-    
+
     #rsvp-confirm-wrapper div#rsvp-confirm-login a {
       font-size: 16px;
     }
   /* --- end rsvp page --- */
-  
+
   /* --- rsvp confirm page --- */
     #confirm-invite-wrapper #confirm-invite-details a {
       font-size: 16px;
@@ -288,14 +288,14 @@ body ::-webkit-scrollbar-thumb {
       font-weight: normal;
       text-decoration: underline;
       margin-left: 20px;
-    } 
+    }
 
     #confirm-invite-invite p:first-of-type {
       margin-top: .5em;
     }
 
   /* --- end rsvp iconfirm page --- */
-  
+
   /* --- overlay date form --- */
   .form-item-date label {
     color: #FFF;
@@ -304,10 +304,10 @@ body ::-webkit-scrollbar-thumb {
   }
   /* --- end overlay date form --- */
 
-/*  ----- END TYPOGRAPHY -------------------------------------------- */    
+/*  ----- END TYPOGRAPHY -------------------------------------------- */
 
 /**********************************************************************/
-/*  ----- LAYOUT ---------------------------------------------------- */    
+/*  ----- LAYOUT ---------------------------------------------------- */
 /**********************************************************************/
 
   html {
@@ -342,7 +342,7 @@ body ::-webkit-scrollbar-thumb {
   form label {
     display: none;
     margin-bottom: 5px;
-    
+
   }
 
   form .form-actions {
@@ -374,7 +374,7 @@ body ::-webkit-scrollbar-thumb {
     padding: 60px 60px 10px 60px;
     width: 730px;
   }
- 
+
   #content-left, #content-right {
     float: left;
     padding: 15px;
@@ -388,7 +388,7 @@ body ::-webkit-scrollbar-thumb {
 
   #content .profile {
     margin: 0 0;
-  } 
+  }
 
   div.border-bottom a {
     margin-left: 30px;
@@ -408,27 +408,27 @@ body ::-webkit-scrollbar-thumb {
 
   div.overlay {
     padding: 20px;
-    position:absolute;    
-    top:0; 
-    left:0; 
-    bottom:0; 
+    position:absolute;
+    top:0;
+    left:0;
+    bottom:0;
     right:0;
-    z-index:200; 
-    background-color:#FFF; 
+    z-index:200;
+    background-color:#FFF;
     display:none;
     margin:auto;
   }
 
 
   div#overlay-background {
-    width:100%; 
-    height:100%;  
-    background-color:#000; 
-    position:absolute; 
-    top:0; 
-    left:0; 
-    z-index:100; 
-    opacity:.7; 
+    width:100%;
+    height:100%;
+    background-color:#000;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:100;
+    opacity:.7;
     display:none;
   }
 
@@ -473,7 +473,7 @@ body ::-webkit-scrollbar-thumb {
       margin-left: 30px;
     }
   /* --- end user login form --- */
-  
+
   /* --- user password form --- */
     form#user-pass #forgot-password-cancel {
       float: right;
@@ -506,7 +506,7 @@ body ::-webkit-scrollbar-thumb {
       height: 268px;
     }
   /* --- end user password form --- */
-  
+
   /* --- user registration form --- */
     form#user-register-form .description {
       display: none;
@@ -521,7 +521,7 @@ body ::-webkit-scrollbar-thumb {
     form#user-register-form input[type="text"], form#user-register-form input[type="password"] {
       width: 395px;
     }
-    
+
     form#user-register-form input#edit-field-last-name-und-0-value {
       width: 185px;
     }
@@ -529,7 +529,7 @@ body ::-webkit-scrollbar-thumb {
     form#user-register-form input#form-item {
       width: 395px;
     }
-    
+
     form#user-register-form #registration-facebook {
       float: right;
       margin: -50px 25px 0 0;
@@ -543,7 +543,7 @@ body ::-webkit-scrollbar-thumb {
       float: right;
       margin-top: -77px;
     }
-    
+
     form#user-register-form .password-strength {
       float: left;
       margin-bottom: 15px;
@@ -554,7 +554,7 @@ body ::-webkit-scrollbar-thumb {
       color: #2e64b0;
     }
   /* --- end user registration form --- */
-  
+
   /* --- profile page --- */
     div#profile-points-total {
       border-radius: 35px;
@@ -563,11 +563,11 @@ body ::-webkit-scrollbar-thumb {
       text-align: center;
       width: 55px;
     }
-  
+
     p.points {
       padding-top: 17%;
     }
-    
+
     div#profile-info {
       margin-top: 20px;
     }
@@ -576,7 +576,7 @@ body ::-webkit-scrollbar-thumb {
       margin-top: auto;
       margin-bottom: -15px;
     }
-    
+
     div.border-bottom:first-child {
       padding-bottom: 10px;
       padding-top: auto;
@@ -588,7 +588,7 @@ body ::-webkit-scrollbar-thumb {
     }
 
   /* --- end profile page --- */
-  
+
   /* --- profile form --- */
     form#user-profile-form div.description {
       display: none;
@@ -599,7 +599,7 @@ body ::-webkit-scrollbar-thumb {
       width: 40%;
       float: left;
     }
-    
+
     form#user-profile-form div.image-preview {
       float: none;
     }
@@ -620,11 +620,11 @@ body ::-webkit-scrollbar-thumb {
     form#user-profile-form div.image-widget-data span.file-size {
       display: none;
     }
-    
+
     form#user-profile-form div#default-image-wrapper {
       padding-right: 110px;
     }
-    
+
     form#user-profile-form div#default-image-wrapper a {
       margin-top: 25px;
     }
@@ -633,23 +633,23 @@ body ::-webkit-scrollbar-thumb {
       float: left;
       margin-right: 25px;
     }
-    
+
     .page-user-edit-profile #edit-profile-profile-field-interests label {
       display: inline;
     }
   /* --- end profile form --- */
- 
+
   /* --- account form --- */
     form#user-profile-form input#edit-field-first-name-und-0-value {
       float: left;
       margin-right: 20px;
       width: 185px;
     }
-    
+
     form#user-profile-form input#edit-field-last-name-und-0-value {
       width: 185px;
     }
-    
+
     form#user-profile-form .password-strength {
       float: left;
       margin-bottom: 15px;
@@ -658,13 +658,13 @@ body ::-webkit-scrollbar-thumb {
     form#user-profile-form #edit-timezone {
       display: none;
     }
-    
+
     form#user-profile-form #edit-profile-cancel {
       float: right;
       margin-top: -40px;
     }
   /* --- end account form --- */
-  
+
   /* --- rsvp page --- */
     #rsvp-logos #rsvp-myngl-logo,
     #rsvp-logos #rsvp-brand-logo {
@@ -674,17 +674,17 @@ body ::-webkit-scrollbar-thumb {
       width: 420px;
       height: 160px;
       text-align: center;
-      margin-top: 50px; 
+      margin-top: 50px;
     }
-    
+
     #rsvp-logos #rsvp-myngl-logo {
       margin-right: 10px;
     }
-    
+
     #rsvp-logos #rsvp-myngl-logo img {
       margin-top: 55px;
     }
-  
+
     #rsvp-logos {
       width: 850px;
       margin: 0 auto -55px auto;
@@ -699,7 +699,7 @@ body ::-webkit-scrollbar-thumb {
       margin-right: auto;
     }
   /* --- end rsvp page --- */
-  
+
   /* --- rsvp confirmed page --- */
 
     #confirm-invite-share {
@@ -735,14 +735,14 @@ body ::-webkit-scrollbar-thumb {
     #confirm-invite-share div p {
       margin-left: 30px;
     }
-    
+
 
     #confirm-invite-wrapper .content {
       margin-bottom: 50px;
       width: 400px;
       margin-left: 30px;
     }
-    
+
     #confirm-invite-wrapper form {
       width: 400px;
     }
@@ -754,7 +754,7 @@ body ::-webkit-scrollbar-thumb {
     #confirm-invite-wrapper #confirm-invite-share {
       padding-top: 20px;
       padding-bottom: 20px;
-      
+
     }
 
     #confirm-invite-invite form {
@@ -769,15 +769,15 @@ body ::-webkit-scrollbar-thumb {
       margin-bottom: 30px;
     }
   /* --- end rsvp confirmed page --- */
-  
+
   /* --- upcoming myngl overlay --- */
-  
+
   #upcoming-myngls-landing h1.title {
     border-bottom: 1px solid #3c4350;
     margin-top: 0px;
     font-size: 22px;
   }
- 
+
   #upcoming-myngls .upcoming-myngl-wrapper {
     float: left;
     margin: 40px 16px 0 16px;
@@ -788,39 +788,39 @@ body ::-webkit-scrollbar-thumb {
     border: 5px double rgba(60,67,80,0.85);
     outline: 10px solid #ffffff;
   }
-  
+
   #upcoming-myngls .upcoming-myngl-wrapper .title {
     font-size: 16px;
     font-weight: bold;
   }
-    
+
   #upcoming-myngls .upcoming-myngl-wrapper .date {
-    font-size: 12px;  
+    font-size: 12px;
   }
-  
+
   #upcoming-myngls .upcoming-myngl-border {
     border: 1px solid #EEE;
     padding: 5px;
     margin-top: 15px;
   }
-  
+
   #upcoming-myngls .upcoming-myngl-background {
     height: 300px;
     width: 205px;
-  }  
-  
+  }
+
   #upcoming-myngls .upcoming-myngl-cover {
     background-color: rgb(60, 67, 80);
     /* RGBa with 0.6 opacity */
     background-color: rgba(60, 67, 80, 0.8);
     height: 125px;
     width: 205px;
-    padding-top: 175px;       
-    display: none; 
+    padding-top: 175px;
+    display: none;
   }
 
   #upcoming-myngls .upcoming-myngl-background:hover .upcoming-myngl-cover {
-    display: block; 
+    display: block;
   }
 
   #upcoming-myngls .upcoming-myngl-link {
@@ -828,7 +828,7 @@ body ::-webkit-scrollbar-thumb {
     padding: 3px 3px 6px 3px;
     border: 2px solid transparent;
   }
-  
+
   #upcoming-myngls .upcoming-myngl-link:hover {
     border: 2px solid #FFF;
   }
@@ -837,7 +837,7 @@ body ::-webkit-scrollbar-thumb {
     color: #FFF;
     font-size: 16px;
     margin-left: 5px;
-  } 
+  }
 
   #upcoming-myngls .upcoming-myngls-pane {
     position: absolute;
@@ -849,7 +849,7 @@ body ::-webkit-scrollbar-thumb {
     box-shadow: 5px 5px 2px #EEE;
     display: none;
     border: 1px solid #999999;
-  } 
+  }
 
   #upcoming-myngls .upcoming-myngls-pane-content {
     background-color: #3c4350;
@@ -868,7 +868,7 @@ body ::-webkit-scrollbar-thumb {
   }
 
 
-  
+
   #upcoming-myngls .upcoming-myngls-pane-content a.overlay-close {
     color: #FFF;
     font-size: 18px;
@@ -943,12 +943,12 @@ body ::-webkit-scrollbar-thumb {
     margin-bottom: 15px;
   }
 
-  .upcoming-myngls-pane-content.upload-pane .upcoming-pane-details a:not(.upload-add), 
+  .upcoming-myngls-pane-content.upload-pane .upcoming-pane-details a:not(.upload-add),
   .upcoming-myngls-pane-content.upload-pane .upcoming-pane-details strong {
     margin-right: 60px;
   }
 
-  .upcoming-myngls-pane-content.upload-pane a:not(.upload-add) i, 
+  .upcoming-myngls-pane-content.upload-pane a:not(.upload-add) i,
   .upcoming-myngls-pane-content.upload-pane .upcoming-pane-details strong i{
     font-size: 3em;
     margin-left: 5px;
@@ -994,7 +994,7 @@ body ::-webkit-scrollbar-thumb {
   }
 
   /* --- end upcoming myngl overlay --- */
-  
+
   /* --- pre and post questions --- */
 
   #myngl-questions-logos {
@@ -1099,7 +1099,7 @@ body ::-webkit-scrollbar-thumb {
     background-image: linear-gradient(rgba(42, 28, 24, 0.1), rgba(42, 28, 24, 0.3));
   }
 
-  
+
   #myngl-event-message {
     float:left;
     width: auto;
@@ -1107,6 +1107,7 @@ body ::-webkit-scrollbar-thumb {
     height:0px;
     background-color: rgba(200,200,150,0.9);
   }
+
 
   #myngl-event-message span {
     position: relative;
@@ -1135,13 +1136,13 @@ body ::-webkit-scrollbar-thumb {
     border-radius: 100%;
     box-shadow: 1px 1px rgba(0, 0, 0, 0.5);
   }
-  
+
   .myngl-event-profile-pic.chat {
     height: 50px;
     width: 50px;
     margin: 10px 10px -20px 10px;
    }
-  
+
   .myngl-event-profile-pic.solo-chat {
     height: 30px;
     width: 30px;
@@ -1164,7 +1165,7 @@ body ::-webkit-scrollbar-thumb {
 
   .point-badge {
     width: 66px;
-    height: 66px;    
+    height: 66px;
     border-radius: 100%;
     float: left;
     margin: 10px;
@@ -1255,11 +1256,11 @@ body ::-webkit-scrollbar-thumb {
   #myngl-event-ugc-box {
     overflow: hidden;
   }
-  
+
   #myngl-event-ugc-box-inside {
     overflow: hidden;
   }
-  
+
   #myngl-event-ugc-box-slider {
     margin-left: -200px;
   }
@@ -1270,7 +1271,7 @@ body ::-webkit-scrollbar-thumb {
 
   /* --- social overlays --- */
 
-  .overlay.branded .overlay-close, 
+  .overlay.branded .overlay-close,
   .branded.ui-draggable .overlay-close {
     color: inherit;
   }
@@ -1341,19 +1342,19 @@ body ::-webkit-scrollbar-thumb {
     margin-right: 0;
     font-size: 1.3em;
   }
- 
+
   #myngl-event-pov form input[type="text"]  {
     box-shadow: inset 1px -1px 2px #b9b9b9;
-    width:394px !important; 
-    height: 50px; 
+    width:394px !important;
+    height: 50px;
     border:none;
   }
 
   .myngl-chat-form form input[type="text"] {
-    height: 50px; 
+    height: 50px;
     border:none;
     box-shadow: inset 1px -1px 2px #b9b9b9;
-    width: 317px !important; 
+    width: 317px !important;
     margin-left: 1px;
   }
 
@@ -1362,8 +1363,8 @@ body ::-webkit-scrollbar-thumb {
   }
 
   .myngl-chat-circles {
-    float:left; 
-    text-align: center; 
+    float:left;
+    text-align: center;
     width: 50px;
     height: 50px;
     margin-top: 15px;
@@ -1425,10 +1426,10 @@ body ::-webkit-scrollbar-thumb {
      width:35px;
      cursor: pointer;
      position: relative;
-     -moz-user-select: none; 
-    -ms-user-select: none; 
-    -webkit-user-select: none; 
-    -o-user-select: none; 
+     -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
    }
 
    .halfCircleRight i, .halfCircleLeft i {
@@ -1447,6 +1448,22 @@ body ::-webkit-scrollbar-thumb {
      bottom: 350px;
      left: 880px;
   }
+
+
+  /* Theater Page */
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .isotope {
@@ -1500,11 +1517,11 @@ body ::-webkit-scrollbar-thumb {
   cursor: pointer;
 }
 
-/*  ----- END LAYOUT------------------------------------------------- */    
+/*  ----- END LAYOUT------------------------------------------------- */
 
 
 /**********************************************************************/
-/*  ----- STYLE ----------------------------------------------------- */    
+/*  ----- STYLE ----------------------------------------------------- */
 /**********************************************************************/
 
   body {
@@ -1515,7 +1532,8 @@ body ::-webkit-scrollbar-thumb {
   body.page-myngl-event {
     background: url(../images/myngl-godiva-bg.png) center center no-repeat;
     background-size: cover;
-  } 
+  }
+
 
   input[type="button"],
   form input[type="submit"] {
@@ -1600,7 +1618,7 @@ body ::-webkit-scrollbar-thumb {
       border-radius: 50px;
     }
   /* --- end profile form --- */
-  
+
   /* --- rewards landing --- */
     div#rewards-dashboard {
       padding-top: 25px;
@@ -1623,14 +1641,14 @@ body ::-webkit-scrollbar-thumb {
       margin-right: 30px;
     }
   /* --- end rewards landing --- */
-  
+
   /* --- rsvp page --- */
     #rsvp-logos #rsvp-myngl-logo,
     #rsvp-logos #rsvp-brand-logo {
       background-color: rgba(255, 255, 255, 0.8);
     }
   /* --- end rsvp page --- */
-  
+
   /* --- rsvp confirmed page --- */
 
 
@@ -1721,7 +1739,7 @@ body ::-webkit-scrollbar-thumb {
 
   /* --- end rsvp confirmed page --- */
 
-/*  ----- ADD THIS ------------------------------------------------- */    
+/*  ----- ADD THIS ------------------------------------------------- */
 /* AddThisEvent (add to your existing CSS) */
   .addthisevent-drop            {display:inline-block;position:relative;z-index:999998;font-family:'Roboto',sans-serif;color:#fff!important;text-decoration:none;font-size:15px;text-decoration:none;}
   .addthisevent-drop:hover        {color:#fff;font-size:15px;text-decoration:none;}
@@ -1741,7 +1759,7 @@ body ::-webkit-scrollbar-thumb {
   .addthisevent_dropdown .frs       {position:absolute;top:8px;cursor:pointer;right:13px;padding-left:10px;font-style:normal;font-weight:normal;text-align:right;z-index:101;line-height:110%;background:#fff;text-decoration:none;font-size:10px;color:#cacaca;}
   .addthisevent_dropdown .frs:hover     {color:#6d84b4;}
   .addthisevent               {visibility:hidden;}
-/*  ----- END ADD THIS ------------------------------------------------- */    
+/*  ----- END ADD THIS ------------------------------------------------- */
 
 
 /* --- sort these out --- */
@@ -1783,4 +1801,4 @@ body ::-webkit-scrollbar-thumb {
   font-size: 18px;
   margin: 20px;
 }
-/*  ----- END STYLE ------------------------------------------------- */    
+/*  ----- END STYLE ------------------------------------------------- */

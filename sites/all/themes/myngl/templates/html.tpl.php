@@ -20,16 +20,25 @@
       color: #53302a;
     }
 
-    .branded ul li:hover {
+    .branded ul li.active{
+      background-color:#191313;
+    }
+    .branded ul li.inactive:hover {
       background-color: #a38d50;
     }
 
-    .branded ul li a {
+    .branded ul li.inactive a {
      color: #a38d50;
      border-right: 1px groove #a38d50;
     }
 
-    .branded ul li a:hover {
+    .branded ul li.active a {
+     color: #53302a;
+     border-right: 1px groove #a38d50;
+    }
+
+
+    .branded ul li.inactive a:hover {
       color: #53302a;
     }
 
@@ -46,7 +55,7 @@
     .branded-background {
       background-color: #d8c696;
       color: #53302a;
-    } 
+    }
 
     .branded-tertiary {
       background-color: #e2dbd2;

@@ -5,57 +5,65 @@ function myngl_myngl_menu() {
     'title' => 'Event RSVP',
     'page callback' => 'myngl_myngl_rsvp',
     'page arguments' => array(1,3),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
-  
+
   $items['myngl/%/confirmed'] = array(
     'title' => 'RSVP CONFIRMED!',
     'page callback' => 'myngl_myngl_confirmed',
     'page arguments' => array(1),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
- 
+
   $items['myngl/%/rsvp/complete'] = array(
     'title' => 'RSVP CONFIRMED!',
     'page callback' => 'myngl_myngl_complete',
     'page arguments' => array(1),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
-  
+
   $items['myngl/%/change_date/%/%'] = array(
     'title' => 'RSVP CONFIRMED!',
     'page callback' => 'myngl_myngl_change_date',
     'page arguments' => array(1,3,4),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
-  
+
   $items['myngl/%/pre-questions'] = array(
     'title' => 'Pre Myngl Questions',
     'page callback' => 'myngl_myngl_pre_questions',
     'page arguments' => array(1),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
 
   $items['myngl/%/post-questions'] = array(
     'title' => 'Post Myngl Questions',
     'page callback' => 'myngl_myngl_post_questions',
     'page arguments' => array(1),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
 
   $items['node/%/message'] = array(
     'title' => 'Edit Message',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('myngl_myngl_edit_message', 1),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
     'type' => MENU_LOCAL_TASK,
   );
-  
+
+  $items['node/%/theater-message'] = array(
+    'title' => 'Edit Theater Message',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('myngl_myngl_edit_theater_message', 1),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
+
   $items['node/%/question'] = array(
     'title' => 'Edit POV Question',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('myngl_myngl_edit_question', 1),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
     'type' => MENU_LOCAL_TASK,
   );
 
@@ -78,17 +86,17 @@ function myngl_myngl_theme() {
                           'template' => 'panel-myngl-upcoming',
                           'variables' => array ('myngl' => null, 'brand' => NULL),
                         );
-  
+
   $items['overlay_myngl_upcoming'] =  array(
                           'template' => 'overlay-myngl-upcoming',
                           'variables' => array ('myngls' => null),
                         );
-  
+
   $items['myngl_pre_questions_fix'] =  array(
                           'template' => 'myngl-pre-questions-fix',
                           'variables' => array ('user_id' => null, 'myngl' => null, 'brand' => null,  'form' => null),
                         );
-  
+
   $items['myngl_post_questions_fix'] =  array(
                           'template' => 'myngl-post-questions-fix',
                           'variables' => array ('user_id' => null, 'myngl' => null, 'brand' => null,  'form' => null),
@@ -102,7 +110,7 @@ function myngl_myngl_change_date($myngl_id, $user_id, $date_id) {
   $node = node_load($myngl_id);
 
   foreach ($node->field_myngl_invitees['und'] as $i) {
-    $ic = array_shift(entity_load('field_collection_item', array($i['value'])));  
+    $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
 
     if ($ic->field_invitee_user_account['und'][0]['uid'] == $user_id) {
       $ic->field_invitee_rsvp_date['und'][0]['value'] = $node->field_myngl_dates['und'][$date_id]['value'];
@@ -134,7 +142,7 @@ function myngl_myngl_confirmed($nid) {
 
 function myngl_myngl_brand_logo($nid) {
   $node = node_load($nid);
-  
+
   $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
 
   $image = theme_image_style(array('style_name' => 'brand_logo', 'path' => $brand->field_brand_logo['und'][0]['uri'], 'height' => null, 'width' => null));
@@ -153,7 +161,7 @@ function myngl_myngl_complete($nid) {
       if ($u->field_invitee_email_address['und'][0]['safe_value'] == $email) {
         $u->field_invitee_status['und'][0]['value'] = 'RSVP';
 
-        if (isset($_COOKIE['Drupal_visitor_rsvp_date'])) { 
+        if (isset($_COOKIE['Drupal_visitor_rsvp_date'])) {
           $u->field_invitee_rsvp_date['und'][0]['value'] = $_COOKIE['Drupal_visitor_rsvp_date'];
         } else {
           $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][0]['value'];
@@ -164,7 +172,7 @@ function myngl_myngl_complete($nid) {
 
         user_cookie_delete('rsvp');
 
-        drupal_goto("myngl/$nid/confirmed");        
+        drupal_goto("myngl/$nid/confirmed");
       }
     }
 
@@ -181,14 +189,14 @@ function myngl_myngl_upcoming($uid) {
 
   if (isset($myngl_id)) {
     $node = node_load($myngl_id);
-    
+
     $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
 
     $output = theme('panel_myngl_upcoming', array('myngl' => $node, 'brand' => $brand));
 
     return $output;
   } else {
-    return 'No Upcoming Myngls'; 
+    return 'No Upcoming Myngls';
   }
 
 }
@@ -201,22 +209,22 @@ function myngl_myngl_upcoming_overlay($uid) {
   foreach ($result as $r) {
     // based on invitee id get myngls
     $sub_result = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = :iid", array(':iid' => $r->entity_id));
- 
-    $invitee_collection = array_shift(entity_load('field_collection_item', array($r->entity_id)));  
-  
+
+    $invitee_collection = array_shift(entity_load('field_collection_item', array($r->entity_id)));
+
     foreach ($sub_result as $s) {
       $myngl = node_load($s->entity_id);
 
       $myngl_brand = array();
       $myngl_brand = array(
         'myngl' => $myngl,
-        'date' => $invitee_collection->field_invitee_rsvp_date['und'][0]['value'], 
+        'date' => $invitee_collection->field_invitee_rsvp_date['und'][0]['value'],
         'brand' => node_load($myngl->field_myngl_brand['und'][0]['nid']),
       );
 
       $myngls[] = $myngl_brand;
     }
-  }    
+  }
 
   $output = theme('overlay_myngl_upcoming', array('myngls' => $myngls));
 
@@ -243,7 +251,7 @@ function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $us
   $dates = array();
 
   foreach ($myngl->field_myngl_dates['und'] as $d) :
-    $dates[$d['value']] = myngl_long_date($d['value']); 
+    $dates[$d['value']] = myngl_long_date($d['value']);
   endforeach;
 
   $form['date'] = array(
@@ -324,7 +332,7 @@ function myngl_myngl_image_upload_ajax_submit($form_id, &$form_state) {
     $file_data = file_get_contents($_FILES['files']['tmp_name']['file']);
     $file = file_save_data($file_data, 'public://' . $_FILES['files']['name']['file'], FILE_EXISTS_RENAME);
     $file->display = 1;
- 
+
     $invitee->field_image_upload['und'][] = (array) $file;
     $invitee->save();
   }
@@ -375,7 +383,7 @@ function myngl_myngl_doc_upload_ajax_submit($form_id, &$form_state) {
     $file_data = file_get_contents($_FILES['files']['tmp_name']['file']);
     $file = file_save_data($file_data, 'public://' . $_FILES['files']['name']['file'], FILE_EXISTS_RENAME);
     $file->display = 1;
- 
+
     $invitee->field_document_upload['und'][] = (array) $file;
     $invitee->save();
   }
@@ -422,7 +430,7 @@ function myngl_myngl_youtube_embed_ajax_submit($form_id, &$form_state) {
   $myngl = node_load($v['myngl_id']);
   $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
 
-  $invitee->field_video_upload['und'][] = array(  'input' => $v['youtube'], 
+  $invitee->field_video_upload['und'][] = array(  'input' => $v['youtube'],
                                                   'video_id' => str_replace('https://www.youtube.com/watch?v=','',$v['youtube']));
   $invitee->save();
 
@@ -443,7 +451,7 @@ function myngl_myngl_pre_questions($nid) {
 
 function myngl_myngl_pre_questions_form($form, &$form_state, $myngl_id, $user_id) {
   $myngl = node_load($myngl_id);
-  
+
   $form['myngl_id'] = array (
     '#type' => 'hidden',
     '#value' => $myngl_id
@@ -455,7 +463,7 @@ function myngl_myngl_pre_questions_form($form, &$form_state, $myngl_id, $user_id
   );
 
   foreach ($myngl->field_pre_myngl_questions['und'] as $k => $v) {
-    $fc = array_shift(entity_load('field_collection_item', array($v['value']))); 
+    $fc = array_shift(entity_load('field_collection_item', array($v['value'])));
 
     $answers = array();
     foreach ($fc->field_answer['und'] as $a) {
@@ -523,7 +531,7 @@ function myngl_myngl_post_questions($nid) {
 
 function myngl_myngl_post_questions_form($form, &$form_state, $myngl_id, $user_id) {
   $myngl = node_load($myngl_id);
-  
+
   $form['myngl_id'] = array (
     '#type' => 'hidden',
     '#value' => $myngl_id
@@ -535,7 +543,7 @@ function myngl_myngl_post_questions_form($form, &$form_state, $myngl_id, $user_i
   );
 
   foreach ($myngl->field_post_myngl_questions['und'] as $k => $v) {
-    $fc = array_shift(entity_load('field_collection_item', array($v['value']))); 
+    $fc = array_shift(entity_load('field_collection_item', array($v['value'])));
 
     $answers = array();
     foreach ($fc->field_answer['und'] as $a) {
@@ -588,7 +596,7 @@ function _myngl_myngl_get_invitee_id($myngl_id, $user_id) {
   $myngl = node_load($myngl_id);
 
   foreach ($myngl->field_myngl_invitees['und'] as $v) {
-    $fc = array_shift(entity_load('field_collection_item', array($v['value']))); 
+    $fc = array_shift(entity_load('field_collection_item', array($v['value'])));
 
     if ($fc->field_invitee_user_account['und'][0]['uid'] == $user_id) {
       return $fc;
@@ -620,11 +628,47 @@ function myngl_myngl_edit_message($form, &$form_state, $nid) {
   return $form;
 }
 
+
+
+function myngl_myngl_edit_theater_message($form, &$form_state, $nid) {
+  $myngl = node_load($nid);
+
+  $form['myngl_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $myngl->nid,
+  );
+
+  $form['theater_message'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Update Theater Message'),
+    '#default_value' => $myngl->field_theater_message['und'][0]['value'],
+    '#description' => t('Leave message blank to hide from Myngl.'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#title' => t('Submit'),
+  );
+
+  return $form;
+}
+
+
 function myngl_myngl_edit_message_submit($form, &$form_state) {
+  $v = $form_state['values'];
+  $myngl = node_load($v['myngl_id']);
+  $myngl->field_myngl_message['und'][0]['value'] = $v['message'];
+  node_save($myngl);
+  drupal_set_message('Messge Updated.  It will appear in the Myngl in a few seconds.');
+}
+
+
+function myngl_myngl_edit_theater_message_submit($form, &$form_state) {
   $v = $form_state['values'];
 
   $myngl = node_load($v['myngl_id']);
-  $myngl->field_myngl_message['und'][0]['value'] = $v['message'];
+  $myngl->field_theater_message['und'][0]['value'] = $v['theater_message'];
   node_save($myngl);
 
   drupal_set_message('Messge Updated.  It will appear in the Myngl in a few seconds.');
@@ -667,5 +711,6 @@ function myngl_myngl_admin_paths() {
   return array(
     'node/*/message' => TRUE,
     'node/*/question' => TRUE,
+    'node/*/theater-message' =>TRUE,
   );
 }
