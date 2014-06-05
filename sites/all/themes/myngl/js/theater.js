@@ -4,8 +4,74 @@
 		$('li#theater').removeClass("inactive").addClass("active");
 		setInterval(function() { theater.message(); }, 3000);
 
-		$("iframe.media-ustream-player").width(694).height(390);
-		//$('body.page-myngl-event').css('background', "#ffffff");
+
+		$("iframe.media-ustream-player").width(694).height(390).attr('id','iframe-movie');
+		var viewer = UstreamEmbed('iframe-movie');
+
+		viewer.addListener('finished', function(){
+			$('#myngl-theater-see-more').css('display','block');
+
+		});
+
+
+
+		$('.downloads-slide:eq(0)').animate({'left':0}).addClass('active');
+
+    var animating = false;
+
+
+    $("#halfCircleLeft").bind('click', function() {
+
+      if (animating == true)
+        return false;
+			if ($('.downloads-slide').length <=1){
+				return false;
+			}
+
+      animating = true;
+
+      var active = $('.downloads-slide.active');
+      var next =  $('.downloads-slide:eq(' + (active.index() + 1) + ')').length ?
+                  $('.downloads-slide:eq(' + (active.index() + 1) + ')')  :
+                  $('.downloads-slide:eq(0)');
+
+      next.css('left',active.width());
+      active.animate({'left':'-' + active.width()});
+      next.animate({'left':'0'}, {'complete':function() { animating = false}});
+
+      active.removeClass('active');
+      next.addClass('active');
+
+      return false;
+    });
+
+    $("#halfCircleRight").bind('click', function() {
+
+      if (animating == true)
+        return false;
+			if ($('.downloads-slide').length <=1){
+				return false;
+			}
+
+      animating = true;
+
+      var active = $('.downloads-slide.active');
+      var last = $('.downloads-slide').last();
+      var next =  (active.index() == 0) ?
+                  $('.downloads-slide:eq(' + last.index() + ')') :
+                  $('.downloads-slide:eq(' + (active.index() - 1) + ')');
+
+      next.css('left',(-1 * active.width()));
+      active.animate({'left':active.width()});
+      next.animate({'left':'0'}, {'complete':function() { animating = false}});
+
+      active.removeClass('active');
+      next.addClass('active');
+
+      return false;
+    });
+
+
 
 	});
 }(jQuery));
@@ -31,6 +97,32 @@ var theater = (function ($) {
           }
         }
       });
+    },
+		downloads_left : function (value) {
+			console.log("downloads_left called");
+			/*
+      ugcScrollPosition += $('#myngl-event-ugc-box-inside').width();
+
+      if (ugcScrollPosition > 0) {
+        ugcScrollPosition = 0;
+      }
+
+      $('#myngl-event-ugc-box-slider').animate({'margin-left': ugcScrollPosition});
+*/
+      return false;
+    },
+    downloads_right : function (value) {
+			console.log("downloads.right called");
+			/*
+      ugcScrollPosition -= $('#myngl-event-ugc-box-inside').width();
+
+      if (ugcScrollPosition < (($("#myngl-event-ugc-thumbs").width() - $('#myngl-event-ugc-box-inside').width()) * -1)) {
+        ugcScrollPosition = ($("#myngl-event-ugc-thumbs").width() - $('#myngl-event-ugc-box-inside').width()) * -1;
+      }
+
+      $('#myngl-event-ugc-box-slider').animate({'margin-left': ugcScrollPosition});
+*/
+      return false;
     }
   }
 }(jQuery));

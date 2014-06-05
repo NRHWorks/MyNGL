@@ -1422,11 +1422,11 @@ body ::-webkit-scrollbar-thumb {
    }
 
    .halfCircleRight, .halfCircleLeft {
-      height:70px;
-     width:35px;
-     cursor: pointer;
-     position: relative;
-     -moz-user-select: none;
+    height:70px;
+    width:35px;
+    cursor: pointer;
+    position: relative;
+    -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
     -o-user-select: none;

@@ -32,7 +32,7 @@ function myngl_theater_theme() {
 
 function myngl_theater_theater($nid) {
   global $user;
-
+  drupal_add_js(path_to_theme().'/js/ustream-embedapi.js');
   drupal_add_js(path_to_theme().'/js/theater.js');
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
