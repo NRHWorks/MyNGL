@@ -1,0 +1,4 @@
+name = MyNGL Activity Room
+package = MyNGL
+description = Sets up functionality for myngl event Activity Room page
+core = 7.x
