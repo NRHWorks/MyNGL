@@ -9,13 +9,16 @@ var scrollPosition = 0;
     $('.activity-room-thumb').each( function() {
       //activity_room_width += $(this).children('a').children('img').width();
 			activity_room_width += $(this).width();
-      activity_room_width += 20;
-			console.log(activity_room_width);
+      activity_room_width += 10;
+			//
     });
 
-    activity_room_width = Math.floor(activity_room_width / 3) + 200; /* 200 is the width of one game */
-console.log(activity_room_width);
+
+		activity_room_width= Math.max((Math.floor( activity_room_width / (160 * 3)) + 1)*160, 800) ;
+    //activity_room_width = Math.max(Math.floor(activity_room_width / 3),800);
+		//console.log(activity_room_width);
     $("#myngl-activity-room-thumbs").css('width', activity_room_width + 'px');
+
 
 
 	})
@@ -69,4 +72,35 @@ var activity_room = (function ($) {
       });
     }
   }
+}(jQuery));
+
+
+var activity_overlay = (function($){
+	return {
+    show : function (source, width, height){
+			$('#overlay-background').fadeIn(500);
+
+			$("iframe#activity-overlay").each( function(){
+				$(this).attr("src", source);
+				$(this).css('width', width);
+				$(this).css('height', height);
+			});
+
+			
+				$("#activity-iframe-wrapper").css('height',height).css('width',width).fadeIn(500);
+
+		},
+		close : function(){
+			$("iframe#activity-overlay").each( function(){
+				$(this).attr("src", "");
+			});
+
+			$('#overlay-background').fadeOut(500);
+      $('#activity-iframe-wrapper').fadeOut(100);
+
+		},
+	/*
+
+	*/
+	}
 }(jQuery));

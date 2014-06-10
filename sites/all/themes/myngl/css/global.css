@@ -1153,7 +1153,8 @@ body ::-webkit-scrollbar-thumb {
     margin-bottom: 15px;
   }
 
-  .social-bg {
+  .social-bg,
+  .activity-room-bg {
     height: 100%;
     width: 100%;
     position: absolute;
