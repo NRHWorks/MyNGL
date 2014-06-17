@@ -60,9 +60,23 @@ var rewards_overlay = (function($){
 		form_submit : function(event){
 			event.preventDefault();
 
+
+    $.ajax({
+        url: '/myngl-event/' + Drupal.settings.myngl_id + '/rewards/question-submit/' + Drupal.settings.user_id + '/' + selected_reward_id ,
+        cache: false,
+        type: 'POST',
+        data : $('form#myngl-myngl-post-questions-form').serialize() ,
+        success: function(json) {}
+    });
+
+
+
 			$('#gifting-series-overlay #questions').fadeOut(500);
 			$('#gifting-series-overlay #congrats').fadeIn(500);
 			$('#gifting-series-overlay .close').fadeOut(500);
+			
+
+
 
 			return false;
 
@@ -71,7 +85,7 @@ var rewards_overlay = (function($){
 		email_form_submit : function(event){
 			event.preventDefault();
 
-			console.log("email sent");
+			console.log($('#gifting-series-overlay form#email #email-input').val()  );
 
 			return false;
 

@@ -15,6 +15,13 @@ function myngl_rewards_menu() {
     'access callback' => TRUE,
   );
 
+  $items['myngl-event/%/rewards/question-submit/%/%'] = array(
+    'title' => 'MyNGL REWARDS QUESTION SUBMIT',
+    'page callback' => 'myngl_rewards_question_submit',
+    'page arguments' => array(1,4,5),
+    'access callback' => TRUE,
+  );
+
 
   return $items;
 }
@@ -158,7 +165,66 @@ function myngl_rewards_add_helper($user_id, $myngl_id, $activity_description, $p
 
 }
 
-function myngl_rewards_redeem($user_id, $myngl_id, $reward_id, $reward_points, $reward_description){
+function myngl_rewards_redeem($user_id, $myngl_id, $reward_id){
+
+//  , $reward_points, $reward_title){
+
+
+  $reward_fc =  entity_load_single('field_collection_item', $reward_id);
+
+
+  $reward_points = $reward_fc->field_points['und'][0]['value'];
+  $reward_title = $reward_fc->field_title['und'][0]['value'];
+
+
+//Add entry to myngl_rewards_history
+  db_insert('myngl_rewards_history')->fields(
+    array(
+      'myngl_id'    => $myngl_id,
+      'user_id'     => $user_id,
+      'points'      => $reward_points * -1,
+      'description' => "Redeem Reward: ".$reward_title,
+      'timestamp'   => time(),
+    )
+  )->execute();
+
+  //Update total Points
+  $result = db_query('SELECT id, total_points FROM {myngl_rewards_total} WHERE
+                        myngl_id = :myngl_id AND
+                        user_id = :user_id',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                          ':user_id' => $user_id,
+                        )
+                      );
+
+
+  $row = $result->fetchObject();
+  $row_id = $row->id;
+  $total_points = $row->total_points - $reward_points;
+
+
+  db_update('myngl_rewards_total')->
+    fields(
+      array(
+       'total_points' =>$total_points,
+      )
+    )->condition('id', $row_id, '=')
+    ->execute();
+
+
+
+//Add entry to myngl_rewards_redeem
+  db_insert('myngl_rewards_redeem')->fields(
+    array(
+      'myngl_id'    => $myngl_id,
+      'user_id'     => $user_id,
+      'reward_id'   => $reward_id,
+      'reward_points'      => $reward_points ,
+      'reward_title' => $reward_title,
+      'timestamp'   => time(),
+    )
+  )->execute();
 
 
 }
@@ -171,5 +237,65 @@ function myngl_rewards_total_points($user_id, $mingl_id){
 
 function myngl_rewards_total_general_points($user_id){
 
+
+}
+
+function myngl_rewards_question_submit($myngl_id, $user_id, $selected_reward_id){
+  /* content of $_POST
+  Array(
+    [myngl_id] => 2
+    [user_id] => 1
+    [question-0] => 30 to 40
+    [question-1] => 5' to 5'6"
+    [form_build_id] => form-5TefKFQIWSUQkhqCjyzCqVivaCcflpBVIwb2HQeWDAA
+    [form_token] => m_uOVr-6aXfMSKch46ArYl0P6dC_FJF-lGISLSN8Mf0
+    [form_id] => myngl_myngl_post_questions_form
+  )
+  */
+
+
+
+  $q_arr = array();
+  foreach ($_POST as $k => $val) {
+    if (preg_match('/question/',$k)) {
+      $q_arr[$k] = $val;
+    }
+  }
+
+
+  $answers_for_user = serialize($q_arr);
+
+
+  $invitee = _myngl_myngl_get_invitee_id($myngl_id, $user_id);
+
+  $invitee->field_myngl_tagline['und'][0]['value'] = $v['tagline'];
+
+  $invitee->field_post_question_answer['und'][0]['value'] = $answers_for_user;
+
+
+  $invitee->save();
+
+  myngl_rewards_redeem($user_id, $myngl_id, $selected_reward_id);
+
+
+}
+
+function myngl_rewards_invitee_redeem($myngl_id){
+  $result = db_query('SELECT user_id, timestamp, reward_id, reward_title
+                      FROM {myngl_rewards_redeem} WHERE
+                        myngl_id = :myngl_id',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                        )
+                      );
+
+
+  $table = "<table><tr><td>User ID</td><td>Reward ID</td><td>Reward Title</td><td>Time</td></tr>";
+  foreach($result as $r){
+    $tablerow = "<tr><td>".$r->user_id."</td><td>".$r->reward_id."</td><td>".$r->reward_title."</td><td>".$r->timestamp."</td></tr>";
+    $table .= $tablerow;
+  }
+  $table .="</table>";
+  return $table;
 
 }

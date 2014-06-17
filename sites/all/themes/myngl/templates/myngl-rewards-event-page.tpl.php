@@ -462,10 +462,23 @@ body.page-myngl-event-rewards {
 
 }
 
-form#myngl-myngl-post-questions-form input#edit-submit:focus{
+form#myngl-myngl-post-questions-form input#edit-submit:focus,
+#gifting-series-overlay form#email #email-input:focus,
+#gifting-series-overlay form#email .form-submit:focus{
   outline:0;
 }
 
+form#myngl-myngl-post-questions-form .form-actions{
+  border:0 !important;
+}
+
+form#myngl-myngl-post-questions-form #edit-submit{
+  font-family:'san-serif';
+  color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
+  font-style:italic;
+  font-size:20px;
+  height:44px;
+}
 #gifting-series-overlay #congrats{
   display:none;
   position:absolute;
@@ -497,7 +510,6 @@ form#myngl-myngl-post-questions-form input#edit-submit:focus{
 #gifting-series-overlay #congrats #gift-photo{
   width:380px;
   height:400px;
-  border:1px solid #856944;
   float:right;
   margin-right:20px;
 
@@ -578,14 +590,17 @@ form#myngl-myngl-post-questions-form input#edit-submit:focus{
   <div id="congrats">
     <div id='title'>CONGRATS, You Got Your Swag!</div>
     <div class="short-line"></div>
-    <div id='social'><div style="float:right">social</div></div>
+    <div id='social'><div style="float:right"><img src='<?php print base_path(). path_to_theme();?>/images/theater-downloads-social-icons1.png'/></div></div>
     <div id='left'>
 
        Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text
       <div class="short-line" style="margin-left:0;margin-top:20px;"></div>
     </div>
 
-    <div id="gift-photo"> photo</div>
+    <div id="gift-photo">
+      <?php $photo = field_view_field('node', $myngl, 'field_reward_congrats_image','full' ); ?>
+      <?php print render ($photo) ?>
+    </div>
     <div id="email-wrapper">
       <form id="email" >
         <label>Email</label>

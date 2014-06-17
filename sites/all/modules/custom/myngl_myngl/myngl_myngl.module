@@ -59,6 +59,14 @@ function myngl_myngl_menu() {
     'type' => MENU_LOCAL_TASK,
   );
 
+  $items['node/%/invitee-redeem'] = array(
+    'title' => 'Invitees and Rewards',
+    'page callback' => 'myngl_rewards_invitee_redeem',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
+
   $items['node/%/question'] = array(
     'title' => 'Edit POV Question',
     'page callback' => 'drupal_get_form',
@@ -712,5 +720,6 @@ function myngl_myngl_admin_paths() {
     'node/*/message' => TRUE,
     'node/*/question' => TRUE,
     'node/*/theater-message' =>TRUE,
+    'node/*/invitee-redeem' => TRUE,
   );
 }

@@ -1,0 +1,310 @@
+FieldCollectionItemEntity Object
+(
+    [fieldInfo:protected] => 
+    [hostEntity:protected] => 
+    [hostEntityId:protected] => 
+    [hostEntityRevisionId:protected] => 
+    [hostEntityType:protected] => 
+    [langcode:protected] => und
+    [item_id] => 34
+    [revision_id] => 34
+    [field_name] => field_reward
+    [default_revision] => 1
+    [archived] => 0
+    [entityType:protected] => field_collection_item
+    [entityInfo:protected] => Array
+        (
+            [label] => Field collection item
+            [label callback] => entity_class_label
+            [uri callback] => entity_class_uri
+            [entity class] => FieldCollectionItemEntity
+            [controller class] => EntityAPIController
+            [base table] => field_collection_item
+            [revision table] => field_collection_item_revision
+            [fieldable] => 1
+            [redirect] => 
+            [entity keys] => Array
+                (
+                    [id] => item_id
+                    [revision] => revision_id
+                    [bundle] => field_name
+                )
+
+            [module] => field_collection
+            [view modes] => Array
+                (
+                    [full] => Array
+                        (
+                            [label] => Full content
+                            [custom settings] => 
+                        )
+
+                    [token] => Array
+                        (
+                            [label] => Tokens
+                            [custom settings] => 
+                        )
+
+                )
+
+            [access callback] => field_collection_item_access
+            [metadata controller class] => FieldCollectionItemMetadataController
+            [bundles] => Array
+                (
+                    [field_myngl_invitees] => Array
+                        (
+                            [label] => Field collection field_myngl_invitees
+                            [admin] => Array
+                                (
+                                    [path] => admin/structure/field-collections/%field_collection_field_name
+                                    [real path] => admin/structure/field-collections/field-myngl-invitees
+                                    [bundle argument] => 3
+                                    [access arguments] => Array
+                                        (
+                                            [0] => administer field collections
+                                        )
+
+                                )
+
+                            [rdf_mapping] => Array
+                                (
+                                )
+
+                        )
+
+                    [field_pre_myngl_questions] => Array
+                        (
+                            [label] => Field collection field_pre_myngl_questions
+                            [admin] => Array
+                                (
+                                    [path] => admin/structure/field-collections/%field_collection_field_name
+                                    [real path] => admin/structure/field-collections/field-pre-myngl-questions
+                                    [bundle argument] => 3
+                                    [access arguments] => Array
+                                        (
+                                            [0] => administer field collections
+                                        )
+
+                                )
+
+                            [rdf_mapping] => Array
+                                (
+                                )
+
+                        )
+
+                    [field_post_myngl_questions] => Array
+                        (
+                            [label] => Field collection field_post_myngl_questions
+                            [admin] => Array
+                                (
+                                    [path] => admin/structure/field-collections/%field_collection_field_name
+                                    [real path] => admin/structure/field-collections/field-post-myngl-questions
+                                    [bundle argument] => 3
+                                    [access arguments] => Array
+                                        (
+                                            [0] => administer field collections
+                                        )
+
+                                )
+
+                            [rdf_mapping] => Array
+                                (
+                                )
+
+                        )
+
+                    [field_theater_downloads] => Array
+                        (
+                            [label] => Field collection field_theater_downloads
+                            [admin] => Array
+                                (
+                                    [path] => admin/structure/field-collections/%field_collection_field_name
+                                    [real path] => admin/structure/field-collections/field-theater-downloads
+                                    [bundle argument] => 3
+                                    [access arguments] => Array
+                                        (
+                                            [0] => administer field collections
+                                        )
+
+                                )
+
+                            [rdf_mapping] => Array
+                                (
+                                )
+
+                        )
+
+                    [field_activity_room_activity] => Array
+                        (
+                            [label] => Field collection field_activity_room_activity
+                            [admin] => Array
+                                (
+                                    [path] => admin/structure/field-collections/%field_collection_field_name
+                                    [real path] => admin/structure/field-collections/field-activity-room-activity
+                                    [bundle argument] => 3
+                                    [access arguments] => Array
+                                        (
+                                            [0] => administer field collections
+                                        )
+
+                                )
+
+                            [rdf_mapping] => Array
+                                (
+                                )
+
+                        )
+
+                    [field_reward] => Array
+                        (
+                            [label] => Field collection field_reward
+                            [admin] => Array
+                                (
+                                    [path] => admin/structure/field-collections/%field_collection_field_name
+                                    [real path] => admin/structure/field-collections/field-reward
+                                    [bundle argument] => 3
+                                    [access arguments] => Array
+                                        (
+                                            [0] => administer field collections
+                                        )
+
+                                )
+
+                            [rdf_mapping] => Array
+                                (
+                                )
+
+                        )
+
+                )
+
+            [static cache] => 1
+            [field cache] => 1
+            [load hook] => field_collection_item_load
+            [translation] => Array
+                (
+                )
+
+            [schema_fields_sql] => Array
+                (
+                    [base table] => Array
+                        (
+                            [0] => item_id
+                            [1] => revision_id
+                            [2] => field_name
+                            [3] => archived
+                        )
+
+                    [revision table] => Array
+                        (
+                            [0] => revision_id
+                            [1] => item_id
+                        )
+
+                )
+
+            [token type] => field_collection_item
+            [configuration] => 
+        )
+
+    [idKey:protected] => item_id
+    [nameKey:protected] => item_id
+    [statusKey:protected] => status
+    [defaultLabel:protected] => 
+    [field_title] => Array
+        (
+            [und] => Array
+                (
+                    [0] => Array
+                        (
+                            [value] => umbrella
+                            [format] => 
+                            [safe_value] => umbrella
+                        )
+
+                )
+
+        )
+
+    [field_thumb] => Array
+        (
+            [und] => Array
+                (
+                    [0] => Array
+                        (
+                            [fid] => 107
+                            [uid] => 1
+                            [filename] => Screen Shot 2014-06-16 at 12.33.59 PM.png
+                            [uri] => public://Screen Shot 2014-06-16 at 12.33.59 PM.png
+                            [filemime] => image/png
+                            [filesize] => 19884
+                            [status] => 1
+                            [timestamp] => 1402940196
+                            [type] => image
+                            [rdf_mapping] => Array
+                                (
+                                )
+
+                            [image_dimensions] => Array
+                                (
+                                    [width] => 119
+                                    [height] => 127
+                                )
+
+                            [alt] => 
+                            [title] => 
+                            [width] => 119
+                            [height] => 127
+                        )
+
+                )
+
+        )
+
+    [field_level] => Array
+        (
+            [und] => Array
+                (
+                    [0] => Array
+                        (
+                            [value] => SILVER
+                        )
+
+                )
+
+        )
+
+    [field_points] => Array
+        (
+            [und] => Array
+                (
+                    [0] => Array
+                        (
+                            [value] => 250
+                        )
+
+                )
+
+        )
+
+    [field_description] => Array
+        (
+            [und] => Array
+                (
+                    [0] => Array
+                        (
+                            [value] => it's raining
+                            [format] => 
+                            [safe_value] => it&#039;s raining
+                        )
+
+                )
+
+        )
+
+    [rdf_mapping] => Array
+        (
+        )
+
+)
