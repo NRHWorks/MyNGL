@@ -32,16 +32,25 @@ function myngl_theater_theme() {
 
 function myngl_theater_theater($nid) {
   global $user;
+
   drupal_add_js(path_to_theme().'/js/ustream-embedapi.js');
   drupal_add_js(path_to_theme().'/js/theater.js');
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
 
   $myngl = node_load($nid);
-
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
+  myngl_rewards_add($user->uid,
+                    $nid,
+                    'Visit theater page',
+                    $myngl->field_points_for_visiting_theate['und'][0]['value'],
+                    TRUE);   //TRUE for testing purpose. it should be false
+
+
   return theme('myngl_theater_theater', array('myngl' => $myngl, 'brand' => $brand));
+
+
 }
 
 

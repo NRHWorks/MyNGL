@@ -5,8 +5,16 @@ function myngl_rewards_menu() {
     'title' => 'REWARDS',
     'page callback' => 'myngl_rewards_page',
     'page arguments' => array(2),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
+
+  $items['myngl-event/%/rewards'] = array(
+    'title' => 'MyNGL REWARDS',
+    'page callback' => 'myngl_rewards_event_page',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
 
   return $items;
 }
@@ -16,13 +24,152 @@ function myngl_rewards_theme() {
                           'template' => 'myngl-rewards',
                           'variables' => array('points' => null),
                         );
+  $items['myngl_rewards_event_page'] = array(
+                          'template' => 'myngle-rewards-event-page',
+                          'variables' => array(
+                                                'myngl' => null,
+                                                'brand'=> null,
+                                                'points'=>null,
+                                                'form'=>null,),
+                        );
+
   return $items;
 }
 
 function myngl_rewards_page() {
   $rewards = rand(100,1000);
-
   $output = theme('myngl_rewards', array('points' => $rewards));
-
   return $output;
+}
+
+function myngl_rewards_event_page($nid){
+  global $user;
+
+  drupal_add_js(path_to_theme().'/js/rewards-event-page.js');
+  drupal_add_js(array('myngl_id' => $nid), 'setting');
+  drupal_add_js(array('user_id' => $user->uid), 'setting');
+
+
+
+  $myngl = node_load($nid);
+  $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
+
+  $result = db_query('SELECT id, total_points FROM {myngl_rewards_total} WHERE
+                        myngl_id = :myngl_id AND
+                        user_id = :user_id',
+                        array(
+                          ':myngl_id' => $nid,
+                          ':user_id' => $user->uid,
+                        )
+                      );
+  $row = $result->fetchObject();
+
+  $total_points = $row->total_points;
+  drupal_add_js(array('total_points' => $total_points), 'setting');
+
+  return theme('myngl_rewards_event_page', array('myngl' => $myngl,
+                                                 'brand' => $brand,
+                                                 'points' => $total_points,
+                                                 'form' => render(drupal_get_form('myngl_myngl_post_questions_form', $nid, $user->uid))
+                                                 )
+               );
+
+
+}
+
+
+
+function myngl_rewards_add($user_id, $myngl_id, $activity_description, $points, $repeatable ){
+
+  if ($repeatable){
+    myngl_rewards_add_helper($user_id, $myngl_id, $activity_description, $points);
+  }
+
+  else{
+    $result = db_query('SELECT id FROM {myngl_rewards_history} WHERE
+                        myngl_id = :myngl_id AND
+                        description = :description AND
+                        user_id = :user_id',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                          ':description' => $activity_description,
+                          ':user_id' => $user_id,
+                        )
+                      );
+
+    if ($result->rowCount()){
+      return;
+    }
+    else {
+      myngl_rewards_add_helper($user_id, $myngl_id, $activity_description, $points);
+    }
+  }
+
+}
+
+function myngl_rewards_add_helper($user_id, $myngl_id, $activity_description, $points){
+
+  //Add entry to myngl_rewards_history
+  $k = db_insert('myngl_rewards_history')->fields(
+    array(
+      'myngl_id'    => $myngl_id,
+      'user_id'     => $user_id,
+      'points'      => $points,
+      'description' => $activity_description,
+      'timestamp'   => time(),
+    )
+  )->execute();
+
+  //Update total Points
+  $result = db_query('SELECT id, total_points FROM {myngl_rewards_total} WHERE
+                        myngl_id = :myngl_id AND
+                        user_id = :user_id',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                          ':user_id' => $user_id,
+                        )
+                      );
+
+  if ($result->rowCount()){
+    $row = $result->fetchObject();
+    $row_id = $row->id;
+    $total_points = $row->total_points + $points;
+
+
+    db_update('myngl_rewards_total')->
+      fields(
+        array(
+         'total_points' =>$total_points,
+        )
+      )->condition('id', $row_id, '=')
+      ->execute();
+
+  }
+  else{
+    $k = db_insert('myngl_rewards_total')->fields(
+      array(
+        'myngl_id'      => $myngl_id,
+        'user_id'       => $user_id,
+        'total_points'  => $points,
+      )
+    )->execute();
+
+  }
+
+}
+
+function myngl_rewards_redeem($user_id, $myngl_id, $reward_id, $reward_points, $reward_description){
+
+
+}
+
+function myngl_rewards_total_points($user_id, $mingl_id){
+
+
+}
+
+
+function myngl_rewards_total_general_points($user_id){
+
+
 }

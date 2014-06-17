@@ -93,6 +93,14 @@ function myngl_event_social_area($nid) {
 
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
+
+  myngl_rewards_add($user->uid,
+                    $nid,
+                    'Enter social area',
+                    $myngl->field_points_for_visiting_social['und'][0]['value'],
+                    FALSE);
+
+
   $invitees = array();
   $ucg = array();
 
