@@ -8,19 +8,19 @@
 
 <div id="myngl-event-social-area">
   <div class="branded-secondary point-badge">
-    <p>45</p>
+    <p><?php print $total_points; ?></p>
   </div>
-  <div class="btn-branded" id="myngl-event-chat-button">  
+  <div class="btn-branded" id="myngl-event-chat-button">
     <a href="#" onclick="jQuery('#invitee-chat-selector').toggle(); return false;"><i class="fa fa-comment-o fa-2x"></i></a>
     <div id="invitee-chat-icons" style="display:none; float:right;">
         <?php foreach ($invitees as $k => $i) : ?>
         <div id="invitee-chat-thumb-<?php print $i['uid']; ?>" style="<?php if ($user->uid == $i['uid']) { print ' display:none; '; } ?>" class="myngl-chat-circles invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
           <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
         </div>
-        <?php endforeach; ?> 
+        <?php endforeach; ?>
     </div>
   </div>
-    
+
   <div id="invitee-chat-selector" style="float:right;">
     <div id="invitee-chat-selector-search">SEARCH USERNAME</div>
     <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
@@ -28,10 +28,10 @@
         <?php print $i['pic']; ?>
         <?php print $i['name']; ?>
       </a>
-    <?php endif; endforeach; ?> 
+    <?php endif; endforeach; ?>
     <br /><br />
   </div>
-  
+
   <div id="myngl-event-ugc-button"  onclick="return social_area.open_ucg(); container();">
   </div>
 
@@ -47,13 +47,13 @@
           <a href="#" onclick="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
           <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
         </div>
-        <?php endforeach; ?> 
+        <?php endforeach; ?>
       </div>
       <div class="thumb-background"></div>
     </div>
     <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
       99 PEOPLE TOTAL / 100 IN THIS ROOM
-      <form>  
+      <form>
         <input type="radio" name="filter" value="fb-friends" /> FB Friends
         <input type="radio" name="filter" value="in-room" /> People in this Room
         <input type="radio" name="filter" value="all" /> Show All
@@ -70,7 +70,7 @@
 
 
 <div id="myngl-event-ugc" class="overlay branded" style="display:none;height:500px; width:900px; ?>;position:absolute; margin:auto;z-index:200;top:0;bottom:0;left:0;right:0">
-  <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>  
+  <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>
   <div id="myngl-event-ugc-box" class="branded-tertiary">
     <div id="myngl-event-ugc-box-inside">
     <div id="myngl-event-ugc-box-slider">
@@ -80,7 +80,7 @@
         <?php endforeach; ?>
       </div>
     </div>
-      
+
     <?php foreach ($ucg as $k => $u) : ?>
       <div id="myngl-event-ugc-content-<?php print $k; ?>" class="myngl-event-ugc-content" style="display:none;">
         <?php print $u['content']; ?><br />
@@ -106,7 +106,7 @@
       <input type="submit" value="Send" />
     </form>
   </div>
-</div> 
+</div>
 
 <div id="myngl-event-chat" class="myngl-chat overlay branded" style="width:500px; height:450px;">
   <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>
@@ -119,12 +119,12 @@
       <input type="submit" value="Send" />
     </form>
   </div>
-</div> 
+</div>
 
 <div class="social-bg" style="background-image: url(<?php print base_path() . 'sites/default/files/styles/godivaroom.jpg' ?>);"> </div>
-        
+
 <?php foreach ($invitees as $k => $i) : ?>
-  <?php if ($user->uid != $i['uid']) : ?> 
+  <?php if ($user->uid != $i['uid']) : ?>
     <div id="myngl-event-solo-chat-<?php print $i['uid']; ?>" class="myngl-event-solo-chat myngl-chat branded" style="width:325px; height:340px; clear:both; display:none; position:absolute; ">
       <div class="myngl-event-solo-chat-intro branded">
         <a href="#" onclick="jQuery(this).parent().parent().removeClass('visible').hide();" class="overlay-close">X</a>
@@ -139,15 +139,12 @@
           <input type="submit" value="Send" />
         </form>
       </div>
-    </div> 
-    <div  id="myngl-event-invitee-info-<?php print $i['uid']; ?>" 
+    </div>
+    <div  id="myngl-event-invitee-info-<?php print $i['uid']; ?>"
           style="background-color: <?php print $primary_color; ?>; color:<?php print $secondary_color; ?>; padding:10px; width:200px; height:200px; position:absolute; display:none;" >
       <span style="font-size:18px; font-weight:bold;"><?php print $i['name']; ?></span><br /><br />
       <span style="font-size:16px; font-weight:bold; ">Tagline: <?php print $i['tagline'] ; ?></span><br /><br /><br />
       <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)" style="float:right;color:<?php print $secondary_color; ?>; font-weight:bold;">Start Chat</a>
     </div>
   <?php endif;  ?>
-<?php endforeach; ?> 
-
-
-
+<?php endforeach; ?>

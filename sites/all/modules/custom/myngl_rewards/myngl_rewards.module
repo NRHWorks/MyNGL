@@ -238,6 +238,29 @@ function myngl_rewards_redeem($user_id, $myngl_id, $reward_id) {
   )->execute();
 }
 
+/**
+ * Calculates reward points for a specific event
+ */
+function myngl_rewards_total_points($user_id, $myngl_id) {
+  $result = db_query('SELECT total_points FROM {myngl_rewards_total} WHERE
+                        myngl_id = :myngl_id AND
+                        user_id = :user_id',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                          ':user_id' => $user_id,
+                        )
+                      );
+
+  if ($result->rowCount()) {
+    $row = $result->fetchObject();
+    return $row->total_points;
+  }
+  else {
+    return 0;
+  }
+}
+
+
 
 /**
  * Calculates total reward points (to-be-implemented).

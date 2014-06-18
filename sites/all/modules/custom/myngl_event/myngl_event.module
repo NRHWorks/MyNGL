@@ -64,7 +64,7 @@ function myngl_event_theme() {
 
   $items['myngl_event_social_area'] =  array(
                           'template' => 'myngl-event-social-area',
-                          'variables' => array ('myngl' => NULL, 'brand' => NULL, 'invitees' => NULL, 'ucg' => NULL),
+                          'variables' => array ('myngl' => NULL, 'brand' => NULL, 'invitees' => NULL, 'ucg' => NULL, 'total_points' => NULL),
                         );
 
   return $items;
@@ -144,7 +144,14 @@ function myngl_event_social_area($nid) {
     }
   }
 
-  return theme('myngl_event_social_area', array('myngl' => $myngl, 'brand' => $brand, 'invitees' => $invitees, 'ucg' => $ucg));
+  return theme('myngl_event_social_area', array(
+                                                'myngl' => $myngl,
+                                                'brand' => $brand,
+                                                'invitees' => $invitees,
+                                                'ucg' => $ucg,
+                                                'total_points' =>myngl_rewards_total_points($user->uid, $nid),
+                                                )
+               );
 }
 
 function myngl_event_social_area_ajax_message($nid) {
