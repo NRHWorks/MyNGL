@@ -1,5 +1,13 @@
 <?php
+/**
+ * @file
+ * Custom functions for theater page.
+ */
 
+
+/**
+ * Implements hook_menu().
+ */
 function myngl_theater_menu() {
   $items['myngl-event/%/theater'] = array(
     'title' => 'MyNGL Theater',
@@ -8,11 +16,10 @@ function myngl_theater_menu() {
     'access callback' => TRUE,
   );
 
-
   $items['myngl-event/theater/question/%/%'] = array(
     'title' => 'MyNGL Lobby',
     'page callback' => 'myngl_theater_question_post',
-    'page arguments' => array(3,4),
+    'page arguments' => array(3, 4),
     'access callback' => TRUE,
   );
 
@@ -20,21 +27,25 @@ function myngl_theater_menu() {
 }
 
 
+/**
+ * Implements hook_theme().
+ */
 function myngl_theater_theme() {
-  $items['myngl_theater_theater'] =  array(
-                          'template' => 'myngl-theater-theater',
-                          'variables' => array ('myngl' => NULL, 'brand' => NULL),
-                        );
-
-
+  $items['myngl_theater_theater'] = array(
+    'template' => 'myngl-theater-theater',
+    'variables' => array('myngl' => NULL, 'brand' => NULL),
+  );
   return $items;
 }
 
+/**
+ * Generates theater page.
+ */
 function myngl_theater_theater($nid) {
   global $user;
 
-  drupal_add_js(path_to_theme().'/js/ustream-embedapi.js');
-  drupal_add_js(path_to_theme().'/js/theater.js');
+  drupal_add_js(path_to_theme() . '/js/ustream-embedapi.js');
+  drupal_add_js(path_to_theme() . '/js/theater.js');
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
 
@@ -45,27 +56,22 @@ function myngl_theater_theater($nid) {
                     $nid,
                     'Visit theater page',
                     $myngl->field_points_for_visiting_theate['und'][0]['value'],
-                    TRUE);   //TRUE for testing purpose. it should be false
-
+                    TRUE);   // TRUE for testing purpose. It should be false.
 
   return theme('myngl_theater_theater', array('myngl' => $myngl, 'brand' => $brand));
-
-
 }
 
 
-
+/**
+ * Recieves users questions.
+ */
 function myngl_theater_question_post($myngl_id, $from_user_id) {
-
-
   $k = db_insert('myngl_theater_question')->fields(
     array(
-     'myngl_id' => $myngl_id,
-     'user_id'  => $from_user_id,
-     'question' => $_POST['question'],
-     'question_date'     =>time(),
+      'myngl_id' => $myngl_id,
+      'user_id'  => $from_user_id,
+      'question' => $_POST['question'],
+      'question_date' => time(),
     )
   )->execute();
-
-  return;
 }

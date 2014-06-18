@@ -1,5 +1,13 @@
 <?php
+/**
+ * @file
+ * Custom functions for activity room page.
+ */
 
+
+/**
+ * Implements hook_menu().
+ */
 function myngl_activity_room_menu() {
   $items['myngl-event/%/activity-room'] = array(
     'title' => 'MyNGL Activity Room',
@@ -7,33 +15,32 @@ function myngl_activity_room_menu() {
     'page arguments' => array(1),
     'access callback' => TRUE,
   );
-
-
-
-
   return $items;
 }
 
 
+/**
+ * Implements hook_theme().
+ */
 function myngl_activity_room_theme() {
-  $items['myngl_activity_room_room'] =  array(
-
-                          'template' => 'myngl-activity-room-room',
-                          'variables' => array ('myngl' => NULL, 'brand' => NULL),
-                        );
-
-
+  $items['myngl_activity_room_room'] = array(
+    'template' => 'myngl-activity-room-room',
+    'variables' => array('myngl' => NULL, 'brand' => NULL),
+  );
   return $items;
 }
 
+
+/**
+ * Function for generating activity room page.
+ */
 function myngl_activity_room_room($nid) {
   global $user;
-  drupal_add_js(path_to_theme().'/js/activity-room.js');
+  drupal_add_js(path_to_theme() . '/js/activity-room.js');
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
 
   $myngl = node_load($nid);
-
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
   myngl_rewards_add($user->uid,
@@ -41,7 +48,6 @@ function myngl_activity_room_room($nid) {
                     'Enter activity room',
                     $myngl->field_points_for_visiting_activi['und'][0]['value'],
                     FALSE);
-
 
   return theme('myngl_activity_room_room', array('myngl' => $myngl, 'brand' => $brand));
 }

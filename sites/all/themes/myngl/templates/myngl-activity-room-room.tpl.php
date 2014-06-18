@@ -100,7 +100,7 @@ display:none;
 
 .activity-room-thumb .field-name-field-title{
 	font-weight:bold;
-	font-family:"arial";
+	font-family:"lato";
 }
 
 #activity-iframe-wrapper{

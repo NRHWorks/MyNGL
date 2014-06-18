@@ -1,29 +1,21 @@
 var scrollPosition = 0;
 (function ($) {
   $(document).ready( function() {
-		$('li#activity-room').removeClass("inactive").addClass("active");
+    $('li#activity-room').removeClass("inactive").addClass("active");
+    setInterval(function() { activity_room.message(); }, 3000);
 
-		setInterval(function() { activity_room.message(); }, 3000);
+    var activity_room_width = 0;
 
-		var activity_room_width = 0;
     $('.activity-room-thumb').each( function() {
-      //activity_room_width += $(this).children('a').children('img').width();
-			activity_room_width += $(this).width();
+      activity_room_width += $(this).width();
       activity_room_width += 10;
-			//
     });
 
-
-		activity_room_width= Math.max((Math.floor( activity_room_width / (160 * 3)) + 1)*160, 800) ;
-    //activity_room_width = Math.max(Math.floor(activity_room_width / 3),800);
-		//console.log(activity_room_width);
+    activity_room_width= Math.max((Math.floor( activity_room_width / (160 * 3)) + 1)*160, 800) ;
     $("#myngl-activity-room-thumbs").css('width', activity_room_width + 'px');
 
-
-
-	})
+  })
 }(jQuery));
-
 
 
 var activity_room = (function ($) {
@@ -39,6 +31,7 @@ var activity_room = (function ($) {
 
       return false;
     },
+
     right : function (value){
 
       scrollPosition -= $('#myngl-activity-room-inside').width();
@@ -76,31 +69,27 @@ var activity_room = (function ($) {
 
 
 var activity_overlay = (function($){
-	return {
+  return {
     show : function (source, width, height){
-			$('#overlay-background').fadeIn(500);
+      $('#overlay-background').fadeIn(500);
 
-			$("iframe#activity-overlay").each( function(){
-				$(this).attr("src", source);
-				$(this).css('width', width);
-				$(this).css('height', height);
-			});
+      $("iframe#activity-overlay").each( function(){
+        $(this).attr("src", source);
+        $(this).css('width', width);
+        $(this).css('height', height);
+      });
 
-			
-				$("#activity-iframe-wrapper").css('height',height).css('width',width).fadeIn(500);
+      $("#activity-iframe-wrapper").css('height',height).css('width',width).fadeIn(500);
 
-		},
-		close : function(){
-			$("iframe#activity-overlay").each( function(){
-				$(this).attr("src", "");
-			});
+    },
+    close : function(){
+      $("iframe#activity-overlay").each( function(){
+        $(this).attr("src", "");
+      });
 
-			$('#overlay-background').fadeOut(500);
+      $('#overlay-background').fadeOut(500);
       $('#activity-iframe-wrapper').fadeOut(100);
 
-		},
-	/*
-
-	*/
-	}
+    },
+  }
 }(jQuery));

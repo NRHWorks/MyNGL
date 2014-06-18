@@ -1,5 +1,13 @@
 <?php
+/**
+ * @file
+ * Custom functions for reward (gifting suite) page.
+ */
 
+
+/**
+ * Implements hook_menu().
+ */
 function myngl_rewards_menu() {
   $items['user/%user/rewards'] = array(
     'title' => 'REWARDS',
@@ -18,45 +26,54 @@ function myngl_rewards_menu() {
   $items['myngl-event/%/rewards/question-submit/%/%'] = array(
     'title' => 'MyNGL REWARDS QUESTION SUBMIT',
     'page callback' => 'myngl_rewards_question_submit',
-    'page arguments' => array(1,4,5),
+    'page arguments' => array(1, 4, 5),
     'access callback' => TRUE,
   );
-
-
   return $items;
 }
 
+
+/**
+ * Implements hook_theme().
+ */
 function myngl_rewards_theme() {
-  $items['myngl_rewards'] =  array(
-                          'template' => 'myngl-rewards',
-                          'variables' => array('points' => null),
-                        );
+  $items['myngl_rewards'] = array(
+    'template' => 'myngl-rewards',
+    'variables' => array('points' => NULL),
+  );
+
   $items['myngl_rewards_event_page'] = array(
-                          'template' => 'myngle-rewards-event-page',
-                          'variables' => array(
-                                                'myngl' => null,
-                                                'brand'=> null,
-                                                'points'=>null,
-                                                'form'=>null,),
-                        );
+    'template' => 'myngle-rewards-event-page',
+    'variables' => array(
+      'myngl' => NULL,
+      'brand' => NULL,
+      'points' => NULL,
+      'form' => NULL,
+    ),
+  );
 
   return $items;
 }
 
+/**
+ * Generates reward overlay.
+ */
 function myngl_rewards_page() {
-  $rewards = rand(100,1000);
+  $rewards = rand(100, 1000);
   $output = theme('myngl_rewards', array('points' => $rewards));
   return $output;
 }
 
-function myngl_rewards_event_page($nid){
+
+/**
+ * Generates gifting suite page.
+ */
+function myngl_rewards_event_page($nid) {
   global $user;
 
-  drupal_add_js(path_to_theme().'/js/rewards-event-page.js');
+  drupal_add_js(path_to_theme() . '/js/rewards-event-page.js');
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
-
-
 
   $myngl = node_load($nid);
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
@@ -74,25 +91,27 @@ function myngl_rewards_event_page($nid){
   $total_points = $row->total_points;
   drupal_add_js(array('total_points' => $total_points), 'setting');
 
-  return theme('myngl_rewards_event_page', array('myngl' => $myngl,
+  return theme('myngl_rewards_event_page', array(
+                                                 'myngl' => $myngl,
                                                  'brand' => $brand,
                                                  'points' => $total_points,
-                                                 'form' => render(drupal_get_form('myngl_myngl_post_questions_form', $nid, $user->uid))
-                                                 )
-               );
-
-
+                                                 'form' => render(drupal_get_form('myngl_myngl_post_questions_form', $nid, $user->uid)),
+                                                )
+              );
 }
 
 
+/**
+ * Adds reward points to users.
+ */
+function myngl_rewards_add($user_id, $myngl_id, $activity_description,
+  $points, $repeatable) {
 
-function myngl_rewards_add($user_id, $myngl_id, $activity_description, $points, $repeatable ){
-
-  if ($repeatable){
+  if ($repeatable) {
     myngl_rewards_add_helper($user_id, $myngl_id, $activity_description, $points);
   }
 
-  else{
+  else {
     $result = db_query('SELECT id FROM {myngl_rewards_history} WHERE
                         myngl_id = :myngl_id AND
                         description = :description AND
@@ -104,19 +123,22 @@ function myngl_rewards_add($user_id, $myngl_id, $activity_description, $points, 
                         )
                       );
 
-    if ($result->rowCount()){
+    if ($result->rowCount()) {
       return;
     }
     else {
       myngl_rewards_add_helper($user_id, $myngl_id, $activity_description, $points);
     }
   }
-
 }
 
-function myngl_rewards_add_helper($user_id, $myngl_id, $activity_description, $points){
+/**
+ * Helper for myngl_rewards_add.
+ */
+function myngl_rewards_add_helper($user_id, $myngl_id, $activity_description,
+  $points) {
 
-  //Add entry to myngl_rewards_history
+  // Add entry to myngl_rewards_history
   $k = db_insert('myngl_rewards_history')->fields(
     array(
       'myngl_id'    => $myngl_id,
@@ -127,7 +149,7 @@ function myngl_rewards_add_helper($user_id, $myngl_id, $activity_description, $p
     )
   )->execute();
 
-  //Update total Points
+  // Update total Points.
   $result = db_query('SELECT id, total_points FROM {myngl_rewards_total} WHERE
                         myngl_id = :myngl_id AND
                         user_id = :user_id',
@@ -137,22 +159,20 @@ function myngl_rewards_add_helper($user_id, $myngl_id, $activity_description, $p
                         )
                       );
 
-  if ($result->rowCount()){
+  if ($result->rowCount()) {
     $row = $result->fetchObject();
     $row_id = $row->id;
     $total_points = $row->total_points + $points;
 
-
-    db_update('myngl_rewards_total')->
-      fields(
+    db_update('myngl_rewards_total')->fields(
         array(
-         'total_points' =>$total_points,
+          'total_points' => $total_points,
         )
       )->condition('id', $row_id, '=')
       ->execute();
 
   }
-  else{
+  else {
     $k = db_insert('myngl_rewards_total')->fields(
       array(
         'myngl_id'      => $myngl_id,
@@ -160,35 +180,31 @@ function myngl_rewards_add_helper($user_id, $myngl_id, $activity_description, $p
         'total_points'  => $points,
       )
     )->execute();
-
   }
-
 }
 
-function myngl_rewards_redeem($user_id, $myngl_id, $reward_id){
 
-//  , $reward_points, $reward_title){
+/**
+ * Redeem rewards.
+ */
+function myngl_rewards_redeem($user_id, $myngl_id, $reward_id) {
 
-
-  $reward_fc =  entity_load_single('field_collection_item', $reward_id);
-
-
+  $reward_fc = entity_load_single('field_collection_item', $reward_id);
   $reward_points = $reward_fc->field_points['und'][0]['value'];
   $reward_title = $reward_fc->field_title['und'][0]['value'];
 
-
-//Add entry to myngl_rewards_history
+  // Add entry to myngl_rewards_history.
   db_insert('myngl_rewards_history')->fields(
     array(
       'myngl_id'    => $myngl_id,
       'user_id'     => $user_id,
       'points'      => $reward_points * -1,
-      'description' => "Redeem Reward: ".$reward_title,
+      'description' => "Redeem Reward: " . $reward_title,
       'timestamp'   => time(),
     )
   )->execute();
 
-  //Update total Points
+  // Update total Points.
   $result = db_query('SELECT id, total_points FROM {myngl_rewards_total} WHERE
                         myngl_id = :myngl_id AND
                         user_id = :user_id',
@@ -198,23 +214,18 @@ function myngl_rewards_redeem($user_id, $myngl_id, $reward_id){
                         )
                       );
 
-
   $row = $result->fetchObject();
   $row_id = $row->id;
   $total_points = $row->total_points - $reward_points;
 
-
-  db_update('myngl_rewards_total')->
-    fields(
+  db_update('myngl_rewards_total')->fields(
       array(
-       'total_points' =>$total_points,
+        'total_points' => $total_points,
       )
     )->condition('id', $row_id, '=')
     ->execute();
 
-
-
-//Add entry to myngl_rewards_redeem
+  // Add entry to myngl_rewards_redeem
   db_insert('myngl_rewards_redeem')->fields(
     array(
       'myngl_id'    => $myngl_id,
@@ -225,22 +236,21 @@ function myngl_rewards_redeem($user_id, $myngl_id, $reward_id){
       'timestamp'   => time(),
     )
   )->execute();
-
-
-}
-
-function myngl_rewards_total_points($user_id, $mingl_id){
-
-
 }
 
 
-function myngl_rewards_total_general_points($user_id){
-
+/**
+ * Calculates total reward points (to-be-implemented).
+ */
+function myngl_rewards_total_general_points($user_id) {
 
 }
 
-function myngl_rewards_question_submit($myngl_id, $user_id, $selected_reward_id){
+
+/**
+ * Recieves ajax data for submitting post-myngl question answers.
+ */
+function myngl_rewards_question_submit($myngl_id, $user_id, $selected_reward_id) {
   /* content of $_POST
   Array(
     [myngl_id] => 2
@@ -253,34 +263,28 @@ function myngl_rewards_question_submit($myngl_id, $user_id, $selected_reward_id)
   )
   */
 
-
-
   $q_arr = array();
   foreach ($_POST as $k => $val) {
-    if (preg_match('/question/',$k)) {
+    if (preg_match('/question/', $k)) {
       $q_arr[$k] = $val;
     }
   }
 
-
   $answers_for_user = serialize($q_arr);
 
-
   $invitee = _myngl_myngl_get_invitee_id($myngl_id, $user_id);
-
   $invitee->field_myngl_tagline['und'][0]['value'] = $v['tagline'];
-
   $invitee->field_post_question_answer['und'][0]['value'] = $answers_for_user;
-
-
   $invitee->save();
 
   myngl_rewards_redeem($user_id, $myngl_id, $selected_reward_id);
-
-
 }
 
-function myngl_rewards_invitee_redeem($myngl_id){
+
+/**
+ * Generates a table of invitees and the gifts they choose.
+ */
+function myngl_rewards_invitee_redeem($myngl_id) {
   $result = db_query('SELECT user_id, timestamp, reward_id, reward_title
                       FROM {myngl_rewards_redeem} WHERE
                         myngl_id = :myngl_id',
@@ -289,13 +293,17 @@ function myngl_rewards_invitee_redeem($myngl_id){
                         )
                       );
 
-
-  $table = "<table><tr><td>User ID</td><td>Reward ID</td><td>Reward Title</td><td>Time</td></tr>";
-  foreach($result as $r){
-    $tablerow = "<tr><td>".$r->user_id."</td><td>".$r->reward_id."</td><td>".$r->reward_title."</td><td>".$r->timestamp."</td></tr>";
-    $table .= $tablerow;
+  $header = array(
+    'User ID',
+    'Reward ID',
+    'Reward Title',
+    'Time',
+  );
+  $rows = array();
+  foreach ($result as $r) {
+    $rows[] = array($r->user_id, $r->reward_id, $r->reward_title, $r->timestamp);
   }
-  $table .="</table>";
-  return $table;
 
+  $table = array('header' => $header, 'rows' => $rows, 'attributes' => array());
+  return theme_table($table);
 }

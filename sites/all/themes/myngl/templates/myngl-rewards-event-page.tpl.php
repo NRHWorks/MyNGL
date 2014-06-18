@@ -136,27 +136,29 @@ body.page-myngl-event-rewards {
 #reward-wrapper .field-collection-item-field-reward .redeem{
   position:absolute;
   top:100px;
-  font-family:"san-serif";
+  font-family:"georgia";
   font-style:italic;
   font-size:18px;
-  margin-left:80px;
+  margin-left:50px;
 }
 
 #reward-wrapper .field-collection-item-field-reward .redeem-button{
-
   position:absolute;
-  left:125px;
+  left:135px;
   top:-1px;
   font-size:20px;
+  font-family:'lato';
+  width:12px !important;
+  height:24px !important;
   font-style:normal;
   font-weight: bold;
   color:<?php print $brand->field_brand_tertiary_color['und'][0]['rgb'];?>;
  padding-left:6px;
  padding-right:6px;
  background-color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
- -moz-border-radius: 30px 30px 30px 30px;
- -webkit-border-radius: 30px 30px 30px 30px;
-
+ -moz-border-radius: 30px 30px 30px 30px;/*
+ -webkit-border-radius: 30px 30px 30px 30px;*/
+ -webkit-border-radius: 100% 100% 100% 100%;
 }
 
 #right{
@@ -177,7 +179,7 @@ body.page-myngl-event-rewards {
   position:relative;
   padding-top:10px;
   padding-left:20px;
-  font-family: "san-serif";
+  font-family: "georgia";
   font-size:24px;
 }
 
@@ -196,23 +198,23 @@ body.page-myngl-event-rewards {
 #reward-wrapper #buy-now{
   position:absolute;
   top:156px;
-  font-family:"san-serif";
+  font-family:"georgia";
   font-style:italic;
   font-size:18px;
-  margin-left:270px;
+  margin-left:260px;
 }
 
 #reward-wrapper #buy-now a{
   position:absolute;
-  left:85px;
+  left:95px;
   top:-1px;
   font-size:20px;
   font-style:normal;
   font-weight: bold;
   color:<?php print $brand->field_brand_tertiary_color['und'][0]['rgb'];?>;
- padding-left:6px;
- padding-right:6px;
- background-color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
+  padding-left:6px;
+  padding-right:6px;
+  background-color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
  -moz-border-radius: 30px 30px 30px 30px;
  -webkit-border-radius: 30px 30px 30px 30px;
 }
@@ -303,7 +305,7 @@ body.page-myngl-event-rewards {
 
 #gifting-series-overlay #gift-redeem{
   color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
-  font-family:'san-serif';
+  font-family:'georgia';
   font-size:28px;
   width:auto;
 
@@ -360,7 +362,7 @@ body.page-myngl-event-rewards {
 }
 
 #gifting-series-overlay #redeem {
-  font-family:'san-serif';
+  font-family:'georgia';
   font-style:italic;
   color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
   float:right;
@@ -373,11 +375,11 @@ body.page-myngl-event-rewards {
 
 
 #gifting-series-overlay #redeem #button{
-
   position:absolute;
   left:115px;
   top:-1px;
   font-size:20px;
+  font-family:'lato';
   font-style:normal;
   font-weight: bold;
   color:<?php print $brand->field_brand_tertiary_color['und'][0]['rgb'];?>;
@@ -400,7 +402,7 @@ body.page-myngl-event-rewards {
 #gifting-series-overlay #you-need{
   float:right;
   position:relative;
-  font-family:"san-serif";
+  font-family:"georgia";
   width:145px;
   padding:30px;
   height:170px;
@@ -452,7 +454,7 @@ body.page-myngl-event-rewards {
 #gifting-series-overlay #questions #title,
 #gifting-series-overlay #congrats #title{
   color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
-  font-family:'san-serif';
+  font-family:'georgia';
   font-size:28px;
   width:auto;
 
@@ -473,7 +475,7 @@ form#myngl-myngl-post-questions-form .form-actions{
 }
 
 form#myngl-myngl-post-questions-form #edit-submit{
-  font-family:'san-serif';
+  font-family:'georgia';
   color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
   font-style:italic;
   font-size:20px;
