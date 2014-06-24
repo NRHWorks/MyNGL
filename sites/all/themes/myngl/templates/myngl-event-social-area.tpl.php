@@ -21,14 +21,26 @@
     </div>
   </div>
 
-  <div id="invitee-chat-selector" style="float:right;">
+  <div id="invitee-chat-selector" style="float:right;z-index:30000;">
     <div id="invitee-chat-selector-search">SEARCH USERNAME</div>
+    <!--  Nathan's code
     <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
       <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)">
         <?php print $i['pic']; ?>
         <?php print $i['name']; ?>
       </a>
     <?php endif; endforeach; ?>
+     end nathan's code-->
+     <form id="social-area-chat-list">
+      <input type="submit" value="Chat" /><br/>
+     <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
+      <input type="checkbox" name="user_id" value="<?php print $i['uid']?>">
+        <?php print $i['pic']; ?>
+        <?php print $i['name']; ?>
+      </input><br/>
+     <?php endif; endforeach; ?>
+
+     </form>
     <br /><br />
   </div>
 

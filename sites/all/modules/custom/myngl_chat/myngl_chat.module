@@ -6,28 +6,57 @@ function myngl_chat_menu() {
     'title' => 'MyNGL Lobby',
     'page callback' => 'myngl_chat_get_message',
     'page arguments' => array(2),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
 
   $items['myngl-chat/send-message/%/%'] = array(
     'title' => 'MyNGL Lobby',
     'page callback' => 'myngl_chat_send_message',
     'page arguments' => array(2,3),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
 
   $items['myngl-chat/solo-fetch/%/%'] = array(
     'title' => 'MyNGL Lobby',
     'page callback' => 'myngl_chat_solo_fetch',
     'page arguments' => array(2,3),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
 
   $items['myngl-chat/solo-post/%/%/%'] = array(
     'title' => 'MyNGL Lobby',
     'page callback' => 'myngl_chat_solo_post',
     'page arguments' => array(2,3,4),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
+  );
+
+
+  $items['myngl-chat/group-create/%'] = array(
+    'title' => 'MyNGL Chat Group Create',
+    'page callback' => 'myngl_chat_group_create',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+  );
+
+  $items['myngl-chat/group-fetch/%/%'] = array(
+    'title' => 'MyNGL Chat Group Fetch',
+    'page callback' => 'myngl_chat_group_fetch',
+    'page arguments' => array(2, 3),
+    'access callback' => TRUE,
+  );
+
+  $items['myngl-chat/group-post/%/%/%'] = array(
+    'title' => 'MyNGL Chat Group Post',
+    'page callback' => 'myngl_chat_group_post',
+    'page arguments' => array(2, 3, 4),
+    'access callback' => TRUE,
+  );
+
+  $items['myngl-chat/group-leave/%/%/%'] = array(
+    'title' => 'MyNGL Chat Group Leave',
+    'page callback' => 'myngl_chat_group_leave',
+    'page arguments' => array(2, 3, 4),
+    'access callback' => TRUE,
   );
 
   return $items;
@@ -78,10 +107,10 @@ function myngl_chat_solo_fetch($myngl_id, $user_id, $latest) {
 function myngl_chat_solo_post($myngl_id, $from_user_id, $to_user_id) {
   print 'here';
 
-  db_query("  INSERT INTO {myngl_solo_chat} 
-              (myngl_id, from_user_id, to_user_id, message, date) 
-              VALUES 
-              (:myngl_id, :from_user_id, :to_user_id, :message, ".time().")", 
+  db_query("  INSERT INTO {myngl_solo_chat}
+              (myngl_id, from_user_id, to_user_id, message, date)
+              VALUES
+              (:myngl_id, :from_user_id, :to_user_id, :message, ".time().")",
               array(  ':myngl_id'     => $myngl_id,
                       ':from_user_id' => $from_user_id,
                       ':to_user_id'   => $to_user_id,
@@ -91,4 +120,218 @@ function myngl_chat_solo_post($myngl_id, $from_user_id, $to_user_id) {
   print '?????';
 
   return;
+}
+
+function myngl_chat_group_create($myngl_id){
+
+  //Get the largest chat group id number
+
+  $result = db_query('SELECT chat_id FROM {myngl_chat_group_chat_id_counter} WHERE
+                        myngl_id = :myngl_id ',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                        )
+                      );
+
+  $chat_id = -1;
+
+  if ($result->rowCount()==0){
+    $chat_id = 0;
+    db_insert('myngl_chat_group_chat_id_counter')->fields(
+      array(
+        'myngl_id'      => $myngl_id,
+        'chat_id'       => $chat_id,
+      )
+    )->execute();
+
+  }
+  else {
+    $chat_id = $result->fetchObject()->chat_id + 1;
+
+    db_update('myngl_chat_group_chat_id_counter')->fields(
+        array(
+          'chat_id' => $chat_id,
+        )
+      )->condition('myngl_id', $myngl_id, '=')
+      ->execute();
+
+  }
+
+
+
+
+
+  $selected_invitees = $_POST['selected_invitees'];
+
+  $users = array();
+
+  foreach($selected_invitees as $invitee_id){
+    $loaded_user = user_load($invitee_id);
+    $name = $loaded_user->field_first_name['und'][0]['value'] . " " . $loaded_user->field_last_name['und'][0]['value'];
+    $users[$invitee_id] = $name;
+    $query = db_insert('myngl_chat_group')->fields(
+      array(
+      'myngl_id'    => $myngl_id,
+      'chat_id'      => $chat_id,
+      'user_id'     => $invitee_id,
+      )
+    )->execute();
+  }
+
+
+  // Return json objec with the chat_id
+  $response_array['status'] = 'success';
+  $response_array['chat_id'] = $chat_id;
+  $response_array['users'] = $users;
+
+  echo json_encode($response_array);
+}
+
+function myngl_chat_group_fetch($myngl_id, $user_id){
+  //file_put_contents("test123.txt", print_r($_POST, TRUE), FILE_APPEND);
+
+
+  $last_message_ids = array();
+  if (isset($_POST['last_message_ids'])){
+    $last_message_ids = $_POST['last_message_ids'];
+  }
+
+
+  //Find out what chat_ids the user belong to
+  $result = db_query('SELECT chat_id FROM {myngl_chat_group} WHERE
+                        myngl_id = :myngl_id AND
+                        user_id = :user_id',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                          ':user_id' => $user_id,
+                        )
+                      );
+
+  $chats = array();
+
+  foreach($result as $row){
+    $this_chat = array();
+    $this_chat['chat_id'] = $row->chat_id;
+    $this_chat['users'] = array();
+
+
+    $result2 = db_query('SELECT user_id FROM {myngl_chat_group} WHERE
+                        myngl_id = :myngl_id AND
+                        chat_id = :chat_id',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                          ':chat_id' => $row->chat_id,
+                        )
+                      );
+
+
+    foreach($result2 as $row2){
+      $loaded_user = user_load($row2->user_id);
+      $name = $loaded_user->field_first_name['und'][0]['value'] . " " . $loaded_user->field_last_name['und'][0]['value'];
+      $this_chat['users'][$row2->user_id] = $name;
+    }
+
+    $old_last_message_id = 0;
+
+
+    if (isset($last_message_ids[$row->chat_id])){
+      $old_last_message_id = $last_message_ids[$row->chat_id];
+    }
+    
+    $this_chat['last_message_id'] = $old_last_message_id ;
+
+    $result3 = db_query('SELECT id, user_id, message FROM {myngl_chat_group_message} WHERE
+                        myngl_id = :myngl_id AND
+                        chat_id = :chat_id AND
+                        id > :old_last_message_id ORDER BY id ASC',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                          ':chat_id' => $row->chat_id,
+                          ':old_last_message_id' => $old_last_message_id,
+                        )
+                      );
+
+    $this_chat['messages'] = array();
+
+    // Create an array to store the id => name of left users not established in the above foreach loop
+    $left_users = array();
+
+
+    $num_of_rows = $result3->rowCount();
+    $counter = 0;
+    foreach ($result3 as $row3){
+      $name = "";
+      // Map message to user name
+      if (isset($this_chat['users'][$row3->user_id])){
+        $name = $this_chat['users'][$row3->user_id];
+
+      }
+      elseif (isset($left_users[$row3->user_id])){
+        $name = $left_users[$row3->user_id];
+      }
+      else {
+        $loaded_user = user_load($row3->user_id);
+        $name = $loaded_user->field_first_name['und'][0]['value'] . " " . $loaded_user->field_last_name['und'][0]['value'];
+        $left_users[$row3->user_id] = $name;
+      }
+
+      $this_chat['messages'][] = array(
+                                        'user_id' => $row3->user_id,
+                                        'user_name' => $name,
+                                        'message' => $row3->message
+                                      );
+
+      if ($counter == $num_of_rows -1){
+        $this_chat['last_message_id'] = $row3->id;
+      }
+
+      $counter ++;
+    }
+
+    $chats[] = $this_chat;
+  }
+
+
+  //file_put_contents("test123.txt", $last_fetch_timestamp , FILE_APPEND );
+  $response_array['status'] = 'success';
+  $response_array['chats'] = $chats;
+
+  echo json_encode($response_array);
+
+
+}
+
+function myngl_chat_group_post($myngl_id, $user_id, $chat_id){
+
+  db_insert('myngl_chat_group_message')->fields(
+    array(
+      'myngl_id'    => $myngl_id,
+      'user_id'     => $user_id,
+      'chat_id'      => $chat_id,
+      'message' => $_POST['message'],
+      'timestamp'   => time(),
+    )
+  )->execute();
+
+}
+
+function myngl_chat_group_leave($myngl_id, $user_id, $chat_id){
+  db_delete('myngl_chat_group')
+  ->condition('myngl_id', $myngl_id)
+  ->condition('chat_id', $chat_id)
+  ->condition('user_id', $user_id)
+  ->execute();
+
+  db_insert('myngl_chat_group_message')->fields(
+    array(
+      'myngl_id'    => $myngl_id,
+      'user_id'     => $user_id,
+      'chat_id'      => $chat_id,
+      'message' => "Left the chat.",
+      'timestamp'   => time(),
+    )
+  )->execute();
+
+
+
 }
