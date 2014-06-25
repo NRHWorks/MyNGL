@@ -237,7 +237,7 @@ function myngl_chat_group_fetch($myngl_id, $user_id){
     if (isset($last_message_ids[$row->chat_id])){
       $old_last_message_id = $last_message_ids[$row->chat_id];
     }
-    
+
     $this_chat['last_message_id'] = $old_last_message_id ;
 
     $result3 = db_query('SELECT id, user_id, message FROM {myngl_chat_group_message} WHERE
@@ -322,16 +322,29 @@ function myngl_chat_group_leave($myngl_id, $user_id, $chat_id){
   ->condition('user_id', $user_id)
   ->execute();
 
-  db_insert('myngl_chat_group_message')->fields(
-    array(
-      'myngl_id'    => $myngl_id,
-      'user_id'     => $user_id,
-      'chat_id'      => $chat_id,
-      'message' => "Left the chat.",
-      'timestamp'   => time(),
-    )
-  )->execute();
+  // Only insert this message if there are already existing message
 
+
+  $result = db_query('SELECT id  FROM {myngl_chat_group_message} WHERE
+                        myngl_id = :myngl_id AND
+                        chat_id = :chat_id LIMIT 1',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                          ':chat_id' => $row->chat_id,
+                        )
+                      );
+  if ($resolt->rowCount() != 0){
+
+    db_insert('myngl_chat_group_message')->fields(
+      array(
+        'myngl_id'    => $myngl_id,
+        'user_id'     => $user_id,
+        'chat_id'      => $chat_id,
+        'message' => "Left the chat.",
+        'timestamp'   => time(),
+      )
+    )->execute();
+  }
 
 
 }

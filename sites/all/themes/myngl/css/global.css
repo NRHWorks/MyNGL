@@ -1143,11 +1143,18 @@ body ::-webkit-scrollbar-thumb {
     margin: 10px 10px -20px 10px;
    }
 
-  .myngl-event-profile-pic.solo-chat {
+  .myngl-event-profile-pic.solo-chat,
+  .myngl-event-profile-pic.group-chat{
     height: 30px;
     width: 30px;
     margin: 10px 5px -10px 10px;
    }
+
+  .myngl-event-profile-pic.minimized{
+    height:60px;
+    width:60px;
+    margin:3px;
+  }
 
   .solo-message {
     margin-bottom: 15px;
@@ -1333,6 +1340,11 @@ body ::-webkit-scrollbar-thumb {
   div.myngl-chat {
     padding: 15px;
     box-shadow: 1px 1px 3px #b9b9b9;
+  }
+
+  form#social-area-chat-list .checkbox.selected{
+    background-color:#888888;
+
   }
 
   .myngl-event-solo-chat-intro {
@@ -1766,6 +1778,15 @@ body ::-webkit-scrollbar-thumb {
 
 /* --- sort these out --- */
 
+#myngl-event-chat-button .minimized-solo-chat{
+  float:right;
+}
+
+#myngl-event-chat-button #minimized-chats{
+  float:right;
+}
+
+
 #invitee-chat-selector {
   border: 15px  solid #53302a;
   background-color: #e2dbd2;
@@ -1793,7 +1814,8 @@ body ::-webkit-scrollbar-thumb {
   width: 40px;
   margin-right: 5px;
   margin-bottom: -15px;
-  margin-top: 20px;
+  margin-top: 0px;
+  /*margin-top:20px;*/
 }
 
 #invitee-chat-selector-search {
@@ -1803,4 +1825,9 @@ body ::-webkit-scrollbar-thumb {
   font-size: 18px;
   margin: 20px;
 }
+
+#invitee-chat-selector input:focus{
+  outline:0;
+}
+
 /*  ----- END STYLE ------------------------------------------------- */

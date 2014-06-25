@@ -1,4 +1,21 @@
 var group_chat_last_message_ids = [];
+function slot_taken(left_array, min,max){
+  var index = 0;
+  while (index < left_array.length){
+    if (left_array[index]>=min && left_array[index]<= max) {
+      return true;
+    }
+    index ++;
+  }
+  return false;
+
+}
+
+
+function sortNumber(a,b) {
+    return a - b;
+}
+
 
 (function ($) {
   $(document).ready( function() {
@@ -16,13 +33,41 @@ var chat = (function ($) {
   var latest_mcsid = 0;
 
   return {
+
+    solo_minimize :function (uid){
+      console.log("minimizedcalled");
+      $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide();
+      var minimized_icon =
+        "<div class='minimized-solo-chat' id='minimized-solo-chat-" + uid + "' onclick='chat.solo_show(" +uid +")'>" +
+        '<img src="' + $("#invitee-thumb-" + uid  + " img").attr('src') + '" class="minimized myngl-event-profile-pic"  />';
+        + "</div>";
+
+
+
+      $("#myngl-event-chat-button #minimized-chats").append(minimized_icon);
+
+    },
+    solo_hide : function(uid){
+
+      $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide();
+    },
+
+    invitee_click: function (uid){
+      if ($("#social-area-chat-list #uid-" + uid).hasClass("selected")){
+        $("#social-area-chat-list #uid-" + uid).removeClass("selected");
+      }
+      else {
+        $("#social-area-chat-list #uid-" + uid).addClass("selected");
+      }
+    },
     name_list_submit : function(event){
       event.preventDefault();
       var selected_invitees = [];
-      $("#social-area-chat-list input[type=checkbox]").each(function() {
-        if ($(this).prop('checked')) {
-          selected_invitees[selected_invitees.length] = $(this).val();
-        }
+
+      $("#social-area-chat-list .selected").each(function() {
+
+          selected_invitees[selected_invitees.length] = $(this).attr('value');
+
       });
 
       if (selected_invitees.length ==1) {
@@ -48,22 +93,23 @@ var chat = (function ($) {
       //console.log(new_chat);
 
       //new chat div
-      var new_chat_div = "<div id='myngl-event-group-chat-" + new_chat.chat_id + "' class='myngl-event-group-chat myngl-chat branded' style='width:325px; height:340px; clear:both;'>";
+      var new_chat_div = "<div id='myngl-event-group-chat-" + new_chat.chat_id + "' class='myngl-event-group-chat myngl-chat branded visible' style='width:325px; height:340px; clear:both;'>";
 
       var group_chat_user_list = "";
       for (var key in new_chat.users){
         if (key != Drupal.settings.user_id ) {
-          group_chat_user_list = group_chat_user_list + new_chat.users[key];
+          group_chat_user_list = group_chat_user_list + new_chat.users[key] + ", ";
         }
-
       }
+      group_chat_user_list = group_chat_user_list.slice(0, -2);
+      group_chat_user_list = group_chat_user_list + ":";
 
       // name list and the close button
       new_chat_div = new_chat_div +
         "<div class='myngl-event-group-chat-intro branded'><a href='#' " +
         //"onclick='jQuery(this).parent().parent().remove();' class='overlay-close'>X</a>" +
         "onclick='chat.group_leave(" + new_chat.chat_id + ");' class='overlay-close'>X</a>" +
-        "Chat with:<div class='group_chat_user_list'>" + group_chat_user_list + "</div>";
+        "Chat with<div class='group_chat_user_list' style='inline-block;'>" + group_chat_user_list + "</div>";
       // messages
       new_chat_div = new_chat_div +
       "<div class='myngl-event-group-chat-messages myngl-chat-messages branded-tertiary' style='height:210px; overflow:scroll; border:1px solid #3c4350;'></div>";
@@ -80,32 +126,32 @@ var chat = (function ($) {
         '   </form>'+
         '</div>';
 
-
-
       new_chat_div = new_chat_div + "</div><!-- /.myngl-event-group-chat-intro -->";
-
       new_chat_div = new_chat_div +   "</div><!-- /#myngl-event-group-chat-" + new_chat.chat_id + "-->";
+
+      var left_array = [];
+      $(".myngl-chat.visible").each( function(){
+        left_array.push($(this).offset().left);
+      });
+
+      left_array.sort(sortNumber);
+      var counter = 0;
+      var left = -1;
+      var min = 0;
+      while ( left == -1) {
+        if (slot_taken(left_array, min, min+ 50)) {
+          min = min + 375;
+        }
+        else {
+          left = min+ 25;
+        }
+      }
+
+
 
       $('#block-system-main').append(new_chat_div);
       $('#myngl-event-group-chat-'+new_chat.chat_id).css('top', '300px').css('position','absolute');
       $('#myngl-event-group-chat-'+new_chat.chat_id).draggable();
-
-      left = 25;
-
-      $(".myngl-event-group-chat").each( function() {
-        var o = $(this).offset();
-        if ((left > (o.left - 25)) && (left < (o.left + 25))) {
-          left = o.left + 375;
-        }
-      });
-
-      $(".myngl-event-solo-chat.visible").each( function() {
-        var o = $(this).offset();
-        if ((left > (o.left - 25)) && (left < (o.left + 25))) {
-          left = o.left + 375;
-        }
-      });
-
       $("#myngl-event-group-chat-" + new_chat.chat_id).css('left', left + 'px');
 
 
@@ -128,7 +174,7 @@ var chat = (function ($) {
           type: "GET",
           url: "/myngl-chat/get-message/" + myngl_id ,
           success: function(data) {
-            console.log(data);
+
 
             $("#myngl-event-chat-messages").html('');
             data.forEach(function(entry) {
@@ -228,10 +274,14 @@ var chat = (function ($) {
           var group_chat_user_list = "";
           for (var key in parsed_data.chats[chat_index]['users']){
             if (key != Drupal.settings.user_id ) {
-              group_chat_user_list = group_chat_user_list + parsed_data.chats[chat_index]['users'][key];
+              group_chat_user_list = group_chat_user_list + parsed_data.chats[chat_index]['users'][key] + ", ";
             }
-          $('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .group_chat_user_list').text(group_chat_user_list);
+
           }
+          group_chat_user_list = group_chat_user_list.slice(0, -2);
+          group_chat_user_list = group_chat_user_list + ":";
+          $('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .group_chat_user_list').text(group_chat_user_list) ;
+
 
           for (var key in parsed_data.chats[chat_index]['messages']){
             $('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages').append(
@@ -298,22 +348,25 @@ var chat = (function ($) {
       },
       solo_show : function(uid) {
         if (!($("#myngl-event-solo-chat-" + uid).hasClass('visible'))) {
-          left = 25;
 
-          $(".myngl-event-solo-chat.visible").each( function() {
-            var o = $(this).offset();
-
-            if ((left > (o.left - 25)) && (left < (o.left + 25))) {
-              left = o.left + 375;
-            }
+          var left_array = [];
+          $(".myngl-chat.visible").each( function(){
+            left_array.push($(this).offset().left);
           });
 
-        $(".myngl-event-group-chat").each( function() {
-            var o = $(this).offset();
-          if ((left > (o.left - 25)) && (left < (o.left + 25))) {
-            left = o.left + 375;
+          left_array.sort(sortNumber);
+          var counter = 0;
+          var left = -1;
+          var min = 0;
+          while ( left == -1) {
+            if (slot_taken(left_array, min, min+ 50)) {
+              min = min + 375;
+            }
+            else {
+              left = min+ 25;
+            }
           }
-        });
+
 
           $("#myngl-event-solo-chat-" + uid).css('left', left + 'px');
 
@@ -325,6 +378,12 @@ var chat = (function ($) {
           $("#myngl-event-solo-chat-" + uid).draggable();
 
           $("#myngl-event-solo-chat-" + uid).css('top', '300px');
+
+
+          // remove minimized button
+          $('.minimized-solo-chat#minimized-solo-chat-' + uid).remove();
+
+
 
         }
 

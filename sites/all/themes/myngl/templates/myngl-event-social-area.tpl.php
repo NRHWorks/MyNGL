@@ -11,6 +11,8 @@
     <p><?php print $total_points; ?></p>
   </div>
   <div class="btn-branded" id="myngl-event-chat-button">
+
+
     <a href="#" onclick="jQuery('#invitee-chat-selector').toggle(); return false;"><i class="fa fa-comment-o fa-2x"></i></a>
     <div id="invitee-chat-icons" style="display:none; float:right;">
         <?php foreach ($invitees as $k => $i) : ?>
@@ -19,6 +21,7 @@
         </div>
         <?php endforeach; ?>
     </div>
+    <div id="minimized-chats">    </div>
   </div>
 
   <div id="invitee-chat-selector" style="float:right;z-index:30000;">
@@ -30,17 +33,23 @@
         <?php print $i['name']; ?>
       </a>
     <?php endif; endforeach; ?>
-     end nathan's code-->
-     <form id="social-area-chat-list">
-      <input type="submit" value="Chat" /><br/>
-     <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
-      <input type="checkbox" name="user_id" value="<?php print $i['uid']?>">
-        <?php print $i['pic']; ?>
-        <?php print $i['name']; ?>
-      </input><br/>
-     <?php endif; endforeach; ?>
+    end nathan's code-->
+    <form id="social-area-chat-list" style="margin-top:-10px;padding-left:20px;">
 
-     </form>
+      <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
+        <div class="checkbox" id="uid-<?php print $i['uid']?>"
+          onclick="chat.invitee_click(<?php print $i['uid']?>)"
+          style="height:40px;margin-right:20px;padding:3px;"
+          value="<?php print $i['uid']?>"
+          >
+
+          <?php print $i['pic']; ?>
+          <?php print $i['name']; ?>
+        </div><br/>
+
+      <?php endif; endforeach; ?>
+      <input type="submit" value="Chat" style=""/>
+    </form>
     <br /><br />
   </div>
 
@@ -137,9 +146,11 @@
 
 <?php foreach ($invitees as $k => $i) : ?>
   <?php if ($user->uid != $i['uid']) : ?>
-    <div id="myngl-event-solo-chat-<?php print $i['uid']; ?>" class="myngl-event-solo-chat myngl-chat branded" style="width:325px; height:340px; clear:both; display:none; position:absolute; ">
+    <div id="myngl-event-solo-chat-<?php print $i['uid']; ?>" class="myngl-event-solo-chat myngl-chat branded" style="left:0px;width:325px; height:340px; clear:both; display:none; position:absolute; ">
       <div class="myngl-event-solo-chat-intro branded">
-        <a href="#" onclick="jQuery(this).parent().parent().removeClass('visible').hide();" class="overlay-close">X</a>
+
+        <a href="#" onclick="chat.solo_hide(<?php print $i['uid']; ?>)" class="overlay-close" style="margin-left:10px">X</a>
+        <a href="#" onclick="chat.solo_minimize(<?php print $i['uid']; ?>);" class="overlay-close">_</a>
         Chat with <?php print $i['name']; ?>:
       </div>
       <div id="myngl-event-solo-chat-messages-<?php print $i['uid']; ?>" class="myngl-event-solo-chat-messages myngl-chat-messages branded-tertiary"style="height:210px; overflow:scroll; border:1px solid #3c4350;"></div>
