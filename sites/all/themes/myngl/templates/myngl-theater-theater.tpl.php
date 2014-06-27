@@ -4,11 +4,10 @@
   }
 
 body.page-myngl-event-theater{
-    background: <?php print $brand->field_brand_primary_color['und'][0]['rgb'];?>;
-  }
+  background: #000;
+}
 
 #theater-body{
-background:url("<?php print base_path()?>sites/all/themes/myngl/images/TheaterBackground.png") no-repeat;
   width: 1020px;
   min-height: 768px;
   position: relative;
@@ -17,6 +16,8 @@ background:url("<?php print base_path()?>sites/all/themes/myngl/images/TheaterBa
   margin-left:auto;
   margin-right:auto;
   height: 100%;
+  
+  background-image: url("/sites/all/themes/myngl/images/theater-background.jpg");
 }
 
 #theater-top-message-wrapper{

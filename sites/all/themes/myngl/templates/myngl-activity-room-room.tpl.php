@@ -8,6 +8,13 @@
 
 
 <style type="text/css">
+  <?php
+	  $background_image =$brand->field_activity_room_background['und'][0]['filename'];
+  ?>
+
+  body.page-myngl-event-activity-room {
+	  background-image: url(<?php print base_path() . 'sites/default/files/'.$background_image ?>);
+  }
 
 	#myngl-activity-room{
 	background-color:<?php print $brand->field_brand_background_color['und'][0]['rgb'];?>;
@@ -61,11 +68,7 @@ i.fa {  /* arrows in the half circles */
   color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
 }
 
-<?php
-	$background_image =$brand->field_activity_room_background['und'][0]['filename'];
-?>
 .activity-room-bg{
-	background-image: url(<?php print base_path() . 'sites/default/files/'.$background_image ?>);
 	z-index:-999;
 	width:1024px;
 	position:absolute;
