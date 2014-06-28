@@ -29,6 +29,7 @@
  */
 ?>
 
+
 <?php $item_id=  $content['field_level']["#object"]->item_id; ?>
 <div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <div class="content"<?php print $content_attributes; ?>>
@@ -51,6 +52,7 @@
       <div class='texts'>
         <?php print render ($content['field_title']); ?>
         <?php print render ($content['field_description']); ?>
+        <?php print render ($content['field_redeem_message']); ?>
         <div class="redeem" onclick="rewards_overlay.show(<?php print $item_id; ?>,<?php print strip_tags( render($content['field_points']));?>)">REDEEM GIFT<div class="redeem-button">></div></div>
       </div><!-- /.texts-->
     </div><!-- /.image-and-texts-wrapper"-->

@@ -8,8 +8,10 @@
     var viewer = UstreamEmbed('iframe-movie');
     viewer.addListener('finished', function(){
       $('#myngl-theater-see-more').css('display','block');
+			$("#question-form-wrapper").hide();
     });
 
+		$("#myngl-theater-see-more .additional-video a").attr('target','_blank');
     $('.downloads-slide:eq(0)').animate({'left':0}).addClass('active');
 
     var animating = false;

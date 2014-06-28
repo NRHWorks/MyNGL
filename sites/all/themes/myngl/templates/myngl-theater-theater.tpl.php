@@ -96,6 +96,15 @@ body.page-myngl-event-theater #see-more{
   left:400px;
 
 }
+#myngl-theater-see-more .additional-video{
+  float:right;
+  margin-right:20px;
+
+}
+
+#myngl-theater-see-more .additional-video img{
+  border:2px solid <?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
+}
 
 </style>
 
@@ -127,10 +136,20 @@ body.page-myngl-event-theater #see-more{
 </div><!-- /#theater-body -->
 
 
-<div id="myngl-theater-see-more" style="display:none;height:150px; width:900px;position:absolute; margin-left:auto;margin-right:auto; margin-top:600px;z-index:50;top:0;bottom:0;left:0;right:0;">
+<div id="myngl-theater-see-more" style="display:none;height:150px; width:870px;position:absolute; margin-left:auto;margin-right:auto; margin-top:600px;z-index:50;top:0;bottom:0;left:0;right:0;">
   <!--<a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a> -->
-  <div><a href="#" onclick="myngl.overlay('myngl-theater-downloads',500,800);" style="float:right;background-color:#8f825d;height:110px; width:150px;padding:10px;">Check out other cool stuff from Godiva</a> </div>
+  <div><a href="#" onclick="myngl.overlay('myngl-theater-downloads',500,800);" style="float:right;background-color:#8f825d;height:98px; width:150px;padding:10px;">Check out other cool stuff from Godiva</a> </div>
+  <?php
+    $additional_videos = field_view_field('node', $myngl, 'field_theater_additional_video','full' );
+    $counter =0;
 
+    while(isset($additional_videos[$counter])){
+      print "<div class='additional-video'>";
+      print render($additional_videos[$counter]);
+      print "</div>";
+      $counter ++;
+    }
+  ?>
 </div> <!-- myngle-theater-see-more -->
 <style type="text/css">
 

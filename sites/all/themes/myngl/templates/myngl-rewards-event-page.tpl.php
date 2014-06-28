@@ -540,7 +540,7 @@ form#myngl-myngl-post-questions-form #edit-submit{
   <div class= 'close' onclick='rewards_overlay.close()'>X</div>
   <div id="gift-and-points-info">
 
-  <div id="gift-redeem">Gift Redeem</div>
+  <div id="gift-redeem">Gift Redemption</div>
   <div class = "short-line" id="short-line-1"></div>
   <div id="text-wrapper">
 
