@@ -35,7 +35,6 @@ var chat = (function ($) {
   return {
 
     solo_minimize :function (uid){
-      console.log("minimizedcalled");
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide();
       var minimized_icon =
         "<div class='minimized-solo-chat' id='minimized-solo-chat-" + uid + "' onclick='chat.solo_show(" +uid +")'>" +
@@ -48,7 +47,6 @@ var chat = (function ($) {
 
     },
     solo_hide : function(uid){
-
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide();
     },
 

@@ -1,7 +1,7 @@
 var scrollPosition = 0;
 (function ($) {
   $(document).ready( function() {
-    $('li#activity-room').removeClass("inactive").addClass("active");
+    $('li#play-room').removeClass("inactive").addClass("active");
     setInterval(function() { activity_room.message(); }, 3000);
 
     var activity_room_width = 0;

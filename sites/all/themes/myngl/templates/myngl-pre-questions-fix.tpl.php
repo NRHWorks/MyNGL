@@ -4,7 +4,7 @@
 </div>
 
 <div id="myngl-questions-title">
-  Welcome to <?php print $myngl->title; ?>
+  Welcome to "<?php print $myngl->title; ?>"
 </div>
 
 <div id="myngl-questions-form">

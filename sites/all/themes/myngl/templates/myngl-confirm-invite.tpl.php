@@ -14,7 +14,7 @@
     <div class="content">
 
 <p>RSVP CONFIRMED!</p>
-<p>We look forward to seeing you at “<?php print $node->title; ?>”.
+<p>We look forward to seeing you at "<?php print $node->title; ?>".
 <p>Now, here’s a chance to invite your friends. And…your first chance to begin earning valuable reward Myngl Points to redeem for great gifts at theMyngl.
 <p>Invite your friends to the “Godiva Chocolate & Fashion Myngl” via email:
 (Earn 10 MynglPoints per invite)

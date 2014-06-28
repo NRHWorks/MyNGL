@@ -75,9 +75,10 @@
     <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
       99 PEOPLE TOTAL / 100 IN THIS ROOM
       <form>
-        <input type="radio" name="filter" value="fb-friends" /> FB Friends
-        <input type="radio" name="filter" value="in-room" /> People in this Room
         <input type="radio" name="filter" value="all" /> Show All
+        <input type="radio" name="filter" value="fb-friends" /> FB Friends
+        <input type="radio" name="filter" value="reps" /> Brand Reps
+        <input type="radio" name="filter" value="other" /> Other Filters
         <!-- <input type="radio" name="filter" value="filter-options" /> Filter Options -->
       </form>
       <form>

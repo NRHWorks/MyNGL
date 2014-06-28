@@ -5,7 +5,7 @@ function myngl_activities_menu() {
     'title' => 'ACTIVITY',
     'page callback' => 'myngl_activities_page',
     'page arguments' => array(2),
-    'access callback' => TRUE, 
+    'access callback' => TRUE,
   );
 
   return $items;
@@ -23,6 +23,26 @@ function myngl_activities_page() {
   $activities = array();
 
   $activities[] = array(
+    'date' => '2014-05-15',
+    'day' => 'Today',
+    'description' => 'Vinny C. accepted your invitation',
+    'points' => '10'
+  );
+
+  $activities[] = array(
+    'date' => '2014-05-16',
+    'day' => "Yesterday",
+    'description' => 'Attended "The Godiva Chocolate & Fashion Myngl"',
+    'points' => '30'
+  );
+
+  $activities[] = array(
+    'date' => '2014-07-07',
+    'description' => 'You RSVPed  for "The Harley Davidson Wild Ride Myngl" on 7-14-14',
+    'points' => '0'
+  );
+  /*
+  $activities[] = array(
     'date' => '2014-04-28',
     'day' => 'Today',
     'description' => 'This is a test description',
@@ -59,26 +79,7 @@ function myngl_activities_page() {
     'description' => 'This is a test description',
     'points' => '225'
   );
-
-  $activities[] = array(
-    'date' => '2014-04-28',
-    'day' => 'Today',
-    'description' => 'This is a test description',
-    'points' => '10'
-  );
-
-  $activities[] = array(
-    'date' => '2014-03-15',
-    'description' => 'This is a test description',
-    'points' => '75'
-  );
-
-  $activities[] = array(
-    'date' => '2014-02-09',
-    'description' => 'This is a test description',
-    'points' => '225'
-  );
-
+  */
   $output = theme('myngl_activities', array('activities' => $activities));
 
   return $output;

@@ -30,10 +30,10 @@ function myngl_user_user_login(&$edit, $account) {
 
         user_cookie_delete('rsvp');
 
-        drupal_goto("myngl/$myngl_nid/confirmed");        
+        drupal_goto("myngl/$myngl_nid/confirmed");
       }
     }
-  } 
+  }
 
   global $user;
   if (in_array('administrator', $user->roles)) {
@@ -44,8 +44,32 @@ function myngl_user_user_login(&$edit, $account) {
 function myngl_user_form_alter(&$form, &$form_state, $form_id) {
   switch($form_id) {
     case 'user_login' :
+      if (isset($_COOKIE['Drupal_visitor_rsvp'])) {
+        $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']);
+
+        if (isset($myngl_nid)) {
+
+          $form['cutomtext'] = array(
+            '#type' => 'item',
+            '#markup' => '<div style="width:400px; height:50px;font-style:italic;margin-bottom:30px;" >To RSVP for this invite-only event and be invited to other exclusive events, please create your account for theMyngl.</div>',
+            '#weight' => -19, // Adjust so that you can place it whereever
+          );
+        }
+
+      }
+
+      if (!isset($form['cutomtext'])){
+
+
+        $form['cutomtext'] = array(
+          '#type' => 'item',
+          '#markup' => '<div style="width:400px; height:50px;margin-bottom:30px;" ></div>',
+          '#weight' => -19, // Adjust so that you can place it whereever
+        );
+
+      }
       $form['name']['#description'] = '';
-      
+
       $form['pass']['#description'] = '';
 
       $form['facebook_signin'] = array (
@@ -67,7 +91,7 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
         '#weight' => 1000
       );
       break;
-  
+
     case 'user_pass' :
       $form['message'] = array (
       '#markup' => '<p>Forgot your password for theMyngl?  No problem. Enter your<br /> Email address and we’ll send it to you.  </p>',
@@ -78,10 +102,35 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
         '#weight' => 200
       );
       break;
-    
+
     case 'user_register_form' :
       $form['actions']['submit']['#value'] = 'REGISTER';
-      
+
+
+      if (isset($_COOKIE['Drupal_visitor_rsvp'])) {
+        $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']);
+
+        if (isset($myngl_nid)) {
+
+          $form['cutomtext'] = array(
+            '#type' => 'item',
+            '#markup' => '<div style="width:400px;height:50px;font-style:italic;margin-bottom:30px;" >To RSVP for this invite-only event and be invited to other exclusive events, please create your account for theMyngl.</div>',
+            '#weight' => -19, // Adjust so that you can place it whereever
+          );
+        }
+
+      }
+
+      if (!isset($form['cutomtext'])){
+
+          $form['cutomtext'] = array(
+            '#type' => 'item',
+            '#markup' => '<div class = "testee" style="width:400px;height:50px;margin-bottom:30px;" ></div>',
+            '#weight' => -19, // Adjust so that you can place it whereever
+          );
+
+      }
+
       $form['facebook_signin'] = array (
         '#markup' => '<div id="registration-facebook">
                         <p class="form-button-text">Facebook user?<br><br>Sign in with<br><span>FACEBOOK CONNECT</span></p>
@@ -92,7 +141,7 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
                       </div>',
         '#weight' => -20
       );
-      
+
       $form['create_account'] = array (
         '#markup' => '<div class="form-button-wrapper">
                         <p class="form-button-text">Already have an account?</p>
@@ -102,10 +151,10 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
         '#weight' => 900
       );
       break;
-    
+
     case 'user_profile_form' :
       $form['actions']['submit']['#value'] = 'SUBMIT CHANGES';
-      
+
       $form['cancel'] = array (
         '#markup' => '<a href="/user" id="edit-profile-cancel">Cancel</a>',
         '#weight' => 200
@@ -122,20 +171,20 @@ function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
     if ($profile) {
       $p = entity_metadata_wrapper('profile2', $profile);
     }
-  }  
+  }
 
-  $form['profile_profile']['field_interests']['und']['#title'] = 'Let TheMyngl further personalize your experience based on your interests:';
+  $form['profile_profile']['field_interests']['und']['#title'] = 'To personalize your Myngl experience, tell us your interests:<br/> (check all that are appropriate)';
 
   $form['profile_profile']['field_picture']['und'][0]['#title'] = '';
 
-  $form['profile_profile']['field_city']['und'][0]['#prefix'] = ' <span class="profile-name">NAME: <strong>'.$u->field_first_name->value().' '.$u->field_last_name->value().'</strong></span><br />';  
+  $form['profile_profile']['field_city']['und'][0]['#prefix'] = ' <span class="profile-name">NAME: <strong>'.$u->field_first_name->value().' '.$u->field_last_name->value().'</strong></span><br />';
 
   if (isset($p)) {
     $pic = $p->field_picture->value();
   }
 
   if (!isset($pic['uri'])) {
-    $form['profile_profile']['field_picture']['und']['#prefix'] = 
+    $form['profile_profile']['field_picture']['und']['#prefix'] =
       " <div id='default-image-wrapper'>" .
         theme_image_style(array('style_name' => 'user_profile_circle_image', 'path' => 'public://default-user-profile.png', 'attributes' => array('class' => 'default-profile-pic'), 'height' => null, 'width' => null)) .
       " <br /><a href='#!' class='link-small' onclick='jQuery(\"#default-image-wrapper\").hide();jQuery(\".image-widget\").show();'>Upload a profile picture</a>

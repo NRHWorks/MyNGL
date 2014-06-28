@@ -27,7 +27,7 @@
         }
       });
     });
-    
+
     $(':password').each( function () {
       $(this).attr('placeholder', $(this).siblings('label').html().replace(/<span.*/,''));
     });
@@ -56,7 +56,14 @@ var myngl = (function($) {
       }
       return false;
 
-    }
+    },
+    help_overlay_close: function(){
+      $('#overlay-background').fadeOut(500);
+      $('#help-overlay').fadeOut(100);
+
+    },
+
+
   }
 
 }(jQuery));

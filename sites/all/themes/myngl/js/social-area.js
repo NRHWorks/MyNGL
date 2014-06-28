@@ -1,6 +1,7 @@
 var ugcScrollPosition = 0;
 (function ($) {
   $(document).ready( function() {
+    $('li#lounge').removeClass("inactive").addClass("active");
     setInterval(function() { social_area.message(); }, 3000);
 
     $('#overlay-background').bind('click', function() {
