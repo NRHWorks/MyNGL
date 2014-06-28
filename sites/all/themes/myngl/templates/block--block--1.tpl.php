@@ -67,18 +67,39 @@
   top:-20px;
   color:#a38d50;
 }
+#help-title{
+  color: #a38d50;
+  font-size:30px;
+  font-family:"georgia";
+  margin-left:20px;
+  margin-top:20px;
+
+}
+#help-overlay-inner ol li{
+  margin-bottom:10px;
+}
+
+#help-overlay-inner .short-line{
+  width:50px;
+  height:1px;
+  border-top:2px #555555 solid;
+  margin-left:20px;
+  margin-top:10px;
+}
 </style>
 <div id="help-overlay-inner" >
   <div id="help-overlay-close" onclick="myngl.help_overlay_close()">X</div>
-  <div id="help-title">Need Help? Find your problem below:</div>
+  <div id="help-title" >Need Help? Find your problem below:</div>
+  <div class="short-line"></div>
   <ol style="list-style-type:decimal">
     <li>I'm having problems with the sound</li>
     <li>I'm having problems with the videos</li>
-    <li>I have problems watching/hearing LIVE performance</li
+    <li>I have problems watching/hearing LIVE performance</li>
     <li>How do i chat with others?</li>
     <li>How do I move from room to room?</li>
     <li>How do I make comments on Shout Out?</li>
     <li>How do I redeem Reward Points?</li>
     <li>How do I use social media tools?</li>
   </ol>
+  <div class="short-line"></div>
 </div>

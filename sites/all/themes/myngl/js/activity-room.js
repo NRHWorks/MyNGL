@@ -2,7 +2,8 @@ var scrollPosition = 0;
 (function ($) {
   $(document).ready( function() {
     $('li#play-room').removeClass("inactive").addClass("active");
-    setInterval(function() { activity_room.message(); }, 3000);
+    //setInterval(function() { activity_room.message(); }, 3000);
+		activity_room.message();
 
     var activity_room_width = 0;
 
@@ -47,7 +48,7 @@ var activity_room = (function ($) {
 
     message: function() {
       var myngl_id = Drupal.settings.myngl_id;
-
+			/*
       $.ajax({
         type: "GET",
         url: "/myngl-event/" + myngl_id + "/ajax/message",
@@ -63,6 +64,9 @@ var activity_room = (function ($) {
           }
         }
       });
+      */
+			$("#myngl-event-message").html($("#activity-room-message").html()).animate({"height": "90px"}, 1000).css('padding-left','10px').css('padding-right','10px');
+
     }
   }
 }(jQuery));

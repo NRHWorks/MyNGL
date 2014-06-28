@@ -249,6 +249,7 @@ i.fa {
   height:150px;
   padding-right:20px;
 
+
 }
 .downloads-element .social-icons{
   float:right;
@@ -256,14 +257,14 @@ i.fa {
 }
 
 .downloads-element .field-name-field-title{
-  font-size:18px;
+  font-size:14px;
   font-family:'lato';
   color:#666666;
 
 }
 
 .downloads-element .field-name-field-description{
-
+padding-top:10px;
 }
 
 .downloads-element .file-download{
@@ -300,7 +301,7 @@ i.fa {
 
 <div id="myngl-theater-downloads" class="overlay" >
   <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close" style="position:absolute; top:-25px; right:0px; color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>">X</a>
-  <div ><h1 style="font-family:'georgia'; color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>"> Downloads from <?php print $brand->title;?> </h1></div>
+  <div ><h1 style="font-family:'georgia'; color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>">DOWNLOAD FROM <?php print strtoupper($brand->title);?> MYNGL</h1></div>
 
   <div id="short-line-below-download-title" style="border-top:1px solid #000000; height:1px; width:50px;"></div>
 

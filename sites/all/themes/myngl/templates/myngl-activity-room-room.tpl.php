@@ -171,3 +171,9 @@ display:none;
 		<iframe id='activity-overlay' ></iframe>
 
 </div>
+<div id="activity-room-message" style = "display:none">
+	<?php
+		$message = field_view_field('node', $myngl, 'field_activity_room_message','full' );
+		print render($message);
+	?>
+</div>
