@@ -344,8 +344,11 @@ body.page-myngl-event-rewards {
 #gifting-series-overlay .level-and-points-wrapper,
 #gifting-series-overlay .field-thumb-place-holder,
 #gifting-series-overlay .field-name-field-thumb,
+#gifting-series-overlay .field-name-field-description,
+#gifting-series-overlay .field-name-field-title,
 #gifting-series-overlay .short-line-4,
-#gifting-series-overlay .redeem{
+#gifting-series-overlay .redeem,
+#left .field-name-field-redeem-message{
   display:none;
 }
 
@@ -590,12 +593,19 @@ form#myngl-myngl-post-questions-form #edit-submit{
   </div>
 
   <div id="congrats">
-    <div id='title'>CONGRATS, You Got Your Swag!</div>
+    <div id='title'></div>
     <div class="short-line"></div>
     <div id='social'><div style="float:right"><img src='<?php print base_path(). path_to_theme();?>/images/theater-downloads-social-icons1.png'/></div></div>
     <div id='left'>
+      <p>We will send your chosen <span id="gift-name">Swag Bag</span> gift redemption -  coupon via email  - or  merchandise via UPS. </p>
 
-       Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text
+      <p>Simply fill in your email address (or home address) below.</p>
+
+      <p>Thanks again from <?php print $brand->title;?> and theMyngl!</p>
+
+      <p>Hope to see you next time at theMyngl!</p>
+
+
       <div class="short-line" style="margin-left:0;margin-top:20px;"></div>
     </div>
 
