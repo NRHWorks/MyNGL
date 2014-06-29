@@ -15,11 +15,16 @@
 
     <a href="#" onclick="jQuery('#invitee-chat-selector').toggle(); return false;"><i class="fa fa-comment-o fa-2x"></i></a>
     <div id="invitee-chat-icons" style="display:none; float:right;">
+        <?php $uids = array(); ?>
         <?php foreach ($invitees as $k => $i) : ?>
-        <div id="invitee-chat-thumb-<?php print $i['uid']; ?>" style="<?php if ($user->uid == $i['uid']) { print ' display:none; '; } ?>" class="myngl-chat-circles invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
-          <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
-        </div>
+          <?php if ($user->uid != $i['uid']): ?>
+            <div id="invitee-chat-thumb-<?php print $i['uid']; ?>" style='display:none' class="myngl-chat-circles invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
+            <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
+            </div>
+          <?php endif; ?>
+        <?php $uids[] = $i['uid'];//maintain a list of invitee id for javascript ?>
         <?php endforeach; ?>
+        <?php drupal_add_js(array('uids' => $uids), 'setting'); ?>
     </div>
     <div id="minimized-chats">    </div>
   </div>
@@ -39,7 +44,7 @@
       <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
         <div class="checkbox" id="uid-<?php print $i['uid']?>"
           onclick="chat.invitee_click(<?php print $i['uid']?>)"
-          style="height:40px;margin-right:20px;padding:3px;"
+          style="height:40px;margin-right:20px;padding:3px; display:none;"
           value="<?php print $i['uid']?>"
           >
 
@@ -64,10 +69,12 @@
       <div id="invitees-thumbs" style="height: 140px; overflow: hidden;">
         <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
         <?php foreach ($invitees as $k => $i) : ?>
-        <div id="invitee-thumb-<?php print $i['uid']; ?>" style="<?php if ($user->uid == $i['uid']) { print ' display:none; '; } ?>float:left; text-align: center; width: 130px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
-          <a href="#" onclick="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
-          <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
-        </div>
+          <?php if ($user->uid != $i['uid']): ?>
+            <div id="invitee-thumb-<?php print $i['uid']; ?>" style="display:none;float:left; text-align: center; width: 130px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
+            <a href="#" onclick="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
+            <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
+            </div>
+          <?php endif; ?>
         <?php endforeach; ?>
       </div>
       <div class="thumb-background"></div>

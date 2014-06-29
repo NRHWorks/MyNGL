@@ -14,7 +14,7 @@ var scrollPosition = 0;
 
     activity_room_width= Math.max((Math.floor( activity_room_width / (160 * 3)) + 1)*160, 800) ;
     $("#myngl-activity-room-thumbs").css('width', activity_room_width + 'px');
-
+		myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"PlayRoom");
   })
 }(jQuery));
 

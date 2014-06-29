@@ -52,6 +52,20 @@ function myngl_event_menu() {
     'access callback' => TRUE,
   );
 
+  $items['myngl-event/%/%/%'] = array(
+  'title' => 'MyNGL Event Participant Status',
+  'page callback' => 'myngl_event_participant_status',
+  'page arguments' => array(1, 2, 3),
+  'access callback' => TRUE,
+  );
+
+  $items['myngl-event/%/update-users-in-lounge'] = array(
+    'title' => 'Update users in lounge',
+    'page callback' => 'myngl_event_update_users_in_lounge',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
 
@@ -182,4 +196,52 @@ function myngl_event_social_area_ajax_pov_message($nid) {
   }
 
   drupal_json_output($messages);
+}
+
+function myngl_event_participant_status($myngl_id, $user_id, $status){
+  $result = db_query('SELECT id FROM {myngl_participant_status} WHERE
+                        myngl_id = :myngl_id AND
+                        user_id = :user_id LIMIT 1',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                          ':user_id' => $user_id,
+                        )
+                      );
+
+  if ($result->rowCount()) {
+    db_update('myngl_participant_status')->fields(
+        array(
+          'status' => $status,
+          'timestamp' => time(),
+        )
+      )->condition('myngl_id', $myngl_id, '=')
+      ->condition('user_id', $user_id, '=')
+      ->execute();
+
+  }
+  else{
+    db_insert('myngl_participant_status')->fields(
+      array(
+        'myngl_id'      => $myngl_id,
+        'user_id'       => $user_id,
+        'status'  => $status,
+        'timestamp' => time(),
+      )
+    )->execute();
+    }
+}
+
+
+function myngl_event_update_users_in_lounge($myngl_id){
+  $result = db_query("SELECT user_id FROM {myngl_participant_status} WHERE
+                     myngl_id = :myngl_id AND status = 'Lounge'", array(':myngl_id' => $myngl_id));
+
+  $data = array();
+
+  foreach ($result as $r) {
+    $data[] = $r->user_id;
+  }
+  return drupal_json_output($data);
+
+
 }

@@ -62,9 +62,10 @@ var chat = (function ($) {
       event.preventDefault();
       var selected_invitees = [];
 
-      $("#social-area-chat-list .selected").each(function() {
+      $("#social-area-chat-list .selected.in-lounge").each(function() {
+        $(this).removeClass('selected');
 
-          selected_invitees[selected_invitees.length] = $(this).attr('value');
+        selected_invitees[selected_invitees.length] = $(this).attr('value');
 
       });
 

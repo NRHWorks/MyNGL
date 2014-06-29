@@ -1,8 +1,10 @@
 var ugcScrollPosition = 0;
 (function ($) {
   $(document).ready( function() {
+    myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");
     $('li#lounge').removeClass("inactive").addClass("active");
     setInterval(function() { social_area.message(); }, 3000);
+    setInterval(function() { social_area.update_users_in_lounge(); }, 5000);
 
     $('#overlay-background').bind('click', function() {
       $('#myngl-event-chat-button-invitees').delay(200).fadeIn(500);
@@ -162,6 +164,45 @@ var social_area = (function ($) {
           }
         }
       });
+    },
+
+    update_users_in_lounge: function(){
+      $.ajax({
+        type: "GET",
+        url: "/myngl-event/"+ Drupal.settings.myngl_id + "/update-users-in-lounge",
+        success: function(users) {
+          social_area.update_users_in_lounge_success(users);
+        }
+      });
+    },
+    update_users_in_lounge_success : function (users){
+      for (var i = 0; i < Drupal.settings.uids.length; i ++){
+        uid = Drupal.settings.uids[i];
+
+        if (users.indexOf(uid)!= -1) {
+          $("#invitee-thumb-"+ uid).addClass("in-lounge");
+          if (!$("#invitee-thumb-"+ uid).hasClass("filter-hidden")) {
+            $("#invitee-thumb-"+ uid).css('display','block');
+          }
+          $("form#social-area-chat-list #uid-" + uid).addClass("in-lounge");
+          if (!$("form#social-area-chat-list #uid-" + uid).hasClass("filter-hidden")) {
+            $("form#social-area-chat-list #uid-" + uid).css('display','block');
+          }
+        }
+
+        else {
+          $("#invitee-thumb-"+ uid).removeClass("in-lounge").css('display','none');
+
+          $("form#social-area-chat-list #uid-" + uid).removeClass("in-lounge").removeClass('selected').css('display','none');
+          
+
+        }
+
+      }
+
+
+
     }
+
   }
 }(jQuery));
