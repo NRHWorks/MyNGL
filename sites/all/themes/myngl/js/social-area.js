@@ -176,7 +176,10 @@ var social_area = (function ($) {
       });
     },
     update_users_in_lounge_success : function (users){
+      $("#invitee-filters span#people-total").text(Drupal.settings.uids.length);
+      $("#invitee-filters span#people-in-lounge").text(users.length);
       for (var i = 0; i < Drupal.settings.uids.length; i ++){
+
         uid = Drupal.settings.uids[i];
 
         if (users.indexOf(uid)!= -1) {
@@ -194,7 +197,7 @@ var social_area = (function ($) {
           $("#invitee-thumb-"+ uid).removeClass("in-lounge").css('display','none');
 
           $("form#social-area-chat-list #uid-" + uid).removeClass("in-lounge").removeClass('selected').css('display','none');
-          
+
 
         }
 

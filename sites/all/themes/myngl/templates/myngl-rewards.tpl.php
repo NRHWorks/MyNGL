@@ -11,14 +11,14 @@
     ?>
     <br clear="both" />
     <div id="profile-info">
-      <span class="label">NAME:</span> 
+      <span class="label">NAME:</span>
       <strong>
       <?php print $u->field_first_name->value().' '.$u->field_last_name->value(); ?><br />
       </strong>
 
       <span class="label">LOCATION:</span>
       <?php print $p->field_city->value(); ?><br />
-      
+
       <em><?php print $p->field_about->value(); ?></em><br />
     </div>
     <div id="spacer">&nbsp;</div>
@@ -27,7 +27,7 @@
     <div id="rewards-dashboard">
       <span class="title">MYNGL REWARDS POINTS</span><br /><br /><br />
       <span class="intro">You Currently Have:</span><br /><br /><br />
-      <div id="points-circle"><?php print $points; ?></div> 
+      <div id="points-circle"><?php print $points; ?></div>
       <span class="points">Points</span>
     </div>
   </div>

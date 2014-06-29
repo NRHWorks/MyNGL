@@ -4,6 +4,12 @@
   $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
   $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
   $tertiary_color = "#e2dbd2";
+  if (!isset($_COOKIE['done_lobby_video']) || $_COOKIE['done_lobby_video']!= 1){
+    global $base_url;
+    $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
+    header($redirect);
+    exit;
+  }
 ?>
 
 <div id="myngl-event-social-area">
@@ -80,7 +86,7 @@
       <div class="thumb-background"></div>
     </div>
     <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
-      99 PEOPLE TOTAL / 100 IN THIS ROOM
+      <span id="people-total">0</span> PEOPLE TOTAL / <span id="people-in-lounge">0</span> IN THIS ROOM
       <form>
         <input type="radio" name="filter" value="all" /> Show All
         <input type="radio" name="filter" value="fb-friends" /> FB Friends
