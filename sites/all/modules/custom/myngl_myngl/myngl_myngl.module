@@ -44,7 +44,7 @@ function myngl_myngl_menu() {
   );
 
   $items['node/%/message'] = array(
-    'title' => 'Edit Message',
+    'title' => 'Message',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('myngl_myngl_edit_message', 1),
     'access callback' => TRUE,
@@ -52,7 +52,7 @@ function myngl_myngl_menu() {
   );
 
   $items['node/%/theater-message'] = array(
-    'title' => 'Edit Theater Message',
+    'title' => 'Theater Message',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('myngl_myngl_edit_theater_message', 1),
     'access callback' => TRUE,
@@ -60,7 +60,7 @@ function myngl_myngl_menu() {
   );
 
   $items['node/%/invitee-redeem'] = array(
-    'title' => 'Invitees and Rewards',
+    'title' => 'Rewards',
     'page callback' => 'myngl_rewards_invitee_redeem',
     'page arguments' => array(1),
     'access callback' => TRUE,
@@ -68,12 +68,22 @@ function myngl_myngl_menu() {
   );
 
   $items['node/%/question'] = array(
-    'title' => 'Edit POV Question',
+    'title' => ' POV Question',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('myngl_myngl_edit_question', 1),
     'access callback' => TRUE,
     'type' => MENU_LOCAL_TASK,
+    'weight' => 99
   );
+  
+  $items['node/%/invitees'] = array(
+    'title' => 'Invitees',
+    'page callback' => 'myngl_myngl_invitees',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
+
 
   return $items;
 }
@@ -473,16 +483,23 @@ function myngl_myngl_pre_questions_form($form, &$form_state, $myngl_id, $user_id
   foreach ($myngl->field_pre_myngl_questions['und'] as $k => $v) {
     $fc = array_shift(entity_load('field_collection_item', array($v['value'])));
 
-    $answers = array();
-    foreach ($fc->field_answer['und'] as $a) {
-      $answers[$a['value']] = $a['value'];
-    }
+    if (isset($fc->field_answer['und'][0])) {
+      $answers = array();
+      foreach ($fc->field_answer['und'] as $a) {
+        $answers[$a['value']] = $a['value'];
+      }
 
-    $form['question-' . $k] = array(
-      '#type' => 'radios',
-      '#title' => t('Question ' . ($k+1) . ': '. $fc->field_question['und'][0]['safe_value']),
-      '#options' => $answers,
-    );
+      $form['question-' . $k] = array(
+        '#type' => 'radios',
+        '#title' => t('Question ' . ($k+1) . ': '. $fc->field_question['und'][0]['safe_value']),
+        '#options' => $answers,
+      );
+    } else {
+      $form['question-' . $k] = array(
+        '#type' => 'textfield',
+        '#title' => t('Question ' . ($k+1) . ': '. $fc->field_question['und'][0]['safe_value']),
+      );
+    }
   }
 
   $form['tagline'] = array(
@@ -715,11 +732,116 @@ function myngl_myngl_edit_question_submit($form, &$form_state) {
   drupal_set_message('Question Updated.  It will appear in the Myngl in a few seconds.');
 }
 
+
+function myngl_myngl_invitees($nid) {
+  $node = node_load($nid);  
+
+  $rows = array();
+
+  foreach ($node->field_myngl_invitees['und'] as $k => $i) {
+    $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
+
+    $row = array();
+  
+    $user_acct = '';
+
+    if (isset($ic->field_invitee_user_account['und'][0]['uid'])) {
+      $user = user_load($ic->field_invitee_user_account['und'][0]['uid']);
+      $user_acct = l($user->name, 'user/'.$user->uid);
+    }
+
+    $actions = '';
+
+    if ($ic->field_invitee_status['und'][0]['value'] == 'New') {
+      $actions = l('Send Invitation', 'myngl/'.$nid.'/send-invitation/'.$k);
+    }
+
+    $row = array(
+      $user_acct,
+      $ic->field_invitee_first_name['und'][0]['value'],
+      $ic->field_invitee_last_name['und'][0]['value'],
+      $ic->field_invitee_email_address['und'][0]['value'],
+      $ic->field_invitee_status['und'][0]['value'],
+      $actions
+    );
+
+    $rows[] = $row;
+  }
+
+  $header = array(
+    'User',
+    'First Name',
+    'Last Name',
+    'Email',
+    'Status',
+    'Actions',
+  );
+
+  $table = theme_table(array('header' => $header, 'rows' => $rows, 'attributes' => array()));
+
+  $form = render(drupal_get_form('myngl_myngl_add_invitee', $nid));
+
+  return '<br />'.$table.'<br /><h2>Add Invitee:</h2>'.$form;
+}
+
+function myngl_myngl_add_invitee($form, &$form_state, $nid) {
+
+  $form['myngl_nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $nid,
+  );
+
+  $form['first_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('First Name'),
+    '#description' => t('Enter invitees first name.'),
+  );
+
+  $form['last_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Last Name'),
+    '#description' => t('Enter invitees last name.'),
+  );
+
+  $form['email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email'),
+    '#description' => t('Enter invitees email address.'),
+  );
+  
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit'),
+  );
+  
+  return $form;
+}
+
+function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
+  $v = $form_state['values'];
+
+  $node = node_load($v['myngl_nid']);
+
+  $field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_myngl_invitees'));
+  $field_collection_item->setHostEntity('node', $node);
+
+  $field_collection_item->field_invitee_first_name['und'][]['value'] = $v['first_name'];
+  $field_collection_item->field_invitee_last_name['und'][]['value'] = $v['last_name'];
+  $field_collection_item->field_invitee_email_address['und'][]['value'] = $v['email'];
+  $field_collection_item->field_invitee_status['und'][]['value'] = 'New';
+
+  $field_collection_item->save();
+
+
+  drupal_set_message('Invitee Added.  Use the link in the invitee list to notify this user.');
+}
+
 function myngl_myngl_admin_paths() {
   return array(
     'node/*/message' => TRUE,
     'node/*/question' => TRUE,
     'node/*/theater-message' =>TRUE,
     'node/*/invitee-redeem' => TRUE,
+    'node/*/invitees' => TRUE,
   );
 }

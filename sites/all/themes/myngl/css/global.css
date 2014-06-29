@@ -369,7 +369,7 @@ body ::-webkit-scrollbar-thumb {
 
   #page-wrapper {
     min-height: 500px;
-    max-height: 715px;
+    max-height: 800px;
     margin: 50px auto 0 auto;
     padding: 60px 60px 10px 60px;
     width: 730px;
