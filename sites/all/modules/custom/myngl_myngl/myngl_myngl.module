@@ -526,7 +526,7 @@ function myngl_myngl_pre_questions_form($form, &$form_state, $myngl_id, $user_id
 
   $form['tagline'] = array(
     '#type' => 'textfield',
-    '#title' => t('Tagline for Event:'),
+    '#title' => t('Tagline for Event'),
   );
 
   $form['submit'] = array(
@@ -854,10 +854,64 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
 
   $field_collection_item->save();
 
-
   drupal_set_message('Invitee Added.  Use the link in the invitee list to notify this user.');
 }
 
+function myngl_myngl_confirm_add_invitee($form, &$form_state, $nid) {
+
+  $form['myngl_nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $nid,
+  );
+
+  $form['first_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('First Name'),
+  );
+
+  $form['last_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Last Name'),
+  );
+
+  $form['email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('SEND INVITE'),
+  );
+
+  return $form;
+}
+
+function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
+  $v = $form_state['values'];
+
+  $node = node_load($v['myngl_nid']);
+
+  $field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_myngl_invitees'));
+  $field_collection_item->setHostEntity('node', $node);
+
+  $field_collection_item->field_invitee_first_name['und'][]['value'] = $v['first_name'];
+  $field_collection_item->field_invitee_last_name['und'][]['value'] = $v['last_name'];
+  $field_collection_item->field_invitee_email_address['und'][]['value'] = $v['email'];
+  $field_collection_item->field_invitee_status['und'][]['value'] = 'New';
+
+  $field_collection_item->save();
+
+  $node_reload = node_load($v['myngl_nid']);
+
+  foreach ($node_reload->field_myngl_invitees['und'] as $k => $v) {
+    $invitee_id = $k;
+  }
+
+  myngl_myngl_send_invitation($node->nid, $invitee_id, FALSE);
+
+  drupal_set_message('An invitation has been sent to '.$v['first_name'].'.');
+}
 
 function myngl_event_participants_status($myngl_id) {
   $result = db_query('SELECT user_id, timestamp, status
@@ -891,11 +945,13 @@ function myngl_myngl_admin_paths() {
     'node/*/invitee-redeem' => TRUE,
     'node/*/invitees' => TRUE,
     'node/*/participants-status' => TRUE,
+    'node/2' => TRUE,
   );
 }
 
 
-function myngl_myngl_send_invitation($myngl_id, $invitee_id) {
+function myngl_myngl_send_invitation($myngl_id, $invitee_id, $redirct = TRUE) {
+
     $node = node_load($myngl_id);
     
     $subject = 'Your\'re invited to the '.$node->title;
@@ -918,10 +974,11 @@ function myngl_myngl_send_invitation($myngl_id, $invitee_id) {
     $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $node->field_myngl_invitation_email['und'][0]['value'])); 
  
     myngl_myngl_sendMail($to, $subject, $html, $alt);
- 
-    drupal_set_message('Invitation Sent.');
 
-    drupal_goto();
+    if ($redirect) {
+      drupal_set_message('Invitation Sent.');
+      drupal_goto('node/'.$myngl_id.'/invitees');
+    }
 }
 
 function myngl_myngl_sendMail($to, $subject, $html, $alt) {

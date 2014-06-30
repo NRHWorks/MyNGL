@@ -11,7 +11,6 @@ function onYouTubeIframeAPIReady() {
     intervalid = setInterval(function() { youtube.loadvideo(); }, 500);
     if (jQuery.cookie('done_lobby_video') !='1') {
 
-
       $(".branded ul li#lounge").removeClass('inactive');
       $(".branded ul li#theater").removeClass('inactive');
       $(".branded ul li#play-room").removeClass('inactive');
@@ -43,7 +42,7 @@ var youtube = (function ($) {
     onPlayerStateChange: function(evt) {
 
       if (evt.data == YT.PlayerState.ENDED ) {
-        console.log("done");
+
         jQuery.cookie('done_lobby_video', '1');
 
         $(".branded ul li#lounge").addClass('inactive');
@@ -55,6 +54,12 @@ var youtube = (function ($) {
         $(".branded ul li#theater a").removeAttr("onclick").css("cursor", "auto");
         $(".branded ul li#play-room a").removeAttr("onclick").css("cursor", "auto");
         $(".branded ul li#gifting-suite a").removeAttr("onclick").css("cursor", "auto");
+
+        setTimeout(function() { 
+          var lobby = window.location.href;
+          var social_area = window.location.href.replace("lobby", "social-area");
+          window.location.href = social_area;
+        }  ,2000);
       }
     },
   }

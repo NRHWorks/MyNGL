@@ -45,21 +45,21 @@
       </a>
     <?php endif; endforeach; ?>
     end nathan's code-->
-    <form id="social-area-chat-list" style="margin-top:-10px;padding-left:20px;">
+    <form id="social-area-chat-list" style="margin-top:-10px;">
 
       <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
         <div class="checkbox" id="uid-<?php print $i['uid']?>"
           onclick="chat.invitee_click(<?php print $i['uid']?>)"
-          style="height:40px;margin-right:20px;padding:3px; display:none;"
+          style="height:40px; padding: 7px 0px 7px 20px; display:none;"
           value="<?php print $i['uid']?>"
           >
 
           <?php print $i['pic']; ?>
           <?php print $i['name']; ?>
-        </div><br/>
+        </div>
 
       <?php endif; endforeach; ?>
-      <input type="submit" value="Chat" style=""/>
+      <input type="submit" value="Chat" style="margin-left:20px;"/>
     </form>
     <br /><br />
   </div>
@@ -88,7 +88,7 @@
     <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
       <span id="people-total">0</span> PEOPLE TOTAL / <span id="people-in-lounge">0</span> IN THIS ROOM
       <form>
-        <input type="radio" name="filter" value="all" /> Show All
+        <input type="radio" name="filter" value="all" checked /> Show All
         <input type="radio" name="filter" value="fb-friends" /> FB Friends
         <input type="radio" name="filter" value="reps" /> Brand Reps
         <input type="radio" name="filter" value="other" /> Other Filters

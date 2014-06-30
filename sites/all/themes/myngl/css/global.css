@@ -369,7 +369,6 @@ body ::-webkit-scrollbar-thumb {
 
   #page-wrapper {
     min-height: 500px;
-    max-height: 800px;
     margin: 50px auto 0 auto;
     padding: 60px 60px 10px 60px;
     width: 730px;
@@ -710,7 +709,7 @@ body ::-webkit-scrollbar-thumb {
 
     #confirm-invite-invite-graphic {
       margin-right: 30px;
-      margin-top: -10px;
+      margin-top: -20px;
     }
 
     #confirm-invite-share #facebook-share, #confirm-invite-share #twitter-share {
@@ -739,7 +738,6 @@ body ::-webkit-scrollbar-thumb {
 
 
     #confirm-invite-wrapper .content {
-      margin-bottom: 50px;
       width: 400px;
       margin-left: 30px;
     }
@@ -1037,7 +1035,20 @@ body ::-webkit-scrollbar-thumb {
  .form-radios .form-item,
  .form-radios .form-item {
     display: inline;
+    float: left;
+    width: 220px;
   }
+
+  #myngl-myngl-pre-questions-form > div > .form-item {
+    clear: both;
+    margin-bottom: 40px;
+  }
+ 
+  #myngl-myngl-pre-questions-form #edit-question-3,
+  #myngl-myngl-pre-questions-form #edit-question-4 {
+    width: 640px;
+  }
+ 
 
   label[for="edit-tagline"] {
     display: inline !important;
@@ -1350,8 +1361,9 @@ body ::-webkit-scrollbar-thumb {
   }
 
   form#social-area-chat-list .checkbox.selected{
-    background-color:#888888;
-
+    background-color:#CCC;
+    border-top: 1px solid #BBB;
+    border-bottom: 1px solid #BBB;
   }
 
   .myngl-event-solo-chat-intro {
@@ -1847,3 +1859,33 @@ body ::-webkit-scrollbar-thumb {
   margin-right:auto;
 }
 /*  ----- END STYLE ------------------------------------------------- */
+
+/*  ----- INVITEE CONFIRM FORM -------------------------------------- */
+
+form#myngl-myngl-confirm-add-invitee {
+  margin-top: 50px;
+}
+
+form#myngl-myngl-confirm-add-invitee #edit-submit  {
+  margin-left: 215px; 
+}
+
+form#myngl-myngl-confirm-add-invitee .form-item {
+  margin-left: 0px;
+}
+
+form#myngl-myngl-confirm-add-invitee #edit-first-name,
+form#myngl-myngl-confirm-add-invitee #edit-last-name {
+  width: 183px;
+}
+
+form#myngl-myngl-confirm-add-invitee .form-item-first-name,
+form#myngl-myngl-confirm-add-invitee .form-item-last-name {
+  float: left;
+}
+
+form#myngl-myngl-confirm-add-invitee .form-item-last-name {
+  margin-left: 10px;
+}
+
+/*  ----- END INVITEE CONFIRM FORM ---------------------------------- */

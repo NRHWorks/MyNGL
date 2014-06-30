@@ -146,15 +146,10 @@ var chat = (function ($) {
         }
       }
 
-
-
       $('#block-system-main').append(new_chat_div);
-      $('#myngl-event-group-chat-'+new_chat.chat_id).css('top', '300px').css('position','absolute');
+      $('#myngl-event-group-chat-'+new_chat.chat_id).css('top', '200px').css('position','absolute');
       $('#myngl-event-group-chat-'+new_chat.chat_id).draggable();
       $("#myngl-event-group-chat-" + new_chat.chat_id).css('left', left + 'px');
-
-
-
 
       return false;
     },
@@ -376,7 +371,7 @@ var chat = (function ($) {
 
           $("#myngl-event-solo-chat-" + uid).draggable();
 
-          $("#myngl-event-solo-chat-" + uid).css('top', '300px');
+          $("#myngl-event-solo-chat-" + uid).css('top', '200px');
 
 
           // remove minimized button
