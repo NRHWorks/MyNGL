@@ -4,6 +4,13 @@
   $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
   $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
   $tertiary_color = $brand->field_brand_tertiary_color['und'][0]['rgb'];
+
+  if (!isset($_COOKIE['done_lobby_video']) || $_COOKIE['done_lobby_video']!= 1){
+    global $base_url;
+    $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
+    header($redirect);
+    exit;
+  }
 ?>
 
 

@@ -1,5 +1,8 @@
 var selected_reward_id = -1;
 
+
+
+
 (function ($) {
   $(document).ready( function() {
     $('li#gifting-suite').removeClass("inactive").addClass("active");
@@ -9,6 +12,7 @@ var selected_reward_id = -1;
     $('form#myngl-myngl-post-questions-form').submit(function(event){rewards_overlay.form_submit(event);});
     $('#congrats form#email').submit(function(event){rewards_overlay.email_form_submit(event);});
 
+    myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Gifting Suite");
   })
 }(jQuery));
 
@@ -53,7 +57,9 @@ var rewards_overlay = (function($){
         cache: false,
         type: 'POST',
         data : $('form#myngl-myngl-post-questions-form').serialize() ,
-        success: function(json) {}
+        success: function(json) {
+
+        }
       });
 
       var gift_name = $("#reward-id-" + selected_reward_id + " .field-name-field-title" ).text();
@@ -63,6 +69,8 @@ var rewards_overlay = (function($){
       $('#gifting-series-overlay #questions').fadeOut(500);
       $('#gifting-series-overlay #congrats').fadeIn(500);
       $('#gifting-series-overlay .close').fadeOut(500);
+
+      myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Gift Redeemed");
 
       return false;
 

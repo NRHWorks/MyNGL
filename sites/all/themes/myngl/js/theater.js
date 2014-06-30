@@ -1,5 +1,6 @@
 (function ($) {
   $(document).ready( function() {
+		myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");
 
     $('li#theater').removeClass("inactive").addClass("active");
     setInterval(function() { theater.message(); }, 3000);

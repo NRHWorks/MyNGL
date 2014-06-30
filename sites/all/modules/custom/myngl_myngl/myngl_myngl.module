@@ -74,6 +74,16 @@ function myngl_myngl_menu() {
     'type' => MENU_LOCAL_TASK,
   );
 
+
+  $items['node/%/participants-status'] = array(
+    'title' => 'Participants Status',
+    'page callback' => 'myngl_event_participants_status',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
+
+
   $items['node/%/question'] = array(
     'title' => ' POV Question',
     'page callback' => 'drupal_get_form',
@@ -82,7 +92,7 @@ function myngl_myngl_menu() {
     'type' => MENU_LOCAL_TASK,
     'weight' => 99
   );
-  
+
   $items['node/%/invitees'] = array(
     'title' => 'Invitees',
     'page callback' => 'myngl_myngl_invitees',
@@ -746,7 +756,7 @@ function myngl_myngl_edit_question_submit($form, &$form_state) {
 
 
 function myngl_myngl_invitees($nid) {
-  $node = node_load($nid);  
+  $node = node_load($nid);
 
   $rows = array();
 
@@ -754,7 +764,7 @@ function myngl_myngl_invitees($nid) {
     $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
 
     $row = array();
-  
+
     $user_acct = '';
 
     if (isset($ic->field_invitee_user_account['und'][0]['uid'])) {
@@ -820,12 +830,12 @@ function myngl_myngl_add_invitee($form, &$form_state, $nid) {
     '#title' => t('Email'),
     '#description' => t('Enter invitees email address.'),
   );
-  
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Submit'),
   );
-  
+
   return $form;
 }
 
@@ -848,6 +858,31 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
   drupal_set_message('Invitee Added.  Use the link in the invitee list to notify this user.');
 }
 
+
+function myngl_event_participants_status($myngl_id) {
+  $result = db_query('SELECT user_id, timestamp, status
+                      FROM {myngl_participant_status} WHERE
+                        myngl_id = :myngl_id',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                        )
+                      );
+
+  $header = array(
+    'User ID',
+    'Status',
+    'Time',
+  );
+  $rows = array();
+  foreach ($result as $r) {
+    $rows[] = array($r->user_id, $r->status, $r->timestamp);
+  }
+
+  $table = array('header' => $header, 'rows' => $rows, 'attributes' => array());
+  return theme_table($table);
+}
+
+
 function myngl_myngl_admin_paths() {
   return array(
     'node/*/message' => TRUE,
@@ -855,6 +890,7 @@ function myngl_myngl_admin_paths() {
     'node/*/theater-message' =>TRUE,
     'node/*/invitee-redeem' => TRUE,
     'node/*/invitees' => TRUE,
+    'node/*/participants-status' => TRUE,
   );
 }
 
