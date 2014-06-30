@@ -950,7 +950,7 @@ function myngl_myngl_admin_paths() {
 }
 
 
-function myngl_myngl_send_invitation($myngl_id, $invitee_id, $redirct = TRUE) {
+function myngl_myngl_send_invitation($myngl_id, $invitee_id, $redirect = TRUE) {
 
     $node = node_load($myngl_id);
     
@@ -967,15 +967,17 @@ function myngl_myngl_send_invitation($myngl_id, $invitee_id, $redirct = TRUE) {
     $ic->field_invitee_status['und'][0]['value'] = 'Invitation Delivered';
     $ic->save(TRUE);
 
-    $to = $ic->field_invitee_email['und'][0]['value'];
+    $to = $ic->field_invitee_email_address['und'][0]['value'];
 
     $firstname = $ic->field_invitee_first_name['und'][0]['value'];
 
     $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $node->field_myngl_invitation_email['und'][0]['value'])); 
- 
+
     myngl_myngl_sendMail($to, $subject, $html, $alt);
 
-    if ($redirect) {
+print $redirect;
+
+    if ($redirect != FALSE) {
       drupal_set_message('Invitation Sent.');
       drupal_goto('node/'.$myngl_id.'/invitees');
     }

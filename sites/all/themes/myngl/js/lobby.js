@@ -10,7 +10,7 @@ function onYouTubeIframeAPIReady() {
   $(document).ready( function() {
     intervalid = setInterval(function() { youtube.loadvideo(); }, 500);
     if (jQuery.cookie('done_lobby_video') !='1') {
-
+/* TODO: need to get this fixed in safari, and firefox 
       $(".branded ul li#lounge").removeClass('inactive');
       $(".branded ul li#theater").removeClass('inactive');
       $(".branded ul li#play-room").removeClass('inactive');
@@ -21,6 +21,7 @@ function onYouTubeIframeAPIReady() {
       $(".branded ul li#play-room a").attr("onclick", "return false;").css("cursor", "default");
       $(".branded ul li#gifting-suite a").attr("onclick", "return false;").css("cursor", "default");
       $("iframe#youtube-field-player").attr('src',$("iframe#youtube-field-player").attr('src') + '&enablejsapi=1');
+*/
     }
   });
 }(jQuery));
