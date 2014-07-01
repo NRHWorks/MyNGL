@@ -28,9 +28,9 @@ function myngl_page_title_init() {
       }
 
       if (isset($myngl_nid)) {
-        drupal_set_title('CREATE YOUR MYNGL ACCOUNT TO RSVP');
+        drupal_set_title('CREATE YOUR ACCOUNT FOR theMYNGL');
       } else {
-        drupal_set_title('CREATE YOUR MYNGL ACCOUNT');
+        drupal_set_title('CREATE YOUR ACCOUNT FOR theMYNGL');
       }
 
       break;
