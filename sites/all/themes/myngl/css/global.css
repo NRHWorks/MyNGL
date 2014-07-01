@@ -640,6 +640,11 @@ body ::-webkit-scrollbar-thumb {
   /* --- end profile form --- */
 
   /* --- account form --- */
+
+    form#user-profile-form span#name{
+      font-weight:bold;
+    }
+
     form#user-profile-form input#edit-field-first-name-und-0-value {
       float: left;
       margin-right: 20px;
@@ -653,6 +658,7 @@ body ::-webkit-scrollbar-thumb {
     form#user-profile-form .password-strength {
       float: left;
       margin-bottom: 15px;
+      display:none;
     }
 
     form#user-profile-form #edit-timezone {
@@ -660,8 +666,19 @@ body ::-webkit-scrollbar-thumb {
     }
 
     form#user-profile-form #edit-profile-cancel {
-      float: right;
-      margin-top: -40px;
+      float: left;
+      margin-top: -15px;
+      text-decoration:underline;
+    }
+
+    form#user-profile-form #edit-submit{
+      float:right;
+      margin-top: -20px;
+    }
+    form#user-profile-form #edit-current-pass,
+    form#user-profile-form #field-last-name-add-more-wrapper,
+    form#user-profile-form #edit-field-first-name-und-0-value{
+      display:none;
     }
   /* --- end account form --- */
 
