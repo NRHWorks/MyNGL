@@ -675,10 +675,17 @@ body ::-webkit-scrollbar-thumb {
       float:right;
       margin-top: -20px;
     }
-    form#user-profile-form #edit-current-pass,
+    /*form#user-profile-form #edit-current-pass,*/
     form#user-profile-form #field-last-name-add-more-wrapper,
     form#user-profile-form #edit-field-first-name-und-0-value{
       display:none;
+    }
+
+    body.page-user-edit-profile form#user-profile-form #edit-name,
+    body.page-user-edit-profile form#user-profile-form #edit-pass-pass1,
+    body.page-user-edit-profile form#user-profile-form #edit-pass-pass2
+    {
+      display: none  ;
     }
   /* --- end account form --- */
 

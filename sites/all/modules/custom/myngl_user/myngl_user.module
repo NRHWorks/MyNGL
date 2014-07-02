@@ -108,7 +108,9 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
 
 
       if (isset($_COOKIE['Drupal_visitor_rsvp'])) {
-        $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']);
+        $cookie['rsvp_through_registration'] = $_COOKIE['Drupal_visitor_rsvp'];
+        user_cookie_save($cookie);
+        //$myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']);
 
         if (isset($myngl_nid)) {
 
@@ -184,7 +186,7 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
  */
 function myngl_user_password_confirm($element) {
   $element['pass1']['#title'] = t("New Password");
-  $element['pass2']['#title'] = t("Verify New Password");
+  $element['pass2']['#title'] = t("Confirm New Password");
   return $element;
 }
 
@@ -216,5 +218,14 @@ function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
       " <br /><a href='#!' class='link-small' onclick='jQuery(\"#default-image-wrapper\").hide();jQuery(\".image-widget\").show();'>Upload a profile picture</a>
         <script>jQuery(document).ready(function () { jQuery('.image-widget').hide(); });</script>
         </div>";
+  }
+}
+
+function myngl_user_user_view_alter(&$build){
+  file_put_contents("test123.txt",print_r($_COOKIE, TRUE), FILE_APPEND);
+  if (isset($_COOKIE['Drupal_visitor_rsvp_through_registration'])){
+    file_put_contents("test123.txt", "called!");
+    myngl_myngl_complete($_COOKIE['Drupal_visitor_rsvp_through_registration']);
+    file_put_contents("test123.txt", "called2");
   }
 }

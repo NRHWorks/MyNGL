@@ -5,7 +5,15 @@
   if (isset($profile->pid)) {
     $p = entity_metadata_wrapper('profile2', $profile);
   }
+  /*
+  file_put_contents("test123.txt",print_r($_COOKIE, TRUE));
+  if (isset($_COOKIE['Drupal_visitor_rsvp'])){
+    file_put_contents("test123.txt", "called!");
+    myngl_myngl_complete($_COOKIE['Drupal_visitor_rsvp']);
+    file_put_contents("test123.txt", "called2");
+  }*/
 ?>
+
 <div class="profile"<?php print $attributes; ?>>
   <div id="content-left">
     <?php
@@ -23,7 +31,7 @@
     </div>
     <br clear="both" />
     <div id="profile-info">
-      <span class="label">NAME:</span> 
+      <span class="label">NAME:</span>
       <strong>
       <?php print $u->field_first_name->value().' '.$u->field_last_name->value(); ?><br />
       </strong>

@@ -211,6 +211,7 @@ function myngl_myngl_complete($nid) {
         $u->save(TRUE);
 
         user_cookie_delete('rsvp');
+        user_cookie_delete('rsvp_through_registration');
 
         drupal_goto("myngl/$nid/confirmed");
       }
