@@ -940,7 +940,7 @@ function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
 
   myngl_myngl_send_invitation($node->nid, $invitee_id, FALSE);
 
-  drupal_set_message('An invitation has been sent to '.$v['first_name'].'.');
+  drupal_set_message('An invitation has been sent to '.$v['email'].'.');
 }
 
 function myngl_event_participants_status($myngl_id) {
