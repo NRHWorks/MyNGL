@@ -64,6 +64,13 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
+  $items['myngl/%/cancel-invitation'] = array(
+    'title' => 'Myngl Cancel Invitation',
+    'page callback' => 'myngl_myngl_cancel_invitation',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
   $items['node/%/message'] = array(
     'title' => 'Message',
     'page callback' => 'drupal_get_form',
@@ -979,7 +986,6 @@ function myngl_myngl_admin_paths() {
   );
 }
 
-
 function myngl_myngl_delete_invitation($myngl_id, $invitee_id) {
 
     $node = node_load($myngl_id);
@@ -993,6 +999,25 @@ function myngl_myngl_delete_invitation($myngl_id, $invitee_id) {
     drupal_goto('node/'.$myngl_id.'/invitees');
 }
 
+function myngl_myngl_cancel_invitation($myngl_id) {
+    global $user;
+
+    $node = node_load($myngl_id);
+ 
+    foreach ($node->field_myngl_invitees['und'] as $k => $i) {
+      $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
+
+      if ($ic->field_invitee_user_account['und'][0]['uid'] == $user->uid) {
+        unset($node->field_myngl_invitees['und'][$k]);
+      }
+    }
+
+    node_save($node);
+
+    drupal_set_message('Invitation Canceled.');
+
+    drupal_goto('user');
+}
 
 function myngl_myngl_send_invitation($myngl_id, $invitee_id, $redirect = TRUE) {
 

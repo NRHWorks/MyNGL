@@ -21,7 +21,6 @@ addthisevent.settings({
       <div class="upcoming-myngl-wrapper">
         <span class="title"><?php print $m['brand']->title; ?></span><br />
         <span class="date"><?php print myngl_short_date($m['date']); ?></span><br />
-
         <div class="upcoming-myngl-border">
           <div class="upcoming-myngl-background" style="background-image: url(<?php print image_style_url('myngl_upcoming_overlay', $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri']); ?>)">
             <div class="upcoming-myngl-cover">
@@ -36,7 +35,7 @@ addthisevent.settings({
                 </a>
               </div>
               <div class="upcoming-myngl-link upcoming-myngl-attendance">
-                <a href="#" onclick="return myngl_upcoming.cancel_rsvp(<?php print arg(1); ?>, <?php print $k; ?>);">
+                <a href="/myngl/<?php print $m['myngl']->nid; ?>/cancel-invitation">
                   <i class="fa fa-times-circle"></i>&nbsp;&nbsp;&nbsp;Cancel Attendance</a>
                 </div>
             </div>
