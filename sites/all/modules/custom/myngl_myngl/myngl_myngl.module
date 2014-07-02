@@ -934,13 +934,13 @@ function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
 
   $node_reload = node_load($v['myngl_nid']);
 
-  foreach ($node_reload->field_myngl_invitees['und'] as $k => $v) {
+  foreach ($node_reload->field_myngl_invitees['und'] as $k => $value) {
     $invitee_id = $k;
   }
 
   myngl_myngl_send_invitation($node->nid, $invitee_id, FALSE);
 
-  drupal_set_message('An invitation has been sent to '.$v['email'].'.');
+  drupal_set_message('An invitation has been sent to '.$v['first_name'].' ('.$v['email']. ').');
 }
 
 function myngl_event_participants_status($myngl_id) {
