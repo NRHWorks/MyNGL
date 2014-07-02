@@ -1,0 +1,1011 @@
+Array
+(
+    [#user] => stdClass Object
+        (
+            [uid] => 21
+            [name] => white
+            [pass] => $S$Dg0XUwiT0352dcWFwocrliw94juWx4aydkkKSBS2NBrA3nH3sJDd
+            [mail] => foo@bar.com
+            [theme] => 
+            [signature] => 
+            [signature_format] => filtered_html
+            [created] => 1400127659
+            [access] => 1404339103
+            [login] => 1404319478
+            [status] => 1
+            [timezone] => America/Chicago
+            [language] => 
+            [picture] => 0
+            [init] => foo@bar.com
+            [data] => 
+            [roles] => Array
+                (
+                    [2] => authenticated user
+                )
+
+            [field_first_name] => Array
+                (
+                    [und] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [value] => Nathan
+                                    [format] => 
+                                    [safe_value] => Nathan
+                                )
+
+                        )
+
+                )
+
+            [field_last_name] => Array
+                (
+                    [und] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [value] => White
+                                    [format] => 
+                                    [safe_value] => White
+                                )
+
+                        )
+
+                )
+
+            [rdf_mapping] => Array
+                (
+                    [rdftype] => Array
+                        (
+                            [0] => sioc:UserAccount
+                        )
+
+                    [name] => Array
+                        (
+                            [predicates] => Array
+                                (
+                                    [0] => foaf:name
+                                )
+
+                        )
+
+                    [homepage] => Array
+                        (
+                            [predicates] => Array
+                                (
+                                    [0] => foaf:page
+                                )
+
+                            [type] => rel
+                        )
+
+                )
+
+        )
+
+    [#user_category] => account
+    [#validate] => Array
+        (
+            [0] => user_account_form_validate
+            [1] => user_validate_current_pass
+            [2] => user_validate_picture
+            [3] => user_profile_form_validate
+        )
+
+    [account] => Array
+        (
+            [#type] => container
+            [#weight] => -10
+            [name] => Array
+                (
+                    [#type] => textfield
+                    [#title] => Username
+                    [#maxlength] => 60
+                    [#description] => Spaces are allowed; punctuation is not allowed except for periods, hyphens, apostrophes, and underscores.
+                    [#required] => 1
+                    [#attributes] => Array
+                        (
+                            [class] => Array
+                                (
+                                    [0] => username
+                                )
+
+                        )
+
+                    [#default_value] => white
+                    [#access] => 
+                    [#weight] => -10
+                )
+
+            [mail] => Array
+                (
+                    [#type] => textfield
+                    [#title] => E-mail address
+                    [#maxlength] => 254
+                    [#description] => A valid e-mail address. All e-mails from the system will be sent to this address. The e-mail address is not made public and will only be used if you wish to receive a new password or wish to receive certain news or notifications by e-mail.
+                    [#required] => 1
+                    [#default_value] => foo@bar.com
+                )
+
+            [pass] => Array
+                (
+                    [#type] => password_confirm
+                    [#size] => 25
+                    [#description] => To change the current user password, enter the new password in both fields.
+                    [#process] => Array
+                        (
+                            [0] => form_process_password_confirm
+                            [1] => myngl_user_password_confirm
+                        )
+
+                )
+
+            [current_pass_required_values] => Array
+                (
+                    [#type] => value
+                    [#value] => Array
+                        (
+                            [mail] => E-mail address
+                            [pass] => Password
+                        )
+
+                )
+
+            [current_pass] => Array
+                (
+                    [#type] => password
+                    [#title] => Current password
+                    [#size] => 25
+                    [#access] => 1
+                    [#description] => Enter your current password to change the <em class="placeholder">E-mail address</em> or <em class="placeholder">Password</em>. <a href="/user/password" title="Request new password via e-mail.">Request new password</a>.
+                    [#weight] => -5
+                    [#attributes] => Array
+                        (
+                            [autocomplete] => off
+                        )
+
+                )
+
+            [status] => Array
+                (
+                    [#type] => radios
+                    [#title] => Status
+                    [#default_value] => 1
+                    [#options] => Array
+                        (
+                            [0] => Blocked
+                            [1] => Active
+                        )
+
+                    [#access] => 
+                )
+
+            [roles] => Array
+                (
+                    [#type] => checkboxes
+                    [#title] => Roles
+                    [#default_value] => Array
+                        (
+                            [0] => 2
+                        )
+
+                    [#options] => Array
+                        (
+                            [3] => administrator
+                        )
+
+                    [#access] => 
+                    [2] => Array
+                        (
+                            [#type] => checkbox
+                            [#title] => authenticated user
+                            [#default_value] => 1
+                            [#disabled] => 1
+                        )
+
+                )
+
+            [notify] => Array
+                (
+                    [#type] => checkbox
+                    [#title] => Notify user of new account
+                    [#access] => 
+                )
+
+        )
+
+    [signature_settings] => Array
+        (
+            [#type] => fieldset
+            [#title] => Signature settings
+            [#weight] => 1
+            [#access] => 
+            [signature] => Array
+                (
+                    [#type] => text_format
+                    [#title] => Signature
+                    [#default_value] => 
+                    [#description] => Your signature will be publicly displayed at the end of your comments.
+                    [#format] => filtered_html
+                )
+
+        )
+
+    [picture] => Array
+        (
+            [#type] => fieldset
+            [#title] => Picture
+            [#weight] => 1
+            [#access] => 
+            [picture] => Array
+                (
+                    [#type] => value
+                    [#value] => 0
+                )
+
+            [picture_current] => Array
+                (
+                    [#markup] => 
+                )
+
+            [picture_delete] => Array
+                (
+                    [#type] => checkbox
+                    [#title] => Delete picture
+                    [#access] => 
+                    [#description] => Check this box to delete your current picture.
+                )
+
+            [picture_upload] => Array
+                (
+                    [#type] => file
+                    [#title] => Upload picture
+                    [#size] => 48
+                    [#description] => Your virtual face or picture. Pictures larger than 1024x1024 pixels will be scaled down. 
+                )
+
+        )
+
+    [#parents] => Array
+        (
+        )
+
+    [#entity] => stdClass Object
+        (
+            [uid] => 21
+            [name] => white
+            [pass] => $S$Dg0XUwiT0352dcWFwocrliw94juWx4aydkkKSBS2NBrA3nH3sJDd
+            [mail] => foo@bar.com
+            [theme] => 
+            [signature] => 
+            [signature_format] => filtered_html
+            [created] => 1400127659
+            [access] => 1404339103
+            [login] => 1404319478
+            [status] => 1
+            [timezone] => America/Chicago
+            [language] => 
+            [picture] => 0
+            [init] => foo@bar.com
+            [data] => 
+            [roles] => Array
+                (
+                    [2] => authenticated user
+                )
+
+            [field_first_name] => Array
+                (
+                    [und] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [value] => Nathan
+                                    [format] => 
+                                    [safe_value] => Nathan
+                                )
+
+                        )
+
+                )
+
+            [field_last_name] => Array
+                (
+                    [und] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [value] => White
+                                    [format] => 
+                                    [safe_value] => White
+                                )
+
+                        )
+
+                )
+
+            [rdf_mapping] => Array
+                (
+                    [rdftype] => Array
+                        (
+                            [0] => sioc:UserAccount
+                        )
+
+                    [name] => Array
+                        (
+                            [predicates] => Array
+                                (
+                                    [0] => foaf:name
+                                )
+
+                        )
+
+                    [homepage] => Array
+                        (
+                            [predicates] => Array
+                                (
+                                    [0] => foaf:page
+                                )
+
+                            [type] => rel
+                        )
+
+                )
+
+        )
+
+    [field_first_name] => Array
+        (
+            [#type] => container
+            [#attributes] => Array
+                (
+                    [class] => Array
+                        (
+                            [0] => field-type-text
+                            [1] => field-name-field-first-name
+                            [2] => field-widget-text-textfield
+                        )
+
+                )
+
+            [#weight] => 0
+            [#tree] => 1
+            [#language] => und
+            [und] => Array
+                (
+                    [0] => Array
+                        (
+                            [#entity_type] => user
+                            [#entity] => stdClass Object
+                                (
+                                    [uid] => 21
+                                    [name] => white
+                                    [pass] => $S$Dg0XUwiT0352dcWFwocrliw94juWx4aydkkKSBS2NBrA3nH3sJDd
+                                    [mail] => foo@bar.com
+                                    [theme] => 
+                                    [signature] => 
+                                    [signature_format] => filtered_html
+                                    [created] => 1400127659
+                                    [access] => 1404339103
+                                    [login] => 1404319478
+                                    [status] => 1
+                                    [timezone] => America/Chicago
+                                    [language] => 
+                                    [picture] => 0
+                                    [init] => foo@bar.com
+                                    [data] => 
+                                    [roles] => Array
+                                        (
+                                            [2] => authenticated user
+                                        )
+
+                                    [field_first_name] => Array
+                                        (
+                                            [und] => Array
+                                                (
+                                                    [0] => Array
+                                                        (
+                                                            [value] => Nathan
+                                                            [format] => 
+                                                            [safe_value] => Nathan
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [field_last_name] => Array
+                                        (
+                                            [und] => Array
+                                                (
+                                                    [0] => Array
+                                                        (
+                                                            [value] => White
+                                                            [format] => 
+                                                            [safe_value] => White
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [rdf_mapping] => Array
+                                        (
+                                            [rdftype] => Array
+                                                (
+                                                    [0] => sioc:UserAccount
+                                                )
+
+                                            [name] => Array
+                                                (
+                                                    [predicates] => Array
+                                                        (
+                                                            [0] => foaf:name
+                                                        )
+
+                                                )
+
+                                            [homepage] => Array
+                                                (
+                                                    [predicates] => Array
+                                                        (
+                                                            [0] => foaf:page
+                                                        )
+
+                                                    [type] => rel
+                                                )
+
+                                        )
+
+                                )
+
+                            [#bundle] => user
+                            [#field_name] => field_first_name
+                            [#language] => und
+                            [#field_parents] => Array
+                                (
+                                )
+
+                            [#columns] => Array
+                                (
+                                    [0] => value
+                                    [1] => format
+                                )
+
+                            [#title] => First Name
+                            [#description] => 
+                            [#required] => 1
+                            [#delta] => 0
+                            [#weight] => 0
+                            [value] => Array
+                                (
+                                    [#entity_type] => user
+                                    [#entity] => stdClass Object
+                                        (
+                                            [uid] => 21
+                                            [name] => white
+                                            [pass] => $S$Dg0XUwiT0352dcWFwocrliw94juWx4aydkkKSBS2NBrA3nH3sJDd
+                                            [mail] => foo@bar.com
+                                            [theme] => 
+                                            [signature] => 
+                                            [signature_format] => filtered_html
+                                            [created] => 1400127659
+                                            [access] => 1404339103
+                                            [login] => 1404319478
+                                            [status] => 1
+                                            [timezone] => America/Chicago
+                                            [language] => 
+                                            [picture] => 0
+                                            [init] => foo@bar.com
+                                            [data] => 
+                                            [roles] => Array
+                                                (
+                                                    [2] => authenticated user
+                                                )
+
+                                            [field_first_name] => Array
+                                                (
+                                                    [und] => Array
+                                                        (
+                                                            [0] => Array
+                                                                (
+                                                                    [value] => Nathan
+                                                                    [format] => 
+                                                                    [safe_value] => Nathan
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                            [field_last_name] => Array
+                                                (
+                                                    [und] => Array
+                                                        (
+                                                            [0] => Array
+                                                                (
+                                                                    [value] => White
+                                                                    [format] => 
+                                                                    [safe_value] => White
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                            [rdf_mapping] => Array
+                                                (
+                                                    [rdftype] => Array
+                                                        (
+                                                            [0] => sioc:UserAccount
+                                                        )
+
+                                                    [name] => Array
+                                                        (
+                                                            [predicates] => Array
+                                                                (
+                                                                    [0] => foaf:name
+                                                                )
+
+                                                        )
+
+                                                    [homepage] => Array
+                                                        (
+                                                            [predicates] => Array
+                                                                (
+                                                                    [0] => foaf:page
+                                                                )
+
+                                                            [type] => rel
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [#bundle] => user
+                                    [#field_name] => field_first_name
+                                    [#language] => und
+                                    [#field_parents] => Array
+                                        (
+                                        )
+
+                                    [#columns] => Array
+                                        (
+                                            [0] => value
+                                            [1] => format
+                                        )
+
+                                    [#title] => First Name
+                                    [#description] => 
+                                    [#required] => 1
+                                    [#delta] => 0
+                                    [#weight] => 0
+                                    [#type] => textfield
+                                    [#default_value] => Nathan
+                                    [#size] => 60
+                                    [#maxlength] => 255
+                                    [#attributes] => Array
+                                        (
+                                            [class] => Array
+                                                (
+                                                    [0] => text-full
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [#theme] => field_multiple_value_form
+                    [#field_name] => field_first_name
+                    [#cardinality] => 1
+                    [#title] => First Name
+                    [#required] => 1
+                    [#description] => 
+                    [#prefix] => <div id="field-first-name-add-more-wrapper">
+                    [#suffix] => </div>
+                    [#max_delta] => 0
+                    [#after_build] => Array
+                        (
+                            [0] => field_form_element_after_build
+                        )
+
+                    [#language] => und
+                    [#field_parents] => Array
+                        (
+                        )
+
+                )
+
+            [#access] => 1
+        )
+
+    [field_last_name] => Array
+        (
+            [#type] => container
+            [#attributes] => Array
+                (
+                    [class] => Array
+                        (
+                            [0] => field-type-text
+                            [1] => field-name-field-last-name
+                            [2] => field-widget-text-textfield
+                        )
+
+                )
+
+            [#weight] => 1
+            [#tree] => 1
+            [#language] => und
+            [und] => Array
+                (
+                    [0] => Array
+                        (
+                            [#entity_type] => user
+                            [#entity] => stdClass Object
+                                (
+                                    [uid] => 21
+                                    [name] => white
+                                    [pass] => $S$Dg0XUwiT0352dcWFwocrliw94juWx4aydkkKSBS2NBrA3nH3sJDd
+                                    [mail] => foo@bar.com
+                                    [theme] => 
+                                    [signature] => 
+                                    [signature_format] => filtered_html
+                                    [created] => 1400127659
+                                    [access] => 1404339103
+                                    [login] => 1404319478
+                                    [status] => 1
+                                    [timezone] => America/Chicago
+                                    [language] => 
+                                    [picture] => 0
+                                    [init] => foo@bar.com
+                                    [data] => 
+                                    [roles] => Array
+                                        (
+                                            [2] => authenticated user
+                                        )
+
+                                    [field_first_name] => Array
+                                        (
+                                            [und] => Array
+                                                (
+                                                    [0] => Array
+                                                        (
+                                                            [value] => Nathan
+                                                            [format] => 
+                                                            [safe_value] => Nathan
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [field_last_name] => Array
+                                        (
+                                            [und] => Array
+                                                (
+                                                    [0] => Array
+                                                        (
+                                                            [value] => White
+                                                            [format] => 
+                                                            [safe_value] => White
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [rdf_mapping] => Array
+                                        (
+                                            [rdftype] => Array
+                                                (
+                                                    [0] => sioc:UserAccount
+                                                )
+
+                                            [name] => Array
+                                                (
+                                                    [predicates] => Array
+                                                        (
+                                                            [0] => foaf:name
+                                                        )
+
+                                                )
+
+                                            [homepage] => Array
+                                                (
+                                                    [predicates] => Array
+                                                        (
+                                                            [0] => foaf:page
+                                                        )
+
+                                                    [type] => rel
+                                                )
+
+                                        )
+
+                                )
+
+                            [#bundle] => user
+                            [#field_name] => field_last_name
+                            [#language] => und
+                            [#field_parents] => Array
+                                (
+                                )
+
+                            [#columns] => Array
+                                (
+                                    [0] => value
+                                    [1] => format
+                                )
+
+                            [#title] => Last Name
+                            [#description] => 
+                            [#required] => 1
+                            [#delta] => 0
+                            [#weight] => 0
+                            [value] => Array
+                                (
+                                    [#entity_type] => user
+                                    [#entity] => stdClass Object
+                                        (
+                                            [uid] => 21
+                                            [name] => white
+                                            [pass] => $S$Dg0XUwiT0352dcWFwocrliw94juWx4aydkkKSBS2NBrA3nH3sJDd
+                                            [mail] => foo@bar.com
+                                            [theme] => 
+                                            [signature] => 
+                                            [signature_format] => filtered_html
+                                            [created] => 1400127659
+                                            [access] => 1404339103
+                                            [login] => 1404319478
+                                            [status] => 1
+                                            [timezone] => America/Chicago
+                                            [language] => 
+                                            [picture] => 0
+                                            [init] => foo@bar.com
+                                            [data] => 
+                                            [roles] => Array
+                                                (
+                                                    [2] => authenticated user
+                                                )
+
+                                            [field_first_name] => Array
+                                                (
+                                                    [und] => Array
+                                                        (
+                                                            [0] => Array
+                                                                (
+                                                                    [value] => Nathan
+                                                                    [format] => 
+                                                                    [safe_value] => Nathan
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                            [field_last_name] => Array
+                                                (
+                                                    [und] => Array
+                                                        (
+                                                            [0] => Array
+                                                                (
+                                                                    [value] => White
+                                                                    [format] => 
+                                                                    [safe_value] => White
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                            [rdf_mapping] => Array
+                                                (
+                                                    [rdftype] => Array
+                                                        (
+                                                            [0] => sioc:UserAccount
+                                                        )
+
+                                                    [name] => Array
+                                                        (
+                                                            [predicates] => Array
+                                                                (
+                                                                    [0] => foaf:name
+                                                                )
+
+                                                        )
+
+                                                    [homepage] => Array
+                                                        (
+                                                            [predicates] => Array
+                                                                (
+                                                                    [0] => foaf:page
+                                                                )
+
+                                                            [type] => rel
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [#bundle] => user
+                                    [#field_name] => field_last_name
+                                    [#language] => und
+                                    [#field_parents] => Array
+                                        (
+                                        )
+
+                                    [#columns] => Array
+                                        (
+                                            [0] => value
+                                            [1] => format
+                                        )
+
+                                    [#title] => Last Name
+                                    [#description] => 
+                                    [#required] => 1
+                                    [#delta] => 0
+                                    [#weight] => 0
+                                    [#type] => textfield
+                                    [#default_value] => White
+                                    [#size] => 60
+                                    [#maxlength] => 255
+                                    [#attributes] => Array
+                                        (
+                                            [class] => Array
+                                                (
+                                                    [0] => text-full
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [#theme] => field_multiple_value_form
+                    [#field_name] => field_last_name
+                    [#cardinality] => 1
+                    [#title] => Last Name
+                    [#required] => 1
+                    [#description] => 
+                    [#prefix] => <div id="field-last-name-add-more-wrapper">
+                    [#suffix] => </div>
+                    [#max_delta] => 0
+                    [#after_build] => Array
+                        (
+                            [0] => field_form_element_after_build
+                        )
+
+                    [#language] => und
+                    [#field_parents] => Array
+                        (
+                        )
+
+                )
+
+            [#access] => 1
+        )
+
+    [#pre_render] => Array
+        (
+            [0] => _field_extra_fields_pre_render
+            [1] => field_group_form_pre_render
+        )
+
+    [#entity_type] => user
+    [#bundle] => user
+    [#attached] => Array
+        (
+            [css] => Array
+                (
+                    [0] => sites/all/modules/contrib/field_group/field_group.field_ui.css
+                )
+
+        )
+
+    [#groups] => Array
+        (
+        )
+
+    [#fieldgroups] => Array
+        (
+        )
+
+    [#group_children] => Array
+        (
+        )
+
+    [actions] => Array
+        (
+            [#type] => actions
+            [submit] => Array
+                (
+                    [#type] => submit
+                    [#value] => SUBMIT CHANGES
+                )
+
+            [cancel] => Array
+                (
+                    [#type] => submit
+                    [#value] => Cancel account
+                    [#submit] => Array
+                        (
+                            [0] => user_edit_cancel_submit
+                        )
+
+                    [#access] => 
+                )
+
+        )
+
+    [#submit] => Array
+        (
+            [0] => user_profile_form_submit
+        )
+
+    [#form_id] => user_profile_form
+    [#type] => form
+    [#build_id] => form-MheWtWblMARZdo72vxd8mCkeEqomZkDtI-Qr_MLzhbs
+    [form_build_id] => Array
+        (
+            [#type] => hidden
+            [#value] => form-MheWtWblMARZdo72vxd8mCkeEqomZkDtI-Qr_MLzhbs
+            [#id] => form-MheWtWblMARZdo72vxd8mCkeEqomZkDtI-Qr_MLzhbs
+            [#name] => form_build_id
+            [#parents] => Array
+                (
+                    [0] => form_build_id
+                )
+
+        )
+
+    [#token] => user_profile_form
+    [form_token] => Array
+        (
+            [#id] => edit-user-profile-form-form-token
+            [#type] => token
+            [#default_value] => _5VNe1SujMxnmCaJpxpuqbTKpj4eaXyesPtQc7BGPCA
+            [#parents] => Array
+                (
+                    [0] => form_token
+                )
+
+        )
+
+    [form_id] => Array
+        (
+            [#type] => hidden
+            [#value] => user_profile_form
+            [#id] => edit-user-profile-form
+            [#parents] => Array
+                (
+                    [0] => form_id
+                )
+
+        )
+
+    [#id] => user-profile-form
+    [#method] => post
+    [#action] => /user/21/edit?destination=user/21
+    [#theme_wrappers] => Array
+        (
+            [0] => form
+        )
+
+    [#tree] => 
+    [#theme] => Array
+        (
+            [0] => user_profile_form
+        )
+
+    [name] => Array
+        (
+            [#type] => item
+            [#markup] => NAME: <span id="name">Nathan White</span>
+            [#weight] => -19
+        )
+
+)

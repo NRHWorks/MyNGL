@@ -1093,7 +1093,7 @@ function myngl_myngl_event_detail($myngl_id, $user_id){
 
   $output =  theme('overlay_myngl_event_detail', array('myngl' => $myngl, 'account' =>$account,));
 
-  return $output;
-  //ajax_deliver($output);
+  //return $output;
+  ajax_deliver($output);
 
 }
