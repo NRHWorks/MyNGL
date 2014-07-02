@@ -71,8 +71,18 @@ var myngl = (function($) {
       });
 
 
+    },
+    event_detail_overlay: function(myngl_id, user_id){
+      $.ajax({
+        type: "GET",
+        url: "/myngl/event-detail/" + myngl_id + "/" + user_id ,
+        success: function(data) {myngl.event_detail_overlay_success(data);}
+      });
+    },
+    event_detail_overlay_success: function(data){
+      console.log(data);
+      return false;
     }
-
 
   }
 

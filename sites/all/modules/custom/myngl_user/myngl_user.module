@@ -24,7 +24,12 @@ function myngl_user_user_login(&$edit, $account) {
 
       if ($u->field_invitee_email_address['und'][0]['safe_value'] == $email) {
         $u->field_invitee_status['und'][0]['value'] = 'RSVP';
-        $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][0]['value'];
+
+        if (isset($_COOKIE['Drupal_visitor_rsvp_date'])) {
+          $u->field_invitee_rsvp_date['und'][0]['value'] = $_COOKIE['Drupal_visitor_rsvp_date'];
+        } else {
+          $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][0]['value'];
+        }
         $u->field_invitee_user_account['und'][0]['uid'] = $account->uid;
         $u->save(TRUE);
 
@@ -222,10 +227,7 @@ function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
 }
 
 function myngl_user_user_view_alter(&$build){
-  file_put_contents("test123.txt",print_r($_COOKIE, TRUE), FILE_APPEND);
   if (isset($_COOKIE['Drupal_visitor_rsvp_through_registration'])){
-    file_put_contents("test123.txt", "called!");
     myngl_myngl_complete($_COOKIE['Drupal_visitor_rsvp_through_registration']);
-    file_put_contents("test123.txt", "called2");
   }
 }
