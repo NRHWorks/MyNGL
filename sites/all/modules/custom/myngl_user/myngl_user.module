@@ -108,7 +108,9 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
 
 
       if (isset($_COOKIE['Drupal_visitor_rsvp'])) {
-        $myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']);
+        $cookie['rsvp_through_registration'] = $_COOKIE['Drupal_visitor_rsvp'];
+        user_cookie_save($cookie);
+        //$myngl_nid = htmlspecialchars($_COOKIE['Drupal_visitor_rsvp']);
 
         if (isset($myngl_nid)) {
 
@@ -153,15 +155,41 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
       break;
 
     case 'user_profile_form' :
+      global $user;
       $form['actions']['submit']['#value'] = 'SUBMIT CHANGES';
 
+
+      $name = $form['#user']->field_first_name['und'][0]['safe_value'] . ' ' .
+              $form['#user']->field_last_name['und'][0]['safe_value'] ;
+
+
+      $form['account']['pass']['#process'] = array('form_process_password_confirm', 'myngl_user_password_confirm');
+
+      $form['name'] = array(
+            '#type' => 'item',
+            '#markup' => 'NAME: <span id="name">' . $name . '</span>',
+            '#weight' => -19, // Adjust so that you can place it whereever
+          );
+
+
+
       $form['cancel'] = array (
-        '#markup' => '<a href="/user" id="edit-profile-cancel">Cancel</a>',
+        '#markup' => '<a href="/user" id="edit-profile-cancel">Cancel edits</a>',
         '#weight' => 200
       );
-      break;
+
   }
 }
+
+/**
+ * Implementation of expand_password_confirm.
+ */
+function myngl_user_password_confirm($element) {
+  $element['pass1']['#title'] = t("New Password");
+  $element['pass2']['#title'] = t("Confirm New Password");
+  return $element;
+}
+
 
 function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
   if ($uid = $form['#user']->uid) {
@@ -190,5 +218,14 @@ function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
       " <br /><a href='#!' class='link-small' onclick='jQuery(\"#default-image-wrapper\").hide();jQuery(\".image-widget\").show();'>Upload a profile picture</a>
         <script>jQuery(document).ready(function () { jQuery('.image-widget').hide(); });</script>
         </div>";
+  }
+}
+
+function myngl_user_user_view_alter(&$build){
+  file_put_contents("test123.txt",print_r($_COOKIE, TRUE), FILE_APPEND);
+  if (isset($_COOKIE['Drupal_visitor_rsvp_through_registration'])){
+    file_put_contents("test123.txt", "called!");
+    myngl_myngl_complete($_COOKIE['Drupal_visitor_rsvp_through_registration']);
+    file_put_contents("test123.txt", "called2");
   }
 }

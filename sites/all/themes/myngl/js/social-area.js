@@ -55,7 +55,6 @@ var ugcScrollPosition = 0;
       });
     });
 */
-
   });
 })(jQuery);
 
@@ -63,24 +62,18 @@ var social_area = (function ($) {
   return {
     ugc_left : function (value) {
       ugcScrollPosition += $('#myngl-event-ugc-box-inside').width();
-
       if (ugcScrollPosition > 0) {
         ugcScrollPosition = 0;
       }
-
       $('#myngl-event-ugc-box-slider').animate({'margin-left': ugcScrollPosition});
-
       return false;
     },
     ugc_right : function (value) {
       ugcScrollPosition -= $('#myngl-event-ugc-box-inside').width();
-
       if (ugcScrollPosition < (($("#myngl-event-ugc-thumbs").width() - $('#myngl-event-ugc-box-inside').width()) * -1)) {
         ugcScrollPosition = ($("#myngl-event-ugc-thumbs").width() - $('#myngl-event-ugc-box-inside').width()) * -1;
       }
-
       $('#myngl-event-ugc-box-slider').animate({'margin-left': ugcScrollPosition});
-
       return false;
     },
     show_fb_friends : function() {
@@ -107,9 +100,7 @@ var social_area = (function ($) {
       $('#close-invitee').hide();
       $('.invitee').show();
       $('#invitees-thumbs').css('height', '150px').css('margin-top','0px');
-
       $("input:radio").attr('checked', false);
-
       return false;
     },
     show_search : function() {
@@ -165,7 +156,6 @@ var social_area = (function ($) {
         }
       });
     },
-
     update_users_in_lounge: function(){
       $.ajax({
         type: "GET",
@@ -179,9 +169,7 @@ var social_area = (function ($) {
       $("#invitee-filters span#people-total").text(Drupal.settings.uids.length);
       $("#invitee-filters span#people-in-lounge").text(users.length);
       for (var i = 0; i < Drupal.settings.uids.length; i ++){
-
         uid = Drupal.settings.uids[i];
-
         if (users.indexOf(uid)!= -1) {
           $("#invitee-thumb-"+ uid).addClass("in-lounge");
           if (!$("#invitee-thumb-"+ uid).hasClass("filter-hidden")) {
@@ -192,20 +180,11 @@ var social_area = (function ($) {
             $("form#social-area-chat-list #uid-" + uid).css('display','block');
           }
         }
-
         else {
           $("#invitee-thumb-"+ uid).removeClass("in-lounge").css('display','none');
-
           $("form#social-area-chat-list #uid-" + uid).removeClass("in-lounge").removeClass('selected').css('display','none');
-
-
         }
-
       }
-
-
-
     }
-
   }
 }(jQuery));
