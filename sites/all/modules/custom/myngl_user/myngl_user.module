@@ -175,7 +175,6 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
             '#markup' => 'NAME: <span id="name">' . $name . '</span>',
             '#weight' => -19, // Adjust so that you can place it whereever
           );
-      file_put_contents('test123.txt', print_r($form, TRUE));
       $form['account']['mail']['#weight'] = -6;
       $form['cancel'] = array (
         '#markup' => '<a href="/user" id="edit-profile-cancel">Cancel edits</a>',
