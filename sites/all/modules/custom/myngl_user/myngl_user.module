@@ -183,7 +183,15 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
         '#weight' => 200
       );
 
+      if (isset($_GET['pass-reset-token'])) {
+        $form['#submit'][] = 'myngl_user_redirect';
+      }
+      
   }
+}
+
+function myngl_user_redirect() {
+  drupal_goto('user');
 }
 
 /**
