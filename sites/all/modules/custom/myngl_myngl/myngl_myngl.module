@@ -617,17 +617,27 @@ function myngl_myngl_post_questions_form($form, &$form_state, $myngl_id, $user_i
   foreach ($myngl->field_post_myngl_questions['und'] as $k => $v) {
     $fc = array_shift(entity_load('field_collection_item', array($v['value'])));
 
-    $answers = array();
-    foreach ($fc->field_answer['und'] as $a) {
-      $answers[$a['value']] = $a['value'];
-    }
+    if (isset($fc->field_answer['und'][0])) {
+      $answers = array();
+      foreach ($fc->field_answer['und'] as $a) {
+        $answers[$a['value']] = $a['value'];
+      }
 
-    $form['question-' . $k] = array(
-      '#type' => 'radios',
-      '#title' => t('Question ' . ($k+1) . ': '. $fc->field_question['und'][0]['safe_value']),
-      '#options' => $answers,
-    );
+      $form['question-' . $k] = array(
+        '#type' => 'radios',
+        '#title' => t('Question ' . ($k+1) . ': '. $fc->field_question['und'][0]['safe_value']),
+        '#options' => $answers,
+      );
+    } else {
+      $form['question-' . $k] = array(
+        '#type' => 'textfield',
+        '#title' => t('Question ' . ($k+1) . ': '. $fc->field_question['und'][0]['safe_value']),
+      );
+    }
   }
+
+
+
 
   $form['submit'] = array(
     '#type' => 'submit',

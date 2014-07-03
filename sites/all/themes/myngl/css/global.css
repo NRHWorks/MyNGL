@@ -1055,13 +1055,19 @@ body ::-webkit-scrollbar-thumb {
   #myngl-myngl-pre-questions-form label.option {
     display: inline;
   }
- .form-radios .form-item,
  .form-radios .form-item {
     display: inline;
     float: left;
     width: 220px;
   }
+ 
+  #myngl-myngl-post-questions-form .form-radios .form-item {
+    display: inline;
+    float: left;
+    width: 50px;
+  }
 
+  #myngl-myngl-post-questions-form > div > .form-item,
   #myngl-myngl-pre-questions-form > div > .form-item {
     clear: both;
     margin-bottom: 40px;
@@ -1069,6 +1075,12 @@ body ::-webkit-scrollbar-thumb {
  
   #myngl-myngl-pre-questions-form #edit-question-3,
   #myngl-myngl-pre-questions-form #edit-question-4 {
+    width: 640px;
+  }
+  
+  #myngl-myngl-post-questions-form #edit-question-1,
+  #myngl-myngl-post-questions-form #edit-question-2,
+  #myngl-myngl-post-questions-form #edit-question-3 {
     width: 640px;
   }
  

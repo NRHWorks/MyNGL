@@ -42,7 +42,7 @@ body.page-myngl-event-rewards {
 }
 
 #reward-wrapper{
-  width:800px;
+  width:900px;
   height:600px;
 
   position:relative;
