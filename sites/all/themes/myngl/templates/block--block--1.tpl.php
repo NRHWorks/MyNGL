@@ -95,7 +95,7 @@
     <li>I'm having problems with the sound</li>
     <li>I'm having problems with the videos</li>
     <li>I have problems watching/hearing LIVE performance</li>
-    <li>How do i chat with others?</li>
+    <li>How do I chat with others?</li>
     <li>How do I move from room to room?</li>
     <li>How do I make comments on Shout Out?</li>
     <li>How do I redeem Reward Points?</li>
