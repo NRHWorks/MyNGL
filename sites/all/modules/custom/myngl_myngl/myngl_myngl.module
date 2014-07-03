@@ -115,7 +115,7 @@ function myngl_myngl_menu() {
   );
 
   $items['myngl/%/event-detail/%'] = array(
-    'title' => 'Myngl Event Detail',
+    'title' => '',
     'page callback' => 'myngl_myngl_event_detail',
     'page arguments' => array(1, 3),
     'access callback' => TRUE,
@@ -1120,7 +1120,7 @@ function myngl_myngl_event_detail($myngl_id, $user_id){
 
   $output =  theme('overlay_myngl_event_detail', array('myngl' => $myngl, 'account' =>$account,));
 
-  //return $output;
-  ajax_deliver($output);
+  return $output;
+  //ajax_deliver($output);
 
 }

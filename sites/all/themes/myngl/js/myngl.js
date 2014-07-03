@@ -71,7 +71,8 @@ var myngl = (function($) {
       });
 
 
-    },
+    }
+    /*
     event_detail_overlay: function(myngl_id, user_id){
       $.ajax({
         type: "GET",
@@ -92,7 +93,7 @@ var myngl = (function($) {
        $('.event-detail-overlay').fadeOut(100);
 
 
-    }
+    }*/
 
   }
 
