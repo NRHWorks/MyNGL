@@ -877,7 +877,7 @@ body ::-webkit-scrollbar-thumb {
   #upcoming-myngls .upcoming-myngls-pane-content {
     background-color: #3c4350;
     margin: 10px;
-    height: 450px;
+    height: 500px;
     color: #FFF;
     padding: 5px;
   }
@@ -941,7 +941,6 @@ body ::-webkit-scrollbar-thumb {
     float:left;
     width: 50%;
     text-align: right;
-    padding-top: 25px;
   }
 
   .upcoming-myngls-pane-footer-left {
@@ -949,7 +948,7 @@ body ::-webkit-scrollbar-thumb {
     margin-right: -30px;
     margin-left: 20px;
     text-decoration: underline;
-    padding-top: 50px;
+    padding-top: 25px;
   }
 
   .upcoming-myngls-pane-content .addthisevent_dropdown span,
