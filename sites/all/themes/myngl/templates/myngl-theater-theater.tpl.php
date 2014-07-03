@@ -322,6 +322,8 @@ padding-top:10px;
  background-color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
  -moz-border-radius: 30px 30px 30px 30px;
  -webkit-border-radius: 30px 30px 30px 30px;
+  height: 30px;
+  width: 16px;
 }
 
 
