@@ -130,7 +130,7 @@
 
 
 <div id='cancel-and-upload-content' style='margin-bottom:40px;padding:0 20px 0 20px;'>
-  <div id='upload' style='float:right;'>UPLOAD CONTENT</div>
+  <!--<div id='upload' style='float:right;'>UPLOAD CONTENT</div>-->
   <div id='cancel-rsvp' style='text-decoration:underline;'>Cancel your RSVP</div>
 </div><!-- /#cancel-and-upload-content -->
 

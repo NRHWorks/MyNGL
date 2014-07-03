@@ -121,7 +121,11 @@ var chat = (function ($) {
         '  <form action="#" onsubmit="return chat.group_post(' + new_chat.chat_id +')" style="margin-top:10px;">' +
         '   <label>Enter Message</label>' +
         '   <input type="hidden" class="chat-to-group" name="chat-to-group" value="' + new_chat.chat_id + '" />'+
-        '   <input type="text" id ="group-chat-message-input-'+  new_chat.chat_id +'" class="group-chat-message-input branded-tertiary" name="message-input" size="40" />' +
+        '   <input type="text" id ="group-chat-message-input-'+  new_chat.chat_id +
+              '" class="group-chat-message-input branded-tertiary form-light"' +
+              ' name="message-input" size="40" '+
+              'onfocus="chat.group_chat_input_focus('+new_chat.chat_id+')" ' +
+              'onblur="chat.group_chat_input_onblur('+new_chat.chat_id+')" value="Enter Message"/>' +
         '   <input type="submit" value="Send" />' +
         '   </form>'+
         '</div>';
@@ -155,6 +159,17 @@ var chat = (function ($) {
       return false;
     },
 
+    group_chat_input_focus: function(chat_id){
+      if ($("#myngl-event-group-chat-" + chat_id + " :text").val() == $("#myngl-event-group-chat-" + chat_id + " :text").siblings('label').html().replace(/<span.*/,'')) {
+        $("#myngl-event-group-chat-" + chat_id + " :text").val('').removeClass('form-light');
+      }
+    },
+    group_chat_input_onblur: function(chat_id){
+      if ($("#myngl-event-group-chat-" + chat_id + " :text").val() == '') {
+        $("#myngl-event-group-chat-" + chat_id + " :text").val($("#myngl-event-group-chat-" + chat_id + " :text").siblings('label').html().replace(/<span.*/,'')).addClass('form-light');
+      }
+
+    },
     open_chat : function() {
       $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
         myngl.overlay('myngl-event-chat', 500, 450);
@@ -228,8 +243,8 @@ var chat = (function ($) {
             data: {'message' : $('#group-chat-message-input-' + chat_id).val()}
           });
 
-          $('#group-chat-message-input-' + chat_id).val('Enter Message');
-          $('#group-chat-message-input-' + chat_id).addClass('form-light');
+          $('#group-chat-message-input-' + chat_id).val('');
+          //$('#group-chat-message-input-' + chat_id).addClass('form-light');*/
         }
 
         return false;
