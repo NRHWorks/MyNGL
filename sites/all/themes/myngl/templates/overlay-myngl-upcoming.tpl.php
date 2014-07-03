@@ -78,7 +78,7 @@ addthisevent.settings({
         </div>
         <div class="upcoming-myngls-pane-footer">
           <div class="upcoming-myngls-pane-footer-left">
-            <a href="#" onclickd="return myngl_upcoming.cancel_rsvp(<?php print arg(1); ?>, <?php print $k; ?>);">Cancel your RSVP</a>
+            <a href="/myngl/<?php print $m['myngl']->nid; ?>/cancel-invitation">Cancel your RSVP</a>
           </div>
           <div class="upcoming-myngls-pane-footer-right">
               <input type="button" value="UPLOAD CONTENT" onclick="return myngl_upcoming.upload_images(<?php print $k ?>);"  />
