@@ -621,14 +621,15 @@ form#myngl-myngl-post-questions-form #edit-submit{
       <?php $photo = field_view_field('node', $myngl, 'field_reward_congrats_image','full' ); ?>
       <?php print render ($photo) ?>
     </div>
+<!--
     <div id="email-wrapper">
       <form id="email" >
         <label>Email</label>
         <input type="text" id='email-input'>
         <input type="submit" value="SEND" class="form-submit">
       </form>
-
     </div>
+-->
   </div>
 
 </div>
