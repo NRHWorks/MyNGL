@@ -87,14 +87,6 @@ function myngl_myngl_menu() {
     'type' => MENU_LOCAL_TASK,
   );
 
-  $items['node/%/invitee-redeem'] = array(
-    'title' => 'Rewards',
-    'page callback' => 'myngl_rewards_invitee_redeem',
-    'page arguments' => array(1),
-    'access callback' => TRUE,
-    'type' => MENU_LOCAL_TASK,
-  );
-
 
   $items['node/%/participants-status'] = array(
     'title' => 'Participants Status',

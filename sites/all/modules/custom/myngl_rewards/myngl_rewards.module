@@ -29,6 +29,23 @@ function myngl_rewards_menu() {
     'page arguments' => array(1, 4, 5),
     'access callback' => TRUE,
   );
+
+  $items['node/%/invitee-redeem'] = array(
+    'title' => 'Rewards',
+    'page callback' => 'myngl_rewards_invitee_redeem',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
+  
+  $items['node/%/invitee-redeem/export'] = array(
+    'title' => 'Rewards',
+    'page callback' => 'myngl_rewards_invitee_redeem_export',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
+
   return $items;
 }
 
@@ -318,15 +335,44 @@ function myngl_rewards_invitee_redeem($myngl_id) {
 
   $header = array(
     'User ID',
+    'First Nme',
+    'Last Name',
+    'Email Address',
     'Reward ID',
     'Reward Title',
     'Time',
   );
   $rows = array();
   foreach ($result as $r) {
-    $rows[] = array($r->user_id, $r->reward_id, $r->reward_title, $r->timestamp);
+    $user = user_load($r->user_id);
+
+//    print '<PrE>'; print_r($user); exit;
+
+    $rows[] = array($r->user_id, $user->field_first_name['und'][0]['value'], $user->field_last_name['und'][0]['value'],  $user->mail, $r->reward_id, $r->reward_title, date('m/d/Y g:ia', $r->timestamp));
   }
 
   $table = array('header' => $header, 'rows' => $rows, 'attributes' => array());
-  return theme_table($table);
+  return '<br /><a href="/node/'.$myngl_id.'/invitee-redeem/export">Export CSV</a><br /><br />'.theme_table($table);
+}
+
+function myngl_rewards_invitee_redeem_export($myngl_id) {
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=User-Rewards.csv');
+
+  $result = db_query('SELECT user_id, timestamp, reward_id, reward_title
+                      FROM {myngl_rewards_redeem} WHERE
+                        myngl_id = :myngl_id',
+                        array(
+                          ':myngl_id' => $myngl_id,
+                        )
+                      );
+
+  print "User ID, First Nme, Last Name, Email Address, Reward ID, Reward Title, Time\n";
+
+  foreach ($result as $r) {
+    $user = user_load($r->user_id);
+    print "{$r->user_id}, {$user->field_first_name['und'][0]['value']}, {$user->field_last_name['und'][0]['value']}, {$user->mail}, {$r->reward_id}, {$r->reward_title},".date('m/d/Y g:ia', $r->timestamp). "\n";
+  }
+
+  exit;
 }
