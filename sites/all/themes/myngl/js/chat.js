@@ -36,15 +36,16 @@ var chat = (function ($) {
 
     solo_minimize :function (uid){
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide();
-      var minimized_icon =
-        "<div class='minimized-solo-chat' id='minimized-solo-chat-" + uid + "' onclick='chat.solo_show(" +uid +")'>" +
-        '<img src="' + $("#invitee-thumb-" + uid  + " img").attr('src') + '" class="minimized myngl-event-profile-pic"  />';
-        + "</div>";
 
+      if ($('#minimized-solo-chat-' + uid).length==0) {
 
+        var minimized_icon =
+          "<div class='minimized-solo-chat' id='minimized-solo-chat-" + uid + "' onclick='chat.solo_show(" +uid +")'>" +
+          '<img src="' + $("#invitee-thumb-" + uid  + " img").attr('src') + '" class="minimized myngl-event-profile-pic"  />';
+          + "</div>";
 
-      $("#myngl-event-chat-button #minimized-chats").append(minimized_icon);
-
+        $("#myngl-event-chat-button #minimized-chats").append(minimized_icon);
+      }
     },
     solo_hide : function(uid){
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide();
@@ -322,7 +323,21 @@ var chat = (function ($) {
               } else {
                 chat.solo_show(entry.from_user_id);
               }
+            });
+            
+            data.forEach( function(entry) {
+              if (entry.to_user_id != user_id) {
+                if (latest_mcsid == 0) {
+                  chat.solo_minimize(entry.to_user_id);   
+                }
+              } else {
+                if (latest_mcsid == 0) {
+                  chat.solo_minimize(entry.from_user_id);   
+                }
+              }
+            });
 
+            data.forEach( function(entry) {
               if (parseInt(entry.mcsid) > latest_mcsid) {
                 latest_mcsid =  parseInt(entry.mcsid);
               }
