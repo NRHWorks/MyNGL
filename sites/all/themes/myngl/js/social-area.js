@@ -1,4 +1,5 @@
 var ugcScrollPosition = 0;
+var currently_shown_ugc = -1;
 (function ($) {
   $(document).ready( function() {
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");
@@ -61,6 +62,16 @@ var ugcScrollPosition = 0;
 var social_area = (function ($) {
   return {
     ugc_left : function (value) {
+      console.log("left clicked, currently_shown ugc is " + currently_shown_ugc);
+
+      if (currently_shown_ugc !=-1) {
+        $("#myngl-event-ugc-content-" + currently_shown_ugc).hide();
+        currently_shown_ugc = (currently_shown_ugc ==0)? $('event-ugc-thumb').length -1: currently_shown_ugc -1;
+        social_area.ugc_show(currently_shown_ugc);
+
+        return false;
+      }
+
       ugcScrollPosition += $('#myngl-event-ugc-box-inside').width();
       if (ugcScrollPosition > 0) {
         ugcScrollPosition = 0;
@@ -69,11 +80,29 @@ var social_area = (function ($) {
       return false;
     },
     ugc_right : function (value) {
+      if (currently_shown_ugc !=-1) {
+        $("#myngl-event-ugc-content-" + currently_shown_ugc).hide();
+        currently_shown_ugc = (currently_shown_ugc ==$('event-ugc-thumb').length -1)?0: currently_shown_ugc +1;
+        social_area.ugc_show(currently_shown_ugc);
+        return false;
+      }
       ugcScrollPosition -= $('#myngl-event-ugc-box-inside').width();
       if (ugcScrollPosition < (($("#myngl-event-ugc-thumbs").width() - $('#myngl-event-ugc-box-inside').width()) * -1)) {
         ugcScrollPosition = ($("#myngl-event-ugc-thumbs").width() - $('#myngl-event-ugc-box-inside').width()) * -1;
       }
       $('#myngl-event-ugc-box-slider').animate({'margin-left': ugcScrollPosition});
+      return false;
+    },
+    ugc_close : function(){
+      myngl.overlay_close(true);
+      social_area.ugc_hide();
+      return false;
+
+    },
+    ugc_hide : function() {
+      $('.myngl-event-ugc-content').hide();
+      $("#myngl-event-ugc-thumbs").fadeIn(500);
+      currently_shown_ugc = -1;
       return false;
     },
     show_fb_friends : function() {
@@ -130,13 +159,11 @@ var social_area = (function ($) {
     ugc_show : function(id) {
       $("#myngl-event-ugc-thumbs").hide();
       $("#myngl-event-ugc-content-" + id).fadeIn(500);
+      currently_shown_ugc = id;
+
       return false;
     },
-    ugc_hide : function() {
-      $('.myngl-event-ugc-content').hide();
-      $("#myngl-event-ugc-thumbs").fadeIn(500);
-      return false;
-    },
+
     message: function() {
       var myngl_id = Drupal.settings.myngl_id;
 
