@@ -75,24 +75,19 @@
 </style>
 
 
-<?php 
-
-foreach ($myngl->field_myngl_invitees['und'] as $i) {
-  $u = array_shift(entity_load('field_collection_item', array($i['value'])));
-  if ($u->field_invitee_email_address['und'][0]['safe_value'] == $user->mail) {
-    $timestamp = strtotime($u->field_invitee_rsvp_date['und'][0]['value']);
-  }
-}
-$brand =node_load($myngl->field_myngl_brand['und'][0]['nid']);
-?>
-
-
 <?php
-// Use $node to get information
+
+  foreach ($myngl->field_myngl_invitees['und'] as $i) {
+    $u = array_shift(entity_load('field_collection_item', array($i['value'])));
+    if ($u->field_invitee_email_address['und'][0]['safe_value'] == $user->mail) {
+      $timestamp = strtotime($u->field_invitee_rsvp_date['und'][0]['value']);
+    }
+  }
+  $brand =node_load($myngl->field_myngl_brand['und'][0]['nid']);
 ?>
 
 <div id="event-detail">
-  <div id='event-detail-overlay-close'>X</div>
+  <div id='event-detail-overlay-close' onclick='myngl.close_event_detail()'>X</div>
   <div id="more-information">MORE INFORMATION ON THIS MYNGL</div>
   <div id='event-title'><?php print $myngl->title;?></div>
   <div id='event-thumb'>
@@ -101,7 +96,6 @@ $brand =node_load($myngl->field_myngl_brand['und'][0]['nid']);
       print render($thumb);
     ?>
   </div>
-
   <div id='event-detail-text-wrapper'>
     <div style='float:right;margin-top:4px;'>Change date? Click here.</div>
     <div id='event-date'><?php print date('m.d.Y @ g:i a T',$timestamp);?></div>
@@ -131,8 +125,12 @@ $brand =node_load($myngl->field_myngl_brand['und'][0]['nid']);
         <input type="submit" value="Add"/>
       </form>
   </div> <!-- /#add-to-calendar-wrapper -->
+
 </div><!-- /#event-detail -->
+
+
 <div id='cancel-and-upload-content' style='margin-bottom:40px;padding:0 20px 0 20px;'>
   <div id='upload' style='float:right;'>UPLOAD CONTENT</div>
   <div id='cancel-rsvp' style='text-decoration:underline;'>Cancel your RSVP</div>
 </div><!-- /#cancel-and-upload-content -->
+

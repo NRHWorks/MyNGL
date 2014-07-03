@@ -66,7 +66,7 @@
         with otehr attendees at the upcoming Myngl event.
       </p>
     </div>
-    <a href="#" onclick="myngl.event_detail_overlay(<?php print $node-nid;?>,<?php global $user; print $user->uid; ?>)"><i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;VIEW EVENT DETAIL</a>
+    <a href="#" onclick="myngl.event_detail_overlay(<?php print $node->nid;?>,<?php global $user; print $user->uid; ?>)"><i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;VIEW EVENT DETAIL</a>
     <a href="#"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;UPLOAD YOUR CONTENT TO THIS EVENT</a>
   </div>
   <br>
