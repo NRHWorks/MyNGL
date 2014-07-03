@@ -8,6 +8,9 @@ function onYouTubeIframeAPIReady() {
 
 (function ($) {
   $(document).ready( function() {
+    myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lobby");
+    update_status_interval = setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lobby");},20000);
+
     intervalid = setInterval(function() { youtube.loadvideo(); }, 500);
     if (jQuery.cookie('done_lobby_video') !='1') {
 /* TODO: need to get this fixed in safari, and firefox 

@@ -3,6 +3,9 @@ var currently_shown_ugc = -1;
 (function ($) {
   $(document).ready( function() {
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");
+    setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");},20000);
+
+
     $('li#lounge').removeClass("inactive").addClass("active");
     setInterval(function() { social_area.message(); }, 3000);
     setInterval(function() { social_area.update_users_in_lounge(); }, 5000);
@@ -193,8 +196,9 @@ var social_area = (function ($) {
       });
     },
     update_users_in_lounge_success : function (users){
-      $("#invitee-filters span#people-total").text(Drupal.settings.uids.length);
-      $("#invitee-filters span#people-in-lounge").text(users.length);
+      //The first element of the array is the total count. rest of the elements are the user_ids in lounge.
+      $("#invitee-filters span#people-total").text(users[0]);
+      $("#invitee-filters span#people-in-lounge").text(users.length -1);
       for (var i = 0; i < Drupal.settings.uids.length; i ++){
         uid = Drupal.settings.uids[i];
         if (users.indexOf(uid)!= -1) {
