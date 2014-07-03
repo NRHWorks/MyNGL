@@ -4,25 +4,30 @@
   $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
   $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
   $tertiary_color = "#e2dbd2";
-
-/*
-  if (!isset($_COOKIE['done_lobby_video']) || $_COOKIE['done_lobby_video']!= 1){
-    global $base_url;
-    $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
-    header($redirect);
-    exit;
-  }
-*/
-
 ?>
+
+<style>
+  #close-and-minimize-all{
+    position:absolute;
+    right:40px;
+    top:150px;
+    background-color: <?php print $primary_color; ?>;
+    color: <?php print $secondary_color; ?>;
+    font-size:16px;
+    padding:4px 8px 4px 8px;
+  }
+  #close-and-minimize-all span{
+    cursor: pointer;
+  }
+</style>
+<div id="close-and-minimize-all"><span onclick='chat.minimize_all()' style="margin-right:5px;">_</span> <span onclick='chat.close_all()'>X</div>
+
 
 <div id="myngl-event-social-area">
   <div class="branded-secondary point-badge">
     <p><?php print $total_points; ?></p>
   </div>
   <div class="btn-branded" id="myngl-event-chat-button">
-
-
     <a href="#" onclick="jQuery('#invitee-chat-selector').toggle(); return false;"><i class="fa fa-comment-o fa-2x"></i></a>
     <div id="invitee-chat-icons" style="display:none; float:right;">
         <?php $uids = array(); ?>
@@ -37,6 +42,9 @@
         <?php drupal_add_js(array('uids' => $uids), 'setting'); ?>
     </div>
     <div id="minimized-chats">    </div>
+    <div id="expand-all" style="float:right; margin-top:5px;padding-right:2px;cursor:pointer;" onclick="chat.expand_all()"><img src="/sites/all/themes/myngl/images/expand_all.png" /></div>
+
+
   </div>
 
   <div id="invitee-chat-selector" style="float:right;z-index:30000;">
@@ -108,7 +116,7 @@
 </div>
 
 
-<div id="myngl-event-ugc" class="overlay branded" style="display:none;height:500px; width:900px;";position:absolute; margin:auto;z-index:200;top:0;bottom:0;left:0;right:0">
+<div id="myngl-event-ugc" class="overlay branded" style="display:none;height:520px; width:900px;";position:absolute; margin:auto;z-index:200;top:0;bottom:0;left:0;right:0">
   <a href="#" onclick="social_area.ugc_close();" class="overlay-close">X</a>
   <div id="myngl-event-ugc-box" class="branded-tertiary">
     <div id="myngl-event-ugc-box-inside">
@@ -122,6 +130,7 @@
 
     <?php foreach ($ucg as $k => $u) : ?>
       <div id="myngl-event-ugc-content-<?php print $k; ?>" class="myngl-event-ugc-content" style="display:none;">
+        <div style='text-align:right; width:800px;'><img src="/sites/all/themes/myngl/images/theater-downloads-social-icons1.png"></div>
         <?php print $u['content']; ?><br />
         <a href="#" onclick="return social_area.ugc_hide();">Back to Gallery</a> <br />
         submitted by <strong><?php print $u['user']; ?></strong>

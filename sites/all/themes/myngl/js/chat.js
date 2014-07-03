@@ -33,9 +33,33 @@ var chat = (function ($) {
   var latest_mcsid = 0;
 
   return {
+    minimize_all: function(){
+      for (var i = 0; i < Drupal.settings.uids.length; i ++){
+        var uid = Drupal.settings.uids[i];
+        if ($("#myngl-event-solo-chat-" + uid).hasClass('visible')) {
+          chat.solo_minimize(uid);
+        }
+      }
+    },
+    close_all: function(){
+      for (var i = 0; i < Drupal.settings.uids.length; i ++){
+        var uid = Drupal.settings.uids[i];
+        if ($("#myngl-event-solo-chat-" + uid).hasClass('visible')) {
+          chat.solo_hide(uid);
+        }
+      }
+    },
+    expand_all: function(){
+      for (var i = 0; i < Drupal.settings.uids.length; i ++){
+        var uid = Drupal.settings.uids[i];
+        if ($("#myngl-event-solo-chat-" + uid).hasClass('minimized')) {
+          chat.solo_show(uid);
+        }
+      }
 
+    },
     solo_minimize :function (uid){
-      $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide();
+      $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide().addClass('minimized');
 
       if ($('#minimized-solo-chat-' + uid).length==0) {
 
@@ -51,6 +75,49 @@ var chat = (function ($) {
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide();
     },
 
+    solo_show : function(uid) {
+        if (!($("#myngl-event-solo-chat-" + uid).hasClass('visible'))) {
+
+          var left_array = [];
+          $(".myngl-chat.visible").each( function(){
+            left_array.push($(this).offset().left);
+          });
+
+          left_array.sort(sortNumber);
+          var counter = 0;
+          var left = -1;
+          var min = 0;
+          while ( left == -1) {
+            if (slot_taken(left_array, min, min+ 50)) {
+              min = min + 375;
+            }
+            else {
+              left = min+ 25;
+            }
+          }
+
+
+          $("#myngl-event-solo-chat-" + uid).css('left', left + 'px');
+
+          $("#myngl-event-invitee-info-" + uid).fadeOut(100);
+          $("#myngl-event-solo-chat-" + uid).fadeIn(100);
+
+          $("#myngl-event-solo-chat-" + uid).addClass('visible').removeClass('minimized');
+
+          $("#myngl-event-solo-chat-" + uid).draggable();
+
+          $("#myngl-event-solo-chat-" + uid).css('top', '200px');
+
+
+          // remove minimized button
+          $('.minimized-solo-chat#minimized-solo-chat-' + uid).remove();
+
+
+
+        }
+
+        return false;
+      },
     invitee_click: function (uid){
       if ($("#social-area-chat-list #uid-" + uid).hasClass("selected")){
         $("#social-area-chat-list #uid-" + uid).removeClass("selected");
@@ -370,49 +437,8 @@ var chat = (function ($) {
           }
         });
       },
-      solo_show : function(uid) {
-        if (!($("#myngl-event-solo-chat-" + uid).hasClass('visible'))) {
-
-          var left_array = [];
-          $(".myngl-chat.visible").each( function(){
-            left_array.push($(this).offset().left);
-          });
-
-          left_array.sort(sortNumber);
-          var counter = 0;
-          var left = -1;
-          var min = 0;
-          while ( left == -1) {
-            if (slot_taken(left_array, min, min+ 50)) {
-              min = min + 375;
-            }
-            else {
-              left = min+ 25;
-            }
-          }
 
 
-          $("#myngl-event-solo-chat-" + uid).css('left', left + 'px');
-
-          $("#myngl-event-invitee-info-" + uid).fadeOut(100);
-          $("#myngl-event-solo-chat-" + uid).fadeIn(100);
-
-          $("#myngl-event-solo-chat-" + uid).addClass('visible');
-
-          $("#myngl-event-solo-chat-" + uid).draggable();
-
-          $("#myngl-event-solo-chat-" + uid).css('top', '200px');
-
-
-          // remove minimized button
-          $('.minimized-solo-chat#minimized-solo-chat-' + uid).remove();
-
-
-
-        }
-
-        return false;
-      },
       show_invitee_info : function(uid) {
         $("#myngl-event-invitee-info-" + uid).fadeIn(100);
 

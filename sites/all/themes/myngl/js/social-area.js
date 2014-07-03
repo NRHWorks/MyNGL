@@ -138,7 +138,7 @@ var social_area = (function ($) {
     },
     open_ucg: function() {
       $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
-        myngl.overlay('myngl-event-ugc', 500, 900);
+        myngl.overlay('myngl-event-ugc', 520, 900);
       });
       /*
       setTimeout(function() {

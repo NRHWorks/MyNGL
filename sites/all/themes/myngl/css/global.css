@@ -1472,7 +1472,7 @@ body ::-webkit-scrollbar-thumb {
 
   #myngl-event-ugc-box {
     padding: 35px;
-    height: 435px;
+    height: 465px;
     box-shadow: 1px 1px 0 #b9b9b9;
   }
 
@@ -1862,7 +1862,7 @@ body ::-webkit-scrollbar-thumb {
   float: right;
   clear: right;
   margin-right: 50px;
-  margin-top: 25px;
+  margin-top: 30px;
   display: none;
 }
 
