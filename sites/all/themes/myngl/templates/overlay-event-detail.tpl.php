@@ -87,7 +87,7 @@
 ?>
 
 <div id="event-detail">
-  <div id='event-detail-overlay-close' onclick='myngl.close_event_detail()'>X</div>
+  <!--<div id='event-detail-overlay-close' onclick='myngl.close_event_detail()'>X</div>-->
   <div id="more-information">MORE INFORMATION ON THIS MYNGL</div>
   <div id='event-title'><?php print $myngl->title;?></div>
   <div id='event-thumb'>
