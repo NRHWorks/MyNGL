@@ -15,6 +15,9 @@
 
 body.page-myngl-event-theater{
   background: #000;
+  background-image: url("/sites/all/themes/myngl/images/theater-background.jpg");
+  background-size: cover;
+  background-position: top center;
 }
 
 #theater-body{
@@ -27,7 +30,6 @@ body.page-myngl-event-theater{
   margin-right:auto;
   height: 100%;
 
-  background-image: url("/sites/all/themes/myngl/images/theater-background.jpg");
 }
 
 #theater-top-message-wrapper{
