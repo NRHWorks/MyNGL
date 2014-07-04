@@ -99,6 +99,7 @@ var chat = (function ($) {
 
 
           $("#myngl-event-solo-chat-" + uid).css('left', left + 'px');
+
           chat.close_invitee_info(uid);
 
           $("#myngl-event-solo-chat-" + uid).fadeIn(100);

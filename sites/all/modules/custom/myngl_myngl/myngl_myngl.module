@@ -870,6 +870,12 @@ function myngl_myngl_add_invitee($form, &$form_state, $nid) {
     '#description' => t('Enter invitees email address.'),
   );
 
+  $form['brand_rep'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Brand Rep'),
+    '#description' => t('Check if the invitee is a brand rep.'),
+  );
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Submit'),
@@ -890,6 +896,7 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
   $field_collection_item->field_invitee_last_name['und'][]['value'] = $v['last_name'];
   $field_collection_item->field_invitee_email_address['und'][]['value'] = $v['email'];
   $field_collection_item->field_invitee_status['und'][]['value'] = 'New';
+  $field_collection_item->field_brand_rep['und'][]['value'] = $v['brand_rep'];
 
   $field_collection_item->save();
 

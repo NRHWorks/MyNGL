@@ -172,6 +172,7 @@
 <div class="social-bg" style="background-image: url(<?php print base_path() . 'sites/default/files/styles/godivaroom.jpg' ?>);"> </div>
 
 <?php foreach ($invitees as $k => $i) : ?>
+
   <?php if ($user->uid != $i['uid']) : ?>
     <div id="myngl-event-solo-chat-<?php print $i['uid']; ?>" class="myngl-event-solo-chat myngl-chat branded" style="left:0px;width:325px; height:340px; clear:both; display:none; position:absolute; ">
       <div class="myngl-event-solo-chat-intro branded">
@@ -191,13 +192,13 @@
       </div>
     </div>
     <div  id="myngl-event-invitee-info-<?php print $i['uid']; ?>"
-          onmouseout="chat.reset_id_of_showing_invitee_info();chat.close_invitee_info(<?php print $i['uid']; ?>)"
+          onmouseleave="chat.reset_id_of_showing_invitee_info();chat.close_invitee_info(<?php print $i['uid']; ?>)"
           style="background-color: <?php print $primary_color; ?>; color:<?php print $secondary_color; ?>; padding:10px; width:200px; height:200px; position:absolute; display:none;" >
-      <span style="font-size:18px; font-weight:bold;"><?php print $i['name']; ?></span>
+      <span style="font-size:18px;font-family:'georgia';"><?php print $i['name']; ?></span>
       <div style="width:10px; height:2px; margin:3px 0 8px 0; background-color:<?php print $secondary_color;?>"> </div>
-
-      <span style="font-size:16px; font-weight:bold; ">Tagline: <?php print $i['tagline'] ; ?></span><br /><br /><br />
-      <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)" style="float:right;color:<?php print $secondary_color; ?>; font-weight:bold;">Start Chat</a>
+      <span style="font-size:16px; font-weight:bold; "><?php print $i['about_me'] ; ?></span><br /><br />
+      <span style="font-size:16px; font-weight:bold; ">Tagline: <?php print $i['tagline'] ; ?></span><br /><br />
+      <a href="#" onclick="chat.reset_id_of_showing_invitee_info(); return chat.solo_show(<?php print $i['uid']; ?>)" style="position:absolute;right:10px;bottom:20px;text-decoration:underline;color:<?php print $secondary_color; ?>; font-weight:bold;">Start Chat</a>
     </div>
   <?php endif;  ?>
 <?php endforeach; ?>
