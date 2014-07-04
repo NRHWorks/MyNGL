@@ -1908,6 +1908,17 @@ body ::-webkit-scrollbar-thumb {
   margin-left: auto;
   margin-right:auto;
 }
+
+
+.invitee-thumb{
+  display:none;
+}
+.invitee-thumb.in-lounge{
+  display:block;
+}
+.invitee-thumb.in-lounge.filter-hide{
+  display:none !important;
+}
 /*  ----- END STYLE ------------------------------------------------- */
 
 /*  ----- INVITEE CONFIRM FORM -------------------------------------- */

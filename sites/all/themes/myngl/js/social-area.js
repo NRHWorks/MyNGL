@@ -16,12 +16,24 @@ var currently_shown_ugc = -1;
 
 
     $("input[name='filter']").change(function(){
-      if ($("input[@name='filter']:checked").val() == 'fb-friends'){
+      if ($("input[name='filter']:checked").val() == 'fb-friends'){
         social_area.show_fb_friends();
-      } else if ($("input[@name='filter']:checked").val() == 'in-room') {
+      } else if ($("input[name='filter']:checked").val() == 'others') {
         social_area.show_in_room();
-      } else if ($("input[@name='filter']:checked").val() == 'all') {
-        social_area.show_all_invitees();
+      } else if ($("input[name='filter']:checked").val() == 'all') {
+        $('.invitee-thumb').removeClass('filter-hide');
+      } else if ($("input[name='filter']:checked").val() == 'reps') {
+
+        $('.invitee-thumb').each(function(){
+          if ($(this).hasClass('brand-rep')) {
+            $(this).removeClass('filter-hide');
+          }
+          else {
+            $(this).addClass('filter-hide');
+          }
+
+        });
+
       }
     });
 
@@ -108,6 +120,7 @@ var social_area = (function ($) {
       currently_shown_ugc = -1;
       return false;
     },
+    /*
     show_fb_friends : function() {
       $('#close-invitee').hide();
       $('#invitees-thumbs').css('height', '150px').css('margin-top','0px');
@@ -127,7 +140,7 @@ var social_area = (function ($) {
       $('#invitees-thumbs').css('height', '450px').css('margin-top','-300px');
       $('.invitee').show();
       return false;
-    },
+    },*/
     close_invitees : function() {
       $('#close-invitee').hide();
       $('.invitee').show();

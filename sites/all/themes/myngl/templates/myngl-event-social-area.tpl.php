@@ -31,15 +31,18 @@
     <a href="#" onclick="jQuery('#invitee-chat-selector').toggle(); return false;"><i class="fa fa-comment-o fa-2x"></i></a>
     <div id="invitee-chat-icons" style="display:none; float:right;">
         <?php $uids = array(); ?>
+        <?php $brand_rep_ids = array(); ?>
         <?php foreach ($invitees as $k => $i) : ?>
           <?php if ($user->uid != $i['uid']): ?>
             <div id="invitee-chat-thumb-<?php print $i['uid']; ?>" style='display:none' class="myngl-chat-circles invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
             <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
             </div>
           <?php endif; ?>
-        <?php $uids[] = $i['uid'];//maintain a list of invitee id for javascript ?>
+          <?php $uids[] = $i['uid'];//maintain a list of invitee id for javascript ?>
+          <?php if ($i['brand_rep']==1) $brand_rep_ids[] = $i['uid']; //for javascript filter?>
         <?php endforeach; ?>
         <?php drupal_add_js(array('uids' => $uids), 'setting'); ?>
+        <?php drupal_add_js(array('brand_rep_ids'=> $brand_rep_ids),'setting'); ?>
     </div>
     <div id="minimized-chats">    </div>
     <div id="expand-all" style="float:right; margin-top:5px;padding-right:2px;cursor:pointer;" onclick="chat.expand_all()"><img src="/sites/all/themes/myngl/images/expand_all.png" /></div>
@@ -88,7 +91,7 @@
         <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
         <?php foreach ($invitees as $k => $i) : ?>
           <?php if ($user->uid != $i['uid']): ?>
-            <div id="invitee-thumb-<?php print $i['uid']; ?>" style="display:none;float:left; text-align: center; width: 130px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
+            <div id="invitee-thumb-<?php print $i['uid']; ?>" style="float:left; text-align: center; width: 130px; height:150px; " class="invitee invitee-thumb <?php if ($i['fb']) { print ' fb ';} ?> <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>">
             <a href="#" onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
             <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
             </div>
@@ -100,8 +103,8 @@
     <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
       <span id="people-total">0</span> PEOPLE TOTAL / <span id="people-in-lounge">0</span> IN THIS ROOM
       <form>
-        <input type="radio" name="filter" value="all" checked /> Show All
-        <input type="radio" name="filter" value="fb-friends" /> FB Friends
+        <input type="radio" name="filter" value="all"  /> Show All
+        <input type="radio" name="filter" value="fb-friends" checked/> FB Friends
         <input type="radio" name="filter" value="reps" /> Brand Reps
         <input type="radio" name="filter" value="other" /> Other Filters
         <!-- <input type="radio" name="filter" value="filter-options" /> Filter Options -->
