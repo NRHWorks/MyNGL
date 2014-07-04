@@ -67,7 +67,7 @@
       </p>
     </div>
     <?php // /myngl/"+ myngl_id + "/event-detail/"  + user_id ?>
-    <a href="<?php print base_path();?>myngl/<?php print $node->nid;?>/event-detail/<?php global $user; print $user->uid; ?>"><i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;VIEW EVENT DETAIL</a>
+    <!--<a href="<?php print base_path();?>myngl/<?php print $node->nid;?>/event-detail/<?php global $user; print $user->uid; ?>"><i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;VIEW EVENT DETAIL</a> -->
 
     <!--
     //<a href="#" onclick="myngl.event_detail_overlay(<?php print $node->nid;?>,<?php global $user; print $user->uid; ?>)"><i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;VIEW EVENT DETAIL</a>
