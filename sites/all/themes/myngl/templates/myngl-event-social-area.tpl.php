@@ -89,7 +89,7 @@
         <?php foreach ($invitees as $k => $i) : ?>
           <?php if ($user->uid != $i['uid']): ?>
             <div id="invitee-thumb-<?php print $i['uid']; ?>" style="display:none;float:left; text-align: center; width: 130px; height:150px; " class="invitee <?php if ($i['fb']) { print ' fb ';} ?> | <?php if ($i['room']) { print ' in_room ';} ?>">
-            <a href="#" onclick="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
+            <a href="#" onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
             <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
             </div>
           <?php endif; ?>
@@ -191,8 +191,11 @@
       </div>
     </div>
     <div  id="myngl-event-invitee-info-<?php print $i['uid']; ?>"
+          onmouseout="chat.reset_id_of_showing_invitee_info();chat.close_invitee_info(<?php print $i['uid']; ?>)"
           style="background-color: <?php print $primary_color; ?>; color:<?php print $secondary_color; ?>; padding:10px; width:200px; height:200px; position:absolute; display:none;" >
-      <span style="font-size:18px; font-weight:bold;"><?php print $i['name']; ?></span><br /><br />
+      <span style="font-size:18px; font-weight:bold;"><?php print $i['name']; ?></span>
+      <div style="width:10px; height:2px; margin:3px 0 8px 0; background-color:<?php print $secondary_color;?>"> </div>
+
       <span style="font-size:16px; font-weight:bold; ">Tagline: <?php print $i['tagline'] ; ?></span><br /><br /><br />
       <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)" style="float:right;color:<?php print $secondary_color; ?>; font-weight:bold;">Start Chat</a>
     </div>

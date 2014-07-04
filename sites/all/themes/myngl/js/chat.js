@@ -1,4 +1,5 @@
 var group_chat_last_message_ids = [];
+var id_of_showing_invitee_info = -1;
 function slot_taken(left_array, min,max){
   var index = 0;
   while (index < left_array.length){
@@ -98,8 +99,8 @@ var chat = (function ($) {
 
 
           $("#myngl-event-solo-chat-" + uid).css('left', left + 'px');
+          chat.close_invitee_info(uid);
 
-          $("#myngl-event-invitee-info-" + uid).fadeOut(100);
           $("#myngl-event-solo-chat-" + uid).fadeIn(100);
 
           $("#myngl-event-solo-chat-" + uid).addClass('visible').removeClass('minimized');
@@ -440,15 +441,31 @@ var chat = (function ($) {
 
 
       show_invitee_info : function(uid) {
+        if (uid==id_of_showing_invitee_info) {
+          return false;
+        }
+        if (id_of_showing_invitee_info!=-1&& id_of_showing_invitee_info!=uid) {
+          chat.close_invitee_info( id_of_showing_invitee_info);
+        }
+        id_of_showing_invitee_info = uid;
         $("#myngl-event-invitee-info-" + uid).fadeIn(100);
-
         var o = $("#invitee-thumb-" + uid).offset();
-
         $("#myngl-event-invitee-info-" + uid).css('top', (o.top - 200) + 'px');
         $("#myngl-event-invitee-info-" + uid).css('left', o.left + 'px');
-
         return false;
-     }
+      },
+      reset_id_of_showing_invitee_info : function(){
+        id_of_showing_invitee_info=-1;
+        return false;
+      },
+      close_invitee_info: function (uid){
+        setTimeout(function(){
+          if (id_of_showing_invitee_info!=uid) {
+          $("#myngl-event-invitee-info-" + uid).fadeOut(100);
+          }
+        }, 100);
+        return false;
+      }
 
     }
 }(jQuery));
