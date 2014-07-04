@@ -333,7 +333,7 @@ function myngl_chat_group_leave($myngl_id, $user_id, $chat_id){
                           ':chat_id' => $row->chat_id,
                         )
                       );
-  if ($resolt->rowCount() != 0){
+  if ($result->rowCount() != 0){
 
     db_insert('myngl_chat_group_message')->fields(
       array(

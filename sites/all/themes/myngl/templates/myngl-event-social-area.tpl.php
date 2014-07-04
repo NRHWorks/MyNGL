@@ -10,7 +10,7 @@
   #close-and-minimize-all{
     position:absolute;
     right:40px;
-    top:150px;
+    top:85px;
     background-color: <?php print $primary_color; ?>;
     color: <?php print $secondary_color; ?>;
     font-size:16px;

@@ -250,7 +250,7 @@ function myngl_event_update_users_in_lounge($myngl_id){
                      timestamp > :inactive_time",
                      array(
                            ':myngl_id' => $myngl_id,
-                           ':inactive_time' =>  time() - 18000,
+                           ':inactive_time' =>  time() - 180,
                            ));
 
   $data = array();
@@ -260,7 +260,7 @@ function myngl_event_update_users_in_lounge($myngl_id){
                      timestamp > :offline_time",
                      array(
                            ':myngl_id' => $myngl_id,
-                           ':offline_time' =>  time() - 18000,
+                           ':offline_time' =>  time() - 180,
                            ));
 
   $data[] = $result2->rowCount();
