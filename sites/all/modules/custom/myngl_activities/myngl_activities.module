@@ -20,66 +20,34 @@ function myngl_activities_theme() {
 }
 
 function myngl_activities_page() {
+  global $user;
+
   $activities = array();
 
-  $activities[] = array(
-    'date' => '2014-05-15',
-    'day' => 'Today',
-    'description' => 'Vinny C. accepted your invitation',
-    'points' => '10'
-  );
+  $result = db_query("  SELECT * FROM {myngl_rewards_history} 
+                        WHERE user_id = :uid 
+                        GROUP BY description 
+                        ORDER BY timestamp DESC ", array(':uid' => $user->uid));
 
-  $activities[] = array(
-    'date' => '2014-05-16',
-    'day' => "Yesterday",
-    'description' => 'Attended "The Godiva Chocolate & Fashion Myngl"',
-    'points' => '30'
-  );
+  foreach ($result as $r) {
 
-  $activities[] = array(
-    'date' => '2014-07-07',
-    'description' => 'You RSVPed  for "The Harley Davidson Wild Ride Myngl" on 7-14-14',
-    'points' => '0'
-  );
-  /*
-  $activities[] = array(
-    'date' => '2014-04-28',
-    'day' => 'Today',
-    'description' => 'This is a test description',
-    'points' => '10'
-  );
+    if (date('Ymd') == date('Ymd', $r->timestamp)) {
+      $day = 'Today';
+    } elseif (date('Ymd', time() - 86400) == date('Ymd', $r->timestamp)) {
+      $day = 'Yesterday';
+    } else {
+      $day = floor((time() - $r->timestamp) / 86400).' DAYS AGO';
+    }
 
-  $activities[] = array(
-    'date' => '2014-03-15',
-    'description' => 'This is a test description',
-    'points' => '75'
-  );
+    $activities[] = array(
+      'date' => $r->timestamp,
+      'day' => $day,
+      'description' => $r->description,
+      'points' => $r->points,
+    );
 
-  $activities[] = array(
-    'date' => '2014-02-09',
-    'description' => 'This is a test description',
-    'points' => '225'
-  );
+  }
 
-  $activities[] = array(
-    'date' => '2014-04-28',
-    'day' => 'Today',
-    'description' => 'This is a test description',
-    'points' => '10'
-  );
-
-  $activities[] = array(
-    'date' => '2014-03-15',
-    'description' => 'This is a test description',
-    'points' => '75'
-  );
-
-  $activities[] = array(
-    'date' => '2014-02-09',
-    'description' => 'This is a test description',
-    'points' => '225'
-  );
-  */
   $output = theme('myngl_activities', array('activities' => $activities));
 
   return $output;

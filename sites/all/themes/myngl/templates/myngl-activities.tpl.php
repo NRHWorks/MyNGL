@@ -9,15 +9,14 @@
     <div class="activity">
       <div class="activity-date">
         <br />
-        <span class="month"><?php print date('F',strtotime($a['date'])); ?></span><br />
-        <span class="day"><?php print date('j',strtotime($a['date'])); ?></span><br />
+        <span class="month"><?php print date('F',$a['date']); ?></span><br />
+        <span class="day"><?php print date('j',$a['date']); ?></span><br />
       </div>
       <div class="activity-details">
         <?php if (isset($a['day'])) : ?><span class="activity-day"><?php print $a['day']; ?></span><br /><?php endif; ?>
         <span class="activity-description"><?php print $a['description']; ?></span>
       </div>
       <div class="activity-points">
-        <span class="plus">+</span>
         <span class="points"><?php print $a['points']; ?></span> 
         <span class="myngl-points">Myngl Points</span>
       </div>
