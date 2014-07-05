@@ -1601,6 +1601,11 @@ body ::-webkit-scrollbar-thumb {
     background: url(../images/myngl-godiva-bg.png) center center no-repeat;
     background-size: cover;
   }
+  
+  body.page-myngl-event-exit {
+    background: url(../images/background.png) center center no-repeat;
+    background-size: cover;
+  }
 
 
   input[type="button"],
@@ -1950,3 +1955,74 @@ form#myngl-myngl-confirm-add-invitee .form-item-last-name {
 }
 
 /*  ----- END INVITEE CONFIRM FORM ---------------------------------- */
+
+/*  ----- Exit Page ---------------------------------- */
+
+div#exit-div {
+  background-color: #FFF;
+  left: 50%;
+  margin-left: -300px;
+  top: 150px;
+  width: 600px;
+  position: absolute;
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+ 
+div#exit-div .exit-thank-you {
+  font-size: 22px;
+}
+ 
+div#exit-div #exit-dashboard-link {
+  width: 224px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 28px;
+} 
+
+div#exit-div #exit-dashboard-link .exit-circle {
+  background-color: #3c4350;
+  height: 25px;
+  width: 25px;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  float: right;
+}
+
+div#exit-div #exit-dashboard-link a {
+  color: #FFF;
+} 
+ 
+div#exit-div #exit-points {
+  background-color: #3c4350;
+  height: 200px;
+  width: 200px;
+  color: #FFF;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+  font-weight: bold;
+  
+}
+
+div#exit-div #exit-points #exit-points-circle {
+  background-color: #FFF;
+  color: #3c4350;
+  height: 100px;
+  width: 125px;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  padding-top: 25px;
+}
+
+div#exit-div #exit-points #exit-points-circle .exit-points-points {
+  font-family: georgia;
+  font-size: 46px;
+  line-height: 60px;
+}
+ 
+/*  ----- End Exit Page ---------------------------------- */

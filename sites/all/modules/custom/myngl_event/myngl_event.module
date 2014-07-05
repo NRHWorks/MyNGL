@@ -14,6 +14,13 @@ function myngl_event_menu() {
     'page arguments' => array(1),
     'access callback' => TRUE,
   );
+  
+  $items['myngl-event/%/exit'] = array(
+    'title' => 'MyNGL Exit',
+    'page callback' => 'myngl_event_exit',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
 
   $items['myngl-event/%/ajax/message'] = array(
     'title' => 'MyNGL Lobby',
@@ -76,12 +83,35 @@ function myngl_event_theme() {
                           'variables' => array ('myngl' => NULL, 'brand' => NULL),
                         );
 
+  $items['myngl_event_exit'] =  array(
+                          'template' => 'myngl-event-exit',
+                          'variables' => array ('myngl' => NULL, 'brand' => NULL, 'points' => NULL),
+                        );
+
   $items['myngl_event_social_area'] =  array(
                           'template' => 'myngl-event-social-area',
                           'variables' => array ('myngl' => NULL, 'brand' => NULL, 'invitees' => NULL, 'ucg' => NULL, 'total_points' => NULL),
                         );
 
   return $items;
+}
+
+function myngl_event_exit($nid) {
+  global $user;
+
+  $myngl = node_load($nid);
+  $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
+
+  $total_points = db_query('SELECT total_points FROM {myngl_rewards_total} WHERE
+                        myngl_id = :myngl_id AND
+                        user_id = :user_id',
+                        array(
+                          ':myngl_id' => $nid,
+                          ':user_id' => $user->uid,
+                        )
+                      )->fetchField();
+
+  return theme('myngl_event_exit', array('myngl' => $myngl, 'brand' => $brand, 'points' => $total_points));
 }
 
 function myngl_event_lobby($nid) {
