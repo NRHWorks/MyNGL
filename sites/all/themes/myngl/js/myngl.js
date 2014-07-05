@@ -1,5 +1,30 @@
 (function ($) {
   $(document).ready( function() {
+
+    if ($(".field-name-field-profile-gender input#edit-profile-profile-field-profile-gender-und").prop('checked')==true) {
+      $("#gender-switch-inner").css('left','50px');
+    }
+    else {
+      $("#gender-switch-inner").css('left','10px');
+    }
+
+    if ($(".field-name-field-relationship input#edit-profile-profile-field-relationship-und").prop('checked')==true) {
+      $("#status-switch-inner").css('left','50px');
+    }
+    else {
+      $("#status-switch-inner").css('left','10px');
+    }
+
+
+
+    $("#gender-switch").click(function(){
+      myngl.profile_switch_clicked('gender');
+    });
+    $("#status-switch").click(function(){
+      myngl.profile_switch_clicked('status');
+    });
+
+
     $(':text').each( function () {
       if ($(this).val() == '') {
         if ($(this).siblings('label').html()) {
@@ -42,6 +67,30 @@
 
 var myngl = (function($) {
   return {
+    profile_switch_clicked: function(label){
+      if (label=='gender') {
+        if ($(".field-name-field-profile-gender input#edit-profile-profile-field-profile-gender-und").prop('checked')==true) {
+          $("#gender-switch-inner").animate({left: "10px"}, 200);
+          $(".field-name-field-profile-gender input#edit-profile-profile-field-profile-gender-und").prop('checked',false);
+        }
+        else {
+          $("#gender-switch-inner").animate({left: "50px"}, 200);
+          $(".field-name-field-profile-gender input#edit-profile-profile-field-profile-gender-und").prop('checked',true);
+        }
+      }
+      else {   // status
+        if ($(".field-name-field-relationship input#edit-profile-profile-field-relationship-und").prop('checked')==true) {
+          $("#status-switch-inner").animate({left: "10px"}, 200);
+          $(".field-name-field-relationship input#edit-profile-profile-field-relationship-und").prop('checked',false);
+        }
+        else {
+          $("#status-switch-inner").animate({left: "50px"}, 200);
+          $(".field-name-field-relationship input#edit-profile-profile-field-relationship-und").prop('checked',true);
+        }
+      }
+
+    },
+
     overlay: function(content, height, width) {
       $('#overlay-background').fadeIn(500);
       $('#' + content).css('height',height).css('width',width).fadeIn(100);

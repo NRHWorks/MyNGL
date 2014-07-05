@@ -213,14 +213,41 @@ function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
   }
 
   $form['profile_profile']['field_interests']['und']['#title'] = 'To personalize your Myngl experience, tell us your interests:<br/> (check all that are appropriate)';
-
   $form['profile_profile']['field_picture']['und'][0]['#title'] = '';
-
   $form['profile_profile']['field_city']['und'][0]['#prefix'] = ' <span class="profile-name">NAME: <strong>'.$u->field_first_name->value().' '.$u->field_last_name->value().'</strong></span><br />';
+
+  $form['profile_profile']['field_date_of_birth']['und'][0]['#suffix'] =
+    '<div class ="profile-flipswitch" id="profile-gender" >
+      <div id="label" style="float:left;">Gender</div>
+      <div class="option-left" style="position:absolute; left:100px;">Male</div>
+      <div id="gender-switch" class="switch" >
+        <div id="gender-switch-inner" class="switch-inner">
+          <div id = "gender-switch-knob" class="switch-knob" ></div>
+        </div>
+      </div>
+      <div class="option-right" style="position:absolute; left:250px;">Female</div>
+    </div>
+
+    <div id="status" class ="profile-flipswitch">
+      <div id="label" style="float:left;">Status</div>
+      <div class="option-left" style="position:absolute; left:100px;">Single</div>
+      <div id="status-switch" class="switch">
+        <div id="status-switch-inner" class="switch-inner" >
+          <div id = "status-switch-knob" class="switch-knob"></div>
+        </div>
+      </div>
+      <div class="option-right" style="position:absolute; left:250px;">In Relationship</div>
+    </div>';
+
+
+
+
+
 
   if (isset($p)) {
     $pic = $p->field_picture->value();
   }
+  //print_r($form); exit();
 
   if (!isset($pic['uri'])) {
     $form['profile_profile']['field_picture']['und']['#prefix'] =
