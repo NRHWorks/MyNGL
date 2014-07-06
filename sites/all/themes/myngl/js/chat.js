@@ -1,5 +1,6 @@
 var group_chat_last_message_ids = [];
 var id_of_showing_invitee_info = -1;
+var id_of_hovered_invitee_info = -1;
 function slot_taken(left_array, min,max){
   var index = 0;
   while (index < left_array.length){
@@ -34,6 +35,28 @@ var chat = (function ($) {
   var latest_mcsid = 0;
 
   return {
+    set_id_of_showing_invitee_info: function(id){
+      id_of_showing_invitee_info = id;
+
+    },
+    set_id_of_hovered_invitee_info: function(id){
+      id_of_hovered_invitee_info = id;
+
+    },
+    mouse_leave_thumb: function(uid){
+
+      setTimeout(function(){
+        if (id_of_hovered_invitee_info != uid) {
+          if ( id_of_showing_invitee_info==uid) {
+            chat.reset_id_of_showing_invitee_info();
+          }
+
+          chat.close_invitee_info(uid);
+        }
+      },100);
+
+
+    },
     minimize_all: function(){
       for (var i = 0; i < Drupal.settings.uids.length; i ++){
         var uid = Drupal.settings.uids[i];
@@ -448,7 +471,8 @@ var chat = (function ($) {
         if (id_of_showing_invitee_info!=-1&& id_of_showing_invitee_info!=uid) {
           chat.close_invitee_info( id_of_showing_invitee_info);
         }
-        id_of_showing_invitee_info = uid;
+        chat.set_id_of_showing_invitee_info(uid);
+
         $("#myngl-event-invitee-info-" + uid).fadeIn(100);
         var o = $("#invitee-thumb-" + uid).offset();
         $("#myngl-event-invitee-info-" + uid).css('top', (o.top - 200) + 'px');
@@ -456,7 +480,8 @@ var chat = (function ($) {
         return false;
       },
       reset_id_of_showing_invitee_info : function(){
-        id_of_showing_invitee_info=-1;
+        chat.set_id_of_showing_invitee_info(-1);
+
         return false;
       },
       close_invitee_info: function (uid){

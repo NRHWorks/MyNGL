@@ -1,10 +1,11 @@
 <?php
+/*
   if (!isset($_COOKIE['done_lobby_video']) || $_COOKIE['done_lobby_video']!= 1){
     global $base_url;
     $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
     header($redirect);
     exit;
-  }
+  }*/
 ?>
 
 <?php
@@ -171,7 +172,7 @@
         <?php foreach ($invitees as $k => $i) : ?>
           <?php if ($user->uid != $i['uid']): ?>
             <div id="invitee-thumb-<?php print $i['uid']; ?>" style="float:left; text-align: center; width: 130px; height:150px; " class="invitee invitee-thumb <?php if ($i['fb']) { print ' fb ';} ?> <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>">
-            <a href="#" onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
+            <a href="#" onmouseleave='chat.mouse_leave_thumb(<?php print $i['uid']; ?>)' onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
             <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
             </div>
           <?php endif; ?>
@@ -274,7 +275,8 @@
       </div>
     </div>
     <div  id="myngl-event-invitee-info-<?php print $i['uid']; ?>"
-          onmouseleave="chat.reset_id_of_showing_invitee_info();chat.close_invitee_info(<?php print $i['uid']; ?>)"
+          onmouseleave="chat.set_id_of_hovered_invitee_info(-1);chat.reset_id_of_showing_invitee_info();chat.close_invitee_info(<?php print $i['uid']; ?>)"
+          onmouseover="chat.set_id_of_hovered_invitee_info(<?php print $i['uid']; ?>);"
           style="background-color: <?php print $primary_color; ?>; color:<?php print $secondary_color; ?>; padding:10px; width:200px; height:200px; position:absolute; display:none;" >
       <span style="font-size:18px;font-family:'georgia';"><?php print $i['name']; ?></span>
       <div style="width:10px; height:2px; margin:3px 0 8px 0; background-color:<?php print $secondary_color;?>"> </div>
