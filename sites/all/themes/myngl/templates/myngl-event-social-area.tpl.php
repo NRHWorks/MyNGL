@@ -76,29 +76,40 @@
     margin-right:5px;
 
   }
+  #other-filter-overlay #other-filter-submit{
+    position:absolute;
+    right:20px;
+    bottom:20px;
+    background-color:<?php print $secondary_color;?>;
+    color:<?php print $primary_color;?>;
+    height:30px;
+    width:80px;
+    font-size:18px;
+    text-align:center;
+    padding-top:5px;
+    border-radius:5px;
+
+  }
   .this-user{
     display:none !important;
   }
 </style>
 <div id="other-filter-overlay">
   <div id="other-filter-close" onclick="social_area.other_filter_close();">X</div>
-
+  <div id="other-filter-submit" onclick="social_area.other_filter_close(); social_area.other_filter()">Submit</div>
   <form id="other-filter">
     <?php foreach($pre_questions as $i =>$question): ?>
       <div class='question' id="question-<?php print $i;?>">
         <div class='question-label'><?php print $question['question']; ?></div>
         <?php foreach($question['answers'] as $ii => $answer):?>
 
-          <div class='input-wrapper'><input onclick='social_area.other_filter()' type="radio" name="other-filter-question-<?php print $i;?>" value="<?php print $answer['value'];?>" /><?php print $answer['value'];?></div>
+          <div class='input-wrapper'><input  type="radio" name="other-filter-question-<?php print $i;?>" value="<?php print $answer['value'];?>" /><?php print $answer['value'];?></div>
         <?php endforeach; ?>
-        <div class='input-wrapper' ><input onclick='social_area.other_filter()' type="radio" name="other-filter-question-<?php print $i;?>" value="all" checked='checked'/>all</div>
+        <div class='input-wrapper' ><input  type="radio" name="other-filter-question-<?php print $i;?>" value="all" checked='checked'/>all</div>
 
       </div><!-- /.question -->
     <?php endforeach; ?>
   </form>
-  <pre>
-    <?php //print_r($pre_questions); ?>
-  </pre>
 </div>
 
 
