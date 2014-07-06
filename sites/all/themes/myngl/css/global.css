@@ -1300,20 +1300,6 @@ body ::-webkit-scrollbar-thumb {
     padding: 15px;
   }
 
-  #myngl-event-ugc-button, #myngl-event-pov-button {
-    float: left;
-  }
-
-  #myngl-event-ugc-button {
-    margin-left: 35%;
-  }
-
-  #myngl-event-ugc-button a, #myngl-event-pov-button a{
-    padding: 20px 13px 20px 13px;
-    background: rgba(226,226,216,0.4);
-    border-radius: 100%;
-    margin: 28px;
-  }
 
   #myngl-event-ugc-box {
     overflow: hidden;
@@ -1564,26 +1550,45 @@ body ::-webkit-scrollbar-thumb {
 /* -- quick fixes */
 
 #myngl-event-ugc-button {
-  width: 200px;
-  height: 200px;
+  width: 15%;
+  height: 13%;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -250px;
-  margin-left: -550px;
+  top: 30%;
+  left: 45%;
+  /*margin-top: -250px;
+  margin-left: -550px;*/
   cursor: pointer;
 }
 
 #myngl-event-pov-button {
-  width: 200px;
-  height: 200px;
+  width: 15%;
+  height: 13%;
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 60%;
+  top: 30%;/*
   margin-top: -200px;
-  margin-left: -300px;
+  margin-left: -300px;*/
   cursor: pointer;
 }
+
+
+/* Moved here by Ming
+#myngl-event-ugc-button, #myngl-event-pov-button {
+    float: left;
+  }
+
+  #myngl-event-ugc-button {
+    margin-left: 35%;
+  }
+*/
+
+  #myngl-event-ugc-button a, #myngl-event-pov-button a{
+    padding: 20px 13px 20px 13px;
+    background: rgba(226,226,216,0.4);
+    border-radius: 100%;
+    margin: 28px;
+  }
+
 
 /*  ----- END LAYOUT------------------------------------------------- */
 
@@ -1598,7 +1603,8 @@ body ::-webkit-scrollbar-thumb {
   }
 
   body.page-myngl-event {
-    background: url(../images/myngl-godiva-bg.png) center center no-repeat;
+    /*background: url(../images/myngl-godiva-bg.png) center center no-repeat;*/
+    background: url(../images/myngl-godiva-bg.jpg) center center no-repeat;
     background-size: cover;
   }
   
