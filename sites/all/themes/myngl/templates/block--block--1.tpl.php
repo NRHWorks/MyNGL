@@ -59,7 +59,7 @@
   background-color:#e2dbd2;
 	border:solid 20px #53302a;
   border-top: solid 35px #53302a;
-
+  overflow: scroll;
 }
 #help-overlay-close{
   position:absolute;
@@ -91,15 +91,37 @@
   <div id="help-overlay-close" onclick="myngl.help_overlay_close()">X</div>
   <div id="help-title" >Need Help? Find your problem below:</div>
   <div class="short-line"></div>
+ 
+  <?php
+    $result = db_query("SELECT nid FROM {nodequeue_nodes} WHERE qid = 1 ORDER BY position");
+
+    foreach ($result as $r) {
+      $faq[] = node_load($r->nid);
+    }
+  ?>
+
   <ol style="list-style-type:decimal">
-    <li>I'm having problems with the sound</li>
-    <li>I'm having problems with the videos</li>
-    <li>I have problems watching/hearing LIVE performance</li>
-    <li>How do I chat with others?</li>
-    <li>How do I move from room to room?</li>
-    <li>How do I make comments on Shout Out?</li>
-    <li>How do I redeem Reward Points?</li>
-    <li>How do I use social media tools?</li>
+  <?php
+    foreach ($faq as $k => $f) {
+      print "<li onclick='jQuery(\"#help-overlay-inner\").scrollTo(\"#answer-$k\");' style='cursor:pointer;'>{$f->title}</li>";
+    }
+  ?>
   </ol>
+
   <div class="short-line"></div>
+
+  <ol style="list-style-type:decimal">
+  <?php 
+
+    foreach ($faq as $k => $f) {
+      print "<li style='padding-top:50px;' id='answer-$k'>";
+      print "<strong>{$f->title}</strong><br>";
+      print "{$f->field_faq_answer['und'][0]['safe_value']}";
+      print "<br /><br /><a href='#' onclick='jQuery(\"#help-overlay-inner\").scrollTo(\"#help-title\"); return false;' style='font-size:14px; font-weight:bold;'>Top</a>";
+      print "</li>";
+    }
+
+  ?>
+  </ol>
+
 </div>

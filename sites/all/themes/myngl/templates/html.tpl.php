@@ -69,20 +69,10 @@
     <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
   </div>
 
-  <div id='help-overlay'>
-    <?php
-      $block = block_load('block', '1');
-      $renderable = _block_get_renderable_array(_block_render_blocks(array($block)));
-      print render ($renderable);
-    ?>
-  </div>
-
   <?php print $page_top; ?>
   <?php print $page; ?>
   <?php print $page_bottom; ?>
   <div id="overlay-background"></div>
-
-
 
 </body>
 </html>

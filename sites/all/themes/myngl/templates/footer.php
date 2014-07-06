@@ -34,3 +34,15 @@
     });
   }) (jQuery);
 </script>
+
+
+<?php /* TODO: MOVE THIS TO A MODULE */ ?>
+
+<div id='help-overlay'>
+  <?php
+    $block = block_load('block', '1');
+    $renderable = _block_get_renderable_array(_block_render_blocks(array($block)));
+    print render ($renderable);
+  ?>
+</div>
+
