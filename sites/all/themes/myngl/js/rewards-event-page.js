@@ -44,6 +44,7 @@ var rewards_overlay = (function($){
     close : function(){
       $('#gifting-series-overlay').fadeOut(100);
       $('.overlay-reward').css('display','none');
+      $('#congrats').css('display','none');
     },
 
     show_questions : function(){
@@ -70,7 +71,7 @@ var rewards_overlay = (function($){
 
       $('#gifting-series-overlay #questions').fadeOut(500);
       $('#gifting-series-overlay #congrats').fadeIn(500);
-      $('#gifting-series-overlay .close').fadeOut(500);
+      //$('#gifting-series-overlay .close').fadeOut(500);
 
       myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Gift Redeemed");
       clearInterval(update_status_interval);

@@ -595,6 +595,7 @@ form#myngl-myngl-post-questions-form #edit-submit{
   </div>
 
   <div id="congrats">
+
     <div id='title'></div>
     <div class="short-line"></div>
     <div id='social'><div style="float:right"><img src='<?php print base_path(). path_to_theme();?>/images/theater-downloads-social-icons1.png'/></div></div>
