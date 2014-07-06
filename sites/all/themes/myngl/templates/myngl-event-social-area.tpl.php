@@ -1,4 +1,13 @@
 <?php
+  if (!isset($_COOKIE['done_lobby_video']) || $_COOKIE['done_lobby_video']!= 1){
+    global $base_url;
+    $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
+    header($redirect);
+    exit;
+  }
+?>
+
+<?php
   global $user;
   $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
   $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
