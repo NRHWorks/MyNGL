@@ -34,9 +34,8 @@ body.page-myngl-event-rewards {
 }
 
 #reward-wrapper{
-  width:900px;
+  width:800px;
   height:600px;
-
   position:relative;
   top:120px;
   margin-left:auto;
@@ -52,6 +51,7 @@ body.page-myngl-event-rewards {
   width:400px;
   color:<?php print $secondary_color ?>;
   float:left;
+  position:absolute;
 }
 #reward-wrapper .field-collection-item-field-reward{
   width:395px;
@@ -163,7 +163,9 @@ body.page-myngl-event-rewards {
 
 #right{
   width:400px;
-  float:right;
+  /*float:right;*/
+  position:absolute;
+  right:0;
 }
 
 #reward-wrapper #external-site{
