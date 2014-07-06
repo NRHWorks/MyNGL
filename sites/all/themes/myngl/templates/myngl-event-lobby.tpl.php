@@ -1,7 +1,7 @@
 
 <div class="video-container">
   <div>
-    <video width="650px" height="350px" autoplay controls>
+    <video width="650px" height="350px" autoplay>
       <source src="http:<?php print str_replace('+','%2B',file_create_url($myngl->field_welcome_video['und'][0]['uri'])); ?>" type="video/mp4">
       Your browser does not support the video tag.
     </video>
