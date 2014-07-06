@@ -83,6 +83,7 @@ var chat = (function ($) {
 
     },
     solo_minimize :function (uid){
+
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide().addClass('minimized');
 
       if ($('#minimized-solo-chat-' + uid).length==0) {
@@ -435,7 +436,8 @@ var chat = (function ($) {
             data.forEach( function(entry) {
               if (entry.to_user_id != user_id) {
                 if (latest_mcsid == 0) {
-                  chat.solo_minimize(entry.to_user_id);   
+                  //BUGGY!! This causes the window to minimize after first message is sent.
+                  //chat.solo_minimize(entry.to_user_id);
                 }
               } else {
                 if (latest_mcsid == 0) {

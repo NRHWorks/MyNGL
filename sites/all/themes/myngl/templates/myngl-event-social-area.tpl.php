@@ -76,7 +76,9 @@
     margin-right:5px;
 
   }
-
+  .this-user{
+    display:none !important;
+  }
 </style>
 <div id="other-filter-overlay">
   <div id="other-filter-close" onclick="social_area.other_filter_close();">X</div>
@@ -170,12 +172,12 @@
       <div id="invitees-thumbs" style="height: 140px; overflow: hidden;">
         <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
         <?php foreach ($invitees as $k => $i) : ?>
-          <?php if ($user->uid != $i['uid']): ?>
+          <?php //if ($user->uid != $i['uid']): ?>
             <div id="invitee-thumb-<?php print $i['uid']; ?>" style="float:left; text-align: center; width: 130px; height:150px; " class="invitee invitee-thumb <?php if ($i['fb']) { print ' fb ';} ?> <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>">
             <a href="#" onmouseleave='chat.mouse_leave_thumb(<?php print $i['uid']; ?>)' onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
             <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
             </div>
-          <?php endif; ?>
+          <?php //endif; ?>
         <?php endforeach; ?>
       </div>
       <div class="thumb-background"></div>

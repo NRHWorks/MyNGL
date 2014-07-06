@@ -5,6 +5,7 @@ var selected_other_filter;
 (function ($) {
   $(document).ready( function() {
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");
+    $("#invitee-thumb-" + Drupal.settings.user_id).addClass('this-user');
     social_area.update_tagline_and_pre_question_answers();
     setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");},20000);
     setInterval(function(){social_area.update_tagline_and_pre_question_answers();},10000);
