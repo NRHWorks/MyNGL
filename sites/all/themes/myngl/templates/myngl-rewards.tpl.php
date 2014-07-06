@@ -1,4 +1,12 @@
 <?php
+  if (!isset($_COOKIE['done_lobby_video']) || $_COOKIE['done_lobby_video']!= 1){
+    global $base_url;
+    $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
+    header($redirect);
+    exit;
+  }
+?>
+<?php
   $uid = arg(1);
   $u = entity_metadata_wrapper('user', user_load($uid));
   $p = entity_metadata_wrapper('profile2', profile2_load_by_user($uid, 'profile'));
