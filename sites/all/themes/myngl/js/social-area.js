@@ -1,25 +1,29 @@
 var ugcScrollPosition = 0;
 var currently_shown_ugc = -1;
+var users_tagline_and_prequestion_answers; //need to keep this info for other filters
+var selected_other_filter;
 (function ($) {
   $(document).ready( function() {
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");
+    social_area.update_tagline_and_pre_question_answers();
     setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");},20000);
-
+    setInterval(function(){social_area.update_tagline_and_pre_question_answers();},10000);
 
     $('li#lounge').removeClass("inactive").addClass("active");
     setInterval(function() { social_area.message(); }, 3000);
     setInterval(function() { social_area.update_users_in_lounge(); }, 5000);
 
     $('#overlay-background').bind('click', function() {
-      $('#myngl-event-chat-button-invitees').delay(200).fadeIn(500);
+      social_area.other_filter_close();
+      return false;
     });
 
 
     $("input[name='filter']").change(function(){
       if ($("input[name='filter']:checked").val() == 'fb-friends'){
         social_area.show_fb_friends();
-      } else if ($("input[name='filter']:checked").val() == 'others') {
-        social_area.show_in_room();
+      } else if ($("input[name='filter']:checked").val() == 'other') {
+        //social_area.show_other_filter();
       } else if ($("input[name='filter']:checked").val() == 'all') {
         $('.invitee-thumb').removeClass('filter-hide');
       } else if ($("input[name='filter']:checked").val() == 'reps') {
@@ -76,6 +80,68 @@ var currently_shown_ugc = -1;
 
 var social_area = (function ($) {
   return {
+    update_tagline_and_pre_question_answers: function(){
+      $.ajax({
+        type: "GET",
+        url: "/myngl-event/" + Drupal.settings.myngl_id + "/invitee-info-update",
+        success: function(data) {
+          users_tagline_and_prequestion_answers = jQuery.parseJSON(data);
+          social_area.update_tagline_and_pre_question_answers_success();
+        }
+      });
+    },
+    update_tagline_and_pre_question_answers_success: function(){
+      // Update the tagline
+      for (var i = 0; i < users_tagline_and_prequestion_answers.length; i ++){
+        $("#myngl-event-invitee-info-"+ users_tagline_and_prequestion_answers[i].user_id + " span#tagline-holder").text(users_tagline_and_prequestion_answers[i].tagline);
+        //console.log((users_tagline_and_prequestion_answers[i].pre_question_answers));
+
+      }
+
+      // Update other filters
+
+      if($('form#filters input#other').is(':checked')) {
+        social_area.other_filter();
+      }
+      return false;
+    },
+    show_other_filter: function(){
+      $('#overlay-background').fadeIn(500);
+      $('#other-filter-overlay').fadeIn(100);
+    },
+    other_filter_close: function(){
+      $('#overlay-background').fadeOut(500);
+      $('#other-filter-overlay').fadeOut(100);
+    },
+    other_filter: function(){
+
+      //Get the selected answers.
+      var filter_answers = [];
+      var num_of_questions = $(("form#other-filter .question")).length;
+      for(var i = 0; i < num_of_questions; i ++){
+        filter_answers.push($("form#other-filter #question-" + i+" input:checked").val());
+      }
+
+      // Now Go through the stored user answers
+      for (var i = 0; i < users_tagline_and_prequestion_answers.length; i ++){
+        var show = true; //initially set show = true. if a test fails, then hide it.
+        for (var j = 0; j < num_of_questions; j ++){
+          var key = 'question-' + j;
+          if (!(filter_answers[j]=='all')&&!(filter_answers[j]==users_tagline_and_prequestion_answers[i].pre_question_answers[key])){
+            show = false;
+          }
+        }
+        if (show) {
+          $("#invitee-thumb-"+ users_tagline_and_prequestion_answers[i].user_id).removeClass("filter-hide")
+        }
+        else {
+          $("#invitee-thumb-"+ users_tagline_and_prequestion_answers[i].user_id).addClass("filter-hide");
+        }
+
+      }
+      return false;
+    },
+
     ugc_left : function (value) {
       console.log("left clicked, currently_shown ugc is " + currently_shown_ugc);
 

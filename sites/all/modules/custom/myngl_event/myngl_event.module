@@ -36,6 +36,12 @@ function myngl_event_menu() {
     'access callback' => TRUE,
   );
 
+  $items['myngl-event/%/invitee-info-update'] = array(
+    'title' => 'MyNGL Invitee Info Update',
+    'page callback' => 'myngl_event_invitee_info_update',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
 
 
   $items['myngl-event/%/ajax/question'] = array(
@@ -90,7 +96,7 @@ function myngl_event_theme() {
 
   $items['myngl_event_social_area'] =  array(
                           'template' => 'myngl-event-social-area',
-                          'variables' => array ('myngl' => NULL, 'brand' => NULL, 'invitees' => NULL, 'ucg' => NULL, 'total_points' => NULL),
+                          'variables' => array ('myngl' => NULL, 'brand' => NULL, 'invitees' => NULL, 'ucg' => NULL, 'total_points' => NULL, 'pre_questions' =>NULL,),
                         );
 
   return $items;
@@ -201,12 +207,31 @@ function myngl_event_social_area($nid) {
     }
   }
 
+  $pre_questions = array();
+  foreach ($myngl->field_pre_myngl_questions['und'] as $x => $i) {
+
+    $j = array_shift(entity_load('field_collection_item', array($i['value'])));
+
+    //Skip non-multichoice questions;
+    if (!isset($j->field_answer['und'])) break;
+
+    $question = array(
+      'item_id' => $j->item_id,
+      'question' => $j->field_question['und'][0]['value'],
+      'answers' =>$j->field_answer['und'],
+    );
+
+    $pre_questions[] = $question;
+
+  }
+
   return theme('myngl_event_social_area', array(
                                                 'myngl' => $myngl,
                                                 'brand' => $brand,
                                                 'invitees' => $invitees,
                                                 'ucg' => $ucg,
                                                 'total_points' =>myngl_rewards_total_points($user->uid, $nid),
+                                                'pre_questions' =>$pre_questions,
                                                 )
                );
 }
@@ -286,9 +311,7 @@ function myngl_event_update_users_in_lounge($myngl_id){
                            ':myngl_id' => $myngl_id,
                            ':inactive_time' =>  time() - 180,
                            ));
-
   $data = array();
-
   $result2 = db_query("SELECT user_id FROM {myngl_participant_status} WHERE
                      myngl_id = :myngl_id AND
                      timestamp > :offline_time",
@@ -298,13 +321,31 @@ function myngl_event_update_users_in_lounge($myngl_id){
                            ));
 
   $data[] = $result2->rowCount();
-
   foreach ($result as $r) {
     $data[] = $r->user_id;
   }
-
   //The first element of the array is the total count. rest of the elements are the user_ids in lounge.
   return drupal_json_output($data);
+}
+
+function myngl_event_invitee_info_update($myngl_id){
+  $myngl = node_load($myngl_id);
+  $invitees = array();
+  //print "<pre>";
+  $invitees_ahh = array();
+
+  foreach ($myngl->field_myngl_invitees['und'] as $x => $i) {
+    $j = array_shift(entity_load('field_collection_item', array($i['value'])));
+    //if (!isset($j->field_invitee_user_account['und'])){break;}
+    $invitee['user_id'] = $j->field_invitee_user_account['und'][0]['uid'];
+    $invitee['tagline'] = $j->field_myngl_tagline['und'][0]['value'];
+    $invitee['pre_question_answers'] = unserialize($j->field_pre_question_answers['und'][0]['value']);
+    $invitees[]= $invitee;
+
+    $invitees_ahh[] = $j;
+  }
+  //print_r($invitees_ahh); exit();
+  echo json_encode($invitees);
 
 
 }

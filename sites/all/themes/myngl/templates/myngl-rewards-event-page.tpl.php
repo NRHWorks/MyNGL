@@ -6,14 +6,6 @@
   $tertiary_color = "#e2dbd2";
   $background_image = file_create_url($myngl->field_gifting_series_background['und'][0]['uri']);
 
-/*
-  if (!isset($_COOKIE['done_lobby_video']) || $_COOKIE['done_lobby_video']!= 1){
-    global $base_url;
-    $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
-    header($redirect);
-    exit;
-  }
-*/
 
 ?>
 <style type="text/css">

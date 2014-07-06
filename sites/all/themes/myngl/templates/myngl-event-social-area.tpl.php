@@ -16,10 +16,80 @@
     font-size:16px;
     padding:4px 8px 4px 8px;
   }
+
   #close-and-minimize-all span{
     cursor: pointer;
   }
+
+  #other-filter-overlay{
+    z-index:1000;
+    width:600px;
+    height:400px;
+    position:absolute;
+    left:0;
+    right:0;
+    top:100px;
+    margin-left:auto;
+    margin-right:auto;
+    background-color:<?php print $primary_color;?>;
+    color:<?php print $secondary_color; ?>;
+    display:none;
+  }
+
+  #other-filter-overlay #other-filter-close{
+    position:absolute;
+    right:10px;
+    top:10px;
+    font-size:18px;
+  }
+
+  form#other-filter{
+    padding:20px;
+    margin-top:20px;
+  }
+
+  form#other-filter .question{
+    margin-bottom:30px;
+    overflow:auto;
+  }
+
+  form#other-filter .question-label{
+    font-size:16px;
+    font-weight:bold;
+    margin-bottom:10px;
+  }
+
+  form#other-filter .input-wrapper{
+  float:left; width:270px;
+  }
+  form#other-filter input{
+    margin-right:5px;
+
+  }
+
 </style>
+<div id="other-filter-overlay">
+  <div id="other-filter-close" onclick="social_area.other_filter_close();">X</div>
+
+  <form id="other-filter">
+    <?php foreach($pre_questions as $i =>$question): ?>
+      <div class='question' id="question-<?php print $i;?>">
+        <div class='question-label'><?php print $question['question']; ?></div>
+        <?php foreach($question['answers'] as $ii => $answer):?>
+
+          <div class='input-wrapper'><input onclick='social_area.other_filter()' type="radio" name="other-filter-question-<?php print $i;?>" value="<?php print $answer['value'];?>" /><?php print $answer['value'];?></div>
+        <?php endforeach; ?>
+        <div class='input-wrapper' ><input onclick='social_area.other_filter()' type="radio" name="other-filter-question-<?php print $i;?>" value="all" checked='checked'/>all</div>
+
+      </div><!-- /.question -->
+    <?php endforeach; ?>
+  </form>
+  <pre>
+    <?php //print_r($pre_questions); ?>
+  </pre>
+</div>
+
+
 <div id="close-and-minimize-all"><span onclick='chat.minimize_all()' style="margin-right:5px;">_</span> <span onclick='chat.close_all()'>X</div>
 
 
@@ -102,11 +172,11 @@
     </div>
     <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
       <span id="people-total">0</span> PEOPLE TOTAL / <span id="people-in-lounge">0</span> IN THIS ROOM
-      <form>
-        <input type="radio" name="filter" value="all"  /> Show All
-        <input type="radio" name="filter" value="fb-friends" checked/> FB Friends
-        <input type="radio" name="filter" value="reps" /> Brand Reps
-        <input type="radio" name="filter" value="other" /> Other Filters
+      <form id='filters'>
+        <input id='all' type="radio" name="filter" value="all"  /> Show All
+        <input id='fb-friends' type="radio" name="filter" value="fb-friends" checked/> FB Friends
+        <input id='reps' type="radio" name="filter" value="reps" /> Brand Reps
+        <input id='other' type="radio" name="filter" value="other" onclick="social_area.show_other_filter();"/> Other Filters
         <!-- <input type="radio" name="filter" value="filter-options" /> Filter Options -->
       </form>
       <form>
@@ -200,7 +270,7 @@
       <span style="font-size:18px;font-family:'georgia';"><?php print $i['name']; ?></span>
       <div style="width:10px; height:2px; margin:3px 0 8px 0; background-color:<?php print $secondary_color;?>"> </div>
       <span style="font-size:16px; font-weight:bold; "><?php print $i['about_me'] ; ?></span><br /><br />
-      <span style="font-size:16px; font-weight:bold; ">Tagline: <?php print $i['tagline'] ; ?></span><br /><br />
+      <span style="font-size:16px; font-weight:bold; ">Tagline: <span id="tagline-holder"><?php print $i['tagline'] ; ?></span></span><br /><br />
       <a href="#" onclick="chat.reset_id_of_showing_invitee_info(); return chat.solo_show(<?php print $i['uid']; ?>)" style="position:absolute;right:10px;bottom:20px;text-decoration:underline;color:<?php print $secondary_color; ?>; font-weight:bold;">Start Chat</a>
     </div>
   <?php endif;  ?>
