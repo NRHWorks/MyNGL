@@ -9,6 +9,7 @@
 var pov = (function ($) {
   return {
     open : function() {
+      myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'opening_pov_win');
       $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
         myngl.overlay('myngl-event-pov', 500, 400);  
       });

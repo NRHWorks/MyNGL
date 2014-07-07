@@ -301,10 +301,12 @@ var chat = (function ($) {
           $('#chat-message-input').val('Enter Message');
           $('#chat-message-input').addClass('form-light');
 
-          return false;
+
         }
+        return false;
       },
       solo_post : function(to_uid) {
+        myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'sending_ct_msg');
         var myngl_id = Drupal.settings.myngl_id;
         var from_uid = Drupal.settings.user_id;
 
@@ -324,6 +326,7 @@ var chat = (function ($) {
 
 
       group_post : function(chat_id) {
+        myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'sending_ct_msg');
         var myngl_id = Drupal.settings.myngl_id;
         var from_uid = Drupal.settings.user_id;
 

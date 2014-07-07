@@ -67,6 +67,16 @@
 
 var myngl = (function($) {
   return {
+
+    add_rewards_points: function(myngl_id,user_id,field_name){
+      $.ajax({
+        type: "GET",
+        url: "/myngl-event/" + myngl_id + "/rewards-add/" +  user_id + "/" +field_name,
+        success: function(data) {
+          $('.branded-secondary.point-badge p').text(data);
+        }
+      });
+    },
     profile_switch_clicked: function(label){
       if (label=='gender') {
         if ($(".field-name-field-profile-gender input#edit-profile-profile-field-profile-gender-und").prop('checked')==true) {

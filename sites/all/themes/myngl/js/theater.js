@@ -2,7 +2,7 @@
   $(document).ready( function() {
 		myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");
     setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");},20000);
-
+		myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_theate');
     $('li#theater').removeClass("inactive").addClass("active");
     setInterval(function() { theater.message(); }, 3000);
 
