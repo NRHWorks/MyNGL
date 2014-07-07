@@ -51,13 +51,6 @@ function myngl_theater_theater($nid) {
 
   $myngl = node_load($nid);
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
-
-  myngl_rewards_add($user->uid,
-                    $nid,
-                    'Visit theater page',
-                    $myngl->field_points_for_visiting_theate['und'][0]['value'],
-                    TRUE);   // TRUE for testing purpose. It should be false.
-
   return theme('myngl_theater_theater', array('myngl' => $myngl, 'brand' => $brand));
 }
 

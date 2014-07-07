@@ -43,11 +43,6 @@ function myngl_activity_room_room($nid) {
   $myngl = node_load($nid);
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
-  myngl_rewards_add($user->uid,
-                    $nid,
-                    'Enter activity room',
-                    $myngl->field_points_for_visiting_activi['und'][0]['value'],
-                    FALSE);
 
   return theme('myngl_activity_room_room', array('myngl' => $myngl, 'brand' => $brand));
 }
