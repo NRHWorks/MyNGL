@@ -63,9 +63,10 @@
 }
 #help-overlay-close{
   position:absolute;
-  right:0px;
-  top:-20px;
-  color:#a38d50;
+  right:-10px;
+  top:10px;
+  z-index:1000;
+  color:#cccccc;
 }
 #help-title{
   color: #a38d50;
@@ -87,8 +88,9 @@
   margin-top:10px;
 }
 </style>
+<div id="help-overlay-close" onclick="myngl.help_overlay_close()">X</div>
 <div id="help-overlay-inner" >
-  <div id="help-overlay-close" onclick="myngl.help_overlay_close()">X</div>
+
   <div id="help-title" >Need Help? Find your problem below:</div>
   <div class="short-line"></div>
  

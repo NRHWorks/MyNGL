@@ -2,9 +2,14 @@ var ugcScrollPosition = 0;
 var currently_shown_ugc = -1;
 var users_tagline_and_prequestion_answers; //need to keep this info for other filters
 var selected_other_filter;
+
 (function ($) {
   $(document).ready( function() {
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");
+    myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_social');
+
+
+
     $("#invitee-thumb-" + Drupal.settings.user_id).addClass('this-user');
     social_area.update_tagline_and_pre_question_answers();
     setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");},20000);
@@ -223,6 +228,7 @@ var social_area = (function ($) {
       $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
         myngl.overlay('myngl-event-ugc', 520, 900);
       });
+      myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'opening_ugc_win');
       /*
       setTimeout(function() {
         $('#myngl-event-ugc-thumbs').isotope({

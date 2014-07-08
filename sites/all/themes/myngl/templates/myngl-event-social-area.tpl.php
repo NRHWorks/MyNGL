@@ -290,12 +290,32 @@
     <div  id="myngl-event-invitee-info-<?php print $i['uid']; ?>"
           onmouseleave="chat.set_id_of_hovered_invitee_info(-1);chat.reset_id_of_showing_invitee_info();chat.close_invitee_info(<?php print $i['uid']; ?>)"
           onmouseover="chat.set_id_of_hovered_invitee_info(<?php print $i['uid']; ?>);"
-          style="background-color: <?php print $primary_color; ?>; color:<?php print $secondary_color; ?>; padding:10px; width:200px; height:200px; position:absolute; display:none;" >
+          style="background-color: <?php print $primary_color; ?>; color:<?php print $secondary_color; ?>; padding:10px; width:250px; height:150px; position:absolute; display:none;" >
+
+      <style>
+        .arrow-down {
+	width: 0;
+	height: 0;
+	border-left: 30px solid transparent;
+	border-right: 30px solid transparent;
+  position:absolute;
+  top:170px;
+  left:35px;
+	border-top: 30px solid <?php print $primary_color;?>;
+
+}
+      </style>
+      <div class="arrow-down"></div>
+
       <span style="font-size:18px;font-family:'georgia';"><?php print $i['name']; ?></span>
       <div style="width:10px; height:2px; margin:3px 0 8px 0; background-color:<?php print $secondary_color;?>"> </div>
       <span style="font-size:16px; font-weight:bold; "><?php print $i['about_me'] ; ?></span><br /><br />
       <span style="font-size:16px; font-weight:bold; ">Tagline: <span id="tagline-holder"><?php print $i['tagline'] ; ?></span></span><br /><br />
       <a href="#" onclick="chat.reset_id_of_showing_invitee_info(); return chat.solo_show(<?php print $i['uid']; ?>)" style="position:absolute;right:10px;bottom:20px;text-decoration:underline;color:<?php print $secondary_color; ?>; font-weight:bold;">Start Chat</a>
+
+
+
+
     </div>
   <?php endif;  ?>
 <?php endforeach; ?>

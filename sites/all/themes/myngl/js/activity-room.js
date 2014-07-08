@@ -1,6 +1,7 @@
 var scrollPosition = 0;
 (function ($) {
   $(document).ready( function() {
+		myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_activi');
     $('li#play-room').removeClass("inactive").addClass("active");
     //setInterval(function() { activity_room.message(); }, 3000);
 		activity_room.message();
@@ -76,6 +77,7 @@ var activity_room = (function ($) {
 var activity_overlay = (function($){
   return {
     show : function (source, width, height){
+			myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'playroom_activi');
       $('#overlay-background').fadeIn(500);
 
       $("iframe#activity-overlay").each( function(){

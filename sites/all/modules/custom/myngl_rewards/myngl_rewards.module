@@ -52,6 +52,9 @@ function myngl_rewards_menu() {
     'page arguments' => array(1,3,4),
     'access callback' => TRUE,
   );
+
+
+
   return $items;
 }
 
@@ -137,8 +140,6 @@ function myngl_rewards_add($myngl_id, $user_id, $activity_field_name) {
       'visiting_theate' => 0,
       'visiting_activi' => 0,
       'playroom_activi' => 1,
-      'start_solo_chat' => 1,
-      'start_group_cha' => 1,
       'sending_ct_msg' => 1,
    );
 
@@ -166,13 +167,11 @@ function myngl_rewards_add($myngl_id, $user_id, $activity_field_name) {
                         )
                       );
 
-    if ($result->rowCount()) {
-      return;
-    }
-    else {
+    if ($result->rowCount()==0) {
       myngl_rewards_add_helper($user_id, $myngl_id, $activity_field_name, $points);
     }
   }
+  echo myngl_rewards_total_points($user_id, $myngl_id);
 }
 
 /**
@@ -302,7 +301,6 @@ function myngl_rewards_total_points($user_id, $myngl_id) {
     return 0;
   }
 }
-
 
 
 /**

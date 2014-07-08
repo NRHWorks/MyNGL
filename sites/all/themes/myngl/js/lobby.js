@@ -5,6 +5,7 @@ var player;
 (function ($) {
   $(document).ready( function() {
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lobby");
+    myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_lobby');
     update_status_interval = setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lobby");},20000);
 
     if (jQuery.cookie('done_lobby_video') !='1') {
@@ -40,6 +41,10 @@ var player;
           window.location.href = social_area;
         }  ,2000);
     });
+
+
+
+
 
   });
 })(jQuery);
