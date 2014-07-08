@@ -21,7 +21,7 @@
     <div id="profile-points">
       <div id="profile-points-total"><p class="points">545</p></div>
       current Myngl point total<br />
-      <a href="/user/<?php print $uid; ?>/rewards" class="link-small">see rewards</a>
+      <!-- <a href="/user/<?php print $uid; ?>/rewards" class="link-small">see rewards</a> -->
     </div>
     <br clear="both" />
     <div id="profile-info">
