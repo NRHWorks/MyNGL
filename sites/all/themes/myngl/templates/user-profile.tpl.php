@@ -18,11 +18,12 @@
         print theme_image_style(array('style_name' => 'user_profile_circle_image', 'path' => 'public://default-user-profile.png', 'attributes' => array('class' => 'profile-pic'), 'height' => null, 'width' => null));
       }
     ?>
+    <!--
     <div id="profile-points">
       <div id="profile-points-total"><p class="points">545</p></div>
       current Myngl point total<br />
-      <!-- <a href="/user/<?php print $uid; ?>/rewards" class="link-small">see rewards</a> -->
-    </div>
+       <a href="/user/<?php print $uid; ?>/rewards" class="link-small">see rewards</a> -
+    </div>-->
     <br clear="both" />
     <div id="profile-info">
       <span class="label">NAME:</span>
@@ -49,6 +50,7 @@
         </span>
       <?php endif; ?>
     </div>
+
     <div id="profile-menu">
       <div class="border-bottom">
         <a href="/user/<?php print $user->uid; ?>/edit/profile?destination=user/<?php print $user->uid; ?>" class="link-small-light">EDIT PROFILE</a> |
@@ -67,6 +69,11 @@
           <img src="<?php print base_path() . path_to_theme(); ?>/images/arrow-button.png">
         </a>
       </div>
+      <?php if(in_array("brand rep", $user->roles) ): ?>
+        <div id="brand-rep"  class="border-bottom">
+          <a class="link-small-light" href="<?php print base_path()?>myngl/brand-rep-area">BRAND REP AREA</a>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
   <div id="content-right">

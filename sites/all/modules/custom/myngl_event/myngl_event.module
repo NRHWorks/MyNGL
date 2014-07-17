@@ -148,6 +148,19 @@ function myngl_event_social_area($nid) {
 
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
+  $brand_reps = $myngl->field_brand_rep2['und'];
+
+
+  $brand_reps_uids = array();
+  foreach($brand_reps as $row){
+    $brand_reps_uids[] = $row['uid'];
+  }
+
+  /*
+  print "<pre>";
+  print_r($brand_reps_uids);
+  exit;
+  */
 
   $invitees = array();
   $ucg = array();
@@ -176,7 +189,7 @@ function myngl_event_social_area($nid) {
                   'room' => $room,
                   'tagline' =>  $ic->field_myngl_tagline['und'][0]['value'],
                   'about_me' => $p->field_about['und'][0]['value'],
-                  'brand_rep' => $ic->field_brand_rep['und'][0]['value'],
+                  'brand_rep' => (in_array($u->uid, $brand_reps_uids))?1:0,
                 );
 
     for ($x=1;$x<=10;$x+=1) {

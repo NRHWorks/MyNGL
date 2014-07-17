@@ -588,6 +588,18 @@ body ::-webkit-scrollbar-thumb {
     }
 
   /* --- end profile page --- */
+  /* --- brand rep area --- */
+    table.brand-rep-area-table{
+      width:90%;
+      margin-left:auto;
+      margin-right:auto;
+      left:0;
+      right:0;
+      margin-top:20px;
+    }
+
+  /* --- end brand rep area ---*/
+
 
   /* --- profile form --- */
     form#user-profile-form div.description {

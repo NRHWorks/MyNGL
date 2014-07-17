@@ -121,6 +121,13 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
+  $items['myngl/brand-rep-area'] = array(
+    'title' => 'Brand Rep Area',
+    'page callback' => 'myngl_myngl_brand_rep_area',
+    'page arguments' => array(),
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
 
@@ -169,6 +176,51 @@ function myngl_myngl_theme() {
   return $items;
 }
 
+function myngl_myngl_brand_rep_area(){
+  global $user;
+
+  $rep_nodes = array();
+
+
+  $result = db_query("SELECT nid FROM {node} WHERE type = 'myngl'");
+
+  foreach ($result as $r) {
+    $myngl = node_load($r->nid);
+    $brand_reps = $myngl->field_brand_rep2['und'];
+    $brand_reps_uids = array();
+      foreach($brand_reps as $row){
+        $brand_reps_uids[] = $row['uid'];
+      }
+    if (in_array($user->uid, $brand_reps_uids)){
+      $n = array(
+        'title' => $myngl->title,
+        'link'  => l("EDIT", "node/".$myngl->nid."/edit"),
+      );
+
+      $rep_nodes[] = $n;
+    }
+  }
+
+  $attributes = array(
+    "class" =>array("brand-rep-area-table"),
+  );
+
+  $headers = array(
+               array('data'=> "Title",
+                     'class' =>array("test"),
+                     'align' => 'center',
+                     'style' =>'width:80%',
+                    ),
+
+
+
+                     "");
+
+  return theme("table",array('header' => $headers, 'rows' => $rep_nodes, 'attributes' =>$attributes, ) );
+
+
+
+}
 function myngl_myngl_change_date($myngl_id, $user_id, $date_id) {
 
   $node = node_load($myngl_id);
@@ -870,11 +922,12 @@ function myngl_myngl_add_invitee($form, &$form_state, $nid) {
     '#description' => t('Enter invitees email address.'),
   );
 
+  /*
   $form['brand_rep'] = array(
     '#type' => 'checkbox',
     '#title' => t('Brand Rep'),
     '#description' => t('Check if the invitee is a brand rep.'),
-  );
+  );*/
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -896,7 +949,7 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
   $field_collection_item->field_invitee_last_name['und'][]['value'] = $v['last_name'];
   $field_collection_item->field_invitee_email_address['und'][]['value'] = $v['email'];
   $field_collection_item->field_invitee_status['und'][]['value'] = 'New';
-  $field_collection_item->field_brand_rep['und'][]['value'] = $v['brand_rep'];
+  //$field_collection_item->field_brand_rep['und'][]['value'] = $v['brand_rep'];
 
   $field_collection_item->save();
 

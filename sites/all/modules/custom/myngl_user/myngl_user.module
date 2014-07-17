@@ -8,6 +8,27 @@ function myngl_user_init() {
       drupal_goto('user');
     }
   }
+
+  // Block users if not brand rep or administrator
+  if (drupal_match_path(current_path(),"node/*/edit")){
+    if (in_array("administrator", $user->roles)){
+    }
+    elseif(in_array("brand rep", $user->roles) ){
+      $myngl = node_load(arg(1));
+      $brand_reps = $myngl->field_brand_rep2['und'];
+      $brand_reps_uids = array();
+      foreach($brand_reps as $row){
+        $brand_reps_uids[] = $row['uid'];
+      }
+      if (!in_array($user->uid, $brand_reps_uids)){
+        drupal_goto('user');
+      }
+    }
+    else{
+      drupal_goto('user');
+    }
+  }
+
 }
 
 function myngl_user_user_login(&$edit, $account) {
