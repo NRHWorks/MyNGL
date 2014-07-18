@@ -35,12 +35,23 @@ addthisevent.settings({
                 </a>
               </div>
               <div class="upcoming-myngl-link upcoming-myngl-attendance">
-                <a href="/myngl/<?php print $m['myngl']->nid; ?>/cancel-invitation">
+                <a href="#" onclick="myngl.cancel_invitation(<?php print $m['myngl']->nid; ?>)">
                   <i class="fa fa-times-circle"></i>&nbsp;&nbsp;&nbsp;Cancel Attendance</a>
                 </div>
             </div>
           </div>
         </div>
+
+        <div class="confirm-cancel" id="confirm-cancel-<?php print $m['myngl']->nid; ?>">
+          <p>Are you sure that you want to cancel the event <?php print $m['myngl']->title?>?</p>
+          <a style="float:left; margin-top:50px;" href="/myngl/<?php print $m['myngl']->nid; ?>/cancel-invitation">
+            <i class="fa fa-times-circle"></i>&nbsp;&nbsp;&nbsp;Cancel Attendance</a>
+          </a>
+          <a style="float:right;margin-top:50px;" href="#" onclick="myngl.cancel_cancel(<?php print $m['myngl']->nid; ?>)">
+            <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Keep my RSVP</a>
+          </a>
+        </div><!-- /.confirm-cancel -->
+
       </div>
 
       <div class="upcoming-myngls-pane" id="upcoming-myngls-pane-details-<?php print $k; ?>">

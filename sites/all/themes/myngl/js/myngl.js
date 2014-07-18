@@ -67,7 +67,12 @@
 
 var myngl = (function($) {
   return {
-
+    cancel_invitation: function($myngl_id){
+      $("#confirm-cancel-" + $myngl_id).fadeIn(300);
+    },
+    cancel_cancel: function($myngl_id){
+      $("#confirm-cancel-" + $myngl_id).fadeOut(300);
+    },
     add_rewards_points: function(myngl_id,user_id,field_name){
       $.ajax({
         type: "GET",
@@ -88,6 +93,7 @@ var myngl = (function($) {
           $(".field-name-field-profile-gender input#edit-profile-profile-field-profile-gender-und").prop('checked',true);
         }
       }
+      /*
       else {   // status
         if ($(".field-name-field-relationship input#edit-profile-profile-field-relationship-und").prop('checked')==true) {
           $("#status-switch-inner").animate({left: "10px"}, 200);
@@ -97,7 +103,7 @@ var myngl = (function($) {
           $("#status-switch-inner").animate({left: "50px"}, 200);
           $(".field-name-field-relationship input#edit-profile-profile-field-relationship-und").prop('checked',true);
         }
-      }
+      }*/
 
     },
 
@@ -110,6 +116,7 @@ var myngl = (function($) {
     overlay_close: function(show) {
       $('#overlay-background').fadeOut(500);
       $('.overlay').fadeOut(100);
+      $('.confirm-cancel').hide();
       if(show == true) {
         $('#myngl-event-chat-button-invitees').delay(200).fadeIn(500);
       }

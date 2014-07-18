@@ -248,7 +248,7 @@ function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
       </div>
       <div class="option-right" style="position:absolute; left:250px;">Female</div>
     </div>
-
+    <!--
     <div id="status" class ="profile-flipswitch">
       <div id="label" style="float:left;">Status</div>
       <div class="option-left" style="position:absolute; left:100px;">Single</div>
@@ -258,7 +258,7 @@ function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
         </div>
       </div>
       <div class="option-right" style="position:absolute; left:250px;">In Relationship</div>
-    </div>';
+    </div>-->';
 
 
 

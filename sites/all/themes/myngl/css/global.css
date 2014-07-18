@@ -587,6 +587,23 @@ body ::-webkit-scrollbar-thumb {
       margin-left: 0;
     }
 
+    div.confirm-cancel{
+      position:absolute;
+      left:0;
+      right:0;
+      top:200px;
+      margin-right:auto;
+      margin-left:auto;
+      background-color:#ffffff;
+      width:400px;
+      height:150px;
+      border:1px solid #000000;
+      padding:50px;
+      display:none;
+      text-align: center;
+      box-shadow: 0 0 30px #666666;
+    }
+
   /* --- end profile page --- */
   /* --- brand rep area --- */
     table.brand-rep-area-table{
