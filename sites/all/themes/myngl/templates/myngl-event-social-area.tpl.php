@@ -116,7 +116,28 @@
 
 <div id="close-and-minimize-all"><span onclick='chat.minimize_all()' style="margin-right:5px;">_</span> <span onclick='chat.close_all()'>X</div>
 
-<div id="expand-fold-dock" style="position:absolute; width:50px; height:50px; background-color:#ff00ff;" onclick="social_area.expand_fold_dock()"></div>
+<style type="text/css">
+  #dock-arrows{
+    position:absolute;
+    z-index:300;
+    right:10px;
+    bottom:45px;
+    width:20px;
+  }
+  .fa-social-dock-arrow{
+    font-size:20px;
+    /*background-color:<?php print $primary_color;?>;*/
+    color:<?php print $secondary_color; ?>;
+  }
+  .fa-social-dock-arrow.disabled{
+    color:#888888;
+  }
+</style>
+<div id="dock-arrows">
+  <div id="dock-up" class="fa-social-dock-arrow fa fa-chevron-circle-up"  onclick="social_area.dock_expand()"></div>
+  <div id="dock-down" class="fa-social-dock-arrow fa fa-chevron-circle-down"  onclick="social_area.dock_fold()"></div>
+</div>
+
 <div id="myngl-event-social-area">
   <div class="branded-secondary point-badge">
     <p><?php print $total_points; ?></p>
@@ -182,9 +203,9 @@
   <div id="myngl-event-chat-button-invitees" style="clear:both; /*margin-top: 300px;*/">
 
     <div id="invitee-thumbs-wrapper" >
-      <div id="dock-scroll-right" onclick="social_area.dock_scroll_right();" style="position: absolute;right:0;font-size:30px;color:#ffffff;z-index:200;">></div>
-      <div id="dock-scroll-left" onclick="social_area.dock_scroll_left();" style="position: absolute; left:0;font-size:30px;color:#ffffff;z-index:200;"><</div>
-      <div id="invitees-thumbs" >
+      <div class="fa-social-dock-arrow fa fa-chevron-circle-right" id="dock-scroll-right" onclick="social_area.dock_scroll_right();" style="position: absolute;right:5px;bottom:5px;font-size:30px;z-index:200;"></div>
+      <div class="fa-social-dock-arrow fa fa-chevron-circle-left" id="dock-scroll-left" onclick="social_area.dock_scroll_left();" style="position: absolute; left:5px;bottom:5px;font-size:30px;z-index:200;"></div>
+      <div id="invitees-thumbs"  >
 
         <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
 

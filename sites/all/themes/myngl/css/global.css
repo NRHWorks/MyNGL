@@ -1295,7 +1295,6 @@ body ::-webkit-scrollbar-thumb {
 
   div#myngl-event-chat-button-invitees #invitee-thumbs-wrapper{
     position:relative;
-    border:1px solid #00ff00;
     width:100%;
     height:120px;
   }
