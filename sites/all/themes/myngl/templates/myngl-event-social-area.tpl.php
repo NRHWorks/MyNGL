@@ -316,15 +316,15 @@
 
         <a href="#" onclick="chat.solo_hide(<?php print $i['uid']; ?>)" class="overlay-close" style="margin-left:10px">X</a>
         <a href="#" onclick="chat.solo_minimize(<?php print $i['uid']; ?>);" class="overlay-close">_</a>
-        Chat with <?php print $i['name']; ?>:
+        <div style = "color:#ffffff;">Chat with <?php print $i['name']; ?>:</div>
       </div>
-      <div id="myngl-event-solo-chat-messages-<?php print $i['uid']; ?>" class="myngl-event-solo-chat-messages myngl-chat-messages branded-tertiary"style="height:210px; overflow:scroll; border:1px solid #3c4350;"></div>
+      <div id="myngl-event-solo-chat-messages-<?php print $i['uid']; ?>" class="myngl-event-solo-chat-messages myngl-chat-messages branded-tertiary" style="height:210px; overflow:scroll; border:1px solid #3c4350; background-color:#ffffff;"></div>
       <div class="myngl-event-solo-chat-form myngl-chat-form">
         <form action="#" onsubmit="return chat.solo_post(<?php print $i['uid']; ?>);" style="margin-top:10px;">
           <label>Enter Message</label>
           <input type="hidden" class="chat-to-uid" name="chat-to-uid" value="<?php print $i['uid']; ?>" />
-          <input type="text" id="solo-chat-message-input-<?php print $i['uid']; ?>" class="solo-chat-message-input branded-tertiary" name="message-input" size="40" />
-          <input type="submit" value="Send" />
+          <input type="text" id="solo-chat-message-input-<?php print $i['uid']; ?>" class="solo-chat-message-input branded-tertiary" name="message-input" size="40" style="background-color:#ffffff;" />
+          <input type="submit" value="Send"/>
         </form>
       </div>
     </div>

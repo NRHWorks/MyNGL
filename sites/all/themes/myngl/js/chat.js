@@ -83,13 +83,6 @@ var chat = (function ($) {
 
     },
     solo_minimize :function (uid){
-      if ($(".myngl-chat.visible").length >1) {
-          $("#close-and-minimize-all").show();
-        }
-      else {
-          $("#close-and-minimize-all").hide();
-      }
-
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide().addClass('minimized');
 
       if ($('#minimized-solo-chat-' + uid).length==0) {
@@ -101,21 +94,23 @@ var chat = (function ($) {
 
         $("#myngl-event-chat-button #minimized-chats").append(minimized_icon);
       }
+      if ($(".myngl-chat.visible").length >1) {
+          $("#close-and-minimize-all").show();
+        }
+      else {
+          $("#close-and-minimize-all").hide();
+      }
     },
     solo_hide : function(uid){
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide();
       if ($(".myngl-chat.visible").length <=1) {
-          $("#close-and-minimize-all").show();
+          $("#close-and-minimize-all").hide();
         }
-
-
     },
 
     solo_show : function(uid) {
 
-        if ($(".myngl-chat.visible").length >1) {
-          $("#close-and-minimize-all").hide();
-        }
+
         if (!($("#myngl-event-solo-chat-" + uid).hasClass('visible'))) {
 
           var left_array = [];
@@ -153,6 +148,9 @@ var chat = (function ($) {
           // remove minimized button
           $('.minimized-solo-chat#minimized-solo-chat-' + uid).remove();
 
+          if ($(".myngl-chat.visible").length >1) {
+            $("#close-and-minimize-all").show();
+          }
 
 
         }
@@ -217,10 +215,10 @@ var chat = (function ($) {
         "<div class='myngl-event-group-chat-intro branded'><a href='#' " +
         //"onclick='jQuery(this).parent().parent().remove();' class='overlay-close'>X</a>" +
         "onclick='chat.group_leave(" + new_chat.chat_id + ");' class='overlay-close'>X</a>" +
-        "Chat with<div class='group_chat_user_list' style='inline-block;'>" + group_chat_user_list + "</div>";
+        "<div style='color:#ffffff'> Chat with<div class='group_chat_user_list' style='inline-block;'>" + group_chat_user_list + "</div></div>";
       // messages
       new_chat_div = new_chat_div +
-      "<div class='myngl-event-group-chat-messages myngl-chat-messages branded-tertiary' style='height:210px; overflow:scroll; border:1px solid #3c4350;'></div>";
+      "<div class='myngl-event-group-chat-messages myngl-chat-messages branded-tertiary' style='height:210px; overflow:scroll; border:1px solid #3c4350;background-color:#ffffff;'></div>";
 
       // submit form
 
@@ -231,7 +229,7 @@ var chat = (function ($) {
         '   <input type="hidden" class="chat-to-group" name="chat-to-group" value="' + new_chat.chat_id + '" />'+
         '   <input type="text" id ="group-chat-message-input-'+  new_chat.chat_id +
               '" class="group-chat-message-input branded-tertiary form-light"' +
-              ' name="message-input" size="40" '+
+              ' name="message-input" size="40" style="background-color:#ffffff;"'+
               'onfocus="chat.group_chat_input_focus('+new_chat.chat_id+')" ' +
               'onblur="chat.group_chat_input_onblur('+new_chat.chat_id+')" value="Enter Message"/>' +
         '   <input type="submit" value="Send" />' +
