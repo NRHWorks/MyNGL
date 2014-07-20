@@ -206,34 +206,30 @@
       <div class="fa-social-dock-arrow fa fa-chevron-circle-right" id="dock-scroll-right" onclick="social_area.dock_scroll_right();" style="position: absolute;right:5px;bottom:5px;font-size:30px;z-index:200;"></div>
       <div class="fa-social-dock-arrow fa fa-chevron-circle-left" id="dock-scroll-left" onclick="social_area.dock_scroll_left();" style="position: absolute; left:5px;bottom:5px;font-size:30px;z-index:200;"></div>
       <div id="invitees-thumbs"  >
-
-        <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
-
-          <!-- Beginning of the test code -->
-          <?php for ($i = 0; $i < $num_of_test_icons; $i ++): ?>
-            <div class="invitee-thumb-test-place-holder"
-               style=" float:left; width: 90px; height:120px;
-               background-color:
-               #<?php print str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT ) .
-                            str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT ) .
-                            str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT );?>">
-
+        <?php foreach ($invitees as $k => $i) : ?>
+          <?php //if ($user->uid != $i['uid']): ?>
+            <div id="invitee-thumb-<?php print $i['uid']; ?>" style="float:left; text-align: center; width: 90px; height:120px; " class="invitee invitee-thumb <?php if ($i['fb']) { print ' fb ';} ?> <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>">
+            <a href="#" onmouseleave='chat.mouse_leave_thumb(<?php print $i['uid']; ?>)' onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
+            <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
             </div>
-          <?php endfor; ?>
-          <!-- end of the test code -->
-            <!-- todo: update #invitee-thumbs width based on the filter -->
+          <?php //endif; ?>
+        <?php endforeach; ?>
 
 
-          <?php foreach ($invitees as $k => $i) : ?>
-            <?php //if ($user->uid != $i['uid']): ?>
-              <div id="invitee-thumb-<?php print $i['uid']; ?>" style="float:left; text-align: center; width: 90px; height:120px; " class="invitee invitee-thumb <?php if ($i['fb']) { print ' fb ';} ?> <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>">
-              <a href="#" onmouseleave='chat.mouse_leave_thumb(<?php print $i['uid']; ?>)' onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
-              <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
-              </div>
-            <?php //endif; ?>
-          <?php endforeach; ?>
+        <!-- Beginning of the test code -->
+        <?php for ($i = 0; $i < $num_of_test_icons; $i ++): ?>
+          <div class="invitee-thumb-test-place-holder"
+             style=" float:left; width: 90px; height:120px;
+             background-color:
+             #<?php print str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT ) .
+                          str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT ) .
+                          str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT );?>">
 
-        </div>
+          </div>
+        <?php endfor; ?>
+        <!-- end of the test code -->
+
+      </div><!-- /#invitees-thumbs -->
       <div class="thumb-background"></div>
     </div> <!-- /#invitee-thumb-wrapper-->
 
