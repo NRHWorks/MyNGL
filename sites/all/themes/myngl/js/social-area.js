@@ -2,12 +2,13 @@ var ugcScrollPosition = 0;
 var currently_shown_ugc = -1;
 var users_tagline_and_prequestion_answers; //need to keep this info for other filters
 var selected_other_filter;
+var dock_shape = 0; //0 = single row at the bottom, 1 = full screen.
+var dock_position = 0;
 
 (function ($) {
   $(document).ready( function() {
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_social');
-
 
 
     $("#invitee-thumb-" + Drupal.settings.user_id).addClass('this-user');
@@ -27,7 +28,7 @@ var selected_other_filter;
 
     $("input[name='filter']").change(function(){
       if ($("input[name='filter']:checked").val() == 'fb-friends'){
-        social_area.show_fb_friends();
+        //social_area.show_fb_friends();
       } else if ($("input[name='filter']:checked").val() == 'other') {
         //social_area.show_other_filter();
       } else if ($("input[name='filter']:checked").val() == 'all') {
@@ -45,6 +46,8 @@ var selected_other_filter;
         });
 
       }
+      social_area.update_dock_size();
+      $("#invitees-thumbs").animate({left: 0}, 400);
     });
 
     var ugc_width = 0;
@@ -86,6 +89,74 @@ var selected_other_filter;
 
 var social_area = (function ($) {
   return {
+    expand_fold_dock: function(){
+      if (dock_shape==0){
+        dock_shape =1;
+        var new_height = $(window).height() - 250;
+        $("#myngl-event-chat-button-invitees #invitee-thumbs-wrapper ").css("height",new_height + "px" );
+        $("#myngl-event-chat-button-invitees #invitee-thumbs-wrapper #invitees-thumbs").css({
+              width:"inherit",
+              overflow:"scroll",
+              height:"inherit",
+              left:0,
+        });
+        $("#dock-scroll-right").hide();
+        $("#dock-scroll-left").hide();
+      }
+      else {
+        dock_shape = 0;
+        $("#invitee-thumbs-wrapper").css("height","120px");
+        $("#myngl-event-chat-button-invitees #invitee-thumbs-wrapper #invitees-thumbs").css({
+            width:"100%",
+            overflow:"hidden",
+            left:-dock_position + "px",
+          });
+        social_area.update_dock_size();
+        $("#dock-scroll-right").show();
+        $("#dock-scroll-left").show();
+
+      }
+    },
+
+    update_dock_size : function(){
+      var v1 = $("#invitees-thumbs .invitee-thumb.in-lounge").length;
+      var v2 = $("#invitees-thumbs .invitee-thumb.in-lounge.filter-hide").length;
+      var v3 =  Drupal.settings.num_of_test_icons;
+      console.log(v1 + ", " + v2 + ", " + v3);
+
+      if (dock_shape==0) { //dock is a single row at the bottom
+        $("#invitee-thumbs-wrapper #invitees-thumbs").css("width", (v1 - v2 + v3)*90 );
+
+      }
+      else { // dock is fully opened.
+
+
+      }
+
+
+    },
+
+    dock_scroll_right: function(){
+      if ($("#invitees-thumbs").width()- $(window).width() <0) {
+        return false;
+      }
+
+      dock_position = Math.min (dock_position + $(window).width(), $("#invitees-thumbs").width()- $(window).width() );
+      $("#invitees-thumbs").animate({left: 0 - dock_position}, 400);
+
+
+      return false;
+    },
+    dock_scroll_left: function(){
+      if ($("#invitees-thumbs").width()- $(window).width() <0) {
+        return false;
+      }
+      dock_position = Math.max (dock_position - $(window).width(), 0 );
+
+      $("#invitees-thumbs").animate({left: 0 - dock_position}, 400);
+
+      return false;
+    },
     update_tagline_and_pre_question_answers: function(){
       $.ajax({
         type: "GET",
@@ -289,11 +360,11 @@ var social_area = (function ($) {
         uid = Drupal.settings.uids[i];
         if (users.indexOf(uid)!= -1) {
           $("#invitee-thumb-"+ uid).addClass("in-lounge");
-          if (!$("#invitee-thumb-"+ uid).hasClass("filter-hidden")) {
+          if (!$("#invitee-thumb-"+ uid).hasClass("filter-hide")) {
             $("#invitee-thumb-"+ uid).css('display','block');
           }
           $("form#social-area-chat-list #uid-" + uid).addClass("in-lounge");
-          if (!$("form#social-area-chat-list #uid-" + uid).hasClass("filter-hidden")) {
+          if (!$("form#social-area-chat-list #uid-" + uid).hasClass("filter-hide")) {
             $("form#social-area-chat-list #uid-" + uid).css('display','block');
           }
         }
@@ -302,6 +373,7 @@ var social_area = (function ($) {
           $("form#social-area-chat-list #uid-" + uid).removeClass("in-lounge").removeClass('selected').css('display','none');
         }
       }
+      social_area.update_dock_size();
     }
   }
 }(jQuery));

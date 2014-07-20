@@ -1213,6 +1213,10 @@ body ::-webkit-scrollbar-thumb {
 
   /* --- Social Area --- */
 
+  .page-myngl-event-social-area .myngl-event-profile-pic{
+    height:70px;
+    width:70px;
+  }
 
   .myngl-event-profile-pic {
     border-radius: 100%;
@@ -1272,14 +1276,12 @@ body ::-webkit-scrollbar-thumb {
   div#myngl-event-chat-button-invitees {
     position: fixed;
     bottom: 40px;
-    min-width: 1080px;
+    /*min-width: 1080px; */
     width: 100%;
+    overflow:hidden;
   }
 
-  div#invitees-thumbs {
-    border: none;
-    background: transparent;
-  }
+
 
   div#myngl-event-chat-button-invitees .thumb-background {
     content: '';
@@ -1289,15 +1291,30 @@ body ::-webkit-scrollbar-thumb {
     position: absolute;
     bottom: 0;
     z-index: -999;
-
   }
 
+  div#myngl-event-chat-button-invitees #invitee-thumbs-wrapper{
+    position:relative;
+    border:1px solid #00ff00;
+    width:100%;
+    height:120px;
+  }
+
+  div#myngl-event-chat-button-invitees #invitee-thumbs-wrapper #invitees-thumbs{
+    position:relative;
+    height: 120px;
+    overflow: hidden;
+    width:100%;
+    border: none;
+    background: transparent;
+  }
   #invitee-filters {
     font-family: Georgia;
     padding-left: 40px;
     padding-right: 50px;
     padding-top: 10px;
     height: 40px;
+    min-width: 1080px;
   }
 
   #invitee-filters form {

@@ -7,7 +7,8 @@
     exit;
   }*/
 ?>
-
+<?php $num_of_test_icons = 50; ?>
+<?php drupal_add_js(array('num_of_test_icons' => $num_of_test_icons), 'setting'); ?>
 <?php
   global $user;
   $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
@@ -115,7 +116,7 @@
 
 <div id="close-and-minimize-all"><span onclick='chat.minimize_all()' style="margin-right:5px;">_</span> <span onclick='chat.close_all()'>X</div>
 
-
+<div id="expand-fold-dock" style="position:absolute; width:50px; height:50px; background-color:#ff00ff;" onclick="social_area.expand_fold_dock()"></div>
 <div id="myngl-event-social-area">
   <div class="branded-secondary point-badge">
     <p><?php print $total_points; ?></p>
@@ -178,21 +179,43 @@
   <div id="myngl-event-pov-button" onclick="return pov.open();">
   </div>
 
-  <div id="myngl-event-chat-button-invitees" style="clear:both; margin-top: 300px;">
-    <div style="position: relative;">
-      <div id="invitees-thumbs" style="height: 140px; overflow: hidden;">
+  <div id="myngl-event-chat-button-invitees" style="clear:both; /*margin-top: 300px;*/">
+
+    <div id="invitee-thumbs-wrapper" >
+      <div id="dock-scroll-right" onclick="social_area.dock_scroll_right();" style="position: absolute;right:0;font-size:30px;color:#ffffff;z-index:200;">></div>
+      <div id="dock-scroll-left" onclick="social_area.dock_scroll_left();" style="position: absolute; left:0;font-size:30px;color:#ffffff;z-index:200;"><</div>
+      <div id="invitees-thumbs" >
+
         <a id="close-invitee" style="float:right; display:none;" href="#" onclick="return social_area.close_invitees();">Close View</a>
-        <?php foreach ($invitees as $k => $i) : ?>
-          <?php //if ($user->uid != $i['uid']): ?>
-            <div id="invitee-thumb-<?php print $i['uid']; ?>" style="float:left; text-align: center; width: 130px; height:150px; " class="invitee invitee-thumb <?php if ($i['fb']) { print ' fb ';} ?> <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>">
-            <a href="#" onmouseleave='chat.mouse_leave_thumb(<?php print $i['uid']; ?>)' onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
-            <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
+
+          <!-- Beginning of the test code -->
+          <?php for ($i = 0; $i < $num_of_test_icons; $i ++): ?>
+            <div class="invitee-thumb-test-place-holder"
+               style=" float:left; width: 90px; height:120px;
+               background-color:
+               #<?php print str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT ) .
+                            str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT ) .
+                            str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT );?>">
+
             </div>
-          <?php //endif; ?>
-        <?php endforeach; ?>
-      </div>
+          <?php endfor; ?>
+          <!-- end of the test code -->
+            <!-- todo: update #invitee-thumbs width based on the filter -->
+
+
+          <?php foreach ($invitees as $k => $i) : ?>
+            <?php //if ($user->uid != $i['uid']): ?>
+              <div id="invitee-thumb-<?php print $i['uid']; ?>" style="float:left; text-align: center; width: 90px; height:120px; " class="invitee invitee-thumb <?php if ($i['fb']) { print ' fb ';} ?> <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>">
+              <a href="#" onmouseleave='chat.mouse_leave_thumb(<?php print $i['uid']; ?>)' onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
+              <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
+              </div>
+            <?php //endif; ?>
+          <?php endforeach; ?>
+
+        </div>
       <div class="thumb-background"></div>
-    </div>
+    </div> <!-- /#invitee-thumb-wrapper-->
+
     <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
       <span id="people-total">0</span> PEOPLE TOTAL / <span id="people-in-lounge">0</span> IN THIS ROOM
       <form id='filters'>
