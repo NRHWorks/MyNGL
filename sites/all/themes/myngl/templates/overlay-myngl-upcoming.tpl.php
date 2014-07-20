@@ -75,7 +75,7 @@ addthisevent.settings({
             <a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
               <span class="_start"><?php print myngl_addthis_date($m['date']); ?></span>
               <span class="_end"><?php print myngl_addthis_end_date($m['date']); ?></span>
-              <span class="_zonecode">35</span>
+              <span class="_zonecode">15</span>
               <span class="_summary"><?php print $m['myngl']->title; ?></span>
               <span class="_description"><?php print strip_tags($m['myngl']->field_myngl_description['und'][0]['safe_value']); ?></span>
               <span class="_location"><?php print $m['brand']->title; ?>.myngl.com</span>
@@ -213,9 +213,6 @@ addthisevent.settings({
         <div class="upcoming-myngls-pane-footer">
           <div class="upcoming-myngls-pane-footer-left">
             <a href="#" onclick="return myngl_upcoming.details(<?php print $k; ?>);">Go Back</a>
-          </div>
-          <div class="upcoming-myngls-pane-footer-right">
-            <input type="submit" value="Confirm" />
           </div>
         </div>
       </div>

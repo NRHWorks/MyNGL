@@ -8,6 +8,15 @@
 
 ?>
 
+<?php if ($_GET['upload']) : ?>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+      myngl.overlay('upcoming-myngls', 600, 750);
+      myngl_upcoming.upload_images(<?php print myngl_myngl_upcoming_overlay_upload_id($uid, $_GET['upload']); ?>);
+    });
+  </script>
+<?php endif; ?>
+
 <div class="profile"<?php print $attributes; ?>>
   <div id="content-left">
     <?php
