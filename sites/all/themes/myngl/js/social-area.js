@@ -97,7 +97,7 @@ var social_area = (function ($) {
     dock_bottom: function(){
       dock_shape = 0;
       $("#invitee-thumbs-wrapper").css("display","block");
-      $("#invitee-thumbs-wrapper").css("height","120px");
+      $("#invitee-thumbs-wrapper").css("height","100px");
       $("#myngl-event-chat-button-invitees #invitee-thumbs-wrapper #invitees-thumbs").css({
           width:"100%",
           overflow:"hidden",

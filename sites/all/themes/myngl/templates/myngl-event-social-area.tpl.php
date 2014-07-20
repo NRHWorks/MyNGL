@@ -19,6 +19,7 @@
 
 <style>
   #close-and-minimize-all{
+    display:none;
     position:absolute;
     right:40px;
     top:85px;

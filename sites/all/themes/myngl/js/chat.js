@@ -83,6 +83,12 @@ var chat = (function ($) {
 
     },
     solo_minimize :function (uid){
+      if ($(".myngl-chat.visible").length >1) {
+          $("#close-and-minimize-all").show();
+        }
+      else {
+          $("#close-and-minimize-all").hide();
+      }
 
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide().addClass('minimized');
 
@@ -98,9 +104,18 @@ var chat = (function ($) {
     },
     solo_hide : function(uid){
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide();
+      if ($(".myngl-chat.visible").length <=1) {
+          $("#close-and-minimize-all").show();
+        }
+
+
     },
 
     solo_show : function(uid) {
+
+        if ($(".myngl-chat.visible").length >1) {
+          $("#close-and-minimize-all").hide();
+        }
         if (!($("#myngl-event-solo-chat-" + uid).hasClass('visible'))) {
 
           var left_array = [];

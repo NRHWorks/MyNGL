@@ -1296,12 +1296,12 @@ body ::-webkit-scrollbar-thumb {
   div#myngl-event-chat-button-invitees #invitee-thumbs-wrapper{
     position:relative;
     width:100%;
-    height:120px;
+    height:100px;
   }
 
   div#myngl-event-chat-button-invitees #invitee-thumbs-wrapper #invitees-thumbs{
     position:relative;
-    height: 120px;
+    height: 100px;
     overflow: hidden;
     width:100%;
     border: none;
