@@ -1188,6 +1188,7 @@ body ::-webkit-scrollbar-thumb {
     font-weight:bold;
     height:0px;
     background-color: rgba(200,200,150,0.9);
+    overflow:hidden;
   }
 
 

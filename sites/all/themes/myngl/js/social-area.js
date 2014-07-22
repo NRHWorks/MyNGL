@@ -7,6 +7,12 @@ var dock_position = 0;
 
 (function ($) {
   $(document).ready( function() {
+    //$.cookie('lounge_entrance_time', null); //comment this line out when it's done
+    if ($.cookie('lounge_entrance_time') == null) {
+      $.cookie('lounge_entrance_time', $.now());
+    }
+
+
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_social');
 
@@ -344,13 +350,15 @@ var social_area = (function ($) {
 
     message: function() {
       var myngl_id = Drupal.settings.myngl_id;
-
+      var time_passed = $.now() - $.cookie('lounge_entrance_time');
+      console.log (time_passed);
       $.ajax({
         type: "GET",
-        url: "/myngl-event/" + myngl_id + "/ajax/message",
+        url: "/myngl-event/" + myngl_id + "/ajax/message/" + time_passed ,
         success: function(data) {
           if (data.message == '') {
             $("#myngl-event-message").animate({"height": "0"}, 200);
+
           } else {
             if ($("#message-span").html() != data.message) {
               $("#myngl-event-message").animate({"height": "0"}, 200, function() {
@@ -360,6 +368,8 @@ var social_area = (function ($) {
           }
         }
       });
+
+
     },
     update_users_in_lounge: function(){
       $.ajax({

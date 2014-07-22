@@ -2,8 +2,8 @@
   if (!isset($_COOKIE['done_lobby_video']) || $_COOKIE['done_lobby_video']!= 1){
     global $base_url;
     $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
-    header($redirect);
-    exit;
+    //header($redirect); Commented out for development -- Ming
+    //exit;
   }
 ?>
 <?php
