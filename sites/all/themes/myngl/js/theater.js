@@ -6,14 +6,24 @@
     $('li#theater').removeClass("inactive").addClass("active");
     setInterval(function() { theater.message(); }, 3000);
 
-    $("iframe.media-ustream-player").width(694).height(390).attr('id','iframe-movie');
+    $("iframe.media-ustream-player").width(852).height(479).attr('id','iframe-movie');
     var viewer = UstreamEmbed('iframe-movie');
     viewer.addListener('finished', function(){
       $('#myngl-theater-see-more').css('display','block');
 			$("#question-form-wrapper").hide();
     });
-
-		$("#myngl-theater-see-more .additional-video a").attr('target','_blank');
+    
+    $("#player").hide();
+    $("#myngl-theater-see-more .additional-video a").click(function(event) {
+        event.preventDefault();       
+        $("#player").show();
+        $("#theater-body .field-name-field-theater").hide();
+                
+        var aID = $(this).attr('href');
+        aID = aID.replace("/watch?v=", "/embed/");
+        $("#player").attr('src', aID + "?enablejsapi=1");        
+    });
+    
     $('.downloads-slide:eq(0)').animate({'left':0}).addClass('active');
 
     var animating = false;
