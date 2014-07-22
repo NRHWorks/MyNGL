@@ -13,8 +13,7 @@
         <span class="day"><?php print date('j',$a['date']); ?></span><br />
       </div>
       <div class="activity-details">
-        <?php if (isset($a['day'])) : ?><span class="activity-day"><?php print $a['day']; ?></span><br /><?php endif; ?>
-        <span class="activity-description"><?php print $a['description']; ?></span>
+        <span class="activity-day"><?php print $a['description']; ?></span>
       </div>
       <div class="activity-points">
         <span class="points"><?php print $a['points']; ?></span> 
