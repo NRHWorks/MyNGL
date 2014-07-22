@@ -66,16 +66,11 @@
         with otehr attendees at the upcoming Myngl event.
       </p>
     </div>
-    <?php // /myngl/"+ myngl_id + "/event-detail/"  + user_id ?>
-    <!--<a href="<?php print base_path();?>myngl/<?php print $node->nid;?>/event-detail/<?php global $user; print $user->uid; ?>"><i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;VIEW EVENT DETAIL</a> -->
-
-    <!--
-    //<a href="#" onclick="myngl.event_detail_overlay(<?php print $node->nid;?>,<?php global $user; print $user->uid; ?>)"><i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;VIEW EVENT DETAIL</a>
-    -->
-    <!--<a href="#"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;UPLOAD YOUR CONTENT TO THIS EVENT</a> -->
-  </div>
   <br>
   <div id="footer-links">
+    <div style="float:right;">
+      <a href="/user/<?php global $user; print $user->uid; ?>?upload=<?php print $node->nid; ?>"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;UPLOAD YOUR CONTENT TO THIS EVENT</a> 
+    </div>
     <a href="/user/<?php global $user; print $user->uid; ?>" class="link-small">Go to your Dashboard</a>
   </div>
 </div>

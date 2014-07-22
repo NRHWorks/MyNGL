@@ -283,10 +283,10 @@ body ::-webkit-scrollbar-thumb {
     #confirm-invite-wrapper #footer-links {
       border: none;
     }
-
+    
     #confirm-invite-wrapper #footer-links a {
       font-weight: normal;
-      text-decoration: underline;
+      text-decoration: none;
       margin-left: 20px;
     }
 

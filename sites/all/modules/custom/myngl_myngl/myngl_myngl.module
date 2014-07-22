@@ -318,6 +318,28 @@ function myngl_myngl_upcoming($uid) {
 
 }
 
+
+function myngl_myngl_upcoming_overlay_upload_id($uid, $nid) {
+  //find myngls for this user
+  $result = db_query("SELECT entity_id FROM {field_data_field_invitee_user_account} WHERE field_invitee_user_account_uid = :uid", array(':uid' => $uid));
+
+  $myngls = array();
+  foreach ($result as $r) {
+    // based on invitee id get myngls
+    $sub_result = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = :iid", array(':iid' => $r->entity_id));
+
+    $invitee_collection = array_shift(entity_load('field_collection_item', array($r->entity_id)));
+
+    foreach ($sub_result as $k => $s) {
+      $myngl = node_load($s->entity_id);
+
+      if ($myngl->nid == $nid) {
+        return $k;
+      }
+    }
+  }
+}
+
 function myngl_myngl_upcoming_overlay($uid) {
   //find myngls for this user
   $result = db_query("SELECT entity_id FROM {field_data_field_invitee_user_account} WHERE field_invitee_user_account_uid = :uid", array(':uid' => $uid));
