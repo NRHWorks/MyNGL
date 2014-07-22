@@ -2127,3 +2127,15 @@ div#exit-div #exit-points #exit-points-circle .exit-points-points {
 }
  
 /*  ----- End Exit Page ---------------------------------- */
+
+#edit-date div.form-item {
+  float: none;
+  display: block;
+  width: 100%;
+}
+
+#myngl-myngl-overlay-change-date #edit-submit--4 {
+  position: absolute;
+  bottom: 125px;
+  right: 50px;
+}

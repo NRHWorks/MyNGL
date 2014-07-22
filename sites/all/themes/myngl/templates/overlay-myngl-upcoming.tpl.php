@@ -214,9 +214,6 @@ addthisevent.settings({
           <div class="upcoming-myngls-pane-footer-left">
             <a href="#" onclick="return myngl_upcoming.details(<?php print $k; ?>);">Go Back</a>
           </div>
-          <div class="upcoming-myngls-pane-footer-right">
-            <input type="submit" value="Confirm" />
-          </div>
         </div>
       </div>
     <?php endforeach; ?>
