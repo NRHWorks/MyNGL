@@ -1185,18 +1185,22 @@ body ::-webkit-scrollbar-thumb {
   #myngl-event-message {
     float:left;
     width: auto;
-    font-weight:bold;
+
+    /*font-weight:bold;*/
     height:0px;
     background-color: rgba(200,200,150,0.9);
     overflow:hidden;
+
   }
 
 
-  #myngl-event-message span {
+  #myngl-event-message #message-text {
     position: relative;
-    padding-left: 20px;
-    padding-right: 20px;
-    top: 25px;
+    width:200px;
+    margin: 20px 20px 20px 20px;
+    /*top: 25px;*/
+
+    font-family:'lato' !important;
   }
 
   /* --- lobby event --- */
@@ -1349,9 +1353,11 @@ body ::-webkit-scrollbar-thumb {
 
   #myngl-event-ugc-box {
     overflow: hidden;
+    position:relative;
   }
 
   #myngl-event-ugc-box-inside {
+    margin-top:5px;
     overflow: hidden;
   }
 

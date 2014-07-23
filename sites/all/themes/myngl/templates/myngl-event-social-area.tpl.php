@@ -217,7 +217,7 @@
         <?php endforeach; ?>
 
 
-        <!-- Beginning of the test code -->
+        <!-- Beginning of the test code -
         <?php for ($i = 0; $i < $num_of_test_icons; $i ++): ?>
           <div class="invitee-thumb-test-place-holder"
              style=" float:left; width: 90px; height:120px;
@@ -256,8 +256,9 @@
 <div id="myngl-event-ugc" class="overlay branded" style="display:none;height:520px; width:900px;";position:absolute; margin:auto;z-index:200;top:0;bottom:0;left:0;right:0">
   <a href="#" onclick="social_area.ugc_close();" class="overlay-close">X</a>
   <div id="myngl-event-ugc-box" class="branded-tertiary">
+    <div id="title" style='font-size:24px;position:absolute;top:5px;'>Guest Creativity</div>
     <div id="myngl-event-ugc-box-inside">
-    <div id="myngl-event-ugc-box-slider">
+    <div id="myngl-event-ugc-box-slider" style="margin-left:0;">
       <div id="myngl-event-ugc-thumbs">
         <?php foreach ($ucg as $k => $u) : ?>
           <div class="event-ugc-thumb item" ><a href="#" onclick="return social_area.ugc_show(<?php print $k; ?>)"><?php print $u['thumb']; ?></a></div>
@@ -281,13 +282,14 @@
 
 <div id="myngl-event-pov" class="overlay branded">
   <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>
-  <div id="myngl-event-pov-question" class="branded-tertiary"></div>
+  <div id="title" style="font-size:20px;position:absolute;">Shout Out!</div>
+  <div id="myngl-event-pov-question" class="branded-tertiary" style="background-color:#ffffff;"></div>
   <hr>
-  <div id="myngl-event-pov-wall" class="branded-tertiary" style="border-right: 5px solid <?php echo $tertiary_color; ?>;"></div>
+  <div id="myngl-event-pov-wall" class="branded-tertiary" style="border-right: 5px solid <?php echo $tertiary_color; ?>;background-color:#ffffff;"></div>
   <div id="myngl-event-pov-messages" >
     <form class="branded" action="#" onsubmit="return pov.post(<?php print $user->uid; ?>);">
       <label>TYPE MESSAGE HERE.</label>
-      <input type="text" class="branded-tertiary" id="pov-message" name="pov-message" size="40" />
+      <input type="text" class="branded-tertiary" id="pov-message" name="pov-message" size="40" style='background-color:#ffffff;' />
       <input type="submit" value="Send" />
     </form>
   </div>
@@ -348,11 +350,15 @@
       </style>
       <div class="arrow-down"></div>
 
-      <span style="font-size:18px;font-family:'georgia';"><?php print $i['name']; ?></span>
-      <div style="width:10px; height:2px; margin:3px 0 8px 0; background-color:<?php print $secondary_color;?>"> </div>
-      <span style="font-size:16px; font-weight:bold; "><?php print $i['about_me'] ; ?></span><br /><br />
-      <span style="font-size:16px; font-weight:bold; ">Tagline: <span id="tagline-holder"><?php print $i['tagline'] ; ?></span></span><br /><br />
-      <a href="#" onclick="chat.reset_id_of_showing_invitee_info(); return chat.solo_show(<?php print $i['uid']; ?>)" style="position:absolute;right:10px;bottom:20px;text-decoration:underline;color:<?php print $secondary_color; ?>; font-weight:bold;">Start Chat</a>
+      <span style="font-size:16px;font-family:'roboto';color:#ffffff;"><?php print $i['name']; ?></span>
+      <div style="width:100%; height:1px; margin:3px 0 8px 0; background-color:#ffffff;"> </div>
+      <span style="font-size:14px; font-family:'lato'; color:#ffffff;"><?php print $i['about_me'] ; ?></span><br /><br />
+      <span style="font-size:14px; font-family:'lato'; color:#ffffff;">Tagline: <span id="tagline-holder"><?php print $i['tagline'] ; ?></span></span><br /><br />
+      <a href="#" onclick="chat.reset_id_of_showing_invitee_info(); return chat.solo_show(<?php print $i['uid']; ?>)"
+                  style="font-size:14px;position:absolute;right:10px;bottom:10px;text-decoration:underline;color:#ffffff; ">
+        CHAT
+        <img style="position:relative;top:10px;" src='<?php print base_path();?>sites/all/themes/myngl/images/chatboxes.png' height='30px' width='30px'/>
+      </a>
 
 
 

@@ -192,7 +192,7 @@ function myngl_event_social_area($nid) {
                   'brand_rep' => (in_array($u->uid, $brand_reps_uids))?1:0,
                 );
 
-    for ($x=1;$x<=10;$x+=1) {
+    //for ($x=1;$x<=3;$x+=1) {
       if (isset($ic->field_image_upload['und'])) {
         foreach ($ic->field_image_upload['und'] as $image) {
           $ucg[] = array(
@@ -212,7 +212,7 @@ function myngl_event_social_area($nid) {
           );
         }
       }
-    }
+    //}
   }
 
   $pre_questions = array();

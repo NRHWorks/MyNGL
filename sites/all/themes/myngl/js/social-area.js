@@ -7,7 +7,7 @@ var dock_position = 0;
 
 (function ($) {
   $(document).ready( function() {
-    //$.cookie('lounge_entrance_time', null); //comment this line out when it's done
+    $.cookie('lounge_entrance_time', null); //comment this line out when it's done
     if ($.cookie('lounge_entrance_time') == null) {
       $.cookie('lounge_entrance_time', $.now());
     }
@@ -64,7 +64,16 @@ var dock_position = 0;
 
     ugc_width = Math.floor(ugc_width / 3);
 
+    if (ugc_width <830) {
+      ugc_width=830;
+
+      $('.halfCircleRight').hide();
+      $('.halfCircleLeft').hide();
+
+    }
+
     $("#myngl-event-ugc-thumbs").css('width', ugc_width + 'px');
+
 
 
 /*
@@ -357,12 +366,12 @@ var social_area = (function ($) {
         url: "/myngl-event/" + myngl_id + "/ajax/message/" + time_passed ,
         success: function(data) {
           if (data.message == '') {
-            $("#myngl-event-message").animate({"height": "0"}, 200);
+            $("#myngl-event-message").css('border', '0').animate({"height": "0"}, 200);
 
           } else {
-            if ($("#message-span").html() != data.message) {
-              $("#myngl-event-message").animate({"height": "0"}, 200, function() {
-                $(this).html('<span id="message-span">' + data.message + '</span>').animate({"height": "90px"}, 1000);
+            if ($("#message-text").html() != data.message) {
+              $("#myngl-event-message").css('border', '1px solid #000000').animate({"height": "0"}, 200, function() {
+                $(this).html('<div id="message-text">' + data.message + '</div>').animate({"height": "90px"}, 1000);
               });
             }
           }

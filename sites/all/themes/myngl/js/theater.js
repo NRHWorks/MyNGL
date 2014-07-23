@@ -1,5 +1,12 @@
 (function ($) {
   $(document).ready( function() {
+
+		if ($('.field-collection-item-field-theater-downloads').length<=4 ) {
+
+			$('.halfCircleRight').hide();
+			$('.halfCircleLeft').hide();
+		}
+
 		myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");
     setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");},20000);
 		myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_theate');
