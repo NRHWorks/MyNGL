@@ -1,10 +1,15 @@
 var scrollPosition = 0;
 (function ($) {
   $(document).ready( function() {
+		$.cookie('playroom_entrance_time', null); //comment this line out when it's done
+    if ($.cookie('playroom_entrance_time') == null) {
+      $.cookie('playroom_entrance_time', $.now());
+    }
+
 		myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_activi');
     $('li#play-room').removeClass("inactive").addClass("active");
-    //setInterval(function() { activity_room.message(); }, 3000);
-		activity_room.message();
+    setInterval(function() { activity_room.message(); }, 3000);
+		//activity_room.message();
 
     var activity_room_width = 0;
 
@@ -50,6 +55,24 @@ var activity_room = (function ($) {
 
     message: function() {
       var myngl_id = Drupal.settings.myngl_id;
+
+			var time_passed = $.now() - $.cookie('playroom_entrance_time');
+			$.ajax({
+        type: "GET",
+        url: "/myngl-event/" + myngl_id + "/ajax/message/" + time_passed + "/2",
+        success: function(data) {
+          if (data.message == '') {
+						$("#myngl-event-message").css('border', '0').animate({"height": "0"}, 200);
+
+					} else {
+            if ($("#message-text").html() != data.message) {
+              $("#myngl-event-message").css('border', '1px solid #000000').animate({"height": "0"}, 200, function() {
+                $(this).html('<div id="message-text">' + data.message + '</div>').animate({"height": "90px"}, 1000);
+              });
+            }
+          }
+        }
+      });
 			/*
       $.ajax({
         type: "GET",
@@ -67,7 +90,7 @@ var activity_room = (function ($) {
         }
       });
       */
-			$("#myngl-event-message").html($("#activity-room-message").html()).animate({"height": "90px"}, 1000).css('padding-left','10px').css('padding-right','10px');
+			//$("#myngl-event-message").html($("#activity-room-message").html()).animate({"height": "90px"}, 1000).css('padding-left','10px').css('padding-right','10px');
 
     }
   }

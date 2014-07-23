@@ -22,10 +22,10 @@ function myngl_event_menu() {
     'access callback' => TRUE,
   );
 
-  $items['myngl-event/%/ajax/message/%'] = array(
+  $items['myngl-event/%/ajax/message/%/%'] = array(
     'title' => 'MyNGL Lobby',
-    'page callback' => 'myngl_event_social_area_ajax_message',
-    'page arguments' => array(1,4),
+    'page callback' => 'myngl_event_alerts_ajax_message',
+    'page arguments' => array(1,4,5),
     'access callback' => TRUE,
   );
 
@@ -244,7 +244,9 @@ function myngl_event_social_area($nid) {
                );
 }
 
-function myngl_event_social_area_ajax_message($nid, $time_passed) {
+function myngl_event_alerts_ajax_message($nid, $time_passed, $page) {
+  // $age: 0 = social-area, 1 = theater, 2 = playroom
+  $page = intval($page);
   // Convert ms to s;
   $time_passed = $time_passed / 1000;
 
@@ -263,15 +265,18 @@ function myngl_event_social_area_ajax_message($nid, $time_passed) {
     $eids[] = $eid->field_myngl_alerts_value;
   }
   $ents =entity_load('field_collection_item', array($eids));
-
   $msgs = array();
   $keys = array();
   foreach($ents as $entity){
-    $keys[] = $entity->field_time['und'][0]['value'];
-    $msgs[] = array('time' =>$entity->field_time['und'][0]['value'],
+    if($entity->field_page['und'][0]['value'] == $page){
+      file_put_contents("test123.txt","Match!\n", FILE_APPEND);
+      $keys[] = $entity->field_time['und'][0]['value'];
+      $msgs[] = array('time' =>$entity->field_time['und'][0]['value'],
                     'message' => $entity->field_message['und'][0]['safe_value'],
                     'duration' => $entity->field_duration['und'][0]['value']);
+    }
   }
+
   array_multisort($keys, $msgs);
 
   $i = 0;

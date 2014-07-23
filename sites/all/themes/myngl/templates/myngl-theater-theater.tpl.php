@@ -43,6 +43,9 @@ body.page-myngl-event-theater{
   padding-bottom:10px;
   padding-left:10px;
 }
+##theater-top-message{
+  overflow:hidden;
+}
 
 #theater-body .media-ustream-player{
   position:absolute;

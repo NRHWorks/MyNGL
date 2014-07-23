@@ -360,10 +360,10 @@ var social_area = (function ($) {
     message: function() {
       var myngl_id = Drupal.settings.myngl_id;
       var time_passed = $.now() - $.cookie('lounge_entrance_time');
-      console.log (time_passed);
+      //console.log (time_passed);
       $.ajax({
         type: "GET",
-        url: "/myngl-event/" + myngl_id + "/ajax/message/" + time_passed ,
+        url: "/myngl-event/" + myngl_id + "/ajax/message/" + time_passed + "/0",
         success: function(data) {
           if (data.message == '') {
             $("#myngl-event-message").css('border', '0').animate({"height": "0"}, 200);

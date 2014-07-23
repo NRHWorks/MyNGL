@@ -1,6 +1,10 @@
 (function ($) {
   $(document).ready( function() {
 
+		$.cookie('theater_entrance_time', null); //comment this line out when it's done
+    if ($.cookie('theater_entrance_time') == null) {
+      $.cookie('theater_entrance_time', $.now());
+    }
 		if ($('.field-collection-item-field-theater-downloads').length<=4 ) {
 
 			$('.halfCircleRight').hide();
@@ -95,8 +99,23 @@ var theater = (function ($) {
 
     message: function() {
       var myngl_id = Drupal.settings.myngl_id;
-
-      $.ajax({
+			var time_passed = $.now() - $.cookie('theater_entrance_time');
+			$.ajax({
+        type: "GET",
+        url: "/myngl-event/" + myngl_id + "/ajax/message/" + time_passed + "/1",
+        success: function(data) {
+          if (data.message == '') {
+						$("#theater-top-message").css('overflow', 'hidden').animate({"height": "0"}, 200);
+          } else {
+            if ($("#message-span").html() != data.message) {
+              $("#theater-top-message").animate({"height": "0"}, 200, function() {
+                $(this).html('<span id="message-span">' + data.message + '</span>').animate({"height": "90px"}, 1000);
+              });
+            }
+          }
+        }
+      });
+      /*$.ajax({
         type: "GET",
         url: "/myngl-event/" + myngl_id + "/ajax/theater-message",
         success: function(data) {
@@ -110,7 +129,7 @@ var theater = (function ($) {
             }
           }
         }
-      });
+      });*/
     },
     downloads_left : function (value) {
       console.log("downloads_left called");
