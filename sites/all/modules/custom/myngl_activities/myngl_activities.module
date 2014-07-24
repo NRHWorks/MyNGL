@@ -20,6 +20,19 @@ function myngl_activities_theme() {
 }
 
 function myngl_activities_page() {
+  $description_mapping = array(
+
+      'visiting_lobby' => "Visit lobby",
+      'visiting_social' => "Visit lounge",
+      'opening_ugc_win' => "View UGC window",
+      'opening_pov_win' => "View POV window",
+      'visiting_theate' => "Visit theater",
+      'visiting_activi' => "Visit playroom",
+      'playroom_activi' => "Play game",
+      'sending_ct_msg' => "Send chat message",
+
+
+  );
   global $user;
 
   $activities = array();
@@ -42,7 +55,7 @@ function myngl_activities_page() {
     $activities[] = array(
       'date' => $r->timestamp,
       'day' => $day,
-      'description' => $r->description,
+      'description' => (isset($description_mapping[$r->description]))?$description_mapping[$r->description]:$r->description,
       'points' => $r->points,
     );
 
