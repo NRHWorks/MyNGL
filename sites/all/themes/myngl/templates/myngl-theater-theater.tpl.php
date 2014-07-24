@@ -65,7 +65,7 @@ body.page-myngl-event-theater{
   height: 100px;
   position: relative;
   margin-left:auto;
-  top:490px;
+  top:600px;
   margin-right:auto;
   background-color:#d6d6d6;
   padding-top:20px;
