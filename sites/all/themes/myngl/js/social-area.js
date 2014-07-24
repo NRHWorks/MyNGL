@@ -2,6 +2,7 @@ var ugcScrollPosition = 0;
 var currently_shown_ugc = -1;
 var users_tagline_and_prequestion_answers; //need to keep this info for other filters
 var selected_other_filter;
+var ugc_width=0;
 var dock_shape = 0; //0 = single row at the bottom, 1 = full screen, -1 = completely hide
 var dock_position = 0;
 
@@ -56,7 +57,7 @@ var dock_position = 0;
       $("#invitees-thumbs").animate({left: 0}, 400);
     });
 
-    var ugc_width = 0;
+
     $('.event-ugc-thumb').each( function() {
       ugc_width += $(this).children('a').children('img').width();
       ugc_width += 20;
@@ -287,6 +288,12 @@ var social_area = (function ($) {
     ugc_close : function(){
       myngl.overlay_close(true);
       social_area.ugc_hide();
+      if (ugc_width <=830) {
+
+        $('.halfCircleRight').hide();
+        $('.halfCircleLeft').hide();
+
+      }
       return false;
 
     },
@@ -294,6 +301,14 @@ var social_area = (function ($) {
       $('.myngl-event-ugc-content').hide();
       $("#myngl-event-ugc-thumbs").fadeIn(500);
       currently_shown_ugc = -1;
+
+      if (ugc_width <=830) {
+
+        $('.halfCircleRight').hide();
+        $('.halfCircleLeft').hide();
+
+      }
+
       return false;
     },
     /*
@@ -353,6 +368,13 @@ var social_area = (function ($) {
       $("#myngl-event-ugc-thumbs").hide();
       $("#myngl-event-ugc-content-" + id).fadeIn(500);
       currently_shown_ugc = id;
+
+
+
+      $('.halfCircleRight').show();
+      $('.halfCircleLeft').show();
+
+
 
       return false;
     },

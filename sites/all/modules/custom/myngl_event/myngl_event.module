@@ -269,7 +269,6 @@ function myngl_event_alerts_ajax_message($nid, $time_passed, $page) {
   $keys = array();
   foreach($ents as $entity){
     if($entity->field_page['und'][0]['value'] == $page){
-      file_put_contents("test123.txt","Match!\n", FILE_APPEND);
       $keys[] = $entity->field_time['und'][0]['value'];
       $msgs[] = array('time' =>$entity->field_time['und'][0]['value'],
                     'message' => $entity->field_message['und'][0]['safe_value'],

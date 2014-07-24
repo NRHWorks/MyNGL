@@ -60,6 +60,7 @@
     $('#overlay-background').bind('click', function() {
       $('#overlay-background').hide();
       $('.overlay').hide();
+      myngl.help_overlay_close();
     });
 
   });
