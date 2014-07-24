@@ -1,19 +1,19 @@
 (function ($) {
   $(document).ready( function() {
 
-		$.cookie('theater_entrance_time', null); //comment this line out when it's done
+    $.cookie('theater_entrance_time', null); //comment this line out when it's done
     if ($.cookie('theater_entrance_time') == null) {
       $.cookie('theater_entrance_time', $.now());
     }
-		if ($('.field-collection-item-field-theater-downloads').length<=4 ) {
+    if ($('.field-collection-item-field-theater-downloads').length<=4 ) {
 
-			$('.halfCircleRight').hide();
-			$('.halfCircleLeft').hide();
-		}
+      $('.halfCircleRight').hide();
+      $('.halfCircleLeft').hide();
+    }
 
-		myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");
+    myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");
     setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");},20000);
-		myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_theate');
+    myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_theate');
     $('li#theater').removeClass("inactive").addClass("active");
     setInterval(function() { theater.message(); }, 3000);
 
@@ -21,7 +21,7 @@
     var viewer = UstreamEmbed('iframe-movie');
     viewer.addListener('finished', function(){
       $('#myngl-theater-see-more').css('display','block');
-			$("#question-form-wrapper").hide();
+      $("#question-form-wrapper").hide();
     });
     
     $("#player").hide();
@@ -42,8 +42,8 @@
     $("#halfCircleLeft").bind('click', function() {
 
       if (animating == true) {
-				return false;
-			}
+        return false;
+      }
       if ($('.downloads-slide').length <=1){
         return false;
       }
@@ -99,22 +99,26 @@ var theater = (function ($) {
 
     message: function() {
       var myngl_id = Drupal.settings.myngl_id;
-			var time_passed = $.now() - $.cookie('theater_entrance_time');
-			$.ajax({
+      var time_passed = $.now() - $.cookie('theater_entrance_time');
+      //console.log (time_passed);
+      $.ajax({
         type: "GET",
         url: "/myngl-event/" + myngl_id + "/ajax/message/" + time_passed + "/1",
         success: function(data) {
           if (data.message == '') {
-						$("#theater-top-message").css('overflow', 'hidden').animate({"height": "0"}, 200);
+            $("#myngl-event-message").css('border', '0').animate({"height": "0"}, 200);
+
           } else {
-            if ($("#message-span").html() != data.message) {
-              $("#theater-top-message").animate({"height": "0"}, 200, function() {
-                $(this).html('<span id="message-span">' + data.message + '</span>').animate({"height": "90px"}, 1000);
+            if ($("#message-text").html() != data.message) {
+              $("#myngl-event-message").css('border', '1px solid #000000').animate({"height": "0"}, 200, function() {
+                $(this).html('<div id="message-text">' + data.message + '</div>').animate({"height": "90px"}, 1000);
               });
             }
           }
         }
       });
+
+
       /*$.ajax({
         type: "GET",
         url: "/myngl-event/" + myngl_id + "/ajax/theater-message",

@@ -131,7 +131,7 @@ body.page-myngl-event-theater #see-more{
 
 
 <div id="theater-body">
-<div id="theater-top-message-wrapper"><div id="theater-top-message"></div></div>
+<!--<div id="theater-top-message-wrapper"><div id="theater-top-message"></div></div>-->
 
 
 <div>

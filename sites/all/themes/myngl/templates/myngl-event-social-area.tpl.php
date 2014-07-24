@@ -7,6 +7,7 @@
     exit;
   }*/
 ?>
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 <?php $num_of_test_icons = 50; ?>
 <?php drupal_add_js(array('num_of_test_icons' => $num_of_test_icons), 'setting'); ?>
 <?php
