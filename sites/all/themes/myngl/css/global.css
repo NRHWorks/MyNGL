@@ -1205,7 +1205,7 @@ body ::-webkit-scrollbar-thumb {
     background-color: rgba(226,226,216,0.4);
     box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     padding: 25px;
-    max-width: 650px;
+    max-width: 845px;
     margin: auto;
     position: relative;
     top: 21.25vh;
