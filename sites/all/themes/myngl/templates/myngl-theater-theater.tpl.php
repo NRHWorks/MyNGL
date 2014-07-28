@@ -20,7 +20,7 @@ body.page-myngl-event-theater{
 
 #theater-body{
   width: 1020px;
-  min-height: 768px;
+  min-height: 888px;
   position: relative;
   top: 0;
 
@@ -47,8 +47,14 @@ body.page-myngl-event-theater{
 #theater-body .media-ustream-player{
   position:absolute;
   top:105px;
-  left:175px;
+  left:100px;
 
+}
+
+#theater-body #player {
+  position: absolute;
+  top: 105px;
+  left: 100px;
 }
 
 #theater-body #question-form-wrapper{
@@ -56,7 +62,7 @@ body.page-myngl-event-theater{
   height: 100px;
   position: relative;
   margin-left:auto;
-  top:470px;
+  top:490px;
   margin-right:auto;
   background-color:#d6d6d6;
   padding-top:20px;
@@ -114,6 +120,8 @@ body.page-myngl-event-theater #see-more{
 
 #myngl-theater-see-more .additional-video img{
   border:2px solid <?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
+  width: 180px;
+  height: 104px;
 }
 
 </style>
@@ -135,6 +143,45 @@ body.page-myngl-event-theater #see-more{
     //print theme('youtube_video', array('video_id' => $myngl->field_welcome_video['und'][0]['video_id'], 'size' => 'custom', 'height' => '350px', 'width' => '650px'));
 
   ?>
+  
+  <div id="player"></div>
+    <script>
+    //Load player api asynchronously.
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    var done = false;
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '479',
+          width: '852',
+          playerVars: { 'autoplay': 1, 'controls': 0 },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+    }
+    function onPlayerReady(evt) {
+        //evt.target.playVideo();
+    }
+    function onPlayerStateChange(evt) {
+//        if (evt.data == YT.PlayerState.PLAYING && !done) {
+//            setTimeout(stopVideo, 6000);
+//            done = true;
+//        }
+      player.startVideo();
+    }
+    function stopVideo() {
+        player.stopVideo();
+    }
+    function startVideo() {
+        player.startVideo();
+    }
+</script>
+
 </div>
 <div id="question-form-wrapper">
 <div id="title">PLEASE SUBMIT YOUR QUESTION HERE </div>
@@ -146,9 +193,9 @@ body.page-myngl-event-theater #see-more{
 </div><!-- /#theater-body -->
 
 
-<div id="myngl-theater-see-more" style="display:none;height:150px; width:870px;position:absolute; margin-left:auto;margin-right:auto; margin-top:600px;z-index:50;top:0;bottom:0;left:0;right:0;">
+<div id="myngl-theater-see-more" style="display:none;height:150px; width:815px;position:absolute; margin-left:auto;margin-right:auto; margin-top:600px;z-index:50;top:0;bottom:0;left:0;right:0;">
   <!--<a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a> -->
-  <div><a href="#" onclick="myngl.overlay('myngl-theater-downloads',500,800);" style="float:right;background-color:#8f825d;height:98px; width:150px;padding:10px;">Check out other cool stuff from Godiva</a> </div>
+  <div><a href="#" onclick="myngl.overlay('myngl-theater-downloads',500,800);" style="float:right;background-color:#8f825d;height:88px; width:150px;padding:10px;">Check out other cool stuff from Godiva</a> </div>
   <?php
     $additional_videos = field_view_field('node', $myngl, 'field_theater_additional_video','full' );
     $counter =0;
