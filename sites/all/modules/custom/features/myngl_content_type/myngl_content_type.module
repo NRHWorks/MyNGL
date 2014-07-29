@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Myngl Content Type feature.
+ */
+
+include_once 'myngl_content_type.features.inc';
