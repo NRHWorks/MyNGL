@@ -22,10 +22,10 @@ function myngl_event_menu() {
     'access callback' => TRUE,
   );
 
-  $items['myngl-event/%/ajax/message'] = array(
+  $items['myngl-event/%/ajax/message/%'] = array(
     'title' => 'MyNGL Lobby',
     'page callback' => 'myngl_event_social_area_ajax_message',
-    'page arguments' => array(1),
+    'page arguments' => array(1,4),
     'access callback' => TRUE,
   );
 
@@ -192,7 +192,7 @@ function myngl_event_social_area($nid) {
                   'brand_rep' => (in_array($u->uid, $brand_reps_uids))?1:0,
                 );
 
-    for ($x=1;$x<=10;$x+=1) {
+    //for ($x=1;$x<=3;$x+=1) {
       if (isset($ic->field_image_upload['und'])) {
         foreach ($ic->field_image_upload['und'] as $image) {
           $ucg[] = array(
@@ -212,7 +212,7 @@ function myngl_event_social_area($nid) {
           );
         }
       }
-    }
+    //}
   }
 
   $pre_questions = array();
@@ -244,8 +244,59 @@ function myngl_event_social_area($nid) {
                );
 }
 
-function myngl_event_social_area_ajax_message($nid) {
-  $message['message'] = db_query('SELECT field_myngl_message_value FROM {field_data_field_myngl_message} WHERE entity_id = :eid', array(':eid' => $nid))->fetchField();
+function myngl_event_social_area_ajax_message($nid, $time_passed) {
+  // Convert ms to s;
+  $time_passed = $time_passed / 1000;
+
+
+  $alert_collection_eids = db_query("SELECT field_myngl_alerts_value
+                                    FROM field_data_field_myngl_alerts WHERE
+                                    entity_id =:eid", array(":eid"=> $nid));
+
+  if ($alert_collection_eids->rowCount()==0){
+    $message['message'] = "";
+    drupal_json_output($message);
+  }
+
+  $eids = array();
+  foreach ($alert_collection_eids as $eid){
+    $eids[] = $eid->field_myngl_alerts_value;
+  }
+  $ents =entity_load('field_collection_item', array($eids));
+
+  $msgs = array();
+  $keys = array();
+  foreach($ents as $entity){
+    $keys[] = $entity->field_time['und'][0]['value'];
+    $msgs[] = array('time' =>$entity->field_time['und'][0]['value'],
+                    'message' => $entity->field_message['und'][0]['safe_value'],
+                    'duration' => $entity->field_duration['und'][0]['value']);
+  }
+  array_multisort($keys, $msgs);
+
+  $i = 0;
+  $msg_set = FALSE;
+  $msg = NULL;
+  while($msg_set == FALSE){
+    if ($keys[$i]>$time_passed){ // beginning of the array
+      $msg_set = TRUE;
+    }
+    else if (!isset($keys[$i+1])){ // end of the array
+      $msg = $msgs[$i];
+      $msg_set = TRUE;
+    }
+    else if ($keys[$i]< $time_passed && $keys[$i+1] > $time_passed){
+      $msg = $msgs[$i];
+      $msg_set = TRUE;
+    }
+    else {
+      $i++;
+    }
+  }
+  if ($msg != NULL){
+    $message['message'] = ($msg['time'] + $msg['duration'] < $time_passed)?'':$msg['message'];
+  }
+  //$message['message'] = db_query('SELECT field_myngl_message_value FROM {field_data_field_myngl_message} WHERE entity_id = :eid', array(':eid' => $nid))->fetchField();
   drupal_json_output($message);
 }
 

@@ -2,8 +2,8 @@
   if (!isset($_COOKIE['done_lobby_video']) || $_COOKIE['done_lobby_video']!= 1){
     global $base_url;
     $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
-    header($redirect);
-    exit;
+    //header($redirect); Commented out for development -- Ming
+    //exit;
   }
 ?>
 <?php
@@ -167,9 +167,9 @@ display:none;
 				</div> <!-- /#myngl-activity-room-thumbs -->
 			</div><!-- /#myngl-activity-room-slider -->
 		</div><!-- /#myngl-activity-room-inside -->
-	  <div onclick="activity_room.left()" class="halfCircleRight "><i class="fa fa-angle-left"></i></div>
+<!--	  <div onclick="activity_room.left()" class="halfCircleRight "><i class="fa fa-angle-left"></i></div>
 		<div onclick="activity_room.right()" class="halfCircleLeft "><i class="fa fa-angle-right"></i></div>
-
+-->
 
 	</div><!-- /#myngl-activity-room -->
 
