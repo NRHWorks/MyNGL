@@ -1466,7 +1466,6 @@ body ::-webkit-scrollbar-thumb {
 
    .myngl-event-solo-chat .solo-message,
    .myngl-event-group-chat .group-message{
-    position:relative;
     min-height:50px;
     margin:0 0 0 0 !important;
    }
@@ -1480,6 +1479,22 @@ body ::-webkit-scrollbar-thumb {
     margin-left:50px;
     margin-top:10px;
   }
+
+  #myngl-event-pov-wall .pov-message{
+    min-height:70px;
+    margin:0 0 0 0 !important;
+    border:1px solid #000000;
+  }
+  #myngl-event-pov-wall .pov-message img{
+    float:left;
+    margin-top:0;
+  }
+  #myngl-event-pov-wall .pov-message .text{
+    margin-left:70px;
+    margin-top:10px;
+    color:#000000 !important;
+  }
+
   .myngl-chat-messages {
     box-shadow: inset 1px -1px 2px #b9b9b9;
   }
