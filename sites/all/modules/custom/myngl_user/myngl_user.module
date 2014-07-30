@@ -206,7 +206,38 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
         $form['#submit'][] = 'myngl_user_redirect';
       }
       
+
+      $form['#after_build'][] = 'myngl_user_timezone_modify';
+      break;
+
   }
+}
+
+function myngl_user_timezone_modify($form, &$form_state) {
+  //file_put_contents('test123.txt', print_r($form['timezone']['timezone'], "TRUE"));
+  $old_options = $form['timezone']['timezone']['#options'];
+  $new_options=array();
+
+  $new_options[''] = $old_options[''];
+  $new_options['America/Anchorage'] = $old_options['America/Anchorage'];
+  $new_options['America/Chicago'] = $old_options['America/Chicago'];
+  $new_options['America/Denver'] = $old_options['America/Denver'];
+  $new_options['America/Detroit'] = $old_options['America/Detroit'];
+  $new_options['America/Detroit'] = $old_options['America/Detroit'];
+  $new_options['America/Indiana/Indianapolis'] = $old_options['America/Indiana/Indianapolis'];
+  $new_options['America/Kentucky/Louisville'] = $old_options['America/Kentucky/Louisville'];
+  $new_options['America/Los_Angeles'] = $old_options['America/Los_Angeles'];
+  $new_options['America/New_York'] = $old_options['America/New_York'];
+  $new_options['America/Phoenix'] = $old_options['America/Phoenix'];
+  $new_options['America/Toronto'] = $old_options['America/Toronto'];
+  $new_options['America/Vancouver'] = $old_options['America/Vancouver'];
+  $new_options['UTC'] = $old_options['UTC'];
+
+
+
+
+  $form['timezone']['timezone']['#options'] = $new_options;
+  return $form;
 }
 
 function myngl_user_redirect() {
