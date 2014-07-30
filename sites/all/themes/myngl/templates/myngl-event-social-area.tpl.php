@@ -57,10 +57,14 @@
   }
 
   form#other-filter{
-    padding:20px;
-    margin-top:20px;
+    padding:30px;
+    margin-top:10px;
   }
+  .field-name-field-lounge-other-filter-title{
+    margin:30px 30px 0 30px;
+    font-size:30px;
 
+  }
   form#other-filter .question{
     margin-bottom:30px;
     overflow:auto;
@@ -100,10 +104,14 @@
 <div id="other-filter-overlay">
   <div id="other-filter-close" onclick="social_area.other_filter_close();">X</div>
   <div id="other-filter-submit" onclick="social_area.other_filter_close(); social_area.other_filter()">Submit</div>
+  <?php
+    $filter_title = field_view_field('node', $myngl, 'field_lounge_other_filter_title','full' );
+    print render ($filter_title); ?>
+
   <form id="other-filter">
     <?php foreach($pre_questions as $i =>$question): ?>
       <div class='question' id="question-<?php print $i;?>">
-        <div class='question-label'><?php print $question['question']; ?></div>
+        <!--<div class='question-label'><?php print $question['question']; ?></div> -->
         <?php foreach($question['answers'] as $ii => $answer):?>
 
           <div class='input-wrapper'><input  type="radio" name="other-filter-question-<?php print $i;?>" value="<?php print $answer['value'];?>" /><?php print $answer['value'];?></div>

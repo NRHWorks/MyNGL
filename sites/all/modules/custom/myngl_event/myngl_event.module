@@ -222,6 +222,7 @@ function myngl_event_social_area($nid) {
 
     //Skip non-multichoice questions;
     if (!isset($j->field_answer['und'])) break;
+    if ($j->field_use_as_other_filter['und'][0]['value']==0) break;
 
     $question = array(
       'item_id' => $j->item_id,
