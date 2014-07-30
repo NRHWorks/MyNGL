@@ -1483,7 +1483,6 @@ body ::-webkit-scrollbar-thumb {
   #myngl-event-pov-wall .pov-message{
     min-height:70px;
     margin:0 0 0 0 !important;
-    border:1px solid #000000;
   }
   #myngl-event-pov-wall .pov-message img{
     float:left;
