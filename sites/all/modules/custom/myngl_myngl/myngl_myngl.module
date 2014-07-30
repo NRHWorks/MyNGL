@@ -394,8 +394,8 @@ function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $us
 
   endforeach;
 
-  file_put_contents('test123.txt', print_r($myngl->field_myngl_dates['und'], TRUE));
-  file_put_contents('test123.txt', print_r($dates, TRUE),FILE_APPEND);
+  //file_put_contents('test123.txt', print_r($myngl->field_myngl_dates['und'], TRUE));
+  //file_put_contents('test123.txt', print_r($dates, TRUE),FILE_APPEND);
   $form['date'] = array(
     '#type' => 'radios',
     '#title' => t('Change Date'),

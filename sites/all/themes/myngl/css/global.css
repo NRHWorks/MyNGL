@@ -1464,6 +1464,22 @@ body ::-webkit-scrollbar-thumb {
     margin-left: 1px;
   }
 
+   .myngl-event-solo-chat .solo-message,
+   .myngl-event-group-chat .group-message{
+    position:relative;
+    min-height:50px;
+    margin:0 0 0 0 !important;
+   }
+  .myngl-event-solo-chat .solo-message img,
+  .myngl-event-group-chat .group-message img{
+    float:left;
+    margin-top:0;
+  }
+  .myngl-event-solo-chat .solo-message .text,
+  .myngl-event-group-chat .group-message .text{
+    margin-left:50px;
+    margin-top:10px;
+  }
   .myngl-chat-messages {
     box-shadow: inset 1px -1px 2px #b9b9b9;
   }
