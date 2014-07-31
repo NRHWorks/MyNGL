@@ -68,10 +68,16 @@
     </div>
   <br>
   <div id="footer-links">
-    <div style="float:right;">
-      <a href="/user/<?php global $user; print $user->uid; ?>?upload=<?php print $node->nid; ?>"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;UPLOAD YOUR CONTENT TO THIS EVENT</a> 
+    <div style="margin-top:-30px;">
+      <div style="float:right;">
+        <a href="/user/<?php global $user; print $user->uid; ?>?upload=<?php print $node->nid; ?>"><i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;UPLOAD YOUR CONTENT TO THIS EVENT</a>
+      </div>
+      <div >
+        <a href="/user/<?php global $user; print $user->uid; ?>?view-detail=<?php print $node->nid; ?>"><i class = "fa fa-bars"></i>&nbsp;&nbsp;&nbsp;VIEW EVENT DETAIL</a>
+      </div>
+
     </div>
-    <a href="/user/<?php global $user; print $user->uid; ?>" class="link-small">Go to your Dashboard</a>
+    <div style="margin-top:40px;"><a style="text-decoration:underline;" href="/user/<?php global $user; print $user->uid; ?>" class="link-small">Go to your Dashboard</a></div>
   </div>
 </div>
 

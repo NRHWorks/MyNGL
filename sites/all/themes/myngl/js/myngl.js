@@ -171,6 +171,7 @@ var myngl_upcoming = (function($) {
     details: function(k) {
       $('.upcoming-myngls-pane').fadeOut(10);
       $('#upcoming-myngls-pane-details-' + k).fadeIn(100);
+      console.log("details called, id is " + k);
       return false;
     },
     upload_images: function(k) {

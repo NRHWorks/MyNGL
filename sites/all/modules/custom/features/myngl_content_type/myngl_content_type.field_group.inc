@@ -111,6 +111,7 @@ function myngl_content_type_field_group_info() {
       0 => 'field_myngl_description',
       1 => 'field_myngl_invitation_email',
       2 => 'field_myngl_sponsor',
+      3 => 'field_twitter_canned_message',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -402,6 +403,7 @@ function myngl_content_type_field_group_info() {
     'children' => array(
       0 => 'field_pre_myngl_questions',
       1 => 'field_post_myngl_questions',
+      2 => 'field_lounge_other_filter_title',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

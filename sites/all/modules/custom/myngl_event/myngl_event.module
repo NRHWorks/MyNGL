@@ -144,8 +144,19 @@ function myngl_event_social_area($nid) {
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
 
+
+
+
+
+
+
   $myngl = node_load($nid);
 
+  //print "<pre>";
+  //print ;
+  drupal_add_js(array('lounge_background'=>file_create_url($myngl->field_lounge_background['und'][0]['uri'])),'setting');
+  //print_r($myngl);
+  //exit;
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
   $brand_reps = $myngl->field_brand_rep2['und'];
@@ -156,11 +167,6 @@ function myngl_event_social_area($nid) {
     $brand_reps_uids[] = $row['uid'];
   }
 
-  /*
-  print "<pre>";
-  print_r($brand_reps_uids);
-  exit;
-  */
 
   $invitees = array();
   $ucg = array();
@@ -222,6 +228,7 @@ function myngl_event_social_area($nid) {
 
     //Skip non-multichoice questions;
     if (!isset($j->field_answer['und'])) break;
+    if ($j->field_use_as_other_filter['und'][0]['value']==0) break;
 
     $question = array(
       'item_id' => $j->item_id,

@@ -192,6 +192,150 @@ function myngl_content_type_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'field_collection_item-field_myngl_alerts-field_duration'
+  $field_instances['field_collection_item-field_myngl_alerts-field_duration'] = array(
+    'bundle' => 'field_myngl_alerts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Duration of this message (in second).',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_integer',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_duration',
+    'label' => 'Duration',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'field_collection_item-field_myngl_alerts-field_message'
+  $field_instances['field_collection_item-field_myngl_alerts-field_message'] = array(
+    'bundle' => 'field_myngl_alerts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_message',
+    'label' => 'Message',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance: 'field_collection_item-field_myngl_alerts-field_page'
+  $field_instances['field_collection_item-field_myngl_alerts-field_page'] = array(
+    'bundle' => 'field_myngl_alerts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 3,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_page',
+    'label' => 'Page',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'field_collection_item-field_myngl_alerts-field_time'
+  $field_instances['field_collection_item-field_myngl_alerts-field_time'] = array(
+    'bundle' => 'field_myngl_alerts',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'On time of the message (in second).',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_integer',
+        'weight' => 1,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_time',
+    'label' => 'On Time',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 2,
+    ),
+  );
+
   // Exported field_instance: 'field_collection_item-field_myngl_invitees-field_document_upload'
   $field_instances['field_collection_item-field_myngl_invitees-field_document_upload'] = array(
     'bundle' => 'field_myngl_invitees',
@@ -756,6 +900,43 @@ function myngl_content_type_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'field_collection_item-field_pre_myngl_questions-field_use_as_other_filter'
+  $field_instances['field_collection_item-field_pre_myngl_questions-field_use_as_other_filter'] = array(
+    'bundle' => 'field_pre_myngl_questions',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_use_as_other_filter',
+    'label' => 'Use as Other Filter',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 5,
+    ),
+  );
+
   // Exported field_instance: 'field_collection_item-field_reward-field_description'
   $field_instances['field_collection_item-field_reward-field_description'] = array(
     'bundle' => 'field_reward',
@@ -1259,7 +1440,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 33,
+      'weight' => 27,
     ),
   );
 
@@ -1299,7 +1480,7 @@ function myngl_content_type_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 35,
+      'weight' => 28,
     ),
   );
 
@@ -1341,7 +1522,7 @@ function myngl_content_type_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 35,
+      'weight' => 36,
     ),
   );
 
@@ -1422,7 +1603,7 @@ function myngl_content_type_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 55,
+      'weight' => 56,
     ),
   );
 
@@ -1462,7 +1643,7 @@ function myngl_content_type_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 56,
+      'weight' => 57,
     ),
   );
 
@@ -1502,7 +1683,7 @@ function myngl_content_type_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 54,
+      'weight' => 55,
     ),
   );
 
@@ -1592,7 +1773,7 @@ function myngl_content_type_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 48,
+      'weight' => 56,
     ),
   );
 
@@ -1642,7 +1823,90 @@ function myngl_content_type_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 50,
+      'weight' => 58,
+    ),
+  );
+
+  // Exported field_instance: 'node-myngl-field_lounge_other_filter_title'
+  $field_instances['node-myngl-field_lounge_other_filter_title'] = array(
+    'bundle' => 'myngl',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 43,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_lounge_other_filter_title',
+    'label' => 'Lounge Other Filter Title',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 35,
+    ),
+  );
+
+  // Exported field_instance: 'node-myngl-field_myngl_alerts'
+  $field_instances['node-myngl-field_myngl_alerts'] = array(
+    'bundle' => 'myngl',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'field_collection',
+        'settings' => array(
+          'add' => 'Add',
+          'delete' => 'Delete',
+          'description' => TRUE,
+          'edit' => 'Edit',
+          'view_mode' => 'full',
+        ),
+        'type' => 'field_collection_view',
+        'weight' => 42,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_myngl_alerts',
+    'label' => 'Myngl Alerts',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'field_collection',
+      'settings' => array(),
+      'type' => 'field_collection_embed',
+      'weight' => 57,
     ),
   );
 
@@ -1981,7 +2245,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 28,
+      'weight' => 29,
     ),
   );
 
@@ -2027,7 +2291,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 27,
+      'weight' => 28,
     ),
   );
 
@@ -2067,7 +2331,7 @@ function myngl_content_type_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 31,
+      'weight' => 32,
     ),
   );
 
@@ -2113,7 +2377,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 26,
+      'weight' => 27,
     ),
   );
 
@@ -2163,7 +2427,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 30,
+      'weight' => 31,
     ),
   );
 
@@ -2309,7 +2573,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 29,
+      'weight' => 30,
     ),
   );
 
@@ -2352,7 +2616,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 9,
+      'weight' => 37,
     ),
   );
 
@@ -2515,7 +2779,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 8,
+      'weight' => 36,
     ),
   );
 
@@ -2558,7 +2822,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 47,
+      'weight' => 55,
     ),
   );
 
@@ -2608,7 +2872,7 @@ function myngl_content_type_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 51,
+      'weight' => 59,
     ),
   );
 
@@ -2660,7 +2924,7 @@ function myngl_content_type_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'media_generic',
-      'weight' => 11,
+      'weight' => 28,
     ),
   );
 
@@ -2700,7 +2964,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'youtube',
       'settings' => array(),
       'type' => 'youtube',
-      'weight' => 13,
+      'weight' => 30,
     ),
   );
 
@@ -2740,7 +3004,7 @@ function myngl_content_type_field_default_field_instances() {
         'size' => 68,
       ),
       'type' => 'text_textfield',
-      'weight' => 14,
+      'weight' => 31,
     ),
   );
 
@@ -2783,7 +3047,7 @@ function myngl_content_type_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 15,
+      'weight' => 32,
     ),
   );
 
@@ -2823,7 +3087,47 @@ function myngl_content_type_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 29,
+    ),
+  );
+
+  // Exported field_instance: 'node-myngl-field_twitter_canned_message'
+  $field_instances['node-myngl-field_twitter_canned_message'] = array(
+    'bundle' => 'myngl',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The default message used when someone shares to Twitter. This field is limited to 140 characters.',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 42,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_twitter_canned_message',
+    'label' => 'Twitter Canned Message',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 80,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 7,
     ),
   );
 
@@ -2868,7 +3172,7 @@ function myngl_content_type_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'video_upload',
-      'weight' => 10,
+      'weight' => 27,
     ),
   );
 
@@ -2925,6 +3229,8 @@ function myngl_content_type_field_default_field_instances() {
   t('Description');
   t('Document Upload');
   t('Downloadable File');
+  t('Duration');
+  t('Duration of this message (in second).');
   t('Email Address');
   t('Embedded code');
   t('External Site Description');
@@ -2941,10 +3247,15 @@ function myngl_content_type_field_default_field_instances() {
   t('Invitees');
   t('Last Name');
   t('Level');
+  t('Lounge Other Filter Title');
   t('Message');
+  t('Myngl Alerts');
+  t('On Time');
+  t('On time of the message (in second).');
   t('POV Messages');
   t('POV Question');
   t('POV Question Suggestions');
+  t('Page');
   t('Points');
   t('Points for Visiting Activity Room');
   t('Points for Visiting Lobby');
@@ -2967,6 +3278,7 @@ function myngl_content_type_field_default_field_instances() {
   t('Sponsor');
   t('Status');
   t('Tagline for Event');
+  t('The default message used when someone shares to Twitter. This field is limited to 140 characters.');
   t('Theater');
   t('Theater Additional Video');
   t('Theater Download Box Copy');
@@ -2974,6 +3286,8 @@ function myngl_content_type_field_default_field_instances() {
   t('Theater Message');
   t('Thumb');
   t('Title');
+  t('Twitter Canned Message');
+  t('Use as Other Filter');
   t('Use the tokens [first-name] and [last-name] to include the user\'s info in the email. ');
   t('User Account');
   t('Video Upload');

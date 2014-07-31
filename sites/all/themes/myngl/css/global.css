@@ -1464,6 +1464,36 @@ body ::-webkit-scrollbar-thumb {
     margin-left: 1px;
   }
 
+   .myngl-event-solo-chat .solo-message,
+   .myngl-event-group-chat .group-message{
+    min-height:50px;
+    margin:0 0 0 0 !important;
+   }
+  .myngl-event-solo-chat .solo-message img,
+  .myngl-event-group-chat .group-message img{
+    float:left;
+    margin-top:0;
+  }
+  .myngl-event-solo-chat .solo-message .text,
+  .myngl-event-group-chat .group-message .text{
+    margin-left:50px;
+    margin-top:10px;
+  }
+
+  #myngl-event-pov-wall .pov-message{
+    min-height:70px;
+    margin:0 0 0 0 !important;
+  }
+  #myngl-event-pov-wall .pov-message img{
+    float:left;
+    margin-top:0;
+  }
+  #myngl-event-pov-wall .pov-message .text{
+    margin-left:70px;
+    margin-top:10px;
+    color:#000000 !important;
+  }
+
   .myngl-chat-messages {
     box-shadow: inset 1px -1px 2px #b9b9b9;
   }
@@ -1605,11 +1635,12 @@ body ::-webkit-scrollbar-thumb {
   width: 15%;
   height: 13%;
   position: absolute;
-  top: 30%;
+  top: 50%;
   left: 45%;
   /*margin-top: -250px;
   margin-left: -550px;*/
   cursor: pointer;
+
 }
 
 #myngl-event-pov-button {
@@ -1617,10 +1648,11 @@ body ::-webkit-scrollbar-thumb {
   height: 13%;
   position: absolute;
   left: 60%;
-  top: 30%;/*
+  top: 50%;/*
   margin-top: -200px;
   margin-left: -300px;*/
   cursor: pointer;
+
 }
 
 
@@ -1656,7 +1688,7 @@ body ::-webkit-scrollbar-thumb {
 
   body.page-myngl-event {
     /*background: url(../images/myngl-godiva-bg.png) center center no-repeat;*/
-    background: url(../images/myngl-godiva-bg.jpg) center center no-repeat;
+    /*background: url(../images/myngl-godiva-bg.jpg) center center no-repeat;*/
     background-size: cover;
   }
   
@@ -1999,8 +2031,10 @@ form#user-profile-form .switch-knob{
   /*margin-top:20px;*/
 }
 
-#invitee-chat-selector-search {
-  color: #666;
+#invitee-chat-selector-search form{
+  margin:0;
+}
+#invitee-chat-selector-search form input {
   border: 2px solid #b9b9b9;
   padding: 5px;
   font-size: 18px;

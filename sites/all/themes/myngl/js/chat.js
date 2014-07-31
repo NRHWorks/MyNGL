@@ -406,9 +406,9 @@ var chat = (function ($) {
             $('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages').append(
               '<div class="group-message"> <img src="' +
               $("#invitee-thumb-" + parsed_data.chats[chat_index]['messages'][key]['user_id']  +
-                " img").attr('src') + '" class="group-chat myngl-event-profile-pic"  /> <strong>' +
+                " img").attr('src') + '" class="group-chat myngl-event-profile-pic"  /><div class="text"> <strong>' +
               $("#invitee-name-" + parsed_data.chats[chat_index]['messages'][key]['user_id']).html()  +
-              ':</strong>  ' +  parsed_data.chats[chat_index]['messages'][key]['message'] + '</div>');
+              ':</strong>  ' +  parsed_data.chats[chat_index]['messages'][key]['message'] + '</div></div>');
             $('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages').animate(
               { scrollTop: $('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages')[0].scrollHeight}, 10);
 
@@ -470,10 +470,10 @@ var chat = (function ($) {
 
             data.forEach( function(entry) {
               if (entry.to_user_id != user_id) {
-                $("#myngl-event-solo-chat-messages-" + entry.to_user_id).append('<div id="solo-message-' + entry.mcsid + '" class="solo-message"> <img src="' + $("#invitee-thumb-" + entry.from_user_id  + " img").attr('src') + '" class="solo-chat myngl-event-profile-pic"  /> <strong>' + $("#invitee-name-" + entry.from_user_id).html()  + ':</strong>  ' +  entry.message + '</div>');
+                $("#myngl-event-solo-chat-messages-" + entry.to_user_id).append('<div id="solo-message-' + entry.mcsid + '" class="solo-message"> <img src="' + $("#invitee-thumb-" + entry.from_user_id  + " img").attr('src') + '" class="solo-chat myngl-event-profile-pic"  /><div class="text"><strong>' + $("#invitee-name-" + entry.from_user_id).html()  + ':</strong>  ' +  entry.message + '</div></div>');
                 $("#myngl-event-solo-chat-messages-" + entry.to_user_id).animate({ scrollTop: $("#myngl-event-solo-chat-messages-" + entry.to_user_id)[0].scrollHeight}, 10);
               } else {
-                $("#myngl-event-solo-chat-messages-" + entry.from_user_id).append('<div id="solo-message-' + entry.mcsid + '" class="solo-message"> <img src="' + $("#invitee-thumb-" + entry.from_user_id  + " img").attr('src') + '" class="solo-chat myngl-event-profile-pic"  /> <strong>' + $("#invitee-name-" + entry.from_user_id).html()  + ':</strong>  ' +  entry.message + '</div>');
+                $("#myngl-event-solo-chat-messages-" + entry.from_user_id).append('<div id="solo-message-' + entry.mcsid + '" class="solo-message"> <img src="' + $("#invitee-thumb-" + entry.from_user_id  + " img").attr('src') + '" class="solo-chat myngl-event-profile-pic"  /><div class="text"><strong>' + $("#invitee-name-" + entry.from_user_id).html()  + ':</strong>  ' +  entry.message + '</div></div>');
                 $("#myngl-event-solo-chat-messages-" + entry.from_user_id).animate({ scrollTop: $("#myngl-event-solo-chat-messages-" + entry.from_user_id)[0].scrollHeight}, 10);
               }
             });

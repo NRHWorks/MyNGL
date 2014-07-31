@@ -8,7 +8,7 @@
   }*/
 ?>
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-<?php $num_of_test_icons = 50; ?>
+<?php $num_of_test_icons = 0; ?>
 <?php drupal_add_js(array('num_of_test_icons' => $num_of_test_icons), 'setting'); ?>
 <?php
   global $user;
@@ -57,10 +57,14 @@
   }
 
   form#other-filter{
-    padding:20px;
-    margin-top:20px;
+    padding:30px;
+    margin-top:10px;
   }
+  .field-name-field-lounge-other-filter-title{
+    margin:30px 30px 0 30px;
+    font-size:30px;
 
+  }
   form#other-filter .question{
     margin-bottom:30px;
     overflow:auto;
@@ -100,10 +104,14 @@
 <div id="other-filter-overlay">
   <div id="other-filter-close" onclick="social_area.other_filter_close();">X</div>
   <div id="other-filter-submit" onclick="social_area.other_filter_close(); social_area.other_filter()">Submit</div>
+  <?php
+    $filter_title = field_view_field('node', $myngl, 'field_lounge_other_filter_title','full' );
+    print render ($filter_title); ?>
+
   <form id="other-filter">
     <?php foreach($pre_questions as $i =>$question): ?>
       <div class='question' id="question-<?php print $i;?>">
-        <div class='question-label'><?php print $question['question']; ?></div>
+        <!--<div class='question-label'><?php print $question['question']; ?></div> -->
         <?php foreach($question['answers'] as $ii => $answer):?>
 
           <div class='input-wrapper'><input  type="radio" name="other-filter-question-<?php print $i;?>" value="<?php print $answer['value'];?>" /><?php print $answer['value'];?></div>
@@ -122,7 +130,7 @@
   #dock-arrows{
     position:absolute;
     z-index:300;
-    right:10px;
+    right:35px;
     bottom:45px;
     width:20px;
   }
@@ -168,7 +176,13 @@
   </div>
 
   <div id="invitee-chat-selector" style="float:right;z-index:30000;">
-    <div id="invitee-chat-selector-search">SEARCH USERNAME</div>
+
+    <div id="invitee-chat-selector-search">
+      <form >
+        <label>Search User Name</label>
+        <input class="form-light" type="text" onkeyup="social_area.search();"/>
+      </form>
+    </div>
     <!--  Nathan's code
     <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
       <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)">
@@ -205,8 +219,8 @@
   <div id="myngl-event-chat-button-invitees" style="clear:both; /*margin-top: 300px;*/">
 
     <div id="invitee-thumbs-wrapper" >
-      <div class="fa-social-dock-arrow fa fa-chevron-circle-right" id="dock-scroll-right" onclick="social_area.dock_scroll_right();" style="position: absolute;right:5px;bottom:5px;font-size:30px;z-index:200;"></div>
-      <div class="fa-social-dock-arrow fa fa-chevron-circle-left" id="dock-scroll-left" onclick="social_area.dock_scroll_left();" style="position: absolute; left:5px;bottom:5px;font-size:30px;z-index:200;"></div>
+      <div class="fa-social-dock-arrow fa fa-chevron-circle-right" id="dock-scroll-right" onclick="social_area.dock_scroll_right();" style="position: absolute;right:5px;bottom:-40px;font-size:30px;z-index:200;"></div>
+      <div class="fa-social-dock-arrow fa fa-chevron-circle-left" id="dock-scroll-left" onclick="social_area.dock_scroll_left();" style="position: absolute; left:5px;bottom:-40px;font-size:30px;z-index:200;"></div>
       <div id="invitees-thumbs"  >
         <?php foreach ($invitees as $k => $i) : ?>
           <?php //if ($user->uid != $i['uid']): ?>
@@ -218,7 +232,7 @@
         <?php endforeach; ?>
 
 
-        <!-- Beginning of the test code -
+        <!-- Beginning of the test code -->
         <?php for ($i = 0; $i < $num_of_test_icons; $i ++): ?>
           <div class="invitee-thumb-test-place-holder"
              style=" float:left; width: 90px; height:120px;
