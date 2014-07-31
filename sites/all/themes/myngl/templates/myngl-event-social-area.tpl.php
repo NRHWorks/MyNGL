@@ -8,7 +8,7 @@
   }*/
 ?>
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-<?php $num_of_test_icons = 50; ?>
+<?php $num_of_test_icons = 0; ?>
 <?php drupal_add_js(array('num_of_test_icons' => $num_of_test_icons), 'setting'); ?>
 <?php
   global $user;
@@ -130,7 +130,7 @@
   #dock-arrows{
     position:absolute;
     z-index:300;
-    right:10px;
+    right:35px;
     bottom:45px;
     width:20px;
   }
@@ -213,8 +213,8 @@
   <div id="myngl-event-chat-button-invitees" style="clear:both; /*margin-top: 300px;*/">
 
     <div id="invitee-thumbs-wrapper" >
-      <div class="fa-social-dock-arrow fa fa-chevron-circle-right" id="dock-scroll-right" onclick="social_area.dock_scroll_right();" style="position: absolute;right:5px;bottom:5px;font-size:30px;z-index:200;"></div>
-      <div class="fa-social-dock-arrow fa fa-chevron-circle-left" id="dock-scroll-left" onclick="social_area.dock_scroll_left();" style="position: absolute; left:5px;bottom:5px;font-size:30px;z-index:200;"></div>
+      <div class="fa-social-dock-arrow fa fa-chevron-circle-right" id="dock-scroll-right" onclick="social_area.dock_scroll_right();" style="position: absolute;right:5px;bottom:-40px;font-size:30px;z-index:200;"></div>
+      <div class="fa-social-dock-arrow fa fa-chevron-circle-left" id="dock-scroll-left" onclick="social_area.dock_scroll_left();" style="position: absolute; left:5px;bottom:-40px;font-size:30px;z-index:200;"></div>
       <div id="invitees-thumbs"  >
         <?php foreach ($invitees as $k => $i) : ?>
           <?php //if ($user->uid != $i['uid']): ?>
@@ -226,7 +226,7 @@
         <?php endforeach; ?>
 
 
-        <!-- Beginning of the test code -
+        <!-- Beginning of the test code -->
         <?php for ($i = 0; $i < $num_of_test_icons; $i ++): ?>
           <div class="invitee-thumb-test-place-holder"
              style=" float:left; width: 90px; height:120px;
