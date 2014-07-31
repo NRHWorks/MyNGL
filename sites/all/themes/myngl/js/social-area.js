@@ -8,6 +8,7 @@ var dock_position = 0;
 
 (function ($) {
   $(document).ready( function() {
+    $('body').css('background', "url("+Drupal.settings.lounge_background + ") center center no-repeat").css('background-size','cover');
     $.cookie('lounge_entrance_time', null); //comment this line out when it's done
     if ($.cookie('lounge_entrance_time') == null) {
       $.cookie('lounge_entrance_time', $.now());
