@@ -2031,8 +2031,10 @@ form#user-profile-form .switch-knob{
   /*margin-top:20px;*/
 }
 
-#invitee-chat-selector-search {
-  color: #666;
+#invitee-chat-selector-search form{
+  margin:0;
+}
+#invitee-chat-selector-search form input {
   border: 2px solid #b9b9b9;
   padding: 5px;
   font-size: 18px;

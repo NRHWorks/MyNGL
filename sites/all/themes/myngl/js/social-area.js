@@ -106,6 +106,23 @@ var dock_position = 0;
 
 var social_area = (function ($) {
   return {
+    search: function(){
+      $("#social-area-chat-list .checkbox.in-lounge").each(function(){
+        social_area.search_helper($(this));
+        });
+    },
+    search_helper:function (this_checkbox){
+      var search_text = $("#invitee-chat-selector-search input:text").val().toLowerCase();
+      var checkbox_text = this_checkbox.text().toLowerCase();
+      console.log(search_text + ", " + checkbox_text);
+      if (checkbox_text.indexOf(search_text)>-1) {
+        this_checkbox.css('display','block');
+      }
+      else{
+        this_checkbox.css('display','none');
+      }
+
+    },
     dock_hide: function(){
       $("#invitee-thumbs-wrapper").css("display","none");
       $(".fa-social-dock-arrow.fa-chevron-circle-down").addClass("disabled");
@@ -162,7 +179,6 @@ var social_area = (function ($) {
       var v1 = $("#invitees-thumbs .invitee-thumb.in-lounge").length;
       var v2 = $("#invitees-thumbs .invitee-thumb.in-lounge.filter-hide").length;
       var v3 =  Drupal.settings.num_of_test_icons;
-      console.log(v1 + ", " + v2 + ", " + v3);
 
       if (dock_shape==0) { //dock is a single row at the bottom
         $("#invitee-thumbs-wrapper #invitees-thumbs").css("width", (v1 - v2 + v3)*90 );

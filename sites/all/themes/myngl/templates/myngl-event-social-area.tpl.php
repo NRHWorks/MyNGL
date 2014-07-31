@@ -176,7 +176,13 @@
   </div>
 
   <div id="invitee-chat-selector" style="float:right;z-index:30000;">
-    <div id="invitee-chat-selector-search">SEARCH USERNAME</div>
+
+    <div id="invitee-chat-selector-search">
+      <form >
+        <label>Search User Name</label>
+        <input class="form-light" type="text" onkeyup="social_area.search();"/>
+      </form>
+    </div>
     <!--  Nathan's code
     <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
       <a href="#" onclick="return chat.solo_show(<?php print $i['uid']; ?>)">
