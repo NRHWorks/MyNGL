@@ -1640,7 +1640,7 @@ body ::-webkit-scrollbar-thumb {
   /*margin-top: -250px;
   margin-left: -550px;*/
   cursor: pointer;
-  border:1px solid #ffffff;
+
 }
 
 #myngl-event-pov-button {
@@ -1652,7 +1652,7 @@ body ::-webkit-scrollbar-thumb {
   margin-top: -200px;
   margin-left: -300px;*/
   cursor: pointer;
-  border:1px solid #ffffff;
+
 }
 
 
