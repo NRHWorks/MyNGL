@@ -5,7 +5,9 @@ function myngl_user_init() {
 
   if (($user->uid == 0) && (arg(0) != 'user') && (!(arg(0) == 'myngl' && arg(2) == 'rsvp'))) {
     if (!drupal_is_cli()) { //add to fix Drush bug
-      drupal_goto('user');
+      if (arg(0) != 'fboauth') {
+        drupal_goto('user');
+      }
     }
   }
 
@@ -28,7 +30,6 @@ function myngl_user_init() {
       drupal_goto('user');
     }
   }
-
 }
 
 function myngl_user_user_login(&$edit, $account) {
@@ -101,10 +102,9 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
       $form['facebook_signin'] = array (
         '#markup' => '<div id="registration-facebook">
                         <p class="form-button-text">Facebook user?<br><br>Sign in with<br><span>FACEBOOK CONNECT</span></p>
-                        <span class="fa-stack fa-lg" id="facebook-signin">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                        </span>
+                        <a  class="facebook-action-connect" rel="nofollow" href="https://www.facebook.com/dialog/oauth?client_id=1445524802389990&redirect_uri=http%3A//myngl.local/fboauth/connect&scope=email%2Cread_friendlists">
+                        <span class="fa-stack fa-lg" id="facebook-signin"> <i class="fa fa-circle fa-stack-2x"></i> <i class="fa fa-facebook fa-stack-1x fa-inverse"></i> </span>
+                        </a>
                       </div>',
         '#weight' => -20
       );
@@ -256,6 +256,7 @@ function myngl_user_password_confirm($element) {
 
 function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
   if ($uid = $form['#user']->uid) {
+    $user = user_load($uid);
     $u = entity_metadata_wrapper('user', user_load($uid));
     $profile = profile2_load_by_user($uid, 'profile');
 
@@ -291,24 +292,29 @@ function myngl_user_form_profile2_form_alter(&$form, &$form_state) {
       <div class="option-right" style="position:absolute; left:250px;">In Relationship</div>
     </div>-->';
 
-
-
-
-
-
   if (isset($p)) {
     $pic = $p->field_picture->value();
   }
   //print_r($form); exit();
 
   if (!isset($pic['uri'])) {
-    $form['profile_profile']['field_picture']['und']['#prefix'] =
-      " <div id='default-image-wrapper'>" .
-        theme_image_style(array('style_name' => 'user_profile_circle_image', 'path' => 'public://default-user-profile.png', 'attributes' => array('class' => 'default-profile-pic'), 'height' => null, 'width' => null)) .
-      " <br /><a href='#!' class='link-small' onclick='jQuery(\"#default-image-wrapper\").hide();jQuery(\".image-widget\").show();'>Upload a profile picture</a>
-        <script>jQuery(document).ready(function () { jQuery('.image-widget').hide(); });</script>
-        </div>";
+    if (isset($user->picture)) {
+      $form['profile_profile']['field_picture']['und']['#prefix'] =
+        " <div id='default-image-wrapper'>" .
+          theme_image_style(array('style_name' => 'user_profile_circle_image', 'path' => $user->picture->uri, 'attributes' => array('class' => 'default-profile-pic'), 'height' => null, 'width' => null)) .
+        " <br /><a href='#!' class='link-small' onclick='jQuery(\"#default-image-wrapper\").hide();jQuery(\".image-widget\").show();'>Upload a profile picture</a>
+          <script>jQuery(document).ready(function () { jQuery('.image-widget').hide(); });</script>
+          </div>";
+    } else {
+      $form['profile_profile']['field_picture']['und']['#prefix'] =
+        " <div id='default-image-wrapper'>" .
+          theme_image_style(array('style_name' => 'user_profile_circle_image', 'path' => 'public://default-user-profile.png', 'attributes' => array('class' => 'default-profile-pic'), 'height' => null, 'width' => null)) .
+        " <br /><a href='#!' class='link-small' onclick='jQuery(\"#default-image-wrapper\").hide();jQuery(\".image-widget\").show();'>Upload a profile picture</a>
+          <script>jQuery(document).ready(function () { jQuery('.image-widget').hide(); });</script>
+          </div>";
+    }
   }
+
 }
 
 function myngl_user_user_view_alter(&$build){
