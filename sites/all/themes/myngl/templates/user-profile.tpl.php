@@ -17,6 +17,17 @@
   </script>
 <?php endif; ?>
 
+<?php if ($_GET['view-detail']) : ?>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+      myngl.overlay('upcoming-myngls', 600, 750);
+      myngl_upcoming.details(<?php print myngl_myngl_upcoming_overlay_upload_id($uid, $_GET['view-detail']); ?>);
+    });
+  </script>
+<?php endif; ?>
+
+
+
 <div class="profile"<?php print $attributes; ?>>
   <div id="content-left">
     <?php
