@@ -30,6 +30,7 @@ function myngl_activities_page() {
       'visiting_activi' => "Visit playroom",
       'playroom_activi' => "Play game",
       'sending_ct_msg' => "Send chat message",
+      'upload_ugc'=>"Upload UGC content",
 
 
   );
@@ -38,9 +39,9 @@ function myngl_activities_page() {
   $activities = array();
 
   $result = db_query("  SELECT * FROM {myngl_rewards_history} 
-                        WHERE user_id = :uid 
-                        GROUP BY description 
-                        ORDER BY timestamp DESC ", array(':uid' => $user->uid));
+                        WHERE user_id = :uid " .
+                        //GROUP BY description  //commented out by Ming
+                        "ORDER BY timestamp DESC ", array(':uid' => $user->uid));
 
   foreach ($result as $r) {
 

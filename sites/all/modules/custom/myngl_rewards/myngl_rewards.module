@@ -141,6 +141,7 @@ function myngl_rewards_add($myngl_id, $user_id, $activity_field_name) {
       'visiting_activi' => 0,
       'playroom_activi' => 1,
       'sending_ct_msg' => 1,
+      'upload_ugc' =>1,
    );
 
   $myngl = node_load($myngl_id);
