@@ -1,6 +1,7 @@
 (function ($) {
   $(document).ready( function() {
 
+
     if ($(".field-name-field-profile-gender input#edit-profile-profile-field-profile-gender-und").prop('checked')==true) {
       $("#gender-switch-inner").css('left','50px');
     }
@@ -194,9 +195,17 @@ var myngl_upcoming = (function($) {
       $('#upcoming-myngls-pane-upload-images-' + k).fadeIn(100);
       return false;
     },
-    upload_finished: function(k) {
+    upload_finished: function(k, myngl_id, uid) {
       $('.upcoming-myngls-pane').fadeOut(10);
       $('#upcoming-myngls-pane-details-' + k).fadeIn(100);
+      $.ajax({
+        type: "GET",
+        url: "/myngl-event/" + myngl_id + "/rewards-add/" + uid + "/" + "upload_ugc",
+        success: function(data) {}
+      });
+
+
+
       return false;
     },
     cancel_upload: function() {

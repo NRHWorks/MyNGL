@@ -124,7 +124,7 @@ addthisevent.settings({
             <a href="#" onclick="return myngl_upcoming.cancel_upload();">Cancel Upload</a>
           </div>
           <div class="upcoming-myngls-pane-footer-right">
-              <input type="button" value="UPLOAD FINISHED" onclick="return myngl_upcoming.upload_finished(<?php print $k ?>);"  />
+              <input type="button" value="UPLOAD FINISHED" onclick="return myngl_upcoming.upload_finished(<?php print $k . ",". $m['myngl']->nid . ", " . $user->uid?>);"  />
           </div>
         </div>
       </div>
@@ -156,7 +156,7 @@ addthisevent.settings({
             <a href="#" onclick="return myngl_upcoming.cancel_upload();">Cancel Upload</a>
           </div>
           <div class="upcoming-myngls-pane-footer-right">
-              <input type="button" value="UPLOAD FINISHED" onclick="return myngl_upcoming.upload_finished(<?php print $k ?>);"  />
+              <input type="button" value="UPLOAD FINISHED" onclick="return myngl_upcoming.upload_finished(<?php print $k . ",". $m['myngl']->nid . ", " . $user->uid?>);"  />
           </div>
         </div>
       </div>
@@ -188,7 +188,7 @@ addthisevent.settings({
             <a href="#" onclick="return myngl_upcoming.cancel_upload();">Cancel Upload</a>
           </div>
           <div class="upcoming-myngls-pane-footer-right">
-              <input type="button" value="UPLOAD FINISHED" onclick="return myngl_upcoming.upload_finished(<?php print $k ?>);"  />
+              <input type="button" value="UPLOAD FINISHED" onclick="return myngl_upcoming.upload_finished(<?php print $k . ",". $m['myngl']->nid . ", " . $user->uid?>);"  />
           </div>
         </div>
       </div>
