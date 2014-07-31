@@ -1,5 +1,6 @@
 <?php
   global $user;
+  global $base_url;
   $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
   $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
   $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
@@ -598,7 +599,37 @@ form#myngl-myngl-post-questions-form #edit-submit{
 
     <div id='title'></div>
     <div class="short-line"></div>
-    <div id='social'><div style="float:right"><img src='<?php print base_path(). path_to_theme();?>/images/theater-downloads-social-icons1.png'/></div></div>
+    <div id='social'>
+      <div style="float:right">
+        <script>
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '{app-id-here}',
+              xfbml      : true,
+              version    : 'v2.0'
+            });
+          };
+
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "//connect.facebook.net/en_US/sdk.js";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <img src='<?php print base_path(). path_to_theme();?>/images/theater-downloads-social-icons1.png' usemap='#socialmap'/>
+        <map name="socialmap">
+          <area shape="rect" coords="2,0,30,28" href="mailto:?subject=Hello world&body=Line one%0DLine two" alt="Share Email" target="_blank" id="share-email">
+          <area shape="rect" coords="38,0,66,28" href="<?php echo $base_url . "/myngl-event/" . $myngl->nid . "/rewards"; ?>" alt="Share Facebook" target="_blank" id="share-facebook">
+          <area shape="rect" 
+                coords="74,0,102,28" 
+                href="https://twitter.com/share?text=<?php $field = field_get_items('node', $myngl, 'field_twitter_canned_message');
+                                                          $output = field_view_value('node', $myngl, 'field_twitter_canned_message', $field[0]);
+                                                          print render($output); ?>" alt="Share Twitter" target="_blank" id="share-twitter">
+        </map>
+      </div>
+    </div>
     <div id='left'>
       <p>We will send your chosen <span id="gift-name">Swag Bag</span> gift redemption -  coupon via email  - or  merchandise via UPS. </p>
 

@@ -15,6 +15,16 @@ var update_status_interval;
 
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Gifting Suite");
     update_status_interval = setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Gifting Suite");},20000);
+    
+    $("#share-facebook").click(function(event) {  
+        event.preventDefault();
+        fb_href = $(this).attr('href');
+        FB.ui(
+        {
+         method: 'share',
+         href: fb_href
+       }, function(response){});
+    });
   })
 }(jQuery));
 
