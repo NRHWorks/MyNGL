@@ -1,5 +1,10 @@
+var additional_videos_offset = 0;
+
 (function ($) {
-  $(document).ready( function() {
+  $(document).ready( function(){
+    if ($(".additional-video").length <=3) {
+      $("#myngl-theater-see-more .fa").css('display','none');
+    }
 
     $.cookie('theater_entrance_time', null); //comment this line out when it's done
     if ($.cookie('theater_entrance_time') == null) {
@@ -10,7 +15,9 @@
       $('.halfCircleRight').hide();
       $('.halfCircleLeft').hide();
     }
-
+    var k =$('.additional-video').length * 204;
+    $("#additional-videos").css('width', k);
+    console.log(k);
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");
     setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");},20000);
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_theate');
@@ -96,7 +103,25 @@
 
 var theater = (function ($) {
   return {
+    additional_video_left: function(){
+      var num_of_additional_videos = $('.additional-video').length;
+      if (additional_videos_offset != 0) {
+        additional_videos_offset --;
+        $("#additional-videos").animate({left: - additional_videos_offset * 204 },200);
+      }
 
+      return false;
+
+    },
+    additional_video_right: function(){
+      var num_of_additional_videos = $('.additional-video').length;
+      if (additional_videos_offset < num_of_additional_videos -3) {
+        additional_videos_offset ++;
+        $("#additional-videos").animate({left: - additional_videos_offset * 204 },200);
+      }
+      return false;
+
+    },
     message: function() {
       var myngl_id = Drupal.settings.myngl_id;
       var time_passed = $.now() - $.cookie('theater_entrance_time');
