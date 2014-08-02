@@ -201,21 +201,29 @@ function myngl_event_social_area($nid) {
     //for ($x=1;$x<=3;$x+=1) {
       if (isset($ic->field_image_upload['und'])) {
         foreach ($ic->field_image_upload['und'] as $image) {
-          $ucg[] = array(
-            'thumb' => theme_image_style(array('style_name' => 'user_generated_content_thumbs', 'path' => $image['uri'], 'attributes' => array('class' => 'ugc-pic'), 'height' => null, 'width' => null)),
-            'content' => theme_image_style(array('style_name' => 'user_generated_content_images', 'path' => $image['uri'], 'attributes' => array('class' => 'ugc-pic'), 'height' => null, 'width' => null)),
-            'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
-          );
+          $approve =db_query("SELECT approve FROM myngl_invitee_ugc_approve WHERE
+                        fid = :fid", array(":fid" => $image['fid']));
+          if ($approve->rowCount() && $approve->fetchObject()->approve){
+            $ucg[] = array(
+              'thumb' => theme_image_style(array('style_name' => 'user_generated_content_thumbs', 'path' => $image['uri'], 'attributes' => array('class' => 'ugc-pic'), 'height' => null, 'width' => null)),
+              'content' => theme_image_style(array('style_name' => 'user_generated_content_images', 'path' => $image['uri'], 'attributes' => array('class' => 'ugc-pic'), 'height' => null, 'width' => null)),
+              'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
+            );
+          }
         }
       }
 
       if (isset($ic->field_video_upload['und'])) {
         foreach ($ic->field_video_upload['und'] as $video) {
-          $ucg[] = array (
-            'thumb' => theme('youtube_thumbnail', array('image_style' => 'user_generated_content_videos', 'video_id' => $video['video_id'])),
-            'content' => theme('youtube_video', array('video_id' => $video['video_id'], 'size' => 'custom', 'height' => '400px', 'width' => '600px')),
-            'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
-          );
+          $approve =db_query("SELECT approve FROM myngl_invitee_ugc_approve WHERE
+                        fid = :vid", array(":vid" => $video['video_id']));
+          if ($approve->rowCount() && $approve->fetchObject()->approve){
+            $ucg[] = array (
+              'thumb' => theme('youtube_thumbnail', array('image_style' => 'user_generated_content_videos', 'video_id' => $video['video_id'])),
+              'content' => theme('youtube_video', array('video_id' => $video['video_id'], 'size' => 'custom', 'height' => '400px', 'width' => '600px')),
+              'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
+            );
+          }
         }
       }
     //}
