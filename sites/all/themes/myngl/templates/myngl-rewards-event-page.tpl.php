@@ -283,7 +283,7 @@ body.page-myngl-event-rewards {
   z-index:200;
 	left:0;
 	right:0;
-	top:160px;
+	top:100px;
 	margin-left:auto;
 	margin-right:auto;
 	border:solid 20px <?php print $brand->field_brand_primary_color['und'][0]['rgb'];?>;

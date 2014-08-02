@@ -1213,7 +1213,7 @@ body ::-webkit-scrollbar-thumb {
     max-width: 845px;
     margin: auto;
     position: relative;
-    top: 21.25vh;
+    top: 14.25vh;
   }
 
   /* --- Social Area --- */
@@ -2048,7 +2048,7 @@ form#user-profile-form .switch-knob{
 #help-overlay{
   display:none;
   position: absolute;
-  top:200px;
+  top:100px;
   left: 0;
   right: 0;
   margin-left: auto;
@@ -2182,4 +2182,8 @@ div#exit-div #exit-points #exit-points-circle .exit-points-points {
 
 form#user-profile-form fieldset#edit-picture {
   display: none;
+}
+
+#invitee-chat-selector-search input {
+  width: 175px;
 }

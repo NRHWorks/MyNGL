@@ -8,6 +8,7 @@ stylesheets[all][] = css/global.css
 scripts[] = js/myngl.js
 scripts[] = js/jquery.isotope.min.js
 scripts[] = js/jquery.scrollTo.js
+scripts[] = js/countdown.min.js
 
 regions[header] = Header
 regions[highlighted] = Highlighted

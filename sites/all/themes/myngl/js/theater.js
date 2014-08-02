@@ -19,9 +19,13 @@
 
     $("iframe.media-ustream-player").width(852).height(479).attr('id','iframe-movie');
     var viewer = UstreamEmbed('iframe-movie');
-    viewer.addListener('finished', function(){
-      $('#myngl-theater-see-more').css('display','block');
-      $("#question-form-wrapper").hide();
+    var slides = false;
+    viewer.addListener('live', function() { slides = true;  });
+    viewer.addListener('offline', function(){
+	if (slides == true) {
+      		$('#myngl-theater-see-more').css('display','block');
+      		$("#question-form-wrapper").hide();
+	}
     });
     
     $("#player").hide();
@@ -159,7 +163,7 @@ var question = (function ($) {
       if ($('#question-input').val() != '') {
         $.ajax({
           type: "POST",
-          url: "/myngl-event/theater/question/" + myngl_id + "/" + from_uid,
+          url: "/myngl-event/theater/question/" + myngl_id,
           data: {'question' : $('#question-input').val()}
         });
 

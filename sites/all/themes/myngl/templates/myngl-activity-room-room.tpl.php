@@ -33,7 +33,7 @@
   position:absolute;
   margin-left:auto;
 	margin-right:auto;
-  top:170px;
+  top:155px;
 	left:0;
 	right:0;
   padding-left:50px;

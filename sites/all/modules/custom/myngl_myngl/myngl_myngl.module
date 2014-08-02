@@ -807,6 +807,15 @@ function myngl_myngl_edit_theater_message($form, &$form_state, $nid) {
     '#title' => t('Submit'),
   );
 
+  $questions = '<h3>Questions:</h3>';	
+  foreach (array_reverse($myngl->field_theater_questions['und']) as $q) {
+	$questions .= $q['value'].'<hr style="margin-top:10px;" /><br />';
+  }
+
+  $form['questions'] = array(
+	'#markup' => $questions,
+  );
+
   return $form;
 }
 
