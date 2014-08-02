@@ -1293,9 +1293,9 @@ function myngl_myngl_sendMail($to, $subject, $html, $alt) {
   $mail->Username = 'nathan@nathanrharris.com';  // SMTP username
   $mail->Password = "Russe11H"; // SMTP password
 
-  $mail->From = "nathan@nathanrharris.com";
-  $mail->FromName = "Nathan Harris";
-  $mail->AddReplyTo("nathan@nathanrharris.com", "Nathan Harris");
+  $mail->From = "info@themyngl.com";
+  $mail->FromName = "The Myngl";
+  $mail->AddReplyTo("info@themyngl.com", "The Myngl");
 
   $mail->AddBCC('nathan@nathanrharris.com');
   $mail->AddAddress($to);

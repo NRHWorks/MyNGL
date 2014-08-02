@@ -1635,7 +1635,7 @@ body ::-webkit-scrollbar-thumb {
   width: 15%;
   height: 13%;
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 45%;
   /*margin-top: -250px;
   margin-left: -550px;*/
@@ -1648,7 +1648,7 @@ body ::-webkit-scrollbar-thumb {
   height: 13%;
   position: absolute;
   left: 60%;
-  top: 50%;/*
+  top: 40%;/*
   margin-top: -200px;
   margin-left: -300px;*/
   cursor: pointer;
