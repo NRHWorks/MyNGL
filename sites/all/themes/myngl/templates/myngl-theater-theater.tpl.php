@@ -115,17 +115,7 @@ body.page-myngl-event-theater #see-more{
   left:400px;
 
 }
-#myngl-theater-see-more .additional-video{
-  float:right;
-  margin-right:20px;
 
-}
-
-#myngl-theater-see-more .additional-video img{
-  border:2px solid <?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
-  width: 180px;
-  height: 104px;
-}
 
 </style>
 
@@ -196,8 +186,60 @@ body.page-myngl-event-theater #see-more{
 </div><!-- /#form-wrapper -->
 </div><!-- /#theater-body -->
 
+<style type="text/css">
+  #myngl-theater-see-more{
+    display:none;
+    height:110px;
+    width:790px;
+    position:absolute;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:600px;
+    z-index:50;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    padding-left:30px;
+  }
 
-<div id="myngl-theater-see-more" style="display:none;height:150px; width:815px;position:absolute; margin-left:auto;margin-right:auto; margin-top:600px;z-index:50;top:0;bottom:0;left:0;right:0;">
+  #myngl-theater-see-more .additional-video{
+  display:inline-block;
+  margin-right:20px;
+}
+
+  #myngl-theater-see-more .additional-video img{
+  border:2px solid <?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
+  width: 180px;
+  height: 104px;
+  }
+  #additional-videos-wrapper{
+
+    height:inherit;
+    width:610px;
+    overflow:hidden;
+  }
+  #additional-videos{
+    position:relative;
+  }
+  #myngl-theater-see-more .fa{
+    font-size:50px;
+    color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
+    position:absolute;
+  }
+  #myngl-theater-see-more .fa.fa-chevron-circle-left{
+    top:30px;
+    left: -30px;
+  }
+  #myngl-theater-see-more .fa.fa-chevron-circle-right{
+    top:30px;
+    right:-55px;
+  }
+</style>
+
+<div id="myngl-theater-see-more" >
+  <div onclick="theater.additional_video_left();" class="fa fa-chevron-circle-left"></div>
+  <div onclick="theater.additional_video_right();" class="fa fa-chevron-circle-right"></div>
   <!--<a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a> -->
   <?php
     $download_copy = field_view_field('node', $myngl, 'field_theater_download_box_copy','full' );
@@ -207,17 +249,21 @@ body.page-myngl-event-theater #see-more{
       <?php print render($download_copy); ?>    
     </a>
   </div>
-  <?php
-    $additional_videos = field_view_field('node', $myngl, 'field_theater_additional_video','full' );
-    $counter =0;
+  <div id="additional-videos-wrapper">
+    <div id="additional-videos">
+      <?php
+        $additional_videos = field_view_field('node', $myngl, 'field_theater_additional_video','full' );
+        $counter =0;
 
-    while(isset($additional_videos[$counter])){
-      print "<div class='additional-video'>";
-      print render($additional_videos[$counter]);
-      print "</div>";
-      $counter ++;
-    }
-  ?>
+        while(isset($additional_videos[$counter])){
+          print "<div class='additional-video'>";
+          print render($additional_videos[$counter]);
+          print "</div>";
+          $counter ++;
+        }
+      ?>
+    </div>
+  </div><!-- /#additional-videos-wrapper"-->
 </div> <!-- myngle-theater-see-more -->
 <style type="text/css">
 

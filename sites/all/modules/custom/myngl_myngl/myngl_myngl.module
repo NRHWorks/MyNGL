@@ -71,6 +71,7 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
+  /*
   $items['node/%/message'] = array(
     'title' => 'Message',
     'page callback' => 'drupal_get_form',
@@ -85,8 +86,15 @@ function myngl_myngl_menu() {
     'page arguments' => array('myngl_myngl_edit_theater_message', 1),
     'access callback' => TRUE,
     'type' => MENU_LOCAL_TASK,
-  );
+  );*/
 
+  $items['node/%/ugc-list'] = array(
+    'title' => 'UGC List',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('myngl_myngl_ugc_list', 1),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
 
   $items['node/%/participants-status'] = array(
     'title' => 'Participants Status',
@@ -760,6 +768,7 @@ function _myngl_myngl_get_invitee_id($myngl_id, $user_id) {
   }
 }
 
+/*
 function myngl_myngl_edit_message($form, &$form_state, $nid) {
   $myngl = node_load($nid);
 
@@ -838,6 +847,115 @@ function myngl_myngl_edit_theater_message_submit($form, &$form_state) {
 
   drupal_set_message('Messge Updated.  It will appear in the Myngl in a few seconds.');
 }
+*/
+
+
+function myngl_myngl_ugc_list($form, &$form_state, $nid) {
+  $myngl = node_load($nid);
+  // Deal with images.
+  foreach($myngl->field_myngl_invitees['und'] as $i){
+    $invitee_collection_id = $i['value'];
+    $result=db_query("SELECT field_image_upload_fid FROM
+                     field_data_field_image_upload WHERE entity_id = :entity_id",
+                     array(":entity_id"=> $i['value']));
+
+    foreach($result as $fid){
+      $fid =$fid->field_image_upload_fid;
+      $approve=db_query("SELECT approve FROM myngl_invitee_ugc_approve WHERE
+                        fid = :fid", array(":fid" => $fid));
+      $form[$fid] = array(
+        '#title' =>'Image: fid = ' . $fid,
+        '#type' => 'checkbox',
+        '#prefix'=>"<div style='float:left;padding:30px; '>",
+        '#suffix' =>"</div>",
+        );
+      // If the row doesn't exist.
+      if ($approve->rowCount()==0){
+        $form[$fid]['#default_value'] = 0;
+      }
+      else{
+        $form[$fid]['#default_value'] = $approve->fetchObject()->approve;
+      }
+
+      $file_uri = db_query("SELECT uri FROM file_managed WHERE fid = :fid", array(":fid"=>$fid));
+      $form[$fid]['#description']=
+        theme_image(array(
+            'path' => file_create_url($file_uri->fetchObject()->uri),
+            'width' =>'120px',
+            'height' =>'80px',
+                          ));
+    }
+
+  }
+
+
+  // Deal with videos.
+  foreach($myngl->field_myngl_invitees['und'] as $i){
+    $invitee_collection_id = $i['value'];
+    $result=db_query("SELECT field_video_upload_video_id FROM
+                     field_data_field_video_upload WHERE entity_id = :entity_id",
+                     array(":entity_id"=> $i['value']));
+
+    foreach($result as $vid){
+      $vid =$vid->field_video_upload_video_id;
+      $approve=db_query("SELECT approve FROM myngl_invitee_ugc_approve WHERE
+                        fid = :vid", array(":vid" => $vid));
+      $form[$vid] = array(
+        '#title' =>  "Youtube: " .$vid,
+        '#type' => 'checkbox',
+        '#prefix'=>"<div style='float:left;padding:30px;'>",
+        '#suffix' =>"</div>",
+        );
+      // If the row doesn't exist.
+      if ($approve->rowCount()==0){
+        $form[$vid]['#default_value'] = 0;
+      }
+      else{
+        $form[$vid]['#default_value'] = $approve->fetchObject()->approve;
+      }
+
+      $form[$vid]['#description']=
+        "<img src='http://img.youtube.com/vi/". $vid."/0.jpg' height='80' width='120' />";
+    }
+
+  }
+
+
+
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#title' => t('Submit'),
+    '#prefix'=>'<div style="clear:both">',
+    '#suffix'=>'</div>',
+  );
+
+  return $form;
+}
+
+function myngl_myngl_ugc_list_submit($form, &$form_state) {
+  foreach($form_state['values'] as $fid =>$value){
+    // Filter out values which are not true or false.
+    if ($value=='0'||$value=='1'){
+      $approve=db_query("SELECT approve FROM myngl_invitee_ugc_approve WHERE
+                          fid = :fid", array(":fid" => $fid));
+      if ($approve->rowCount()==0){
+        db_insert('myngl_invitee_ugc_approve')->fields(
+          array('fid' => $fid, 'approve' => intval($value),))->execute();
+      }
+      else{
+        db_update('myngl_invitee_ugc_approve')->fields(
+          array( 'approve' => $value,))->condition('fid', $fid, '=')->execute();
+      }
+    }
+  }
+
+
+  drupal_set_message("UGC approval is successfully updated.");
+
+}
+
 
 function myngl_myngl_edit_question($form, &$form_state, $nid) {
   $myngl = node_load($nid);
@@ -1069,9 +1187,10 @@ function myngl_event_participants_status($myngl_id) {
 
 function myngl_myngl_admin_paths() {
   return array(
-    'node/*/message' => TRUE,
+    //'node/*/message' => TRUE,
     'node/*/question' => TRUE,
-    'node/*/theater-message' =>TRUE,
+    //'node/*/theater-message' =>TRUE,
+    'node/*/ugc-list' =>TRUE,
     'node/*/invitee-redeem' => TRUE,
     'node/*/invitees' => TRUE,
     'node/*/participants-status' => TRUE,
