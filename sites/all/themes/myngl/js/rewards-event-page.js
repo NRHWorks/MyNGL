@@ -76,7 +76,7 @@ var rewards_overlay = (function($){
       });
 
       var gift_name = $("#reward-id-" + selected_reward_id + " .field-name-field-title" ).text();
-      $('#gifting-series-overlay #congrats #title').text("CONGRATS, YOU GOT YOUR " + gift_name.toUpperCase());
+      $('#gifting-series-overlay #congrats #title').html("CONGRATULATIONS!<br /><br /> ENJOY YOUR " + gift_name.toUpperCase() + "!");
       $('#gifting-series-overlay #congrats span#gift-name').text(gift_name);
 
       $('#gifting-series-overlay #questions').fadeOut(500);
