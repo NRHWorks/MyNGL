@@ -240,7 +240,7 @@ body.page-myngl-event-rewards {
 <div id="reward-wrapper">
   <div id="left">
     <?php
-      $rewards = field_view_field('node', $myngl, 'field_reward','full' );
+      $rewards = field_view_field('node', $myngl, 'field_reward','fullhtml' );
       $element_counter = 0;
     ?>
     <?php while(isset($rewards[$element_counter])): ?>
@@ -250,20 +250,20 @@ body.page-myngl-event-rewards {
   </div><!-- /#left-->
   <div id="right">
     <div id="external-site">
-      <?php $ex_site_title = field_view_field('node', $myngl, 'field_external_site_title','full' ); ?>
+      <?php $ex_site_title = field_view_field('node', $myngl, 'field_external_site_title','fullhtml' ); ?>
       <?php print render($ex_site_title); ?>
-      <?php $ex_site_subtitle = field_view_field('node', $myngl, 'field_external_site_subtitle','full' ); ?>
+      <?php $ex_site_subtitle = field_view_field('node', $myngl, 'field_external_site_subtitle','fullhtml' ); ?>
       <?php print render($ex_site_subtitle); ?>
-      <?php $ex_site_desc = field_view_field('node', $myngl, 'field_external_site_description','full' ); ?>
+      <?php $ex_site_desc = field_view_field('node', $myngl, 'field_external_site_description','fullhtml' ); ?>
       <?php print render($ex_site_desc); ?>
 
-      <?php $ex_site_link = field_view_field('node', $myngl, 'field_external_site_link','full' ); ?>
+      <?php $ex_site_link = field_view_field('node', $myngl, 'field_external_site_link','fullhtml' ); ?>
       <div id="buy-now">
         BUY NOW <a href='<?php print strip_tags(render($ex_site_link)); ?>' target='_blank'>></a>
       </div>
     </div>
     <div id="bottom-right-image">
-      <?php $bottom_right_image = field_view_field('node', $myngl, 'field_gifting_series_bottom_righ','full' ); ?>
+      <?php $bottom_right_image = field_view_field('node', $myngl, 'field_gifting_series_bottom_righ','fullhtml' ); ?>
       <?php print render($bottom_right_image); ?>
     </div>
   </div>
