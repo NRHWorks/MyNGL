@@ -592,6 +592,12 @@ form#myngl-myngl-post-questions-form #edit-submit{
 
   <div id='questions'>
     <div id='title'>Gift Redeem: questions</div>
+
+    <div style="margin-left:30px; margin-bottom:30px;">
+      <p>We’re ready to give you your Gift Bag!</p>
+      <p>Please give us a “gift” by answering a few questions below. Thanks</p>
+    </div>
+
     <?php print $form; ?>
   </div>
 
