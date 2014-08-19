@@ -637,15 +637,7 @@ form#myngl-myngl-post-questions-form #edit-submit{
       </div>
     </div>
     <div id='left'>
-      <p>We will send your chosen <span id="gift-name">Swag Bag</span> gift redemption -  coupon via email  - or  merchandise via UPS. </p>
-
-      <p>Simply fill in your email address (or home address) below.</p>
-
-      <p>Thanks again from <?php print $brand->title;?> and theMyngl!</p>
-
-      <p>Hope to see you next time at theMyngl!</p>
-
-
+      <?php print $node->field_reward_congrats_text['und'][0]['safe_value']; ?>
       <div class="short-line" style="margin-left:0;margin-top:20px;"></div>
     </div>
 
