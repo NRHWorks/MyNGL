@@ -69,7 +69,21 @@
       }
     ?>
     Myngl Event will start in
-    <div id="time"><?php print $till_event_text; ?></div>
+    <div id="time"><?php print $till_event_text; ?>...</div>
+
+<?php /*
+<script>  
+  var clock = document.getElementById("time")  
+    , targetDate = new Date(<?php print date("Y, m, d, G, i", strtotime($myngl->field_myngl_dates['und'][0]['value'])); ?>); // Jan 1, 2050;  
+  
+  clock.innerHTML = countdown(targetDate).toString();  
+  setInterval(function(){  
+    clock.innerHTML = countdown(targetDate).toString();  
+  }, 1000);  
+</script>  
+*/ ?>
+
+
 
   </div>
 

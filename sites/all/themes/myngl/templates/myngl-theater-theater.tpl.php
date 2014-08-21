@@ -133,6 +133,7 @@ body.page-myngl-event-theater #see-more{
     $theater = field_view_field('node', $myngl, 'field_theater','full' );
 
     print render($theater);
+    //print str_replace('class="media-ustream-player"','class="media-ustream-player" id="ustreamPlayer"',str_replace('wmode','autoplay=true&wmode',render($theater)));
     //print theme('youtube_video', array('video_id' => $myngl->field_welcome_video['und'][0]['video_id'], 'size' => 'custom', 'height' => '350px', 'width' => '650px'));
 
   ?>
@@ -474,3 +475,24 @@ padding-top:10px;
   <div  class="halfCircleRight" id="halfCircleRight"><i class="fa fa-angle-left"></i></div>
   <div  class="halfCircleLeft" id="halfCircleLeft"><i class="fa fa-angle-right"></i></div>
 </div><!-- #myngl-theater-downloads -->
+
+<?php /* ?>
+
+<script src="/sites/all/themes/myngl/js/embedapi-master/src/ustream-embedapi.js"></script>
+
+<script type="text/javascript">
+  jQuery(document).ready(function () {
+	alert('embed api loaded');	
+  	var viewer = UstreamEmbed("ustreamPlayer");
+			
+	console.log(viewer);
+
+	 	viewer.addListener('offline', function() {
+	alert('live stream offline');	
+		      jQuery('#myngl-theater-see-more').css('display','block');
+		      jQuery("#question-form-wrapper").hide();
+		});
+	});
+</script>
+
+<?php */ ?>
