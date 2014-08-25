@@ -151,12 +151,6 @@ function myngl_event_social_area($nid) {
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
 
-
-
-
-
-
-
   $myngl = node_load($nid);
 
   //print "<pre>";
@@ -203,7 +197,10 @@ function myngl_event_social_area($nid) {
                   'tagline' =>  $ic->field_myngl_tagline['und'][0]['value'],
                   'about_me' => $p->field_about['und'][0]['value'],
                   'brand_rep' => (in_array($u->uid, $brand_reps_uids))?1:0,
+                  'city' => $p->field_city['und'][0]['value']
+
                 );
+
 
     //for ($x=1;$x<=3;$x+=1) {
       if (isset($ic->field_image_upload['und'])) {
@@ -418,20 +415,23 @@ function myngl_event_update_users_in_lounge($myngl_id){
 function myngl_event_invitee_info_update($myngl_id){
   $myngl = node_load($myngl_id);
   $invitees = array();
-  //print "<pre>";
   $invitees_ahh = array();
 
   foreach ($myngl->field_myngl_invitees['und'] as $x => $i) {
     $j = array_shift(entity_load('field_collection_item', array($i['value'])));
-    //if (!isset($j->field_invitee_user_account['und'])){break;}
+
     $invitee['user_id'] = $j->field_invitee_user_account['und'][0]['uid'];
     $invitee['tagline'] = $j->field_myngl_tagline['und'][0]['value'];
     $invitee['pre_question_answers'] = unserialize($j->field_pre_question_answers['und'][0]['value']);
+    /*
+    $p = profile2_load_by_user($invitee['user_id'], 'profile');
+    $invitee['city'] = $p->field_city['und'][0]['value'];*/
     $invitees[]= $invitee;
 
-    $invitees_ahh[] = $j;
+
+
   }
-  //print_r($invitees_ahh); exit();
+
   echo json_encode($invitees);
 }
 

@@ -367,8 +367,9 @@
 
       <span style="font-size:16px;font-family:'roboto';color:#ffffff;"><?php print $i['name']; ?></span>
       <div style="width:100%; height:1px; margin:3px 0 8px 0; background-color:#ffffff;"> </div>
-      <span style="font-size:14px; font-family:'lato'; color:#ffffff;"><?php print $i['about_me'] ; ?></span><br /><br />
-      <span style="font-size:14px; font-family:'lato'; color:#ffffff;">Tagline: <span id="tagline-holder"><?php print $i['tagline'] ; ?></span></span><br /><br />
+      <!--<span style="font-size:14px; font-family:'lato'; color:#ffffff;"><?php print $i['about_me'] ; ?></span><br /><br />-->
+      <span id='city' style="font-size:14px; font-family:'lato'; color:#ffffff;">Hometown: <?php print $i['city'];?></span><br /><br />
+      <span style="font-size:14px; font-family:'lato'; color:#ffffff;"><span id="tagline-holder"><?php print $i['tagline'] ; ?></span></span><br /><br />
       <a href="#" onclick="chat.reset_id_of_showing_invitee_info(); return chat.solo_show(<?php print $i['uid']; ?>)"
                   style="font-size:14px;position:absolute;right:10px;bottom:10px;text-decoration:underline;color:#ffffff; ">
         CHAT

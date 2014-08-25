@@ -222,6 +222,8 @@ var social_area = (function ($) {
       // Update the tagline
       for (var i = 0; i < users_tagline_and_prequestion_answers.length; i ++){
         $("#myngl-event-invitee-info-"+ users_tagline_and_prequestion_answers[i].user_id + " span#tagline-holder").text(users_tagline_and_prequestion_answers[i].tagline);
+        $("#myngl-event-invitee-info-"+ users_tagline_and_prequestion_answers[i].user_id + " span#city").text(users_tagline_and_prequestion_answers[i].city);
+        console.log(users_tagline_and_prequestion_answers[i]);
         //console.log((users_tagline_and_prequestion_answers[i].pre_question_answers));
 
       }

@@ -1115,8 +1115,12 @@ body ::-webkit-scrollbar-thumb {
  
 
   label[for="edit-tagline"] {
-    display: inline !important;
+/*    display: inline !important;*/
     margin-right: 10px;
+    /*border: 2px solid #00ff00;*/
+  }
+  input#edit-tagline{
+    width:640px;
   }
 
   #myngl-questions-below-form {
