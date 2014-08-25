@@ -91,11 +91,11 @@ i.fa {  /* arrows in the half circles */
 
 .activity-room-thumb{
 	float:left;
-	margin-left:5px;
-	margin-right:5px;
-	margin-top:20px;
-	width:150px;
-	height:140px;
+	margin-left:2.5%;
+	margin-right:0;
+	margin-top:80px;
+	width:45%;
+  text-align: center;
 
 }
 .activity-room-thumb ul{

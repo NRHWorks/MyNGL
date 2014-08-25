@@ -30,6 +30,7 @@ var additional_videos_offset = 0;
     viewer.addListener('live', function() { slides = true;  });
     viewer.addListener('offline', function(){
 	if (slides == true) {
+      		$('#myngl-event-menu').css('display','block');
       		$('#myngl-theater-see-more').css('display','block');
       		$("#question-form-wrapper").hide();
 	}

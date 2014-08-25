@@ -339,6 +339,8 @@ function myngl_event_social_area_ajax_post_pov_message($nid) {
   $node->field_pov_messages['und'][] = array('value' => $_POST['pov_message']);
 
   node_save($node);
+  
+
 }
 
 function myngl_event_social_area_ajax_pov_message($nid) {

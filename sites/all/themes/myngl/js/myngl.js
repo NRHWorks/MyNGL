@@ -1,6 +1,10 @@
 (function ($) {
   $(document).ready( function() {
 
+    $("#terms-overlay-link").click(function() {
+      myngl.overlay('terms-overlay', 500, 750);
+    });
+
 
     if ($(".field-name-field-profile-gender input#edit-profile-profile-field-profile-gender-und").prop('checked')==true) {
       $("#gender-switch-inner").css('left','50px');
@@ -128,7 +132,10 @@ var myngl = (function($) {
     help_overlay_close: function(){
       $('#overlay-background').fadeOut(500);
       $('#help-overlay').fadeOut(100);
-
+    },
+    terms_overlay_close: function(){
+      $('#overlay-background').fadeOut(500);
+      $('#terms-overlay').fadeOut(100);
     },
 
     update_participant_status: function(myngl_id, user_id, status){

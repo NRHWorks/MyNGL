@@ -222,6 +222,10 @@ body.page-myngl-event-rewards {
  -webkit-border-radius: 30px 30px 30px 30px;
 }
 
+#congrats a {
+	font: 900 14px 'Lato', 'sans-serif';
+}
+
 </style>
 
 
@@ -556,10 +560,16 @@ form#myngl-myngl-post-questions-form #edit-submit{
       while (isset($reward_collections[$counter])){
         $collection = entity_load_single('field_collection_item',$reward_collections[$counter]['value'] );
         print "<div class ='overlay-reward' id='reward-id-". $reward_collections[$counter]['value']."'>";
+
+        print theme_image_style(array('style_name' => 'reward_thumb_120x120' , 'path' => $collection->field_thumb['und'][0]['uri'],'attributes' => array('align' => 'left', 'style' => 'margin-right: 20px;')));
+
         $renderable = entity_view('field_collection_item', array($collection), 'full' );
         print render ($renderable);
         print "</div>";
         $counter ++;
+
+
+
       }
     ?>
     <div class = "short-line" id="short-line-2"></div>
@@ -638,6 +648,9 @@ form#myngl-myngl-post-questions-form #edit-submit{
     </div>
     <div id='left'>
 <<<<<<< HEAD
+      <?php print $myngl->field_reward_congrats_text['und'][0]['safe_value']; ?>
+=======
+<<<<<<< HEAD
       <?php
         $text = field_view_field('node', $myngl, 'field_reward_congrats_text','full' );
         print render ($text);
@@ -646,6 +659,7 @@ form#myngl-myngl-post-questions-form #edit-submit{
 =======
       <?php print $node->field_reward_congrats_text['und'][0]['safe_value']; ?>
 >>>>>>> 2844238f80999e5fa762e0ce8836057cb1483859
+>>>>>>> 4d4ba6a1a9799b69e3a4aa68285ffe899d3ab659
       <div class="short-line" style="margin-left:0;margin-top:20px;"></div>
     </div>
 

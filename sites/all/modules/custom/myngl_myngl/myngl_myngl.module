@@ -186,7 +186,7 @@ function myngl_myngl_theme() {
 
   $items['myngl_invitation_email'] =  array(
                           'template' => 'myngl-invitation-email',
-                          'variables' => array ('myngl_id' => null, 'invitee' => null, 'banner' => null, 'gift_image' => null, 'title' => null,  'text' => null),
+                          'variables' => array ('myngl_id' => null, 'invitee' => null, 'friend' => null, 'banner' => null, 'gift_image' => null, 'title' => null,  'text' => null),
                         );
 
   $items['overlay_myngl_event_detail'] = array(
@@ -1072,6 +1072,13 @@ function myngl_myngl_edit_question_submit($form, &$form_state) {
   $myngl->field_pov_question['und'][0]['value'] = $v['question'];
   node_save($myngl);
 
+  $question = db_query("SELECT field_pov_question_value FROM {field_data_field_pov_question} WHERE entity_id = :eid", array(':eid' => $v['myngl_id']))->fetchField();
+
+  db_query("  INSERT INTO {myngl_pov} 
+              (myngl_id, user_id, question, message, date) 
+              VALUES (:myngl_id, :user_id, :question, :message, ".time().") ", 
+              array(':myngl_id'=>$v['myngl_id'], ':user_id'=>0, ':question'=>$question, ':message'=>'Question: '.$v['question']));
+
   drupal_set_message('Question Updated.  It will appear in the Myngl in a few seconds.');
 }
 
@@ -1317,10 +1324,15 @@ function myngl_myngl_cancel_invitation($myngl_id) {
 }
 
 function myngl_myngl_send_invitation($myngl_id, $invitee_id, $redirect = TRUE) {
+    global $user;
+    $user = user_load($user->uid);    
+
+    $friend = $user->field_first_name['und'][0]['value'];
 
     $node = node_load($myngl_id);
     
-    $subject = 'Your\'re invited to the '.$node->title;
+    //$subject = 'Your\'re invited to the '.$node->title;
+    $subject = 'You have been invited by your friend to a Myngl'; 
 
     $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
 
@@ -1337,7 +1349,7 @@ function myngl_myngl_send_invitation($myngl_id, $invitee_id, $redirect = TRUE) {
 
     $firstname = $ic->field_invitee_first_name['und'][0]['value'];
 
-    $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $node->field_myngl_invitation_email['und'][0]['value'])); 
+    $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'friend' => $friend, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $node->field_myngl_invitation_email['und'][0]['value'])); 
 
     myngl_myngl_sendMail($to, $subject, $html, $alt);
 
