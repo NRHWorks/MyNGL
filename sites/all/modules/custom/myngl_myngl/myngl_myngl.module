@@ -324,7 +324,6 @@ function myngl_myngl_upcoming($uid) {
   if ($invitee_id != '') {
     $next_scheduled_myngl = _myngl_myngl_get_next_scheduled_myngl($uid);
     $myngl_id = $next_scheduled_myngl['nid'];
-    file_put_contents("text123.txt", print_r($next_scheduled_myngl, TRUE));
   }
 
   if (isset($myngl_id)) {
@@ -483,6 +482,8 @@ function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $us
   $form['#prefix'] = '<div id="success-message-' . $k . '">
                         <span class="date change-date">Current <span class="date">'. myngl_long_date($invitee->field_invitee_rsvp_date['und'][0]['value']) .'</span></span>
                         <br/><br/>
+                        This Myngl will also be presented on the following dates. Please select the date that works best for you:
+                        <br/><br/>
                         <div id="event-date-timestamp" style="display:none">'. strtotime($invitee->field_invitee_rsvp_date['und'][0]['value']).'</div>
                       </div>'
                        ;
@@ -508,22 +509,14 @@ function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
                       <span class="date change-date">Current <span class="date">'.myngl_long_date($v['date']).'</span></span>
                       <br/><br/>
                       <strong>Date Updated</strong>
-                      <br/>
+                      <br/></br>
+                      This Myngl will also be presented on the following dates. Please select the date that works best for you:
+                      <br/><br/>
                       <div id="event-date-timestamp" style="display:none">'. strtotime($v['date']).'</div>
                     </div>'
                      ;
 ;
-          /*
-           This Myngl will also run on the following dates.  Pick one that will work for you: <br/><br/>'.
-           //render( drupal_get_form('myngl_myngl_overlay_change_date', $k, $v['myngl_id'], $v['user_id']));
-  //file_put_contents("text123.txt",drupal_build_form('myngl_myngl_overlay_change_date', $k, $v['myngl_id'], $v['user_id']));
-  return  '<span class="date">Current '.myngl_long_date($v['date']).'</span><br/><br/>
-          <strong>Date Updated</strong><br/>
-           This Myngl will also run on the following dates.  Pick one that will work for you: <br/><br/>'; //.
-           //render( drupal_get_form('myngl_myngl_overlay_change_date', $k, $v['myngl_id'], $v['user_id']));
-           // . drupal_build_form('myngl_myngl_overlay_change_date', $k, $v['myngl_id'], $v['user_id'])
 
-           ;*/
           return $return_string;
 
 }
