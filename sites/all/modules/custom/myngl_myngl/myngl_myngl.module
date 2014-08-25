@@ -71,6 +71,19 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
+  $items['myngl/next-scheduled-myngl-id/%'] = array(
+    'title' => 'Myngl Next Scheduled Event',
+    'page callback' => 'myngl_myngl_next_scheduled_event_nid',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+  );
+
+  $items['myngl/upcoming-ajax/%'] = array(
+    'title' => 'Myngl Next Scheduled Event',
+    'page callback' => 'myngl_myngl_upcoming_ajax',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+  );
   /*
   $items['node/%/message'] = array(
     'title' => 'Message',
@@ -153,7 +166,7 @@ function myngl_myngl_theme() {
 
   $items['panel_myngl_upcoming'] =  array(
                           'template' => 'panel-myngl-upcoming',
-                          'variables' => array ('myngl' => null, 'brand' => NULL),
+                          'variables' => array ('myngl' => null, 'brand' => NULL,'rsvp_date' => NULL),
                         );
 
   $items['overlay_myngl_upcoming'] =  array(
@@ -305,11 +318,13 @@ function myngl_myngl_complete($nid) {
 }
 
 function myngl_myngl_upcoming($uid) {
+
   $invitee_id = db_query("SELECT entity_id FROM {field_data_field_invitee_user_account} WHERE field_invitee_user_account_uid = :uid LIMIT 1", array(':uid' => $uid))->fetchField();
 
   if ($invitee_id != '') {
-    //TODO: make sure this is getting the next scheduled myngl
-    $myngl_id = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = $invitee_id LIMIT 1")->fetchField();
+    $next_scheduled_myngl = _myngl_myngl_get_next_scheduled_myngl($uid);
+    $myngl_id = $next_scheduled_myngl['nid'];
+    file_put_contents("text123.txt", print_r($next_scheduled_myngl, TRUE));
   }
 
   if (isset($myngl_id)) {
@@ -317,13 +332,57 @@ function myngl_myngl_upcoming($uid) {
 
     $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
 
-    $output = theme('panel_myngl_upcoming', array('myngl' => $node, 'brand' => $brand));
+    $rsvp_date = $next_scheduled_myngl['timestamp'];
+
+
+    drupal_add_js(array('current_server_time' => time()), 'setting');
+    /*drupal_add_js(array('invitee_rsvp_date' => $rsvp_date), 'setting');*/
+    drupal_add_js(array('next_scheduled_myngl_id' => $myngl_id), 'setting');
+    drupal_add_js(array('uid'=> $uid),'setting');
+    drupal_add_js(path_to_theme().'/js/upcoming.js');
+
+
+    $output = theme('panel_myngl_upcoming', array('myngl' => $node, 'brand' => $brand, 'rsvp_date' =>$rsvp_date));
 
     return $output;
   } else {
     return 'No Upcoming Myngls';
   }
 
+}
+
+
+function myngl_myngl_upcoming_ajax($uid){
+  return drupal_json_output(myngl_myngl_upcoming($uid));
+}
+
+
+/**
+ * This function returns the next scheduled myngl event for a given uid.
+ */
+function _myngl_myngl_get_next_scheduled_myngl($uid){
+  $invitee_ids = db_query("SELECT entity_id from {field_data_field_invitee_user_account} WHERE field_invitee_user_account_uid = $uid");
+  if ($invitee_ids->rowCount() ==0) {
+    return NULL;
+  }
+
+  $myngl_event_dates = array();
+  foreach($invitee_ids as $i){
+    $myngl_event_dates[$i->entity_id] = strtotime(db_query(
+      "SELECT field_invitee_rsvp_date_value from {field_data_field_invitee_rsvp_date} WHERE entity_id = :eid",
+      array(':eid'=>$i->entity_id))->fetchField());
+  }
+  asort($myngl_event_dates,SORT_NUMERIC);
+  $next_event_invitee_id = key($myngl_event_dates);
+
+  //$next_scheduled_event_timestamp = $myngl_event_dates[$next_event_invitee_id];
+  $return_array['timestamp'] = $myngl_event_dates[$next_event_invitee_id];
+  $return_array['nid'] = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = $next_event_invitee_id LIMIT 1")->fetchField();
+  return $return_array;
+}
+
+function myngl_myngl_next_scheduled_event_nid($uid){
+  return drupal_json_output (_myngl_myngl_get_next_scheduled_myngl($uid));
 }
 
 
@@ -415,11 +474,18 @@ function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $us
     '#title' => t('Submit'),
     '#ajax' => array(
         'callback' => 'myngl_myngl_overlay_change_date_ajax_submit',
-        'wrapper' => 'upcoming-myngls-pane-info-' . $k,
+        //'wrapper' => 'upcoming-myngls-pane-info-' . $k,
+        'wrapper' => 'success-message-'.$k,
         'method' => 'replace',
         'effect' => 'fade',
     ),
   );
+  $form['#prefix'] = '<div id="success-message-' . $k . '">
+                        <span class="date change-date">Current <span class="date">'. myngl_long_date($invitee->field_invitee_rsvp_date['und'][0]['value']) .'</span></span>
+                        <br/><br/>
+                        <div id="event-date-timestamp" style="display:none">'. strtotime($invitee->field_invitee_rsvp_date['und'][0]['value']).'</div>
+                      </div>'
+                       ;
 
   return $form;
 }
@@ -431,9 +497,35 @@ function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
   $invitee->field_invitee_rsvp_date['und'][0]['value'] = $v['date'];
   $invitee->save();
 
-  return  '<span class="date">Current '.myngl_long_date($v['date']).'</span><br><br>
-           This Myngl will also run on the following dates.  Pick one that will work for you: <br><br>
-           <strong>Date Updated</strong?>';
+  // This section get the $k for calling the drupal_get_form again
+
+  $wrapper = $form_id['submit']['#ajax']['wrapper'];
+  $pos = strrpos ( $wrapper , '-' );
+  $k =substr($wrapper, $pos+1, strlen($wrapper)-$pos -1);
+
+
+  $return_string = '<div id="success-message-'.$k.'">
+                      <span class="date change-date">Current <span class="date">'.myngl_long_date($v['date']).'</span></span>
+                      <br/><br/>
+                      <strong>Date Updated</strong>
+                      <br/>
+                      <div id="event-date-timestamp" style="display:none">'. strtotime($v['date']).'</div>
+                    </div>'
+                     ;
+;
+          /*
+           This Myngl will also run on the following dates.  Pick one that will work for you: <br/><br/>'.
+           //render( drupal_get_form('myngl_myngl_overlay_change_date', $k, $v['myngl_id'], $v['user_id']));
+  //file_put_contents("text123.txt",drupal_build_form('myngl_myngl_overlay_change_date', $k, $v['myngl_id'], $v['user_id']));
+  return  '<span class="date">Current '.myngl_long_date($v['date']).'</span><br/><br/>
+          <strong>Date Updated</strong><br/>
+           This Myngl will also run on the following dates.  Pick one that will work for you: <br/><br/>'; //.
+           //render( drupal_get_form('myngl_myngl_overlay_change_date', $k, $v['myngl_id'], $v['user_id']));
+           // . drupal_build_form('myngl_myngl_overlay_change_date', $k, $v['myngl_id'], $v['user_id'])
+
+           ;*/
+          return $return_string;
+
 }
 
 function myngl_myngl_image_upload($form, &$form_state, $k, $myngl_id, $user_id) {
@@ -463,7 +555,7 @@ function myngl_myngl_image_upload($form, &$form_state, $k, $myngl_id, $user_id) 
         'callback' => 'myngl_myngl_image_upload_ajax_submit',
         'wrapper' => 'myngl-myngl-image-upload-wrapper-' . $k,
         'method' => 'replace',
-        'effect' => 'fade',
+        'effect' => 'fade'
     ),
   );
 

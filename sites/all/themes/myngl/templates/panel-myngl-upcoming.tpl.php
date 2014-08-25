@@ -13,6 +13,9 @@
     top:380px;
     width:340px;
   }
+  #link.hide{
+    display:none;
+  }
   #link a{
     color:<?php print $secondary_color; ?>;
     font-size:16px;
@@ -50,11 +53,14 @@
   <div style="position:absolute; width:340px; height:1px; background-color:#999999; left:2px;top:363px;"></div>
   <div style="position:absolute; width:340px; height:1px; background-color:#999999; left:2px;top:417px;"></div>
 
-  <div style="margin-bottom:40px;">Next Myngl on <?php print $myngl->field_myngl_dates['und'][0]['value']; ?></div>
+  <div style="margin-bottom:40px;">Next Myngl on
+    <?php //print $myngl->field_myngl_dates['und'][0]['value']; ?>
+    <?php print date("Y-m-d h:i:s a",$rsvp_date); ?>
+  </div>
   <?php print theme_image_style(array('style_name' => 'brand_logo', 'path' => $brand->field_brand_logo['und'][0]['uri'], 'height' => null, 'width' => null)).'<br><br>'; ?>
   <div id="count-down">
     <?php
-
+      /*
       $till_event = strtotime($myngl->field_myngl_dates['und'][0]['value']) - time();
       $till_event_text = "";
 
@@ -66,28 +72,15 @@
       }
       else {
         $till_event_text = intval($till_event / 60). " min";
-      }
+      }*/
     ?>
     Myngl Event will start in
-    <div id="time"><?php print $till_event_text; ?>...</div>
-
-<?php /*
-<script>  
-  var clock = document.getElementById("time")  
-    , targetDate = new Date(<?php print date("Y, m, d, G, i", strtotime($myngl->field_myngl_dates['und'][0]['value'])); ?>); // Jan 1, 2050;  
-  
-  clock.innerHTML = countdown(targetDate).toString();  
-  setInterval(function(){  
-    clock.innerHTML = countdown(targetDate).toString();  
-  }, 1000);  
-</script>  
-*/ ?>
-
-
+    <div id="time"></div>
 
   </div>
 
-  <div id="link">
+  <div id="link" class="hide">
+
   <?php
     $link_text = 'Go to the '. strtoupper($brand->title).' Myngl now!';
     print l($link_text, 'myngl/' . $myngl->nid . '/pre-questions');
