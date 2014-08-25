@@ -1332,13 +1332,14 @@ function myngl_myngl_send_invitation($myngl_id, $invitee_id, $redirect = TRUE) {
     $node = node_load($myngl_id);
     
     //$subject = 'Your\'re invited to the '.$node->title;
-    $subject = 'You have been invited by your friend to a Myngl'; 
-
+    //$subject = 'You have been invited by your friend to a Myngl';
+    $subject = $node->field_invitation_email_title['und'][0]['value'];
     $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
 
     $banner = file_create_url($brand->field_brand_logo['und'][0]['uri']);
 
-    $gift_image = file_create_url($node->field_reward_congrats_image['und'][0]['uri']);
+    $gift_image = file_create_url($node->field_invitation_email_image['und'][0]['uri']);
+    //$gift_image = file_create_url($node->field_reward_congrats_image['und'][0]['uri']);
    
     $ic = array_shift(entity_load('field_collection_item', array($node->field_myngl_invitees['und'][$invitee_id]['value'])));
  
