@@ -75,7 +75,7 @@ function myngl_user_register_validate($element, &$form_state, $form){
   //die;
   if ($element['und']['#value']==0) {
 
-     form_error($element, t('This field is required.'));
+     form_error($element, t('Must agree to Terms and Conditions.'));
    }
 
 }
