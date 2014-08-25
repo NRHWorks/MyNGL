@@ -2169,16 +2169,30 @@ div#exit-div #exit-points #exit-points-circle .exit-points-points {
  
 /*  ----- End Exit Page ---------------------------------- */
 
-#edit-date div.form-item {
+/*#edit-date div.form-item {*/
+.upcoming-myngl form div.form-item{
   float: none;
   display: block;
   width: 100%;
 }
 
-#myngl-myngl-overlay-change-date #edit-submit--4 {
+.upcoming-myngl form .form-submit{
+  /*
+#myngl-myngl-overlay-change-date #edit-submit--4 {*/
   position: absolute;
   bottom: 125px;
   right: 50px;
+}
+
+.upcoming-myngl form .form-type-radio {
+/*#myngl-myngl-overlay-change-date .form-type-radio{ */
+  margin-left:100px;
+}
+
+/*
+#myngl-myngl-overlay-change-date .description{*/
+.upcoming-myngl form .description{
+  display:none;
 }
 
 form#user-profile-form fieldset#edit-picture {

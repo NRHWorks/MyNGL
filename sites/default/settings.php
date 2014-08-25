@@ -213,10 +213,10 @@
 $databases = array();
 $databases['default']['default'] = array(
  'driver' => 'mysql',
- 'database' => 'Myngl_Drupal',
- 'username' => 'myngl_drupal',
+ 'database' => 'myngl',
+ 'username' => 'myngl',
  'password' => 'p@55w0rd',
- 'host' => '2fd7354076528039fafb89b64041553ba72aef22.rackspaceclouddb.com',
+ 'host' => 'localhost',
  'prefix' => '',
 );
 

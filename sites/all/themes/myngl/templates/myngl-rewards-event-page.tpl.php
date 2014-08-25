@@ -647,7 +647,19 @@ form#myngl-myngl-post-questions-form #edit-submit{
       </div>
     </div>
     <div id='left'>
+<<<<<<< HEAD
       <?php print $myngl->field_reward_congrats_text['und'][0]['safe_value']; ?>
+=======
+<<<<<<< HEAD
+      <?php
+        $text = field_view_field('node', $myngl, 'field_reward_congrats_text','full' );
+        print render ($text);
+      ?>
+
+=======
+      <?php print $node->field_reward_congrats_text['und'][0]['safe_value']; ?>
+>>>>>>> 2844238f80999e5fa762e0ce8836057cb1483859
+>>>>>>> 4d4ba6a1a9799b69e3a4aa68285ffe899d3ab659
       <div class="short-line" style="margin-left:0;margin-top:20px;"></div>
     </div>
 
