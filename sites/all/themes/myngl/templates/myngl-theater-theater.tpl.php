@@ -187,6 +187,10 @@ body.page-myngl-event-theater #see-more{
 </div><!-- /#theater-body -->
 
 <style type="text/css">
+  #myngl-event-menu {
+    display: none;
+  }
+
   #myngl-theater-see-more{
     display:none;
     height:110px;
@@ -201,6 +205,13 @@ body.page-myngl-event-theater #see-more{
     left:0;
     right:0;
     padding-left:30px;
+  }
+
+
+  
+  #myngl-theater-see-more p {
+    text-align: center; 
+    color: #a38d50;
   }
 
   #myngl-theater-see-more .additional-video{
@@ -238,6 +249,7 @@ body.page-myngl-event-theater #see-more{
 </style>
 
 <div id="myngl-theater-see-more" >
+  <p><?php print $myngl->field_theater_above_thumbs['und'][0]['safe_value'];  ?></p>
   <div onclick="theater.additional_video_left();" class="fa fa-chevron-circle-left"></div>
   <div onclick="theater.additional_video_right();" class="fa fa-chevron-circle-right"></div>
   <!--<a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a> -->
@@ -264,6 +276,7 @@ body.page-myngl-event-theater #see-more{
       ?>
     </div>
   </div><!-- /#additional-videos-wrapper"-->
+  <p><?php print $myngl->field_theater_below_thumbs['und'][0]['safe_value'];  ?></p>
 </div> <!-- myngle-theater-see-more -->
 <style type="text/css">
 

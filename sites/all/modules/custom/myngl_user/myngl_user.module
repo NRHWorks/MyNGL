@@ -158,6 +158,16 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
           );
 
       }
+      
+      $form['terms_and_conditions'] = array (
+        '#type' => 'checkbox',
+        '#weight' => 10,
+        '#required' => TRUE,
+        '#title' => 'I have read and agree to the <a href="#" id="terms-overlay-link">Terms & Conditions</a>.',
+        '#options' => array(
+          'html' => true,
+        )
+      );
 
       $form['facebook_signin'] = array (
         '#markup' => '<div id="registration-facebook">

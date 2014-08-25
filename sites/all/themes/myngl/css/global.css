@@ -1389,6 +1389,7 @@ body ::-webkit-scrollbar-thumb {
     padding: 15px;
     box-shadow: inset 1px -1px 2px #b9b9b9;
     text-align: center;
+    font-weight: bold;
   }
 
   #myngl-event-pov hr {
@@ -2186,4 +2187,9 @@ form#user-profile-form fieldset#edit-picture {
 
 #invitee-chat-selector-search input {
   width: 175px;
+}
+
+.form-item-terms-and-conditions {
+  margin-top: 50px;
+  margin-bottom: -35px;
 }

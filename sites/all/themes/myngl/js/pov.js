@@ -26,7 +26,11 @@ var pov = (function ($) {
 
             $("#myngl-event-pov-wall").html('');
             data.forEach(function(entry) {
-              $("#myngl-event-pov-wall").append('  <div id="pov-message-' + entry.mpovid + '" class="pov-message"> <img src="' + $("#invitee-thumb-" + entry.user_id  + " img").attr('src') + '" class="chat myngl-event-profile-pic"  /><div class="text"><strong>' + $("#invitee-name-" + entry.user_id).html()  + ':</strong>  ' +  entry.message + '</div></div>');
+	            if (entry.user_id == 0) {	
+                $("#myngl-event-pov-wall").append('  <div id="pov-message-' + entry.mpovid + '" class="pov-message"><div class="text"><strong>' +  entry.message + '</strong></div></div>');
+              } else {
+                $("#myngl-event-pov-wall").append('  <div id="pov-message-' + entry.mpovid + '" class="pov-message"> <img src="' + $("#invitee-thumb-" + entry.user_id  + " img").attr('src') + '" class="chat myngl-event-profile-pic"  /><div class="text"><strong>' + $("#invitee-name-" + entry.user_id).html()  + ':</strong>  ' +  entry.message + '</div></div>');
+              }
             });
           }
         });

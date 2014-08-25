@@ -268,7 +268,7 @@
 </div>
 
 
-<div id="myngl-event-ugc" class="overlay branded" style="display:none;height:520px; width:900px;";position:absolute; margin:auto;z-index:200;top:0;bottom:0;left:0;right:0">
+<div id="myngl-event-ugc" class="overlay branded" style="display:none;height:520px; width:900px; position:absolute; margin:auto;z-index:200;top:0;bottom:0;left:0;right:0">
   <a href="#" onclick="social_area.ugc_close();" class="overlay-close">X</a>
   <div id="myngl-event-ugc-box" class="branded-tertiary">
     <div id="title" style='font-size:24px;position:absolute;top:5px;'>Guest Creativity</div>
