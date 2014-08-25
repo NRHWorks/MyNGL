@@ -1,5 +1,7 @@
 
 
+<?php print $myngl->field_exit_google_survey['und'][0]['value']?>
+
 <div id="exit-div" style="padding-top:100px; padding-bottom:100px;">
   <img src="/sites/all/themes/myngl/images/logo.png" /><br /><br />
   <span class="exit-thank-you">THANK YOU FOR JOINING US</span><br /><br />

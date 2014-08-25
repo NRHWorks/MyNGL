@@ -134,6 +134,7 @@ function myngl_event_lobby($nid){
   
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
+  //drupal_add_js("http://survey.g.doubleclick.net/async_survey?site=ckqirtkixakm2hybneeuj6j7uq");
   $myngl = node_load($nid);
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
