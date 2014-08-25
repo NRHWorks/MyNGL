@@ -553,6 +553,10 @@ body ::-webkit-scrollbar-thumb {
     #registration-facebook p span {
       color: #2e64b0;
     }
+    form#user-register-form .field-name-field-terms-and-condition{
+      padding-top:40px;
+      margin-bottom:-50px;
+    }
   /* --- end user registration form --- */
 
   /* --- profile page --- */
