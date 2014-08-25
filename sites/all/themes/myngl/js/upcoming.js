@@ -11,6 +11,8 @@ var next_scheduled_event_update_in_progress = false;
           upcoming.count_down();
         }, 1000);
 
+    // remove this line when the site goes online. uncomment line 46 and 47.
+    $("#content-right center #link").removeClass("hide");
   });
 
   $( document ).ajaxComplete(function(event, xhr, settings) {
@@ -39,8 +41,10 @@ var upcoming = (function ($) {
       var time_till_event = next_event_time - current_server_time;
 
       if (time_till_event<0) {
-        $("#content-right center #link").removeClass("hide");
-        $("#content-right center #count-down").css("display","none");
+
+        // This two lines must be uncommented when the site goes online.
+        //$("#content-right center #link").removeClass("hide");
+        //$("#content-right center #count-down").css("display","none");
         return false;
       }
 
