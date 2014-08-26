@@ -135,12 +135,6 @@ function myngl_myngl_menu() {
     'type' => MENU_LOCAL_TASK,
   );
 
-  $items['myngl/%/event-detail/%'] = array(
-    'title' => '',
-    'page callback' => 'myngl_myngl_event_detail',
-    'page arguments' => array(1, 3),
-    'access callback' => TRUE,
-  );
 
   $items['myngl/brand-rep-area'] = array(
     'title' => 'Brand Rep Area',
@@ -189,12 +183,6 @@ function myngl_myngl_theme() {
                           'variables' => array ('myngl_id' => null, 'invitee' => null, 'friend' => null, 'banner' => null, 'gift_image' => null, 'title' => null,  'text' => null),
                         );
 
-  $items['overlay_myngl_event_detail'] = array(
-                          'template' => 'overlay-event-detail',
-                          'variables' => array ('myngl' =>null, 'account' =>null),
-                          'path' => 'sites/all/themes/myngl/templates',
-                        );
-  return $items;
 }
 
 function myngl_myngl_brand_rep_area(){
@@ -1421,14 +1409,3 @@ function myngl_myngl_sendMail($to, $subject, $html, $alt) {
   return 1;
 }
 
-function myngl_myngl_event_detail($myngl_id, $user_id){
-
-  $myngl= node_load($myngl_id);
-  $account = user_load($user_id);
-
-  $output =  theme('overlay_myngl_event_detail', array('myngl' => $myngl, 'account' =>$account,));
-
-  return $output;
-  //ajax_deliver($output);
-
-}

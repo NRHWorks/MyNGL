@@ -147,28 +147,6 @@ var myngl = (function($) {
 
 
     }
-    /*
-    event_detail_overlay: function(myngl_id, user_id){
-      $.ajax({
-        type: "GET",
-        url: "/myngl/"+ myngl_id + "/event-detail/"  + user_id ,
-        success: function(data) {myngl.event_detail_overlay_success(data);}
-      });
-    },
-    event_detail_overlay_success: function(data){
-      //console.log(data);
-      $('.event-detail-overlay').html(data[1].data).fadeIn(100);
-      $('#overlay-background').fadeIn(500);
-
-
-      return false;
-    },
-    close_event_detail: function(){
-      $('#overlay-background').fadeOut(500);
-       $('.event-detail-overlay').fadeOut(100);
-
-
-    }*/
 
   }
 

@@ -73,7 +73,9 @@ addthisevent.settings({
               </div><br>
 
               <span class="info-header">ADD TO CALENDAR</span><br><br>
-              <a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
+              <a href="<?php global $base_url; print $base_url;?>"
+                 title="Add to Calendar"
+                 class="addthisevent">
                 <span class="_start"><?php print myngl_addthis_date($m['date']); ?></span>
                 <span class="_end"><?php print myngl_addthis_end_date($m['date']); ?></span>
                 <span class="_zonecode">15</span>
