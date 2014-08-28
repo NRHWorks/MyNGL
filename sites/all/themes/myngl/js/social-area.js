@@ -8,6 +8,24 @@ var dock_position = 0;
 
 (function ($) {
   $(document).ready( function() {
+
+
+    $("#myngl-event-ugc-button").css("height", Drupal.settings.ugc_height + "%" );
+    $("#myngl-event-ugc-button").css("width", Drupal.settings.ugc_width + "%");
+    $("#myngl-event-ugc-button").css("left", Drupal.settings.ugc_left + "%" );
+    $("#myngl-event-ugc-button").css("top", Drupal.settings.ugc_top + "%");
+
+    $("#myngl-event-pov-button").css("height", Drupal.settings.pov_height + "%" );
+    $("#myngl-event-pov-button").css("width", Drupal.settings.pov_width + "%");
+    $("#myngl-event-pov-button").css("left", Drupal.settings.pov_left + "%" );
+    $("#myngl-event-pov-button").css("top", Drupal.settings.pov_top + "%");
+
+    if (Drupal.settings.show_pov_and_ugc_borders=="1") {
+      $("#myngl-event-pov-button").css("border", "2px solid #ff0000" );
+      $("#myngl-event-ugc-button").css("border", "2px solid #0000ff" );
+    }
+
+
     $('body').css('background', "url("+Drupal.settings.lounge_background + ") center center no-repeat").css('background-size','cover');
     $.cookie('lounge_entrance_time', null); //comment this line out when it's done
     if ($.cookie('lounge_entrance_time') == null) {

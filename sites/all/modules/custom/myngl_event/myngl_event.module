@@ -154,9 +154,23 @@ function myngl_event_social_area($nid) {
 
   $myngl = node_load($nid);
 
+
   //print "<pre>";
   //print ;
   drupal_add_js(array('lounge_background'=>file_create_url($myngl->field_lounge_background['und'][0]['uri'])),'setting');
+
+  drupal_add_js(array('show_pov_and_ugc_borders'=>$myngl->field_show_pov_and_ugc_borders['und'][0]['value']),'setting');
+
+
+  drupal_add_js(array('ugc_height'=>$myngl->field_ugc_height['und'][0]['value']),'setting');
+  drupal_add_js(array('ugc_width'=>$myngl->field_ugc_width['und'][0]['value']),'setting');
+  drupal_add_js(array('ugc_top'=>$myngl->field_ugc_top['und'][0]['value']),'setting');
+  drupal_add_js(array('ugc_left'=>$myngl->field_ugc_left['und'][0]['value']),'setting');
+
+  drupal_add_js(array('pov_height'=>$myngl->field_pov_height['und'][0]['value']),'setting');
+  drupal_add_js(array('pov_width'=>$myngl->field_pov_width['und'][0]['value']),'setting');
+  drupal_add_js(array('pov_top'=>$myngl->field_pov_top['und'][0]['value']),'setting');
+  drupal_add_js(array('pov_left'=>$myngl->field_pov_left['und'][0]['value']),'setting');
   //print_r($myngl);
   //exit;
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
