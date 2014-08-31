@@ -1329,6 +1329,23 @@ body ::-webkit-scrollbar-thumb {
     min-width: 1080px;
   }
 
+  @media only screen and (max-width:1050px) {
+    #invitee-filters-wrapper {
+      background-color: #d8c696;
+    }
+    #invitee-filters {
+      width: 600px;
+      min-width: 600px;
+      height: 60px;
+    }
+    input[value="other"] {
+      margin-left: 284px !important;
+    }
+    .fa-social-dock-arrow {
+      bottom: -60px !important;
+    }
+  }
+
   #invitee-filters form {
     display: inline;
     font-family: 'Lato';
@@ -2215,3 +2232,5 @@ form#user-profile-form fieldset#edit-picture {
   margin-top: 50px;
   margin-bottom: -35px;
 }
+
+
