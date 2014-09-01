@@ -111,6 +111,16 @@ function myngl_myngl_menu() {
     'type' => MENU_LOCAL_TASK,
   );
 
+  $items['node/%/ugc-list-reorder/%/%'] = array(
+    'title' => 'UGC List Reorder',
+    'page callback' => 'myngl_myngl_ugc_list_reorder',
+    'page arguments' => array(1,3,4),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
+
+
+
   $items['node/%/participants-status'] = array(
     'title' => 'Participants Status',
     'page callback' => 'myngl_event_participants_status',
@@ -973,6 +983,19 @@ function myngl_myngl_edit_theater_message_submit($form, &$form_state) {
 
 
 function myngl_myngl_ugc_list($form, &$form_state, $nid) {
+
+  $approved_result = db_query("SELECT fid, weight FROM myngl_invitee_ugc_approve
+                             WHERE myngl_id = $nid ORDER BY weight ASC");
+
+  $approval_list = array();
+  foreach($approved_result as $r){
+    $approval_list[$r->weight] = $r->fid;
+
+  }
+
+  $not_approved_list = array();
+  $approve_list_form_item = array();
+
   $myngl = node_load($nid);
   // Deal with images.
   foreach($myngl->field_myngl_invitees['und'] as $i){
@@ -983,29 +1006,39 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
 
     foreach($result as $fid){
       $fid =$fid->field_image_upload_fid;
-      $approve=db_query("SELECT approve FROM myngl_invitee_ugc_approve WHERE
-                        fid = :fid", array(":fid" => $fid));
-      $form[$fid] = array(
-        '#title' =>'Image: fid = ' . $fid,
-        '#type' => 'checkbox',
-        '#prefix'=>"<div style='float:left;padding:30px; '>",
-        '#suffix' =>"</div>",
-        );
-      // If the row doesn't exist.
-      if ($approve->rowCount()==0){
-        $form[$fid]['#default_value'] = 0;
-      }
-      else{
-        $form[$fid]['#default_value'] = $approve->fetchObject()->approve;
-      }
+
+      $this_item = array(
+          '#fid' =>$fid,
+          '#title' =>'Image: fid = ' . $fid,
+          '#type' => 'checkbox',
+          '#prefix'=>"<div style='float:left;padding:30px;'>",
+          //'#suffix' =>"</div>",
+          '#default_value' => (in_array($fid, $approval_list))?1:0,
+          );
 
       $file_uri = db_query("SELECT uri FROM file_managed WHERE fid = :fid", array(":fid"=>$fid));
-      $form[$fid]['#description']=
+      $this_item['#description']=
         theme_image(array(
             'path' => file_create_url($file_uri->fetchObject()->uri),
             'width' =>'120px',
             'height' =>'80px',
                           ));
+
+      if (in_array($fid, $approval_list)){
+        $this_item['#suffix'] =
+          '<a class="decrease" style="float:left; margin-left:40px;" href="' . base_path() . 'node/' . ARG(1) . '/ugc-list-reorder/' .
+              $fid . '/0">&lt;</a>' .
+          '<a class="increase" style="float:right; margin-right:20px;" href="' . base_path() . 'node/' . ARG(1) . '/ugc-list-reorder/' .
+              $fid . '/1">&gt;</a>' .
+              '</div>';
+        $approve_list_form_item[array_search($fid, $approval_list)]= $this_item;
+        //$form[array_search($fid, $approval_list)] = $this_item;
+      }
+      else{
+        // Leave it till the end.
+        $this_item['#suffix'] = '</div>';
+        $not_approved_list[] = $this_item;
+      }
     }
 
   }
@@ -1020,28 +1053,48 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
 
     foreach($result as $vid){
       $vid =$vid->field_video_upload_video_id;
-      $approve=db_query("SELECT approve FROM myngl_invitee_ugc_approve WHERE
-                        fid = :vid", array(":vid" => $vid));
-      $form[$vid] = array(
+
+      $this_item = array(
+        '#fid'=> $vid,
         '#title' =>  "Youtube: " .$vid,
         '#type' => 'checkbox',
         '#prefix'=>"<div style='float:left;padding:30px;'>",
-        '#suffix' =>"</div>",
+        //'#suffix' =>"</div>",
+        '#default_value' => (in_array($vid, $approval_list))?1:0,
+        '#description' => "<img src='http://img.youtube.com/vi/". $vid."/0.jpg' height='80' width='120' />",
         );
-      // If the row doesn't exist.
-      if ($approve->rowCount()==0){
-        $form[$vid]['#default_value'] = 0;
+
+      if (in_array($vid, $approval_list)){
+        $this_item['#suffix'] =
+          '<a class="decrease" style="float:left; margin-left:40px;" href="' . base_path() . 'node/' . ARG(1) . '/ugc-list-reorder/' .
+              $vid . '/0">&lt;</a>' .
+          '<a class="increase" style="float:right; margin-right:60px;" href="' . base_path() . 'node/' . ARG(1) . '/ugc-list-reorder/' .
+              $vid . '/1">&gt;</a>' .
+              '</div>';
+
+        $approve_list_form_item[array_search($vid, $approval_list)]= $this_item;
+        //$form[array_search($vid, $approval_list)] = $this_item;
       }
       else{
-        $form[$vid]['#default_value'] = $approve->fetchObject()->approve;
+        // Leave it till the end.
+        $this_item['#suffix'] = '</div>';
+        $not_approved_list[] = $this_item;
       }
-
-      $form[$vid]['#description']=
-        "<img src='http://img.youtube.com/vi/". $vid."/0.jpg' height='80' width='120' />";
     }
 
   }
 
+  ksort($approve_list_form_item);
+
+  foreach($approve_list_form_item as $r){
+    $form[] = $r;
+  }
+
+  // Add back the unapproved items
+
+  foreach($not_approved_list as $r){
+    $form[] = $r;
+  }
 
 
 
@@ -1057,25 +1110,139 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
 }
 
 function myngl_myngl_ugc_list_submit($form, &$form_state) {
-  foreach($form_state['values'] as $fid =>$value){
-    // Filter out values which are not true or false.
-    if ($value=='0'||$value=='1'){
-      $approve=db_query("SELECT approve FROM myngl_invitee_ugc_approve WHERE
-                          fid = :fid", array(":fid" => $fid));
-      if ($approve->rowCount()==0){
-        db_insert('myngl_invitee_ugc_approve')->fields(
-          array('fid' => $fid, 'approve' => intval($value),))->execute();
-      }
-      else{
-        db_update('myngl_invitee_ugc_approve')->fields(
-          array( 'approve' => $value,))->condition('fid', $fid, '=')->execute();
+  //print "<pre>";
+
+  //print_r($form_state);
+  //die;
+  $new_approved_list = array();
+
+  $approved_result = db_query("SELECT fid FROM myngl_invitee_ugc_approve
+                             WHERE myngl_id = :nid ORDER BY weight ASC",
+                             array(":nid"=>ARG(1)));
+
+  $approval_list = array();
+  foreach($approved_result as $r){
+    $approval_list[] = $r->fid;
+  }
+
+  foreach($form_state['complete form'] as $weight => $item){
+    if ($item['#value']==1){
+      $new_approved_list[$weight] = $item['#fid'];
+    }
+    else{
+      if(in_array($item['#fid'], $approval_list)){
+        db_delete('myngl_invitee_ugc_approve')
+        ->condition('fid', $item['#fid'])
+        ->execute();
       }
     }
   }
 
+  $new_approved_list = array_values($new_approved_list);
 
+  foreach($new_approved_list as $weight => $fid){
+    if(in_array($fid, $approval_list)){
+      db_update('myngl_invitee_ugc_approve')->fields(
+        array(
+          'weight' => $weight,
+        )
+      )->condition('myngl_id', ARG(1), '=')->condition('fid', $fid, '=')
+      ->execute();
+
+    }
+    else{
+      db_insert('myngl_invitee_ugc_approve')->fields(
+        array(
+          'myngl_id'      => ARG(1),
+          'fid'       => $fid,
+          'weight'  => $weight,
+        )
+      )->execute();
+
+    }
+
+
+    //in the above function. if item value = 1, print arrows and make function to change it.
+  }
+  /*
+  if($approve->rowCount()==0){
+        db_insert('myngl_invitee_ugc_approve')->fields(
+          array('fid' => $item['#fid'],
+                'weight' => intval($weight),
+                'myngl_id' => intval(ARG(1)),
+                )
+          )->execute();
+      }
+  */
   drupal_set_message("UGC approval is successfully updated.");
 
+
+
+}
+
+
+function myngl_myngl_ugc_list_reorder($myngl_id, $fid, $direction){
+  print '<pre>';
+
+  $original_weight = db_query("SELECT weight FROM myngl_invitee_ugc_approve WHERE
+                              fid=:fid LIMIT 1", array(":fid"=>$fid))->fetchField();
+  //print "original weight: ". $original_weight;
+  if ($direction == 0){ // decrease
+    if ($original_weight == 0){
+      //Do Nothing.
+      //print "original weight = 0!";
+
+    }
+    else{
+      //print "original weight !=0 !";
+      $switch_fid = db_query("SELECT fid FROM myngl_invitee_ugc_approve WHERE
+                             weight=:weight", array(":weight"=>$original_weight-1))->fetchField();
+
+      //print "switch id = " . $switch_fid;
+
+      db_update('myngl_invitee_ugc_approve')->fields(
+        array(
+          'weight' => $original_weight,
+        )
+      )->condition('fid', $switch_fid, '=')
+      ->execute();
+
+      db_update('myngl_invitee_ugc_approve')->fields(
+        array(
+          'weight' => $original_weight-1,
+        )
+      )->condition('fid', $fid, '=')
+      ->execute();
+
+    }
+  }
+  else{
+
+    $switch_fid = db_query("SELECT fid FROM myngl_invitee_ugc_approve WHERE
+                             weight=:weight", array(":weight"=>$original_weight+1));
+    if ($switch_fid->rowCount()==0){
+      // Do nothing
+    }
+
+    else{
+      $switch_fid = $switch_fid->fetchField();
+      db_update('myngl_invitee_ugc_approve')->fields(
+        array(
+          'weight' => $original_weight,
+        )
+      )->condition('fid', $switch_fid, '=')
+      ->execute();
+
+      db_update('myngl_invitee_ugc_approve')->fields(
+        array(
+          'weight' => $original_weight+1,
+        )
+      )->condition('fid', $fid, '=')
+      ->execute();
+
+    }
+  }
+  drupal_goto ('node/'. $myngl_id.'/ugc-list');
 }
 
 
