@@ -1011,7 +1011,7 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
           '#fid' =>$fid,
           '#title' =>'Image: fid = ' . $fid,
           '#type' => 'checkbox',
-          '#prefix'=>"<div style='float:left;padding:30px;'>",
+          '#prefix'=>"<div style='float:left;padding:30px;height:180px; width:270px;'>",
           //'#suffix' =>"</div>",
           '#default_value' => (in_array($fid, $approval_list))?1:0,
           );
@@ -1028,7 +1028,7 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
         $this_item['#suffix'] =
           '<a class="decrease" style="float:left; margin-left:40px;" href="' . base_path() . 'node/' . ARG(1) . '/ugc-list-reorder/' .
               $fid . '/0">&lt;</a>' .
-          '<a class="increase" style="float:right; margin-right:20px;" href="' . base_path() . 'node/' . ARG(1) . '/ugc-list-reorder/' .
+          '<a class="increase" style="float:right; margin-right:90px;" href="' . base_path() . 'node/' . ARG(1) . '/ugc-list-reorder/' .
               $fid . '/1">&gt;</a>' .
               '</div>';
         $approve_list_form_item[array_search($fid, $approval_list)]= $this_item;
@@ -1058,7 +1058,7 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
         '#fid'=> $vid,
         '#title' =>  "Youtube: " .$vid,
         '#type' => 'checkbox',
-        '#prefix'=>"<div style='float:left;padding:30px;'>",
+        '#prefix'=>"<div style='float:left;padding:30px;height:180px; width:270px;'>",
         //'#suffix' =>"</div>",
         '#default_value' => (in_array($vid, $approval_list))?1:0,
         '#description' => "<img src='http://img.youtube.com/vi/". $vid."/0.jpg' height='80' width='120' />",
@@ -1068,7 +1068,7 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
         $this_item['#suffix'] =
           '<a class="decrease" style="float:left; margin-left:40px;" href="' . base_path() . 'node/' . ARG(1) . '/ugc-list-reorder/' .
               $vid . '/0">&lt;</a>' .
-          '<a class="increase" style="float:right; margin-right:60px;" href="' . base_path() . 'node/' . ARG(1) . '/ugc-list-reorder/' .
+          '<a class="increase" style="float:right; margin-right:90px;" href="' . base_path() . 'node/' . ARG(1) . '/ugc-list-reorder/' .
               $vid . '/1">&gt;</a>' .
               '</div>';
 
