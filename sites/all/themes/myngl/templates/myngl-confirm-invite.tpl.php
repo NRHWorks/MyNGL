@@ -39,16 +39,16 @@
 
     <div id="confirm-invite-invite-graphic">
 
-      <script>function fbs_click() {u=location.href;t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
-      <a href="http://www.facebook.com/share.php?u=http%3A%2F%2F166.78.241.22" onclick="return fbs_click()" target="_blank" title="Myngl"> 
+      <script>function fbs_click() {u='<?php print 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REDIRECT_URL']; ?>';t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+      <a href="http://www.facebook.com/share.php" onclick="return fbs_click()" target="_blank" title="Myngl"> 
         <span class="fa-stack fa-lg" id="facebook-share">
           <i class="fa fa-circle fa-stack-2x"></i>
           <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
         </span>
       </a> 
 
-      <script>function twt_click() { window.open('https://twitter.com/share?url=http%3A%2F%2F166.78.241.22','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
-      <a href="https://twitter.com/share?url=http%3A%2F%2F166.78.241.22" onclick="return twt_click()" target="_blank">
+      <script>function twt_click() { window.open('https://twitter.com/share?url=<?php print 'http://'.$_SERVER['HTTP_HOST']; ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+        <a href="https://twitter.com/share?url=<?php print 'http://'.$_SERVER['HTTP_HOST']; ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>" onclick="return twt_click()" target="_blank">
         <span class="fa-stack fa-lg" id="twitter-share">
           <i class="fa fa-circle fa-stack-2x"></i>
           <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>

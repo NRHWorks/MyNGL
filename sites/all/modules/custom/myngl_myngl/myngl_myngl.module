@@ -84,7 +84,8 @@ function myngl_myngl_menu() {
     'page arguments' => array(2),
     'access callback' => TRUE,
   );
-  /*
+
+/*
   $items['node/%/message'] = array(
     'title' => 'Message',
     'page callback' => 'drupal_get_form',
@@ -92,6 +93,7 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
     'type' => MENU_LOCAL_TASK,
   );
+*/
 
   $items['node/%/theater-message'] = array(
     'title' => 'Theater Message',
@@ -99,7 +101,7 @@ function myngl_myngl_menu() {
     'page arguments' => array('myngl_myngl_edit_theater_message', 1),
     'access callback' => TRUE,
     'type' => MENU_LOCAL_TASK,
-  );*/
+  );
 
   $items['node/%/ugc-list'] = array(
     'title' => 'UGC List',
@@ -196,6 +198,41 @@ function myngl_myngl_theme() {
                         );
   return $items;
 }
+
+
+function myngl_myngl_edit_theater_message($form, &$form_state, $nid) {
+  $myngl = node_load($nid);
+
+  $form['myngl_id'] = array (
+    '#type' => 'hidden',
+    '#value' => $myngl->nid,
+  );
+
+  $form['theater_message'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Update Theater Message'),
+    '#default_value' => $myngl->field_theater_message['und'][0]['value'],
+    '#description' => t('Leave message blank to hide from Myngl.'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#title' => t('Submit'),
+  );
+
+  $questions = '<h3>Questions:</h3>';  
+  foreach (array_reverse($myngl->field_theater_questions['und']) as $q) {
+    $questions .= $q['value'].'<hr style="margin-top:10px;" /><br />';
+  }
+
+  $form['questions'] = array(
+    '#markup' => $questions,
+  );
+
+  return $form;
+}
+
 
 function myngl_myngl_brand_rep_area(){
   global $user;
@@ -1286,6 +1323,7 @@ function myngl_myngl_admin_paths() {
     'node/*/invitee-redeem' => TRUE,
     'node/*/invitees' => TRUE,
     'node/*/participants-status' => TRUE,
+    'node/*/theater-message' => TRUE,
     'node/2' => TRUE,
   );
 }

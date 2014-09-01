@@ -193,7 +193,6 @@ function myngl_event_social_area($nid) {
     $u = user_load($ic->field_invitee_user_account['und'][0]['uid']);
     $p = profile2_load_by_user($u->uid, 'profile');
 
-
     $fb = false;
     $room = false;
 
@@ -227,6 +226,7 @@ function myngl_event_social_area($nid) {
               'thumb' => theme_image_style(array('style_name' => 'user_generated_content_thumbs', 'path' => $image['uri'], 'attributes' => array('class' => 'ugc-pic'), 'height' => null, 'width' => null)),
               'content' => theme_image_style(array('style_name' => 'user_generated_content_images', 'path' => $image['uri'], 'attributes' => array('class' => 'ugc-pic'), 'height' => null, 'width' => null)),
               'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
+              'path' => file_create_url($image['uri']),
             );
           }
         }

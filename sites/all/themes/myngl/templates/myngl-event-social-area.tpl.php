@@ -284,8 +284,23 @@
     </div>
 
     <?php foreach ($ucg as $k => $u) : ?>
+
       <div id="myngl-event-ugc-content-<?php print $k; ?>" class="myngl-event-ugc-content" style="display:none;">
-        <div style='text-align:right; width:800px;'><img src="/sites/all/themes/myngl/images/theater-downloads-social-icons1.png"></div>
+        <div style='text-align:right; width:800px;'>
+          <a href="mailto:?body=<?php print urlencode($u['path']); ?>&subject=<?php print $myngl->title; ?>">
+            <img src="/sites/all/themes/myngl/images/ucg-email.png" />
+          </a>
+
+          <script>function fbs_click_<?php print $k; ?>() {u='<?php print $u['path']; ?>';t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+          <a href="http://www.facebook.com/share.php" onclick="return fbs_click_<?php print $k; ?>()" target="_blank" title="Myngl">
+            <img src="/sites/all/themes/myngl/images/ucg-facebook.png" />
+          </a>
+
+          <script>function twt_click_<?php print $k; ?>() { window.open('https://twitter.com/share?url=<?php print urlencode($u['path']); ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+          <a href="https://twitter.com/share?url=<?php print urlencode($u['path']); ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>" onclick="return twt_click_<?php print $k; ?>()" target="_blank">
+            <img src="/sites/all/themes/myngl/images/ucg-twitter.png" />
+          </a>
+        </div>
         <?php print $u['content']; ?><br />
         <a href="#" onclick="return social_area.ugc_hide();">Back to Gallery</a> <br />
         submitted by <strong><?php print $u['user']; ?></strong>
@@ -325,10 +340,7 @@
   </div>
 </div>
 
-<div class="social-bg" style="background-image: url(<?php print base_path() . 'sites/default/files/styles/godivaroom.jpg' ?>);"> </div>
-
 <?php foreach ($invitees as $k => $i) : ?>
-
   <?php if ($user->uid != $i['uid']) : ?>
     <div id="myngl-event-solo-chat-<?php print $i['uid']; ?>" class="myngl-event-solo-chat myngl-chat branded" style="left:0px;width:325px; height:340px; clear:both; display:none; position:absolute; ">
       <div class="myngl-event-solo-chat-intro branded">

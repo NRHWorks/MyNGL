@@ -3,7 +3,7 @@
 function myngl_user_init() {
   global $user;
 
-  if (($user->uid == 0) && (arg(0) != 'user') && (!(arg(0) == 'myngl' && arg(2) == 'rsvp'))) {
+  if (($user->uid == 0) && (arg(0) != 'user') && (!(arg(0) == 'myngl' && arg(2) == 'rsvp')) && (!(arg(0) == 'myngl' && arg(2) == 'confirmed'))) {
     if (!drupal_is_cli()) { //add to fix Drush bug
       if (arg(0) != 'fboauth') {
         drupal_goto('user');

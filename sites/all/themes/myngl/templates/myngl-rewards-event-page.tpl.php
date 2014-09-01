@@ -617,49 +617,27 @@ form#myngl-myngl-post-questions-form #edit-submit{
     <div class="short-line"></div>
     <div id='social'>
       <div style="float:right">
-        <script>
-          window.fbAsyncInit = function() {
-            FB.init({
-              appId      : '{app-id-here}',
-              xfbml      : true,
-              version    : 'v2.0'
-            });
-          };
+          <a href="mailto:?body=<?php print urlencode(file_create_url($myngl->field_reward_congrats_image['und'][0]['uri'])); ?>&subject=<?php print $myngl->title; ?>">
+            <img src="/sites/all/themes/myngl/images/ucg-email.png" />
+          </a>
 
-          (function(d, s, id){
-             var js, fjs = d.getElementsByTagName(s)[0];
-             if (d.getElementById(id)) {return;}
-             js = d.createElement(s); js.id = id;
-             js.src = "//connect.facebook.net/en_US/sdk.js";
-             fjs.parentNode.insertBefore(js, fjs);
-           }(document, 'script', 'facebook-jssdk'));
-        </script>
-        <img src='<?php print base_path(). path_to_theme();?>/images/theater-downloads-social-icons1.png' usemap='#socialmap'/>
-        <map name="socialmap">
-          <area shape="rect" coords="2,0,30,28" href="mailto:?subject=Hello world&body=Line one%0DLine two" alt="Share Email" target="_blank" id="share-email">
-          <area shape="rect" coords="38,0,66,28" href="<?php echo $base_url . "/myngl-event/" . $myngl->nid . "/rewards"; ?>" alt="Share Facebook" target="_blank" id="share-facebook">
-          <area shape="rect" 
-                coords="74,0,102,28" 
-                href="https://twitter.com/share?text=<?php $field = field_get_items('node', $myngl, 'field_twitter_canned_message');
-                                                          $output = field_view_value('node', $myngl, 'field_twitter_canned_message', $field[0]);
-                                                          print render($output); ?>" alt="Share Twitter" target="_blank" id="share-twitter">
-        </map>
+          <script>function fbs_click_<?php print $k; ?>() {u='<?php print file_create_url($myngl->field_reward_congrats_image['und'][0]['uri']); ?>';t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+          <a href="http://www.facebook.com/share.php" onclick="return fbs_click_<?php print $k; ?>()" target="_blank" title="Myngl">
+            <img src="/sites/all/themes/myngl/images/ucg-facebook.png" />
+          </a>
+
+          <script>function twt_click_<?php print $k; ?>() { window.open('https://twitter.com/share?url=<?php print urlencode(file_create_url($myngl->field_reward_congrats_image['und'][0]['uri'])); ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+          <a href="https://twitter.com/share?url=<?php print urlencode(file_create_url($myngl->field_reward_congrats_image['und'][0]['uri'])); ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>" onclick="return twt_click_<?php print $k; ?>()" target="_blank">
+            <img src="/sites/all/themes/myngl/images/ucg-twitter.png" />
+          </a>
+
       </div>
     </div>
     <div id='left'>
-<<<<<<< HEAD
-      <?php print $myngl->field_reward_congrats_text['und'][0]['safe_value']; ?>
-=======
-<<<<<<< HEAD
       <?php
         $text = field_view_field('node', $myngl, 'field_reward_congrats_text','full' );
         print render ($text);
       ?>
-
-=======
-      <?php print $node->field_reward_congrats_text['und'][0]['safe_value']; ?>
->>>>>>> 2844238f80999e5fa762e0ce8836057cb1483859
->>>>>>> 4d4ba6a1a9799b69e3a4aa68285ffe899d3ab659
       <div class="short-line" style="margin-left:0;margin-top:20px;"></div>
     </div>
 
