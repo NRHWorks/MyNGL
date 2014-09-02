@@ -8,7 +8,7 @@ var player;
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_lobby');
     update_status_interval = setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lobby");},20000);
 
-    if (jQuery.cookie('done_lobby_video') !='1') {
+    if (jQuery.cookie('done_lobby_video_'+Drupal.settings.myngl_id) !='1') {
 
       $(".branded ul li#lounge").removeClass('inactive');
       $(".branded ul li#theater").removeClass('inactive');
@@ -23,8 +23,8 @@ var player;
     }
 
     $('video').bind('ended',  function(){
-        jQuery.cookie('done_lobby_video', '1');
-
+        jQuery.cookie('done_lobby_video_'+Drupal.settings.myngl_id, '1');
+        /*
         $(".branded ul li#lounge").addClass('inactive');
         $(".branded ul li#theater").addClass('inactive');
         $(".branded ul li#play-room").addClass('inactive');
@@ -34,7 +34,7 @@ var player;
         $(".branded ul li#theater a").removeAttr("onclick").css("cursor", "auto");
         $(".branded ul li#play-room a").removeAttr("onclick").css("cursor", "auto");
         $(".branded ul li#gifting-suite a").removeAttr("onclick").css("cursor", "auto");
-
+        */
         setTimeout(function() { 
           var lobby = window.location.href;
           var social_area = window.location.href.replace("lobby", "social-area");

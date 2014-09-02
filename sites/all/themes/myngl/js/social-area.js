@@ -5,9 +5,21 @@ var selected_other_filter;
 var ugc_width=0;
 var dock_shape = 0; //0 = single row at the bottom, 1 = full screen, -1 = completely hide
 var dock_position = 0;
+var redirect_setinterval_id;
 
 (function ($) {
   $(document).ready( function() {
+    if ($.cookie('myngl_done_theater_'+Drupal.settings.myngl_id) != 1){
+
+      $(".branded ul li#theater").removeClass('inactive');
+      $(".branded ul li#play-room").removeClass('inactive');
+      $(".branded ul li#gifting-suite").removeClass('inactive');
+
+      $(".branded ul li#theater a").attr("onclick", "return false;").css("cursor", "default");
+      $(".branded ul li#play-room a").attr("onclick", "return false;").css("cursor", "default");
+      $(".branded ul li#gifting-suite a").attr("onclick", "return false;").css("cursor", "default");
+      $("iframe#youtube-field-player").attr('src',$("iframe#youtube-field-player").attr('src') + '&enablejsapi=1');
+    }
 
 
     $("#myngl-event-ugc-button").css("height", Drupal.settings.ugc_height + "%" );
@@ -45,6 +57,7 @@ var dock_position = 0;
     $('li#lounge').removeClass("inactive").addClass("active");
     setInterval(function() { social_area.message(); }, 3000);
     setInterval(function() { social_area.update_users_in_lounge(); }, 5000);
+    redirect_setinterval_id = setInterval(function(){social_area.check_redirect_to_theater();},1000);
 
     $('#overlay-background').bind('click', function() {
       social_area.other_filter_close();
@@ -94,36 +107,31 @@ var dock_position = 0;
 
     $("#myngl-event-ugc-thumbs").css('width', ugc_width + 'px');
 
-
-
-/*
-    $( window ).resize(function() {
-      if (($( window ).width() / $( window ).height()) > 1) {
-        console.log('tall');
-      } else {
-        console.log('wide');
-      }
-    });
-*/
-
-/*
-    var $container = $('#myngl-event-ugc-thumbs').imagesLoaded( function() {
-      $container.isotope({
-        itemSelector : '.item',
-        containerStyle: { 'overflow-x' :'scroll', 'overflow-y' : 'hidden', position: 'relative'},
-        resizesContainer: false,
-        layoutMode: 'masonryHorizontal',
-        masonryHorizontal: {
-          rowHeight: 150
-        }
-      });
-    });
-*/
   });
 })(jQuery);
 
 var social_area = (function ($) {
   return {
+    check_redirect_to_theater: function(){
+
+      // TODO check if cookie is set. if so, stop checking status
+      if ($.cookie('myngl_done_theater_'+Drupal.settings.myngl_id) == 1){
+        clearInterval(redirect_setinterval_id);
+        return false;
+      }
+
+      $.ajax({
+        type: "GET",
+        url: "/myngl-event/" + Drupal.settings.myngl_id + "/lounge-redirect-to-theater",
+        success: function(data) {
+          //console.log(data);
+          if (data==1) {
+            window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater";
+          }
+        }
+      });
+      return false;
+    },
     search: function(){
       $("#social-area-chat-list .checkbox.in-lounge").each(function(){
         social_area.search_helper($(this));
