@@ -17,7 +17,7 @@ var additional_videos_offset = 0;
     }
     var k =$('.additional-video').length * 204;
     $("#additional-videos").css('width', k);
-    console.log(k);
+    //console.log(k);
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");
     setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");},20000);
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_theate');
@@ -29,11 +29,17 @@ var additional_videos_offset = 0;
     var slides = false;
     viewer.addListener('live', function() { slides = true;  });
     viewer.addListener('offline', function(){
-	if (slides == true) {
-      		$('#myngl-event-menu').css('display','block');
-      		$('#myngl-theater-see-more').css('display','block');
-      		$("#question-form-wrapper").hide();
-	}
+      if (slides == true) {
+    		$('#myngl-event-menu').css('display','block');
+    		$('#myngl-theater-see-more').css('display','block');
+    		$("#question-form-wrapper").hide();
+
+        var date = new Date();
+
+        date.setTime(date.getTime() + (240 * 60 * 1000)); // Cookie expires in 4 hours. should be enough
+        $.cookie("myngl_done_theater_"+Drupal.settings.myngl_id, 1, { expires: date });
+
+      }
     });
     
     $("#player").hide();

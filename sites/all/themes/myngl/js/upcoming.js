@@ -13,7 +13,7 @@ var next_scheduled_event_update_in_progress = false;
         }, 1000);
 
     // remove this line when the site goes online. uncomment line 46 and 47.
-    $("#content-right center #link").removeClass("hide");
+    //$("#content-right center #link").removeClass("hide");
   });
 
   $( document ).ajaxComplete(function(event, xhr, settings) {
@@ -95,8 +95,10 @@ var upcoming = (function ($) {
       if (time_till_event<0) {
 
         // This two lines must be uncommented when the site goes online.
-        //$("#content-right center #link").removeClass("hide");
-        //$("#content-right center #count-down").css("display","none");
+        // To show both links, uncomment line 15 and comment out the following
+        // two lines.
+        $("#content-right center #link").removeClass("hide");
+        $("#content-right center #count-down").css("display","none");
         return false;
       }
 
