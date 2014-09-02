@@ -472,6 +472,7 @@ function myngl_myngl_upcoming_overlay($uid) {
         'myngl' => $myngl,
         'date' => $invitee_collection->field_invitee_rsvp_date['und'][0]['value'],
         'brand' => node_load($myngl->field_myngl_brand['und'][0]['nid']),
+        'facebook_event_id' => $myngl->field_facebook_event_id['und'][0]['value'],
       );
 
       $myngls[] = $myngl_brand;
