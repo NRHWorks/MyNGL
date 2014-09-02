@@ -84,7 +84,8 @@ addthisevent.settings({
                 <span class="_location"><?php print $m['brand']->title; ?>.myngl.com</span>
                 <span class="_organizer"><?php print $m['brand']->title; ?></span>
                 <span class="_organizer_email">admin@myngl.com</span>
-                <span class="_facebook_event">http://www.facebook.com/events/160427380695693</span>
+                <span class="_facebook_event">
+                  http://www.facebook.com/events/<?php print $m['facebook_event_id'];?></span>
                 <span class="_all_day_event">false</span>
                 <span class="_date_format">DD/MM/YYYY</span>
               </a>

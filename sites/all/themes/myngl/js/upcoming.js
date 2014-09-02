@@ -85,6 +85,12 @@ var upcoming = (function ($) {
         $(this).find('.addthisevent-drop ._start').html(calendar_date);
         $(this).find('.addthisevent-drop ._end').html(calendar_end_date);
 
+        $(this).find('span.addthisevent_dropdown').remove();
+        addthisevent.refresh();
+
+
+
+
       });
     },
 
