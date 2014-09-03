@@ -37,7 +37,6 @@
   #other-filter-overlay{
     z-index:1000;
     width:600px;
-    height:400px;
     position:absolute;
     left:0;
     right:0;
@@ -111,7 +110,7 @@
   <form id="other-filter">
     <?php foreach($pre_questions as $i =>$question): ?>
       <div class='question' id="question-<?php print $i;?>">
-        <!--<div class='question-label'><?php print $question['question']; ?></div> -->
+        <div class='question-label'><?php print $question['question']; ?></div>
         <?php foreach($question['answers'] as $ii => $answer):?>
 
           <div class='input-wrapper'><input  type="radio" name="other-filter-question-<?php print $i;?>" value="<?php print $answer['value'];?>" /><?php print $answer['value'];?></div>
@@ -382,8 +381,12 @@
       <span style="font-size:16px;font-family:'roboto';color:#ffffff;"><?php print $i['name']; ?></span>
       <div style="width:100%; height:1px; margin:3px 0 8px 0; background-color:#ffffff;"> </div>
       <!--<span style="font-size:14px; font-family:'lato'; color:#ffffff;"><?php print $i['about_me'] ; ?></span><br /><br />-->
-      <span id='city' style="font-size:14px; font-family:'lato'; color:#ffffff;">Hometown: <?php print $i['city'];?></span><br /><br />
-      <span style="font-size:14px; font-family:'lato'; color:#ffffff;"><span id="tagline-holder"><?php print $i['tagline'] ; ?></span></span><br /><br />
+      <?php //if (isset($i['city']) && ($i['city'] != 'null')) : ?>
+        <span id='city' style="font-size:14px; font-family:'lato'; color:#ffffff;">Hometown: <?php print $i['city'];?></span><br /><br />
+      <?php //endif; ?>
+      <?php if (isset($i['tagline']) && ($i['tagline'] != 'null')) : ?>
+        <span style="font-size:14px; font-family:'lato'; color:#ffffff;"><span id="tagline-holder"><?php print $i['tagline'] ; ?></span></span><br /><br />
+      <?php endif; ?>
       <a href="#" onclick="chat.reset_id_of_showing_invitee_info(); return chat.solo_show(<?php print $i['uid']; ?>)"
                   style="font-size:14px;position:absolute;right:10px;bottom:10px;text-decoration:underline;color:#ffffff; ">
         CHAT

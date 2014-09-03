@@ -210,6 +210,8 @@ function myngl_event_social_area($nid) {
       $pic = "<img src='/sites/default/files/styles/user_profile_circle_image/public/default_images/default-user-profile.png' class='myngl-event-profile-pic' />";
     }
 
+    $answers = unserialize($ic->field_pre_question_answers['und'][0]['value']);
+
     $invitees[] = array (
                   'uid' => $u->uid,
                   'name' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
@@ -259,9 +261,6 @@ function myngl_event_social_area($nid) {
       ksort($ucg);
     //}
   }
-  //print "<pre>";
-  //print $ugc;
-  //die;
 
   $pre_questions = array();
   foreach ($myngl->field_pre_myngl_questions['und'] as $x => $i) {
@@ -269,8 +268,8 @@ function myngl_event_social_area($nid) {
     $j = array_shift(entity_load('field_collection_item', array($i['value'])));
 
     //Skip non-multichoice questions;
-    if (!isset($j->field_answer['und'])) break;
-    if ($j->field_use_as_other_filter['und'][0]['value']==0) break;
+    if (!isset($j->field_answer['und'])) continue;
+    if ($j->field_use_as_other_filter['und'][0]['value']==0) continue;
 
     $question = array(
       'item_id' => $j->item_id,

@@ -114,6 +114,9 @@ var social_area = (function ($) {
   return {
     check_redirect_to_theater: function(){
 
+      
+
+
       // TODO check if cookie is set. if so, stop checking status
       if ($.cookie('myngl_done_theater_'+Drupal.settings.myngl_id) == 1){
         clearInterval(redirect_setinterval_id);
@@ -126,7 +129,9 @@ var social_area = (function ($) {
         success: function(data) {
           //console.log(data);
           if (data==1) {
-            window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater";
+            /* commenting out for testing 
+              window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater"; 
+            */
           }
         }
       });

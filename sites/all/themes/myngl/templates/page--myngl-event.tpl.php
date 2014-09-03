@@ -16,12 +16,14 @@
 
 <?php include "footer.php"; ?>
 
-<?php if (in_array(arg(2), array('social-area','activity-room','rewards', 'exit'))) : ?>
-<!--
+<?php if (in_array(arg(2), array('social-area'))) : ?>
 <audio autoplay loop style="display:none;">
   <source src="http:<?php $node = node_load(arg(1)); print file_create_url($node->field_audio['und'][0]['uri']); ?>" type="audio/mp3">
 </audio>
--->
+<?php elseif (in_array(arg(2), array('theater', 'activity-room','rewards', 'exit'))) : ?>
+<audio autoplay loop style="display:none;">
+  <source src="http:<?php $node = node_load(arg(1)); print file_create_url($node->field_crowd_noise['und'][0]['uri']); ?>" type="audio/mp3">
+</audio>
 <?php endif; ?>
 
 </div>
