@@ -78,7 +78,7 @@ addthisevent.settings({
                  class="addthisevent">
                 <span class="_start"><?php print myngl_addthis_date($m['date']); ?></span>
                 <span class="_end"><?php print myngl_addthis_end_date($m['date']); ?></span>
-                <span class="_zonecode">15</span>
+                <span class="_zonecode"><?php print (date("I", strtotime($m['date']))==1)?11:11 ;?></span>   <!--15 is UTC-5 (EST), or 11 is UTC-6 (EDT) ... never mind. i think 11 is the right code. DST doesn't matter it seems..-->
                 <span class="_summary"><?php print $m['myngl']->title; ?></span>
                 <span class="_description"><?php print strip_tags($m['myngl']->field_myngl_description['und'][0]['safe_value']); ?></span>
                 <span class="_location"><?php print $m['brand']->title; ?>.myngl.com</span>

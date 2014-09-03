@@ -82,9 +82,11 @@ var upcoming = (function ($) {
         var calendar_date = day+"-"+month+"-"+year+" "+hour+":"+min+":00";
         var calendar_end_date = end_day+"-"+end_month+"-"+year+" "+end_hour+":"+min+":00";
 
+        var day_light_saving = ($(this).find('span.date.long-date').text().slice(-3)=="EDT")?true:false;
+
         $(this).find('.addthisevent-drop ._start').html(calendar_date);
         $(this).find('.addthisevent-drop ._end').html(calendar_end_date);
-
+        $(this).find('.addthisevent-drop ._zonecode').html( 11/*(day_light_saving)?'11':'15'*/);
         $(this).find('span.addthisevent_dropdown').remove();
         addthisevent.refresh();
 

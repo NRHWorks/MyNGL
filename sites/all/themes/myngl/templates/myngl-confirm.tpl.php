@@ -1,8 +1,12 @@
-<?php global $user; ?>
+<?php
+  global $user;
+  $event_timestamp = strtotime($node->field_myngl_dates['und'][0]['value']);
+  $event_date = date('m.d.Y @ g:i a', $event_timestamp) . ((date("I",$event_timestamp)==1)?" EDT":" EST");
+?>
 
 <div id="rsvp-confirm-wrapper">
   <div id="rsvp-confirm-title">WELCOME TO "<?php print $node->title; ?>"</div>
-  <div id="rsvp-confirm-date"><?php print date('m.d.Y @ g:i a',strtotime($node->field_myngl_dates['und'][0]['value'])); ?> EST</div>
+  <div id="rsvp-confirm-date"><?php print $event_date; ?></div>
   <div>
     <span class="additional-dates" style="font-size:14px; color:#957f57">Change date?
       <a href="#" onclick="return myngl.overlay('switch-date', 300, 400);" style="font-size:16px; color:#555;">Click here</a>
@@ -28,8 +32,13 @@
                 return false;">
     <?php
       foreach ($node->field_myngl_dates['und'] as $d) :
+
+        $event_timestamp = strtotime($d['value']);
+        $daylight_saving = (date("I",$event_timestamp)==1)?" EDT":" EST";
+
+
         print "<div>";
-        print "<input type='radio' name='change-date-radio' value='".$d['value']." EST' style='margin-left:60px;margin-right:10px;'>";
+        print "<input type='radio' name='change-date-radio' value='".$d['value']. $daylight_saving ."' style='margin-left:60px;margin-right:10px;'>";
         print '<div style="font-size: 18px; display: inline;">' . myngl_long_date($d['value']) . '</div><br /><br />';
         print "</div>";
       endforeach;
