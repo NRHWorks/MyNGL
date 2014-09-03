@@ -213,8 +213,8 @@
 $databases = array();
 $databases['default']['default'] = array(
  'driver' => 'mysql',
- 'database' => 'myngl',
- 'username' => 'myngl',
+ 'database' => 'Myngl_Drupal',
+ 'username' => 'myngl_drupal',
  'password' => 'p@55w0rd',
  'host' => 'localhost',
  'prefix' => '',
