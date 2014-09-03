@@ -1,10 +1,11 @@
 <?php
+	/*
   if (!isset($_COOKIE['done_lobby_video_'.$myngl->nid]) || $_COOKIE['done_lobby_video_'.$myngl->nid]!= 1){
     global $base_url;
     $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
     header($redirect); //Commented out for development -- Ming
     exit;
-  }
+  }*/
 ?>
 <?php
   global $user;
