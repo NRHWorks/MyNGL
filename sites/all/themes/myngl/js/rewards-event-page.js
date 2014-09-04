@@ -71,7 +71,7 @@ var rewards_overlay = (function($){
         type: 'POST',
         data : $('form#myngl-myngl-post-questions-form').serialize() ,
         success: function(json) {
-
+          console.log(json);
         }
       });
 
