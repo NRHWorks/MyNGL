@@ -252,8 +252,11 @@ var social_area = (function ($) {
     update_tagline_and_pre_question_answers_success: function(){
       // Update the tagline
       for (var i = 0; i < users_tagline_and_prequestion_answers.length; i ++){
-        $("#myngl-event-invitee-info-"+ users_tagline_and_prequestion_answers[i].user_id + " span#tagline-holder").text(users_tagline_and_prequestion_answers[i].tagline);
-        $("#myngl-event-invitee-info-"+ users_tagline_and_prequestion_answers[i].user_id + " span#city").text(users_tagline_and_prequestion_answers[i].city);
+        if (users_tagline_and_prequestion_answers[i].tagline!=null) {
+          $("#myngl-event-invitee-info-"+ users_tagline_and_prequestion_answers[i].user_id + " span#tagline-holder").text(users_tagline_and_prequestion_answers[i].tagline);
+        }
+        // The following line only work if myngl_event.module line 496 is un commented (search for "city")
+        //$("#myngl-event-invitee-info-"+ users_tagline_and_prequestion_answers[i].user_id + " span#city").text(users_tagline_and_prequestion_answers[i].city);
         console.log(users_tagline_and_prequestion_answers[i]);
         //console.log((users_tagline_and_prequestion_answers[i].pre_question_answers));
 
