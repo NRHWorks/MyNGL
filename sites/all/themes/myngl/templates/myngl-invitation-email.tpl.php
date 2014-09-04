@@ -9,7 +9,7 @@
       <div style="margin-top:25px; float:right; height:125px;"><img src="<?php print $banner; ?>" style="width:140px; height:auto;"></div>
       <div style="border-top: 1px solid #999; color:#555; clear:both; padding-top:25px; padding:25px;">
         <img src="<?php print $gift_image; ?>" style="float:left; margin-right:25px; width:150px; height:auto;">
-        <h1 style="font-famiy:'helvetica';font-weight:normal; color: #957f57; font-size: 34px; text-transform: uppercase; letter-spacing: 1px;">YOU'RE INVITED TO THE <?php print $title; ?></h1>
+        <h1 style="font-famiy:'helvetica';font-weight:normal; color: #957f57; font-size: 34px; text-transform: uppercase; letter-spacing: 1px;">YOU'RE INVITED TO <?php print $title; ?></h1>
         <div style="clear:both; padding-top:25px;">
           <?php print str_replace('[friend-name]',$friend,str_replace('[first-name]',$invitee,$text)); ?>
         </div>
