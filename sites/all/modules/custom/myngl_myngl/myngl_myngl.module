@@ -302,7 +302,10 @@ function myngl_myngl_change_date($myngl_id, $user_id, $date_id) {
     }
   }
 
-  print  date('m.d.Y @ g:i a',strtotime($node->field_myngl_dates['und'][$date_id]['value'])) . ' EST';
+
+  $daylight_saving = (date("I", strtotime($node->field_myngl_dates['und'][$date_id]['value']))==1)?" EDT":" EST";
+
+  print  date('m.d.Y @ g:i a',strtotime($node->field_myngl_dates['und'][$date_id]['value'])) . $daylight_saving;
 }
 
 function myngl_myngl_rsvp($nid) {
@@ -527,6 +530,7 @@ function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $us
         'effect' => 'fade',
     ),
   );
+  date_default_timezone_set('UTC');
   $form['#prefix'] = '<div id="success-message-' . $k . '">
                         <span class="date change-date">Current <span class="date">'. myngl_long_date($invitee->field_invitee_rsvp_date['und'][0]['value']) .'</span></span>
                         <br/><br/>
@@ -552,7 +556,7 @@ function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
   $pos = strrpos ( $wrapper , '-' );
   $k =substr($wrapper, $pos+1, strlen($wrapper)-$pos -1);
 
-
+  date_default_timezone_set('UTC');
   $return_string = '<div id="success-message-'.$k.'">
                       <span class="date change-date">Current <span class="date">'.myngl_long_date($v['date']).'</span></span>
                       <br/><br/>

@@ -1,9 +1,31 @@
 var next_scheduled_myngl_id;
 var current_server_time;
 var next_scheduled_event_update_in_progress = false;
+var today_is_daylight_saving_time;
 
 (function ($) {
   $(document).ready( function() {
+
+    Date.prototype.stdTimezoneOffset = function() {
+      var jan = new Date(this.getFullYear(), 0, 1);
+      var jul = new Date(this.getFullYear(), 6, 1);
+      return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+    }
+
+    Date.prototype.dst = function() {
+      return this.getTimezoneOffset() < this.stdTimezoneOffset();
+    }
+
+    var today = new Date();
+    if (today.dst()) {
+      console.log("Daylight savings time!");
+      today_is_daylight_saving_time = true;
+    }
+    else {
+      console.log("not daylight saving time");
+      today_is_daylight_saving_time = false;
+    }
+
     next_scheduled_myngl_id = Drupal.settings.next_scheduled_myngl_id;
     current_server_time = Drupal.settings.current_server_time;
     upcoming.update_overlay_short_date();
@@ -38,7 +60,14 @@ var upcoming = (function ($) {
         // long date format: 08.27.2014 @ 07:00 pm EST
         // format: 27-08-2014 19:00:00
         var timestamp = parseInt( $(this).find("#event-date-timestamp").text());
-        console.log(timestamp);
+        console.log(timestamp+'!!!!!');
+        console.log(today_is_daylight_saving_time);
+        console.log( "=========");
+        //if (!today_is_daylight_saving_time) {
+        // turns out the timestamp is always one hour off. i'm not sure why..
+          timestamp = timestamp - 3600;
+          console.log ('timestamp modified');
+        //}
         var date = new Date (timestamp * 1000);
         var end_date = new Date( (timestamp + 3600)*1000);
 
@@ -86,7 +115,7 @@ var upcoming = (function ($) {
 
         $(this).find('.addthisevent-drop ._start').html(calendar_date);
         $(this).find('.addthisevent-drop ._end').html(calendar_end_date);
-        $(this).find('.addthisevent-drop ._zonecode').html( 11/*(day_light_saving)?'11':'15'*/);
+        $(this).find('.addthisevent-drop ._zonecode').html(15/* (day_light_saving)?'11':'15'*/);
         $(this).find('span.addthisevent_dropdown').remove();
         addthisevent.refresh();
 
