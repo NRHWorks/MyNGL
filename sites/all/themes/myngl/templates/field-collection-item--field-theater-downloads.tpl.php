@@ -27,7 +27,13 @@
  * @see template_preprocess_entity()
  * @see template_process()
  */
+
+global $fb_count;
+
+$fb_count += 1;
+
 ?>
+
 <div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <div class="content"<?php print $content_attributes; ?>>
     <?
@@ -38,8 +44,25 @@
         print "<div class='field_downloads_image_place_holder'></div>";
       }
       print "<div class='text-wrapper'>";
-      print "<div class='social-icons'><img src='".base_path()."sites/all/themes/myngl/images/theater-downloads-social-icons1.png'/></div>";
+?>
 
+      <div class="social-icons">
+          <a href="mailto:?body=<?php print urlencode($u['path']); ?>&subject=<?php print $title; ?>">
+            <img src="/sites/all/themes/myngl/images/ucg-email.png" />
+          </a>
+
+          <script>function fbs_click<?php print $fb_count; ?>() {u='<?php print $u['path']; ?>';t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+          <a href="http://www.facebook.com/share.php" onclick="return fbs_click_<?php print $fb_count; ?>()" target="_blank" title="Myngl">
+            <img src="/sites/all/themes/myngl/images/ucg-facebook.png" />
+          </a>
+
+          <script>function twt_click_<?php print $k; ?>() { window.open('https://twitter.com/share?url=<?php print urlencode($u['path']); ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+          <a href="https://twitter.com/share?url=<?php print urlencode($u['path']); ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>" onclick="return twt_click_<?php print $k; ?>()" target="_blank">
+            <img src="/sites/all/themes/myngl/images/ucg-twitter.png" />
+          </a>
+      </div>
+
+<?php
       print render($content['field_title']);
       print render($content['field_description']);
       if(isset($content['field_downloadable_file'])){
