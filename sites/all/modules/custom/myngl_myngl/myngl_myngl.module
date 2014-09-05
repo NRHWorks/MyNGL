@@ -557,7 +557,7 @@ function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
   $pos = strrpos ( $wrapper , '-' );
   $k =substr($wrapper, $pos+1, strlen($wrapper)-$pos -1);
 
-  date_default_timezone_set('UTC');
+
 
   $return_string = '<div id="success-message-'.$k.'">
                       <span class="date change-date">Current <span class="date">'.myngl_long_date($v['date']).'</span></span>
@@ -565,8 +565,9 @@ function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
                       <strong>Date Updated</strong>
                       <br/></br>
                       This Myngl will also be presented on the following dates. Please select the date that works best for you:
-                      <br/><br/>
-                      <div id="event-date-timestamp" style="display:none">'. strtotime($v['date']).'</div>
+                      <br/><br/>';
+  date_default_timezone_set('UTC'); // have to call this function after calling myngl_long_date...
+  $return_string .=                    '<div id="event-date-timestamp" style="display:none">'. strtotime($v['date']).'</div>
                     </div>'
                      ;
 ;
