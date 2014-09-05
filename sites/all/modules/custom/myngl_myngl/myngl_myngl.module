@@ -545,6 +545,7 @@ function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $us
 
 function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
   $v = $form_state['values'];
+
   $myngl = node_load($v['myngl_id']);
   $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
   $invitee->field_invitee_rsvp_date['und'][0]['value'] = $v['date'];
@@ -557,6 +558,7 @@ function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
   $k =substr($wrapper, $pos+1, strlen($wrapper)-$pos -1);
 
   date_default_timezone_set('UTC');
+
   $return_string = '<div id="success-message-'.$k.'">
                       <span class="date change-date">Current <span class="date">'.myngl_long_date($v['date']).'</span></span>
                       <br/><br/>

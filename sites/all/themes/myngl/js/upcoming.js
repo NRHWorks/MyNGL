@@ -65,39 +65,42 @@ var upcoming = (function ($) {
         console.log( "=========");
         //if (!today_is_daylight_saving_time) {
         // turns out the timestamp is always one hour off. i'm not sure why..
-          timestamp = timestamp - 3600;
+          //timestamp = timestamp - 3600;
           console.log ('timestamp modified');
         //}
+
         var date = new Date (timestamp * 1000);
+
         var end_date = new Date( (timestamp + 3600)*1000);
 
 
-        var year = date.getFullYear();
-        var end_year = end_date.getFullYear();
+        var year = date.getUTCFullYear();
+        var end_year = end_date.getUTCFullYear();
 
-        var month = date.getMonth()+1;
+        var month = date.getUTCMonth()+1;
         if (month<10) {
           month = "0"+month;
         }
-        var end_month = end_date.getMonth()+1;
+        var end_month = end_date.getUTCMonth()+1;
         if (end_month <10) {
           end_month = "0"+end_month;
         }
 
-        var day = date.getDate();
+        var day = date.getUTCDate();
         if (day<10) {
           day = "0"+day;
         }
-        var end_day = end_date.getDate();
+        var end_day = end_date.getUTCDate();
         if (end_day<10) {
           end_day = "0"+end_day;
         }
 
-        var hour = date.getHours();
+        var hour = date.getUTCHours();
+
         if (hour<10) {
           hour = "0"+ hour;
         }
-        var end_hour = end_date.getHours();
+        var end_hour = end_date.getUTCHours();
         if (end_hour<10) {
           end_hour = "0"+ end_hour;
         }
