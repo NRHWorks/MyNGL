@@ -97,9 +97,10 @@ body.page-myngl-event-theater{
     background:transparent;
     font-weight:bold;
     position:relative;
-    top:40px;
-    margin-left:320px;
-    float: right;
+    top:-5px;
+    /*margin-left:350px;*/
+    /*float: right;*/
+    left:300px;
 }
 
 #theater-body #question-form-wrapper input[type="submit"]:focus,
