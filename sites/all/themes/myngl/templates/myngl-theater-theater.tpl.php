@@ -99,6 +99,7 @@ body.page-myngl-event-theater{
     position:relative;
     top:40px;
     margin-left:320px;
+    float: right;
 }
 
 #theater-body #question-form-wrapper input[type="submit"]:focus,
