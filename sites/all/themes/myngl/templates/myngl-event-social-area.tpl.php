@@ -252,8 +252,8 @@
       <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
         <span id="people-total">0</span> PEOPLE TOTAL / <span id="people-in-lounge">0</span> IN THIS ROOM
         <form id='filters'>
-          <input id='all' type="radio" name="filter" value="all"  /> Show All
-          <input id='fb-friends' type="radio" name="filter" value="fb-friends" checked/> FB Friends
+          <input id='all' type="radio" name="filter" value="all" checked/> Show All
+          <input id='fb-friends' type="radio" name="filter" value="fb-friends" /> FB Friends
           <input id='reps' type="radio" name="filter" value="reps" /> Brand Reps
           <input id='other' type="radio" name="filter" value="other" onclick="social_area.show_other_filter();"/> Other Filters
           <!-- <input type="radio" name="filter" value="filter-options" /> Filter Options -->
