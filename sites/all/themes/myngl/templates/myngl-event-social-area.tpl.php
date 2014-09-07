@@ -1,3 +1,10 @@
+<script>
+//var tag = document.createElement('script');
+
+      //tag.src = "https://www.youtube.com/iframe_api";
+      //var firstScriptTag = document.getElementsByTagName('script')[0];
+      //firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+</script>
 <?php
   /*
   if (!isset($_COOKIE['done_lobby_video_'.$myngl->nid]) || $_COOKIE['done_lobby_video_'.$myngl->nid]!= 1){
@@ -283,7 +290,6 @@
     </div>
 
     <?php foreach ($ucg as $k => $u) : ?>
-
       <div id="myngl-event-ugc-content-<?php print $k; ?>" class="myngl-event-ugc-content" style="display:none;">
         <div style='text-align:right; width:800px;'>
           <a href="mailto:?body=<?php print urlencode($u['path']); ?>&subject=<?php print $myngl->title; ?>">

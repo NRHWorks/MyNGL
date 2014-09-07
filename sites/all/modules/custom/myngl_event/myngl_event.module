@@ -178,6 +178,7 @@ function myngl_event_social_area($nid) {
   drupal_add_js(array('pov_width'=>$myngl->field_pov_width['und'][0]['value']),'setting');
   drupal_add_js(array('pov_top'=>$myngl->field_pov_top['und'][0]['value']),'setting');
   drupal_add_js(array('pov_left'=>$myngl->field_pov_left['und'][0]['value']),'setting');
+  drupal_add_js('http://www.youtube.com/player_api');
   //print_r($myngl);
   //exit;
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);

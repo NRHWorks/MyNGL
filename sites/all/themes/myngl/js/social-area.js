@@ -6,9 +6,17 @@ var ugc_width=0;
 var dock_shape = 0; //0 = single row at the bottom, 1 = full screen, -1 = completely hide
 var dock_position = 0;
 var redirect_setinterval_id;
+var num_of_ugc;
+var youtube_players = [];
+
 
 (function ($) {
   $(document).ready( function() {
+
+    $.getScript('https://www.youtube.com/iframe_api', function(){social_area.create_youtube_player()});
+
+
+    num_of_ugc = $(".myngl-event-ugc-content").length;
     if ($.cookie('myngl_done_theater_'+Drupal.settings.myngl_id) != 1){
 
       $(".branded ul li#theater").removeClass('inactive');
@@ -18,7 +26,7 @@ var redirect_setinterval_id;
       $(".branded ul li#theater a").attr("onclick", "return false;").css("cursor", "default");
       $(".branded ul li#play-room a").attr("onclick", "return false;").css("cursor", "default");
       $(".branded ul li#gifting-suite a").attr("onclick", "return false;").css("cursor", "default");
-      $("iframe#youtube-field-player").attr('src',$("iframe#youtube-field-player").attr('src') + '&enablejsapi=1');
+
     }
 
 
@@ -110,14 +118,56 @@ var redirect_setinterval_id;
   });
 })(jQuery);
 
+
+
 var social_area = (function ($) {
   return {
+
+    create_youtube_player: function(){
+
+      $("iframe").each(function(){
+
+        var src = $(this).attr('src');
+        var video_id = src.substring(src.lastIndexOf('/')+1 , src.lastIndexOf('?')  );
+        var id = $(this).attr('id');
+        $(this).attr('id',id + " youtube-" + video_id );
+        $(this).attr('src',src+"&enablejsapi=1");
+        var player = new YT.Player($(this).attr('id'), {
+          events: {
+          'onStateChange': social_area.onPlayerStateChange
+          }
+        });
+        youtube_players.push(player);
+      });
+
+
+    },
+    onPlayerStateChange: function(e){
+      /*  e.data can be:
+        -1 (unstarted)
+         0 (ended)
+         1 (playing)
+         2 (paused)
+         3 (buffering)
+      */
+
+
+      // first we need a flag to tell if the user turns off the audio by themselves
+      if (e.data==1 && !user_turn_off_music) {   // AND ther user doesn't turn off the music by themselves
+        $('audio').trigger('pause');
+        $('.fa-pause').removeClass('fa-pause').addClass('fa-play');
+        background_music_playing = false;
+      }
+      else if ((e.data==0|| e.data==2)&&!user_turn_off_music) { //and the user doesn't turn off the music by themselves
+        background_music_playing = true;
+          $('audio').trigger('play');
+          $('.fa-play').removeClass('fa-play').addClass('fa-pause');
+      }
+
+
+    },
     check_redirect_to_theater: function(){
 
-      
-
-
-      // TODO check if cookie is set. if so, stop checking status
       if ($.cookie('myngl_done_theater_'+Drupal.settings.myngl_id) == 1){
         clearInterval(redirect_setinterval_id);
         return false;
@@ -145,7 +195,7 @@ var social_area = (function ($) {
     search_helper:function (this_checkbox){
       var search_text = $("#invitee-chat-selector-search input:text").val().toLowerCase();
       var checkbox_text = this_checkbox.text().toLowerCase();
-      console.log(search_text + ", " + checkbox_text);
+      //console.log(search_text + ", " + checkbox_text);
       if (checkbox_text.indexOf(search_text)>-1) {
         this_checkbox.css('display','block');
       }
@@ -257,7 +307,7 @@ var social_area = (function ($) {
         }
         // The following line only work if myngl_event.module line 496 is un commented (search for "city")
         //$("#myngl-event-invitee-info-"+ users_tagline_and_prequestion_answers[i].user_id + " span#city").text(users_tagline_and_prequestion_answers[i].city);
-        console.log(users_tagline_and_prequestion_answers[i]);
+        //console.log(users_tagline_and_prequestion_answers[i]);
         //console.log((users_tagline_and_prequestion_answers[i].pre_question_answers));
 
       }
@@ -306,12 +356,25 @@ var social_area = (function ($) {
       return false;
     },
 
+    turn_off_all_youtube_videos: function(){
+      for(var i = 0; i < youtube_players.length; i++){
+        youtube_players[i].pauseVideo();
+      }
+      if (!user_turn_off_music){
+        background_music_playing = true;
+        $('audio').trigger('play');
+        $('.fa-play').removeClass('fa-play').addClass('fa-pause');
+
+      }
+    },
     ugc_left : function (value) {
-      console.log("left clicked, currently_shown ugc is " + currently_shown_ugc);
+      //console.log("left clicked, currently_shown ugc is " + currently_shown_ugc);
+      social_area.turn_off_all_youtube_videos();
+
 
       if (currently_shown_ugc !=-1) {
         $("#myngl-event-ugc-content-" + currently_shown_ugc).hide();
-        currently_shown_ugc = (currently_shown_ugc ==0)? $('event-ugc-thumb').length -1: currently_shown_ugc -1;
+        currently_shown_ugc = (currently_shown_ugc ==0)? num_of_ugc -1: currently_shown_ugc -1;
         social_area.ugc_show(currently_shown_ugc);
 
         return false;
@@ -325,9 +388,12 @@ var social_area = (function ($) {
       return false;
     },
     ugc_right : function (value) {
+      //console.log("right clicked, currently_shown ugc is " + currently_shown_ugc);
+      social_area.turn_off_all_youtube_videos();
+
       if (currently_shown_ugc !=-1) {
         $("#myngl-event-ugc-content-" + currently_shown_ugc).hide();
-        currently_shown_ugc = (currently_shown_ugc ==$('event-ugc-thumb').length -1)?0: currently_shown_ugc +1;
+        currently_shown_ugc = (currently_shown_ugc ==num_of_ugc -1)?0: currently_shown_ugc +1;
         social_area.ugc_show(currently_shown_ugc);
         return false;
       }
@@ -339,6 +405,8 @@ var social_area = (function ($) {
       return false;
     },
     ugc_close : function(){
+
+      social_area.turn_off_all_youtube_videos();
       myngl.overlay_close(true);
       social_area.ugc_hide();
       if (ugc_width <=830) {
@@ -351,6 +419,8 @@ var social_area = (function ($) {
 
     },
     ugc_hide : function() {
+
+      social_area.turn_off_all_youtube_videos();
       $('.myngl-event-ugc-content').hide();
       $("#myngl-event-ugc-thumbs").fadeIn(500);
       currently_shown_ugc = -1;
@@ -393,7 +463,7 @@ var social_area = (function ($) {
       return false;
     },
     show_search : function() {
-      console.log('show search');
+      //console.log('show search');
       return false;
     },
     open_ucg: function() {

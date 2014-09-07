@@ -16,19 +16,23 @@
   <footer>
 
 <script type="text/javascript">
+
+  var background_music_playing = true;
+  var user_turn_off_music = false;
+
   (function ($) {
     $(document).ready(function() {
-      var playing = true;
-
       $('#audio_pause').click(function() {
-        if (playing == true) {
-          playing = false;
+        if (background_music_playing == true) {
+          background_music_playing = false;
           $('audio').trigger('pause');
           $('.fa-pause').removeClass('fa-pause').addClass('fa-play');
+          user_turn_off_music = true;
         } else {
-          playing = true;
+          background_music_playing = true;
           $('audio').trigger('play');
           $('.fa-play').removeClass('fa-play').addClass('fa-pause');
+          user_turn_off_music = false;
         }
       });
     });
