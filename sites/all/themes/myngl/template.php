@@ -3,6 +3,11 @@
 drupal_add_library('system', 'jquery.cookie');
 
 function myngl_preprocess_html(&$vars) {
+
+  if ((arg(0)=='user') && isset($_COOKIE['Drupal_visitor_rsvp_date'])) {
+    drupal_goto('myngl/'.$_COOKIE['Drupal_visitor_rsvp'].'/rsvp/complete');
+  }
+
   if (arg(0) == 'myngl-event') {
     $myngl = node_load(arg(1));
     $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);

@@ -14,8 +14,8 @@
           <?php print str_replace('[friend-name]',$friend,str_replace('[first-name]',$invitee,$text)); ?>
         </div>
         <div style="text-align:center; color:#555;">
-          <a href="http://166.78.241.22/myngl/<?php print $myngl_id; ?>/rsvp" style="color:#555;text-decoration:none;">
-            <img src="http://166.78.241.22/sites/all/themes/myngl/images/rsvp-button.png" /><br />
+          <a href="http://www.themyngl.com/myngl/<?php print $myngl_id; ?>/rsvp" style="color:#555;text-decoration:none;">
+            <img src="http://www.themyngl.com/sites/all/themes/myngl/images/rsvp-button.png" /><br />
             Click Here to RSVP your spot.
           </a>
         </div>

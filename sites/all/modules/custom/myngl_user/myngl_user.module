@@ -117,7 +117,7 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
       $form['facebook_signin'] = array (
         '#markup' => '<div id="registration-facebook">
                         <p class="form-button-text">Facebook user?<br><br>Sign in with<br><span>FACEBOOK CONNECT</span></p>
-                        <a  class="facebook-action-connect" rel="nofollow" href="https://www.facebook.com/dialog/oauth?client_id=1445524802389990&redirect_uri=http%3A//myngl.local/fboauth/connect&scope=email%2Cread_friendlists">
+                        <a  class="facebook-action-connect" rel="nofollow" href="https://www.facebook.com/dialog/oauth?client_id=352510628237304&redirect_uri=http%3A//www.themyngl.com/fboauth/connect&scope=email%2Cread_friendlists">
                         <span class="fa-stack fa-lg" id="facebook-signin"> <i class="fa fa-circle fa-stack-2x"></i> <i class="fa fa-facebook fa-stack-1x fa-inverse"></i> </span>
                         </a>
                       </div>',
@@ -193,7 +193,7 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
       $form['facebook_signin'] = array (
         '#markup' => '<div id="registration-facebook">
                         <p class="form-button-text">Facebook user?<br><br>Sign in with<br><span>FACEBOOK CONNECT</span></p>
-                        <a  class="facebook-action-connect" rel="nofollow" href="https://www.facebook.com/dialog/oauth?client_id=1445524802389990&redirect_uri=http%3A//myngl.local/fboauth/connect&scope=email%2Cread_friendlists">
+                        <a  class="facebook-action-connect" rel="nofollow" href="https://www.facebook.com/dialog/oauth?client_id=352510628237304&redirect_uri=http%3A//www.themyngl.com/fboauth/connect&scope=email%2Cread_friendlists">
                         <span class="fa-stack fa-lg" id="facebook-signin"> <i class="fa fa-circle fa-stack-2x"></i> <i class="fa fa-facebook fa-stack-1x fa-inverse"></i> </span>
                         </a>
                       </div>',
