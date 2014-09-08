@@ -177,11 +177,11 @@ var social_area = (function ($) {
         type: "GET",
         url: "/myngl-event/" + Drupal.settings.myngl_id + "/lounge-redirect-to-theater",
         success: function(data) {
-          //console.log(data);
-          if (data==1) {
-            /* commenting out for testing 
-              window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater"; 
-            */
+          console.log(data);
+          if (data.redirect==1) {
+            // commenting out for testing
+              window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater";
+
           }
         }
       });

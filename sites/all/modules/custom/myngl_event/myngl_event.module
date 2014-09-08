@@ -450,20 +450,18 @@ function myngl_event_lounge_redirect_to_theater($myngl_id){
                       WHERE entity_id = $myngl_id");
 
   foreach($result as $r){
-    $dates[] = strtotime($r->field_myngl_dates_value);
-
+    $dates[] = strtotime($r->field_myngl_dates_value) - ((date("I", time()))? 18000:18000);
   }
-  $now = time();
+
+
+  $now = time() - ((date("I", time()))? 14400:18000); //adjust from UTC to edt/est
   rsort($dates);
-  //print_r($dates);
-  //print $now . "<br/>";
-
-
+  $return_array['dates'] = $dates;
   $this_date_index = 0;
   while($this_date_index< count($dates)&& $dates[$this_date_index] > $now){
     $this_date_index++;
   }
-
+  $return_array['this_date_index'] = $this_date_index;
 
   //print $this_date_index . "<br/>";
 
@@ -473,11 +471,20 @@ function myngl_event_lounge_redirect_to_theater($myngl_id){
 
   //print $field_theater_start_time . "<br/>";
 
+  $return_array['now'] = $now;
+  $return_array['$field_theater_start_time'] = $field_theater_start_time;
+  $return_array['daylight_saving'] = date("I", time());
+  $return_array['this_date'] = $dates[$this_date_index];
+
+
+
   if ( $now - $dates[$this_date_index] > $field_theater_start_time){
-    return drupal_json_output("1");
+    $return_array['redirect'] = 1;
+    return drupal_json_output($return_array);
   }
   else{
-    return drupal_json_output("0");
+    $return_array['redirect'] = 0;
+    return drupal_json_output($return_array);
   }
 }
 

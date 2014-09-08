@@ -60,14 +60,7 @@ var upcoming = (function ($) {
         // long date format: 08.27.2014 @ 07:00 pm EST
         // format: 27-08-2014 19:00:00
         var timestamp = parseInt( $(this).find("#event-date-timestamp").text());
-        console.log(timestamp+'!!!!!');
-        console.log(today_is_daylight_saving_time);
-        console.log( "=========");
-        //if (!today_is_daylight_saving_time) {
-        // turns out the timestamp is always one hour off. i'm not sure why..
-          //timestamp = timestamp - 3600;
-          console.log ('timestamp modified');
-        //}
+
 
         var date = new Date (timestamp * 1000);
 
@@ -129,8 +122,34 @@ var upcoming = (function ($) {
     },
 
     count_down: function(){
+
+      Date.prototype.stdTimezoneOffset = function() {
+      var jan = new Date(this.getFullYear(), 0, 1);
+      var jul = new Date(this.getFullYear(), 6, 1);
+      return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+      }
+
+    Date.prototype.dst = function() {
+      return this.getTimezoneOffset() < this.stdTimezoneOffset();
+    }
+    var today_is_daylight_saving_time;
+    var today = new Date();
+    if (today.dst()) {
+      //console.log("Daylight savings time!");
+      today_is_daylight_saving_time = true;
+    }
+    else {
+      //console.log("not daylight saving time");
+      today_is_daylight_saving_time = false;
+    }
+
+      //UTC to EST / EDT
+      var adjusted_current_server_time = current_server_time - ((today_is_daylight_saving_time)?14400:18000);
+
       var next_event_time = parseInt($("#upcoming-myngl-"+ next_scheduled_myngl_id+" #event-date-timestamp").text());
-      var time_till_event = next_event_time - current_server_time;
+      var time_till_event = next_event_time - adjusted_current_server_time;
+      //console.log("current_server_time = " + current_server_time);
+      //console.log('next_event_time = '+ next_event_time);
 
       if (time_till_event<0) {
 

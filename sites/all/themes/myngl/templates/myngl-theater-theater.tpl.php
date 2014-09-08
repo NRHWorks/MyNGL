@@ -1,12 +1,12 @@
 <?php
-  /*
-  if (!isset($_COOKIE['done_lobby_video_'.$myngl->nid]) || $_COOKIE['done_lobby_video_'.$myngl->nid]!= 1){
-    global $base_url;
-    $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
-    header($redirect); //Commented out for development -- Ming
-    exit;
+  if ($myngl->field_show_pov_and_ugc_borders['und'][0]['value']!=1){
+    if (!isset($_COOKIE['done_lobby_video_'.$myngl->nid]) || $_COOKIE['done_lobby_video_'.$myngl->nid]!= 1){
+      global $base_url;
+      $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
+      header($redirect);
+      exit;
+    }
   }
-  */
 ?>
 <style type="text/css">
   .field-name-field-theater .field-label{

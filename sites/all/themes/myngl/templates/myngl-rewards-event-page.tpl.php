@@ -1,4 +1,14 @@
 <?php
+
+  if ($myngl->field_show_pov_and_ugc_borders['und'][0]['value']!=1){
+    if (!isset($_COOKIE['done_lobby_video_'.$myngl->nid]) || $_COOKIE['done_lobby_video_'.$myngl->nid]!= 1){
+      global $base_url;
+      $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/lobby";
+      header($redirect);
+      exit;
+    }
+  }
+
   global $user;
   global $base_url;
   $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
@@ -6,8 +16,6 @@
   $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
   $tertiary_color = "#e2dbd2";
   $background_image = file_create_url($myngl->field_gifting_series_background['und'][0]['uri']);
-
-
 ?>
 <style type="text/css">
 
