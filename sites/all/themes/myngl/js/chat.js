@@ -405,7 +405,7 @@ var chat = (function ($) {
           for (var key in parsed_data.chats[chat_index]['messages']){
             //BADDDDDDDDDD CHEATING FIX
 
-            if ($('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages').text.indexOf(parsed_data.chats[chat_index]['messages'][key]['message'])==-1) {
+            if ($('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages').text().indexOf(parsed_data.chats[chat_index]['messages'][key]['message'])==-1) {
 
               $('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages').append(
                 '<div class="group-message"> <img src="' +
