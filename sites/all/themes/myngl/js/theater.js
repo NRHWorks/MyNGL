@@ -2,6 +2,11 @@ var additional_videos_offset = 0;
 
 (function ($) {
   $(document).ready( function(){
+    if ($.cookie("myngl_done_theater_"+Drupal.settings.myngl_id)==1) {
+      $('#myngl-theater-see-more').css('display','block');
+      $("#question-form-wrapper").hide();
+    }
+
     if ($(".additional-video").length <=3) {
       $("#myngl-theater-see-more .fa").css('display','none');
     }

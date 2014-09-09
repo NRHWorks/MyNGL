@@ -33,9 +33,8 @@ function myngl_preprocess_page(&$vars) {
 function myngl_long_date($date) {
   $timestamp = strtotime($date);
 
-
+  // This thing will return EST if using EST.
   $long_date = date('m.d.Y @ h:i a', $timestamp) . ((date("I",$timestamp)==1)?" EDT":" EST");
-
   return $long_date;
   //return date('m.d.Y @ h:i a',strtotime($date)) . ' EST';
   // Used to be  m.d.Y @ g:i a. I changed it so that upcoming.js upcoming.update_overlay_short_date works.

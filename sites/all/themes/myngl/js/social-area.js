@@ -65,7 +65,7 @@ var youtube_players = [];
     $('li#lounge').removeClass("inactive").addClass("active");
     setInterval(function() { social_area.message(); }, 3000);
     setInterval(function() { social_area.update_users_in_lounge(); }, 5000);
-    redirect_setinterval_id = setInterval(function(){social_area.check_redirect_to_theater();},1000);
+    redirect_setinterval_id = setInterval(function(){social_area.check_redirect_to_theater();},5000);
 
     $('#overlay-background').bind('click', function() {
       social_area.other_filter_close();
@@ -180,7 +180,7 @@ var social_area = (function ($) {
           console.log(data);
           if (data.redirect==1) {
             // commenting out for testing
-              window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater";
+              //window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater";
 
           }
         }

@@ -530,7 +530,9 @@ function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $us
         'effect' => 'fade',
     ),
   );
-  date_default_timezone_set('UTC');
+
+  // BUG?
+  //date_default_timezone_set('UTC');
   $form['#prefix'] = '<div id="success-message-' . $k . '">
                         <span class="date change-date">Current <span class="date">'. myngl_long_date($invitee->field_invitee_rsvp_date['und'][0]['value']) .'</span></span>
                         <br/><br/>
