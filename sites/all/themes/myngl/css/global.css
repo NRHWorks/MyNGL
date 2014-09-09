@@ -1437,7 +1437,9 @@ body ::-webkit-scrollbar-thumb {
   #myngl-event-pov .pov-message {
     margin-bottom: 20px;
   }
-
+  #myngl-event-pov #myngl-event-pov-wall .question{
+    background-color:#aaaaaa;
+  }
   #myngl-event-pov #myngl-event-pov-messages form {
     margin-top: 5px;
   }
