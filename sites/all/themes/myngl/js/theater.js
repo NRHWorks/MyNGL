@@ -5,6 +5,7 @@ var additional_videos_offset = 0;
     if ($.cookie("myngl_done_theater_"+Drupal.settings.myngl_id)==1) {
       $('#myngl-theater-see-more').css('display','block');
       $("#question-form-wrapper").hide();
+      $('#myngl-event-menu').css('display','block');
     }
 
     if ($(".additional-video").length <=3) {
