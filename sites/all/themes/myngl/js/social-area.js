@@ -180,7 +180,7 @@ var social_area = (function ($) {
           console.log(data);
           if (data.redirect==1) {
             // commenting out for testing
-              //window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater";
+              window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater";
 
           }
         }
