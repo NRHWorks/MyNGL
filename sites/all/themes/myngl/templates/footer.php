@@ -24,7 +24,7 @@
     $(document).ready(function() {
 
       // added by ming because this shit is annoying.
-      $('audio').trigger('pause');
+      //$('audio').trigger('pause');
 
       $('#audio_pause').click(function() {
         if (background_music_playing == true) {
