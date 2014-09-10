@@ -15,6 +15,15 @@
       </div>
     </div>
     <div class="content">
+      <?php
+
+        $m =field_view_field('node', $node, 'field_rsvp_confirmed_message','full' );
+        print render($m);
+      ?>
+
+
+
+      <!--
       <p>RSVP CONFIRMED!</p>
       <p>We look forward to seeing you at "<?php print $node->title; ?>".
       <p>Now, here’s a chance to invite your friends. And…your first chance to begin earning valuable reward Myngl Points to redeem for great gifts at theMyngl.
@@ -27,7 +36,7 @@
       <p>We want you to be part of theMyngl!  Be creative! Share your videos and photos to be shown at the event by uploading here.<br />
       (Earn 20 Myngl Points per submission)
       </p>
-
+      -->
       <?php
         print render(drupal_get_form('myngl_myngl_confirm_add_invitee', arg(1)));
       ?>
