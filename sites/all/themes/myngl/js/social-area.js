@@ -8,6 +8,7 @@ var dock_position = 0;
 var redirect_setinterval_id;
 var num_of_ugc;
 var youtube_players = [];
+var filter_answers = [];
 
 
 (function ($) {
@@ -83,7 +84,7 @@ var youtube_players = [];
       if ($("input[name='filter']:checked").val() == 'fb-friends'){
         //social_area.show_fb_friends();
       } else if ($("input[name='filter']:checked").val() == 'other') {
-        //social_area.show_other_filter();
+        social_area.show_other_filter();
       } else if ($("input[name='filter']:checked").val() == 'all') {
         $('.invitee-thumb').removeClass('filter-hide');
       } else if ($("input[name='filter']:checked").val() == 'reps') {
@@ -306,6 +307,7 @@ var social_area = (function ($) {
       });
     },
     update_tagline_and_pre_question_answers_success: function(){
+      //console.log(users_tagline_and_prequestion_answers);
       // Update the tagline
       for (var i = 0; i < users_tagline_and_prequestion_answers.length; i ++){
         if (users_tagline_and_prequestion_answers[i].tagline!=null) {
@@ -334,8 +336,35 @@ var social_area = (function ($) {
       $('#other-filter-overlay').fadeOut(100);
     },
     other_filter: function(){
+      $(("form#other-filter .question")).each(function(){
+        var id_string =$(this).attr('id');
+        var id = id_string.substring(id_string.lastIndexOf('-')+1, id_string.length);
+        console.log(id);
+        filter_answers[id] = $("form#other-filter #question-" + id+" input:checked").val();
 
-      //Get the selected answers.
+      });
+
+
+      for (var i = 0; i < users_tagline_and_prequestion_answers.length; i ++){
+        var show = true; //initially set show = true. if a test fails, then hide it.
+        for (var question_id in filter_answers){
+          var key = 'question-' + question_id;
+          if (!(filter_answers[question_id]=='all')&&!(filter_answers[question_id]==users_tagline_and_prequestion_answers[i].pre_question_answers[key])){
+            show = false;
+          }
+        }
+        if (show) {
+          $("#invitee-thumb-"+ users_tagline_and_prequestion_answers[i].user_id).removeClass("filter-hide")
+        }
+        else {
+          $("#invitee-thumb-"+ users_tagline_and_prequestion_answers[i].user_id).addClass("filter-hide");
+        }
+
+      }
+
+
+      //Original code
+      /*
       var filter_answers = [];
       var num_of_questions = $(("form#other-filter .question")).length;
       for(var i = 0; i < num_of_questions; i ++){
@@ -358,7 +387,7 @@ var social_area = (function ($) {
           $("#invitee-thumb-"+ users_tagline_and_prequestion_answers[i].user_id).addClass("filter-hide");
         }
 
-      }
+      }*/
       return false;
     },
 

@@ -1,4 +1,5 @@
 <?php
+
   if ($myngl->field_show_pov_and_ugc_borders['und'][0]['value']!=1){
     if (!isset($_COOKIE['done_lobby_video_'.$myngl->nid]) || $_COOKIE['done_lobby_video_'.$myngl->nid]!= 1){
       global $base_url;
@@ -109,6 +110,7 @@
     print render ($filter_title); ?>
 
   <form id="other-filter">
+
     <?php foreach($pre_questions as $i =>$question): ?>
       <div class='question' id="question-<?php print $i;?>">
         <div class='question-label'><?php print $question['question']; ?></div>
