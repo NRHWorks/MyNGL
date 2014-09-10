@@ -41,7 +41,7 @@ var additional_videos_offset = 0;
         theater.show_menu_and_additional_items();
     })
     viewer.addListener('offline', function(){
-      console.log('offilen');
+      //console.log('offilen');
       if (slides == true) {
         theater.show_menu_and_additional_items();
 
@@ -187,12 +187,12 @@ var theater = (function ($) {
       });*/
     },
     downloads_left : function (value) {
-      console.log("downloads_left called");
+      //console.log("downloads_left called");
       return false;
     },
 
     downloads_right : function (value) {
-      console.log("downloads.right called");
+      //console.log("downloads.right called");
       return false;
     }
   }
