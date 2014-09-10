@@ -9,7 +9,7 @@
           <li class="inactive" id="exit"><a href="/myngl-event/<?php print $myngl->nid; ?>/exit">Exit</a></li>
           <li class="inactive" id="help"><a href="#" onclick="myngl.overlay('help-overlay',500,800);">HELP</a></li>
           <li class="inactive" id="pause"><a href="#" id="audio_pause"><i class="fa fa-pause"></i></a></li>
-          <li class="inactive" id="the-myngl"><a href="/">The Myngl</a></li>
+          <li class="inactive" id="the-myngl"><a href="/">theMyngl</a></li>
         <ul>
       </div>
     </div>
