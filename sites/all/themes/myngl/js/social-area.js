@@ -76,6 +76,8 @@ var filter_answers = [];
 
     $('#overlay-background').bind('click', function() {
       social_area.other_filter_close();
+      $('#myngl-event-menu').css('display','block');
+       myngl.overlay_close(true);
       return false;
     });
 

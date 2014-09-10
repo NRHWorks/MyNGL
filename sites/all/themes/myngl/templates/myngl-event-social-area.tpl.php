@@ -1,5 +1,4 @@
 <?php
-
   if ($myngl->field_show_pov_and_ugc_borders['und'][0]['value']!=1){
     if (!isset($_COOKIE['done_lobby_video_'.$myngl->nid]) || $_COOKIE['done_lobby_video_'.$myngl->nid]!= 1){
       global $base_url;
