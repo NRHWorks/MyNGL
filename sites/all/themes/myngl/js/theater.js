@@ -33,17 +33,18 @@ var additional_videos_offset = 0;
     $("iframe.media-ustream-player").width(852).height(479).attr('id','iframe-movie');
     var viewer = UstreamEmbed('iframe-movie');
     var slides = false;
-    viewer.addListener('live', function() { slides = true;  });
+    viewer.addListener('live', function() {
+      slides = true;
+      });
+    viewer.addListener('finished', function(){
+
+        theater.show_menu_and_additional_items();
+    })
     viewer.addListener('offline', function(){
+      console.log('offilen');
       if (slides == true) {
-    		$('#myngl-event-menu').css('display','block');
-    		$('#myngl-theater-see-more').css('display','block');
-    		$("#question-form-wrapper").hide();
+        theater.show_menu_and_additional_items();
 
-        var date = new Date();
-
-        date.setTime(date.getTime() + (240 * 60 * 1000)); // Cookie expires in 4 hours. should be enough
-        $.cookie("myngl_done_theater_"+Drupal.settings.myngl_id, 1, { expires: date });
 
       }
     });
@@ -120,6 +121,14 @@ var additional_videos_offset = 0;
 
 var theater = (function ($) {
   return {
+    show_menu_and_additional_items: function(){
+    		$('#myngl-event-menu').css('display','block');
+    		$('#myngl-theater-see-more').css('display','block');
+    		$("#question-form-wrapper").hide();
+        var date = new Date();
+        date.setTime(date.getTime() + (240 * 60 * 1000)); // Cookie expires in 4 hours. should be enough
+        $.cookie("myngl_done_theater_"+Drupal.settings.myngl_id, 1, { expires: date });
+    },
     additional_video_left: function(){
       var num_of_additional_videos = $('.additional-video').length;
       if (additional_videos_offset != 0) {

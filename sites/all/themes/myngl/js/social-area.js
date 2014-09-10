@@ -12,6 +12,12 @@ var youtube_players = [];
 
 (function ($) {
   $(document).ready( function() {
+    if (Drupal.settings.developer_mode==1) {
+      $('audio').trigger('pause');
+        $('.fa-pause').removeClass('fa-pause').addClass('fa-play');
+        background_music_playing = false;
+
+    }
 
     $.getScript('https://www.youtube.com/iframe_api', function(){social_area.create_youtube_player()});
 
@@ -168,7 +174,7 @@ var social_area = (function ($) {
     },
     check_redirect_to_theater: function(){
 
-      if ($.cookie('myngl_done_theater_'+Drupal.settings.myngl_id) == 1){
+      if ($.cookie('myngl_done_theater_'+Drupal.settings.myngl_id) == 1 ||Drupal.settings.developer_mode==1){
         clearInterval(redirect_setinterval_id);
         return false;
       }
