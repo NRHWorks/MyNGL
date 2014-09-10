@@ -5,7 +5,7 @@ function myngl_page_title_init() {
 
   // change titles based on path
   switch (TRUE) {
-    case ($path == 'user') :
+    case ($path == 'user' || $path == "") :
       global $user;
 
       if ($user->uid != 0){
