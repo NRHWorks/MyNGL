@@ -168,17 +168,22 @@ var chat = (function ($) {
     name_list_submit : function(event){
       event.preventDefault();
       var selected_invitees = [];
-
+      if ($("#social-area-chat-list .selected.in-lounge").length >5){
+        alert("Please limit your group chat members to 5 people or less.");
+        return false;
+      }
       $("#social-area-chat-list .selected.in-lounge").each(function() {
         $(this).removeClass('selected');
-
         selected_invitees[selected_invitees.length] = $(this).attr('value');
 
       });
 
+
+
       if (selected_invitees.length ==1) {
         chat.solo_show(selected_invitees[0]);
       }
+
       else if (selected_invitees.length >1) { //group chat
         selected_invitees[selected_invitees.length]=Drupal.settings.user_id; //add the current user
         $.ajax({

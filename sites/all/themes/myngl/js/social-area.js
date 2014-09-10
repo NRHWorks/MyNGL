@@ -186,7 +186,7 @@ var social_area = (function ($) {
         type: "GET",
         url: "/myngl-event/" + Drupal.settings.myngl_id + "/lounge-redirect-to-theater",
         success: function(data) {
-          console.log(data);
+          //console.log(data);
           if (data.redirect==1) {
             // commenting out for testing
               window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater";
@@ -341,7 +341,7 @@ var social_area = (function ($) {
       $(("form#other-filter .question")).each(function(){
         var id_string =$(this).attr('id');
         var id = id_string.substring(id_string.lastIndexOf('-')+1, id_string.length);
-        console.log(id);
+        //console.log(id);
         filter_answers[id] = $("form#other-filter #question-" + id+" input:checked").val();
 
       });
