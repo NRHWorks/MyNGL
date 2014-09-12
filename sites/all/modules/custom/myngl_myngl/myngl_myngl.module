@@ -1401,8 +1401,12 @@ function myngl_myngl_invitees($nid) {
       $ic->field_invitee_last_name['und'][0]['value'],
       $ic->field_invitee_email_address['und'][0]['value'],
       $ic->field_invitee_status['und'][0]['value'],
-      $actions
+      //$actions
     );
+    if ($node->field_enable_invitee_group['und'][0]['value']==1){
+      $row[] = $ic->field_group_name_social['und'][0]['value'];
+    }
+    $row[]=$actions;
 
     $rows[] = $row;
   }
@@ -1413,8 +1417,12 @@ function myngl_myngl_invitees($nid) {
     'Last Name',
     'Email',
     'Status',
-    'Actions',
+    //'Actions',
   );
+  if ($node->field_enable_invitee_group['und'][0]['value']==1){
+      $header[] = "Group";
+    }
+  $header[] = "Actions";
 
   $table = theme_table(array('header' => $header, 'rows' => $rows, 'attributes' => array()));
 
@@ -1448,12 +1456,26 @@ function myngl_myngl_add_invitee($form, &$form_state, $nid) {
     '#description' => t('Enter invitees email address.'),
   );
 
-  /*
-  $form['brand_rep'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Brand Rep'),
-    '#description' => t('Check if the invitee is a brand rep.'),
-  );*/
+
+
+  $myngl = node_load($nid);
+  if ($myngl->field_enable_invitee_group['und'][0]['value']==1){
+    $form['group'] = array(
+      '#type' => 'select',
+      '#title' => t('Group'),
+      '#description' => t('Enter invitees group'),
+      '#default_value' => "",
+    );
+    $options[0] = "Randomize";
+    foreach ($myngl->field_invitee_group_name['und'] as $key => $group_name){
+      if ($group_name['value'] != NULL){
+        $options[$key+1] = $group_name['value'];
+      }
+    }
+    $form['group']['#options'] = $options;
+
+  }
+
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -1464,18 +1486,36 @@ function myngl_myngl_add_invitee($form, &$form_state, $nid) {
 }
 
 function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
-  $v = $form_state['values'];
-
+  $v=$form_state['values'];
   $node = node_load($v['myngl_nid']);
-
   $field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_myngl_invitees'));
   $field_collection_item->setHostEntity('node', $node);
-
   $field_collection_item->field_invitee_first_name['und'][]['value'] = $v['first_name'];
   $field_collection_item->field_invitee_last_name['und'][]['value'] = $v['last_name'];
   $field_collection_item->field_invitee_email_address['und'][]['value'] = $v['email'];
   $field_collection_item->field_invitee_status['und'][]['value'] = 'New';
   //$field_collection_item->field_brand_rep['und'][]['value'] = $v['brand_rep'];
+
+
+  if(isset($v['group'])){
+    if ($v['group']==0){
+      $num_of_options = 0;
+      foreach ($node->field_invitee_group_name['und'] as $key => $group_name){
+        if ($group_name['value'] != NULL){
+          $num_of_options ++;
+        }
+      }
+      $option_index = rand(0, $num_of_options -1);
+      $field_collection_item->field_group_name_social['und'][]['value'] = $node->field_invitee_group_name['und'][$option_index]['value'];
+    }
+    else{
+      $field_collection_item->field_group_name_social['und'][]['value'] = $node->field_invitee_group_name['und'][$v['group']-1]['value'];
+    }
+
+  }
+  else {
+    $field_collection_item->field_group_name_social['und'][]['value'] = "";
+  }
 
   $field_collection_item->save();
 
