@@ -106,14 +106,52 @@ var filter_answers = [];
       $("#invitees-thumbs").animate({left: 0}, 400);
     });
 
+    function get_next_row(a, b, c){
+      if (a==b && a==c) {
+        return 0;
+      }
+      else if (a==b) {
+        return (a>c)?2:0;
+      }
+      else if (a==c) {
+        return (a>b)?1:0;
+      }
+      else if (b==c) {
+        return (a>b)?1:0;
+      }
+      else{
+        var k = Math.min(a,b,c);
+        if (k==a) {
+          return 0;
+        }
+        else{
+          return (k==b)?1:2;
+        }
+      }
+    }
 
-    $('.event-ugc-thumb').each( function() {
-      ugc_width += $(this).children('a').children('img').width();
-      ugc_width += 20;
-    });
+    // move each item to 3 rows
+    var len_row = [0,0,0];
 
-    ugc_width = Math.floor(ugc_width / 3);
+    for (var i = 0; i < num_of_ugc; i ++){
+      var next_row = get_next_row(len_row[0], len_row[1], len_row[2]);
+      console.log($("#event-ugc-thumb-"+ i +" img").width());
+      len_row[next_row] += $("#event-ugc-thumb-"+ i +" img").width()+ 10;
+      $("#event-ugc-thumb-"+i).appendTo("#myngl-event-ugc-thumbs-row-"+next_row);
 
+    }
+
+    $("#myngl-event-ugc-thumbs-row-0").css("width", len_row[0]+"px");
+    $("#myngl-event-ugc-thumbs-row-1").css("width", len_row[1]+"px");
+    $("#myngl-event-ugc-thumbs-row-2").css("width", len_row[2]+"px");
+
+    $("#myngl-event-ugc-thumbs").css('width', Math.max(len_row[0],len_row[1], len_row[2]) + 'px');
+
+    if (Math.max(len_row[0],len_row[1], len_row[2]) <= 830) {
+      $('.halfCircleRight').hide();
+      $('.halfCircleLeft').hide();
+    }
+    /*
     if (ugc_width <830) {
       ugc_width=830;
 
@@ -122,7 +160,9 @@ var filter_answers = [];
 
     }
 
+     //$("#myngl-event-ugc-box-inside").css('width', ugc_width + 'px');
     $("#myngl-event-ugc-thumbs").css('width', ugc_width + 'px');
+    */
 
   });
 })(jQuery);
@@ -364,32 +404,6 @@ var social_area = (function ($) {
 
       }
 
-
-      //Original code
-      /*
-      var filter_answers = [];
-      var num_of_questions = $(("form#other-filter .question")).length;
-      for(var i = 0; i < num_of_questions; i ++){
-        filter_answers.push($("form#other-filter #question-" + i+" input:checked").val());
-      }
-
-      // Now Go through the stored user answers
-      for (var i = 0; i < users_tagline_and_prequestion_answers.length; i ++){
-        var show = true; //initially set show = true. if a test fails, then hide it.
-        for (var j = 0; j < num_of_questions; j ++){
-          var key = 'question-' + j;
-          if (!(filter_answers[j]=='all')&&!(filter_answers[j]==users_tagline_and_prequestion_answers[i].pre_question_answers[key])){
-            show = false;
-          }
-        }
-        if (show) {
-          $("#invitee-thumb-"+ users_tagline_and_prequestion_answers[i].user_id).removeClass("filter-hide")
-        }
-        else {
-          $("#invitee-thumb-"+ users_tagline_and_prequestion_answers[i].user_id).addClass("filter-hide");
-        }
-
-      }*/
       return false;
     },
 

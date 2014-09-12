@@ -1574,7 +1574,7 @@ body ::-webkit-scrollbar-thumb {
 
   #myngl-event-ugc-thumbs {
     width: auto;
-    height: 470px;
+    /*height: 470px;*/
   }
 
   .halfCircleRight{

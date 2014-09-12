@@ -278,8 +278,11 @@
     <div id="myngl-event-ugc-box-inside">
     <div id="myngl-event-ugc-box-slider" style="margin-left:0;">
       <div id="myngl-event-ugc-thumbs">
+        <div id="myngl-event-ugc-thumbs-row-0" style="height:150px;"></div>
+        <div id="myngl-event-ugc-thumbs-row-1" style="height:150px;"></div>
+        <div id="myngl-event-ugc-thumbs-row-2" style="height:150px;"></div>
         <?php foreach ($ucg as $k => $u) : ?>
-          <div class="event-ugc-thumb item" ><a href="#" onclick="return social_area.ugc_show(<?php print $k; ?>)"><?php print $u['thumb']; ?></a></div>
+          <div class="event-ugc-thumb item" id="event-ugc-thumb-<?php print $k; ?>"><a href="#" onclick="return social_area.ugc_show(<?php print $k; ?>)"><?php print $u['thumb']; ?></a></div>
         <?php endforeach; ?>
       </div>
     </div>
