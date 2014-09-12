@@ -39,6 +39,8 @@ var today_is_daylight_saving_time;
   });
 
   $( document ).ajaxComplete(function(event, xhr, settings) {
+    $('input.form-file').val('');
+    $('input.form-text').val('');
     if (!next_scheduled_event_update_in_progress) {
       next_scheduled_event_update_in_progress = true;
       upcoming.update_next_scheduled_event();

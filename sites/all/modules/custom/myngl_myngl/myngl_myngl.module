@@ -569,7 +569,7 @@ function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
                       This Myngl will also be presented on the following dates. Please select the date that works best for you:
                       <br/><br/>';
   date_default_timezone_set('UTC'); // have to call this function after calling myngl_long_date...
-  $return_string .=                    '<div id="event-date-timestamp" style="display:none">'. strtotime($v['date']).'</div>
+  $return_string .=   '<div id="event-date-timestamp" style="display:none">'. strtotime($v['date']).'</div>
                     </div>'
                      ;
 ;
@@ -580,6 +580,7 @@ function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
 
 function myngl_myngl_image_upload($form, &$form_state, $k, $myngl_id, $user_id) {
   $form['#attributes'] = array('enctype' => "multipart/form-data");
+
 
   $form['myngl_id'] = array (
     '#type' => 'hidden',
@@ -601,13 +602,18 @@ function myngl_myngl_image_upload($form, &$form_state, $k, $myngl_id, $user_id) 
     '#type' => 'submit',
     '#value' => 'Submit',
     '#title' => t('Submit'),
+    '#k' => $k,
     '#ajax' => array(
         'callback' => 'myngl_myngl_image_upload_ajax_submit',
-        'wrapper' => 'myngl-myngl-image-upload-wrapper-' . $k,
+        //'wrapper' => 'myngl-myngl-image-upload-wrapper-' . $k, //changed to the next line. also overlay-myngl-upcoming.tpl.php line 120
+        'wrapper' =>'myngl-upload-image-success-'.$k,
         'method' => 'replace',
         'effect' => 'fade'
     ),
   );
+
+
+
 
   return $form;
 }
@@ -624,9 +630,19 @@ function myngl_myngl_image_upload_ajax_submit($form_id, &$form_state) {
 
     $invitee->field_image_upload['und'][] = (array) $file;
     $invitee->save();
-  }
 
-  return 'File Uploaded';
+
+  return '<div id="myngl-upload-image-success-' . $form_state['triggering_element']['#k'] .'">'.
+           'File '. $_FILES['files']['name']['file'] .' successfully uploaded' .
+         '</div>';
+  }
+  else {
+    return
+    '<div id="myngl-upload-image-success-' . $form_state['triggering_element']['#k'] .'">'.
+        'No File is submitted' .
+         '</div>';
+
+  }
 }
 
 function myngl_myngl_doc_upload($form, &$form_state, $k, $myngl_id, $user_id) {
@@ -651,14 +667,19 @@ function myngl_myngl_doc_upload($form, &$form_state, $k, $myngl_id, $user_id) {
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Submit',
+    '#k' => $k,
     '#title' => t('Submit'),
     '#ajax' => array(
         'callback' => 'myngl_myngl_doc_upload_ajax_submit',
-        'wrapper' => 'myngl-myngl-doc-upload-wrapper-' . $k,
+        //'wrapper' => 'myngl-myngl-doc-upload-wrapper-' . $k,
+        'wrapper' =>'myngl-upload-doc-success-'.$k,
         'method' => 'replace',
         'effect' => 'fade',
     ),
   );
+
+
+
 
   return $form;
 }
@@ -675,9 +696,22 @@ function myngl_myngl_doc_upload_ajax_submit($form_id, &$form_state) {
 
     $invitee->field_document_upload['und'][] = (array) $file;
     $invitee->save();
+
+    return '<div id="myngl-upload-doc-success-' . $form_state['triggering_element']['#k'] .'">'.
+           'File '. $_FILES['files']['name']['file'] .' successfully uploaded' .
+         '</div>';
+
   }
 
-  return 'File Uploaded';
+
+  else {
+    return
+    '<div id="myngl-upload-doc-success-' . $form_state['triggering_element']['#k'] .'">'.
+        'No File is submitted' .
+         '</div>';
+
+  }
+
 }
 
 function myngl_myngl_youtube_embed($form, &$form_state, $k, $myngl_id, $user_id) {
@@ -702,28 +736,65 @@ function myngl_myngl_youtube_embed($form, &$form_state, $k, $myngl_id, $user_id)
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Submit',
+    '#k' => $k,
     '#title' => t('Submit'),
     '#ajax' => array(
         'callback' => 'myngl_myngl_youtube_embed_ajax_submit',
-        'wrapper' => 'myngl-myngl-youtube-embed-wrapper-' . $k,
+        'wrapper' =>'myngl-upload-youtube-success-'.$k,
+        //'wrapper' => 'myngl-myngl-youtube-embed-wrapper-' . $k,
         'method' => 'replace',
         'effect' => 'fade',
     ),
   );
 
+
   return $form;
 }
 
-function myngl_myngl_youtube_embed_ajax_submit($form_id, &$form_state) {
+function myngl_myngl_youtube_embed_ajax_submit($form_id, &$form_state){
+
   $v = $form_state['values'];
+
+
+  if (strpos($v['youtube'],'youtube.com')== FALSE){
+    return '<div id="myngl-upload-youtube-success-' . $form_state['triggering_element']['#k'] .'">'.
+        'No Youtube video is submitted<br/>' .
+        'The format of the submitted link should look like: "http://www.youtube.com/watch?v=xxxxxxxxx"'.
+         '</div>';
+  }
+
+  $video_id = substr($v['youtube'],strpos($v['youtube'],'=')+1);
+  $k = "http://youtube.com/get_video_info?video_id=".$video_id;
+
+  $youtube_content = file_get_contents("http://youtube.com/get_video_info?video_id=".$video_id);
+  if ($youtube_content == FALSE){
+     return '<div id="myngl-upload-youtube-success-' . $form_state['triggering_element']['#k'] .'">'.
+        'No Youtube video is submitted<br/>' .
+        'The format of the submitted link should look like: "http://www.youtube.com/watch?v=xxxxxxxxx"'.
+         '</div>';
+
+  }
+
+  parse_str($youtube_content, $ytarr);
+
+
+  $title =  $ytarr['title'];
+
+
   $myngl = node_load($v['myngl_id']);
   $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
 
+
   $invitee->field_video_upload['und'][] = array(  'input' => $v['youtube'],
-                                                  'video_id' => str_replace('https://www.youtube.com/watch?v=','',$v['youtube']));
+                                                  'video_id' => $video_id);
+
   $invitee->save();
 
-  return 'Video Embedded';
+   return  '<div id="myngl-upload-youtube-success-' . $form_state['triggering_element']['#k'] .'">'.
+           'Youtube '. $title .' successfully submitted' .
+         '</div>';
+
+
 }
 
 function myngl_myngl_pre_questions($nid) {

@@ -113,14 +113,15 @@ addthisevent.settings({
               <hr>
               <strong>IMAGES <i class="fa fa-picture-o"></i></strong></a>
               <a href="#" onclick="return myngl_upcoming.upload_videos(<?php print $k; ?>);">VIDEO <i class="fa fa-film"></i></a>
-              <a href="#" onclick="return myngl_upcoming.upload_doc(<?php print $k; ?>);">.DOC <i class="fa fa-file-text"></i></a>
+              <a href="#" onclick="return myngl_upcoming.upload_docs(<?php print $k; ?>);">.DOC <i class="fa fa-file-text"></i></a>
               <br /><br />
 
               <div id="myngl-myngl-image-upload-wrapper-<?php print $k; ?>">
+                <div id="myngl-upload-image-success-<?php print $k; ?>"></div>
                 <?php print render(drupal_get_form('myngl_myngl_image_upload', $k, $m['myngl']->nid, $user->uid)); ?>
               </div>
 
-             <a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
+             <!--<a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a> -->
             </div>
           </div>
           <div class="upcoming-myngls-pane-footer">
@@ -149,10 +150,11 @@ addthisevent.settings({
               <br /><br />
 
               <div id="myngl-myngl-doc-upload-wrapper-<?php print $k; ?>">
+                <div id="myngl-upload-doc-success-<?php print $k; ?>"></div>
                 <?php print render(drupal_get_form('myngl_myngl_doc_upload', $k, $m['myngl']->nid, $user->uid)); ?>
               </div>
 
-             <a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
+             <!--<a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a> -->
             </div>
           </div>
           <div class="upcoming-myngls-pane-footer">
@@ -181,10 +183,11 @@ addthisevent.settings({
               <br /><br />
 
               <div id="myngl-myngl-youtube-embed-wrapper-<?php print $k; ?>">
+                <div id="myngl-upload-youtube-success-<?php print $k; ?>"></div>
                 <?php print render(drupal_get_form('myngl_myngl_youtube_embed', $k, $m['myngl']->nid, $user->uid)); ?>
               </div>
 
-              <a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>
+              <!--<a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>-->
             </div>
           </div>
           <div class="upcoming-myngls-pane-footer">
