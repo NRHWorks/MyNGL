@@ -151,18 +151,6 @@ var filter_answers = [];
       $('.halfCircleRight').hide();
       $('.halfCircleLeft').hide();
     }
-    /*
-    if (ugc_width <830) {
-      ugc_width=830;
-
-      $('.halfCircleRight').hide();
-      $('.halfCircleLeft').hide();
-
-    }
-
-     //$("#myngl-event-ugc-box-inside").css('width', ugc_width + 'px');
-    $("#myngl-event-ugc-thumbs").css('width', ugc_width + 'px');
-    */
 
   });
 })(jQuery);

@@ -101,7 +101,9 @@ function myngl_rewards_event_page($nid) {
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
 
+
   $myngl = node_load($nid);
+  drupal_add_js(array('developer_mode'=>$myngl->field_show_pov_and_ugc_borders['und'][0]['value']), 'setting');
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
   $result = db_query('SELECT id, total_points FROM {myngl_rewards_total} WHERE

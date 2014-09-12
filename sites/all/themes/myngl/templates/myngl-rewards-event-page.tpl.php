@@ -354,8 +354,14 @@ body.page-myngl-event-rewards {
   height:485px;
   color:#666666;
   position:relative;
+  font-size:18px !important;
 
 }
+#gifting-series-overlay #text-wrapper p{
+  font-size:16px !important;
+  margin-left:140px;
+}
+
 #gifting-series-overlay .level-and-points-wrapper,
 #gifting-series-overlay .field-thumb-place-holder,
 #gifting-series-overlay .field-name-field-thumb,
@@ -562,25 +568,28 @@ form#myngl-myngl-post-questions-form #edit-submit{
   <div class = "short-line" id="short-line-1"></div>
   <div id="text-wrapper">
 
-    <?php
-      $counter = 0;
-      $reward_collections = $myngl->field_reward['und'];
-      while (isset($reward_collections[$counter])){
-        $collection = entity_load_single('field_collection_item',$reward_collections[$counter]['value'] );
-        print "<div class ='overlay-reward' id='reward-id-". $reward_collections[$counter]['value']."'>";
+    <div id="text-wrapper-inner" style="position:relative; top:50%; transform:translateY(-100%)">
+        <?php
+          $counter = 0;
+          $reward_collections = $myngl->field_reward['und'];
+          while (isset($reward_collections[$counter])){
+            $collection = entity_load_single('field_collection_item',$reward_collections[$counter]['value'] );
+            print "<div class ='overlay-reward' id='reward-id-". $reward_collections[$counter]['value']."'>";
 
-        print theme_image_style(array('style_name' => 'reward_thumb_120x120' , 'path' => $collection->field_thumb['und'][0]['uri'],'attributes' => array('align' => 'left', 'style' => 'margin-right: 20px;')));
+            print theme_image_style(array('style_name' => 'reward_thumb_120x120' , 'path' => $collection->field_thumb['und'][0]['uri'],'attributes' => array('align' => 'left', 'style' => 'margin-right: 20px;')));
 
-        $renderable = entity_view('field_collection_item', array($collection), 'full' );
-        print render ($renderable);
-        print "</div>";
-        $counter ++;
+            $renderable = entity_view('field_collection_item', array($collection), 'full' );
+            print render ($renderable);
+            print "</div>";
+            $counter ++;
 
 
 
-      }
-    ?>
-    <div class = "short-line" id="short-line-2"></div>
+          }
+        ?>
+      </div> <!-- /#text-wraper-inner -->
+
+    <!--<div class = "short-line" id="short-line-2"></div> -->
     <div id = "text-bottom">
       <div id="redeem" onclick="rewards_overlay.show_questions()">REDEEM GIFT <div id="button">></div></div>
       <div class = "short-line" id="short-line-3"></div>

@@ -6,6 +6,15 @@ var update_status_interval;
 
 (function ($) {
   $(document).ready( function() {
+    if (Drupal.settings.developer_mode==1) {
+      $('audio').trigger('pause');
+        $('.fa-pause').removeClass('fa-pause').addClass('fa-play');
+        background_music_playing = false;
+
+    }
+
+
+
     $('li#gifting-suite').removeClass("inactive").addClass("active");
 
     $('form#myngl-myngl-post-questions-form input#edit-submit').attr("value", "NEXT");
