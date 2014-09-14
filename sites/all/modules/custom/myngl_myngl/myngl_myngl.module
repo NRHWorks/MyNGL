@@ -1568,8 +1568,8 @@ function myngl_myngl_invitee_group_reassign($node_id, $assign_all){
 
 
 
-  drupal_set_message('Invitee Added.  Use the link in the invitee list to notify this user.');
-  drupal_goto("/node/".$node_id."/invitees");
+  drupal_set_message('Group Assigned.');
+  drupal_goto("node/".$node_id."/invitees");
 }
 
 
