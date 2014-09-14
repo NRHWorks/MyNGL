@@ -8,6 +8,12 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
+  $items['node/%/invitee-group-reassign/%'] = array(
+    'title' => 'Invitee Group Reassign',
+    'page callback' => 'myngl_myngl_invitee_group_reassign',
+    'page arguments' => array(1,3),
+    'access callback' => TRUE,
+  );
   $items['myngl/%/confirmed'] = array(
     'title' => 'RSVP CONFIRMED!',
     'page callback' => 'myngl_myngl_confirmed',
@@ -1476,12 +1482,22 @@ function myngl_myngl_add_invitee($form, &$form_state, $nid) {
 
   }
 
-
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Submit'),
   );
 
+  if ($myngl->field_enable_invitee_group['und'][0]['value']==1){
+    $form['submit']['#suffix']=
+    '<br/><br/>'.
+    '<a href="'.base_path().'node/'.$myngl->nid.'/invitee-group-reassign/0">'.
+      'Assign Group to invitees without group assignment'.
+    '</a>'.
+    '<br/>'.
+    '<a href="'.base_path().'node/'.$myngl->nid.'/invitee-group-reassign/1">'.
+      'Re-assign Group to all invitees'.
+    '</a>';
+  }
   return $form;
 }
 
@@ -1521,6 +1537,41 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
 
   drupal_set_message('Invitee Added.  Use the link in the invitee list to notify this user.');
 }
+
+
+function myngl_myngl_invitee_group_reassign($node_id, $assign_all){
+
+  $myngl = node_load($node_id);
+  $num_of_options = 0;
+  foreach ($myngl->field_invitee_group_name['und'] as $key => $group_name){
+    if ($group_name['value'] != NULL){
+      $num_of_options ++;
+    }
+  }
+
+
+
+  print "<pre>";
+  foreach ($myngl->field_myngl_invitees['und'] as $x => $i) {
+
+    $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
+    print_r($ic);
+
+    if ($assign_all==1 || $ic->field_group_name_social['und'][0]['value'] == NULL ){
+      $option_index = rand(0, $num_of_options -1);
+      $ic->field_group_name_social['und'][0]['value'] = $myngl->field_invitee_group_name['und'][$option_index]['value'];
+      $ic->save();
+    }
+
+  }
+  //die;
+
+
+
+  drupal_set_message('Invitee Added.  Use the link in the invitee list to notify this user.');
+  drupal_goto("/node/".$node_id."/invitees");
+}
+
 
 function myngl_myngl_confirm_add_invitee($form, &$form_state, $nid) {
 

@@ -81,6 +81,29 @@ var filter_answers = [];
       return false;
     });
 
+    $("input#group").change(function(){
+      //console.log($("input#group").prop('checked'));
+      var my_class = 'group-' +Drupal.settings.group_name;
+      console.log(my_class);
+      if ($("input#group").prop('checked')) {
+        $(".invitee-thumb").each(function(){
+          //console.log(my_class);
+          console.log($(this).attr('class'));
+          if($(this).hasClass(my_class)){
+            $(this).removeClass('group-hide');
+            console.log("show!");
+          }
+          else {
+            $(this).addClass('group-hide');
+            console.log("hide");
+          }
+        });
+      }
+      else{
+        $(".invitee-thumb").removeClass('group-hide');
+      }
+    });
+
 
     $("input[name='filter']").change(function(){
       if ($("input[name='filter']:checked").val() == 'fb-friends'){
@@ -135,7 +158,7 @@ var filter_answers = [];
 
     for (var i = 0; i < num_of_ugc; i ++){
       var next_row = get_next_row(len_row[0], len_row[1], len_row[2]);
-      console.log($("#event-ugc-thumb-"+ i +" img").width());
+      //console.log($("#event-ugc-thumb-"+ i +" img").width());
       len_row[next_row] += $("#event-ugc-thumb-"+ i +" img").width()+ 10;
       $("#event-ugc-thumb-"+i).appendTo("#myngl-event-ugc-thumbs-row-"+next_row);
 

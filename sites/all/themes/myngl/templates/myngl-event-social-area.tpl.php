@@ -95,11 +95,8 @@
     text-align:center;
     padding-top:5px;
     border-radius:5px;
+  }
 
-  }
-  .this-user{
-    display:none !important;
-  }
 </style>
 <div id="other-filter-overlay">
   <div id="other-filter-close" onclick="social_area.other_filter_close();">X</div>
@@ -225,7 +222,14 @@
       <div id="invitees-thumbs"  >
         <?php foreach ($invitees as $k => $i) : ?>
           <?php //if ($user->uid != $i['uid']): ?>
-            <div id="invitee-thumb-<?php print $i['uid']; ?>" style="float:left; text-align: center; width: 90px; height:120px; " class="invitee invitee-thumb <?php if ($i['fb']) { print ' fb ';} ?> <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>">
+            <div  id="invitee-thumb-<?php print $i['uid']; ?>"
+                  style="float:left; text-align: center; width: 90px; height:120px; "
+                  class="invitee
+                         invitee-thumb
+                         <?php if ($i['fb']) { print ' fb ';} ?>
+                         <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>
+                         <?php if(isset($i['group_name'])){print ' group-'.$i['group_name'];} ?>
+                         ">
             <a href="#" onmouseleave='chat.mouse_leave_thumb(<?php print $i['uid']; ?>)' onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
             <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
             </div>
@@ -254,6 +258,9 @@
       <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
         <span id="people-total">0</span> PEOPLE TOTAL / <span id="people-in-lounge">0</span> IN THIS ROOM
         <form id='filters'>
+          <?php if ($myngl->field_enable_invitee_group['und'][0]['value']==1): ?>
+            <input id='group' type="checkbox"/> My Group
+          <?php endif; ?>
           <input id='all' type="radio" name="filter" value="all" checked/> Show All
           <input id='fb-friends' type="radio" name="filter" value="fb-friends" /> FB Friends
           <input id='reps' type="radio" name="filter" value="reps" /> Brand Reps

@@ -213,8 +213,7 @@ function myngl_event_social_area($nid) {
     }
 
     $answers = unserialize($ic->field_pre_question_answers['und'][0]['value']);
-
-    $invitees[] = array (
+    $invitee =  array (
                   'uid' => $u->uid,
                   'name' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
                   'pic' => $pic,
@@ -223,10 +222,20 @@ function myngl_event_social_area($nid) {
                   'tagline' =>  $ic->field_myngl_tagline['und'][0]['value'],
                   'about_me' => $p->field_about['und'][0]['value'],
                   'brand_rep' => (in_array($u->uid, $brand_reps_uids))?1:0,
-                  'city' => $p->field_city['und'][0]['value']
-
+                  'city' => $p->field_city['und'][0]['value'],
                 );
+    if ($myngl->field_enable_invitee_group['und'][0]['value']==1){
+      $invitee['group_name'] = $ic->field_group_name_social['und'][0]['value'];
+      if ($ic->field_invitee_user_account['und'][0]['uid'] == $user->uid){
+        drupal_add_js(array('group_name'=> $ic->field_group_name_social['und'][0]['value']), 'setting');
 
+      }
+    }
+
+
+
+
+    $invitees[] = $invitee;
     //for ($x=1;$x<=3;$x+=1) {
       if (isset($ic->field_image_upload['und'])) {
         foreach ($ic->field_image_upload['und'] as $image) {
@@ -280,6 +289,8 @@ function myngl_event_social_area($nid) {
     );
 
     $pre_questions[$x] = $question;
+
+
 
   }
 

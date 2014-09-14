@@ -2090,7 +2090,9 @@ form#user-profile-form .switch-knob{
 .invitee-thumb.in-lounge{
   display:block;
 }
-.invitee-thumb.in-lounge.filter-hide{
+.invitee-thumb.in-lounge.filter-hide,
+ invitee-thumb.in-lounge.group-hide,
+ invitee-thumb.in-lounge.this-user{
   display:none !important;
 }
 /*  ----- END STYLE ------------------------------------------------- */
