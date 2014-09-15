@@ -312,8 +312,8 @@
             <img src="/sites/all/themes/myngl/images/ucg-facebook.png" />
           </a>
 
-          <script>function twt_click_<?php print $k; ?>() { window.open('https://twitter.com/share?url=<?php print urlencode($u['path']); ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
-          <a href="https://twitter.com/share?url=<?php print urlencode($u['path']); ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>" onclick="return twt_click_<?php print $k; ?>()" target="_blank">
+          <script>function twt_click_<?php print $k; ?>() { window.open('https://twitter.com/share?url=<?php print urlencode($u['path']); ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+          <a href="https://twitter.com/share?url=<?php print urlencode($u['path']); ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>" onclick="return twt_click_<?php print $k; ?>()" target="_blank">
             <img src="/sites/all/themes/myngl/images/ucg-twitter.png" />
           </a>
         </div>

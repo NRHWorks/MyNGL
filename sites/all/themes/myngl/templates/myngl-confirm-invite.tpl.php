@@ -1,4 +1,6 @@
 
+<?php $brand = node_load($node->field_myngl_brand['und'][0]['nid']);  ?>
+
 <div class="event-detail-overlay" ></div>
 
 <div id="confirm-invite-wrapper">
@@ -56,8 +58,8 @@
         </span>
       </a> 
 
-      <script>function twt_click() { window.open('https://twitter.com/share?url=<?php print 'http://'.$_SERVER['HTTP_HOST']; ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
-        <a href="https://twitter.com/share?url=<?php print 'http://'.$_SERVER['HTTP_HOST']; ?>&text=<?php print urlencode('Your friend is at '.$node->title.' an invite-only “Online Experiential Event” – Socializing, Privileged Content, FREE Gift Bags! Check out '); ?>" onclick="return twt_click()" target="_blank">
+      <script>function twt_click() { window.open('https://twitter.com/share?url=<?php print 'http://'.$_SERVER['HTTP_HOST']; ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+        <a href="https://twitter.com/share?url=<?php print 'http://'.$_SERVER['HTTP_HOST']; ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>" onclick="return twt_click()" target="_blank">
         <span class="fa-stack fa-lg" id="twitter-share">
           <i class="fa fa-circle fa-stack-2x"></i>
           <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
