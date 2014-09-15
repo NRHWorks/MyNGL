@@ -91,22 +91,21 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
-/*
-  $items['node/%/message'] = array(
-    'title' => 'Message',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('myngl_myngl_edit_message', 1),
-    'access callback' => TRUE,
-    'type' => MENU_LOCAL_TASK,
-  );
-*/
 
   $items['node/%/theater-message'] = array(
     'title' => 'Theater Message',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('myngl_myngl_edit_theater_message', 1),
+    'page callback' => 'myngl_myngl_edit_theater_message',
+    'page arguments' => array(1),
     'access callback' => TRUE,
     'type' => MENU_LOCAL_TASK,
+  );
+
+
+  $items['node/%/theater-message-ajax-fetch'] = array(
+    'title' => 'Theater Message Ajax Fetch',
+    'page callback' => 'myngl_myngl_theater_message_fetch',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
   );
 
   $items['node/%/ugc-list'] = array(
@@ -212,41 +211,51 @@ function myngl_myngl_theme() {
                           'variables' => array ('myngl' =>null, 'account' =>null),
                           'path' => 'sites/all/themes/myngl/templates',
                         );
+
+  $items['myngl_myngl_theater_message'] = array(
+                          'template' => 'myngl-myngl-theater-message',
+                          'variables' => array ('questions' =>null),
+                          'path' => 'sites/all/themes/myngl/templates',
+                        );
+
   return $items;
 }
 
+function myngl_myngl_edit_theater_message($nid){
+  //$myngl = node_load($nid);
 
-function myngl_myngl_edit_theater_message($form, &$form_state, $nid) {
-  $myngl = node_load($nid);
 
-  $form['myngl_id'] = array (
-    '#type' => 'hidden',
-    '#value' => $myngl->nid,
-  );
+  $result = db_query("SELECT delta, field_theater_questions_value
+                      FROM field_data_field_theater_questions
+                      WHERE entity_id = :nid
+                      ORDER BY delta DESC", array(':nid'=>$nid));
 
-  $form['theater_message'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Update Theater Message'),
-    '#default_value' => $myngl->field_theater_message['und'][0]['value'],
-    '#description' => t('Leave message blank to hide from Myngl.'),
-  );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'Submit',
-    '#title' => t('Submit'),
-  );
-
-  $questions = '<h3>Questions:</h3>';  
-  foreach (array_reverse($myngl->field_theater_questions['und']) as $q) {
-    $questions .= $q['value'].'<hr style="margin-top:10px;" /><br />';
+  foreach($result as $r){
+    $questions[] = array('delta'=>$r->delta, 'question'=>$r->field_theater_questions_value);
   }
 
-  $form['questions'] = array(
-    '#markup' => $questions,
-  );
 
-  return $form;
+
+  drupal_add_js('sites/all/themes/myngl/js/theater-message.js');
+  drupal_add_js(array('myngl_id'=> $nid),'setting');
+  $output = theme('myngl_myngl_theater_message', array('questions'=> $questions));
+
+  return $output;
+
+}
+
+function myngl_myngl_theater_message_fetch($nid){
+  $result = db_query("SELECT delta, field_theater_questions_value
+                      FROM field_data_field_theater_questions
+                      WHERE entity_id = :nid
+                      ORDER BY delta ASC", array(':nid'=>$nid));
+
+  foreach($result as $r){
+    $questions[] = array('delta'=>$r->delta, 'question'=>$r->field_theater_questions_value);
+  }
+
+
+  return drupal_json_output( $questions);
 }
 
 
@@ -987,86 +996,8 @@ function _myngl_myngl_get_invitee_id($myngl_id, $user_id) {
   }
 }
 
-/*
-function myngl_myngl_edit_message($form, &$form_state, $nid) {
-  $myngl = node_load($nid);
-
-  $form['myngl_id'] = array (
-    '#type' => 'hidden',
-    '#value' => $myngl->nid,
-  );
-
-  $form['message'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Update Message'),
-    '#default_value' => $myngl->field_myngl_message['und'][0]['value'],
-    '#description' => t('Leave message blank to hide from Myngl.'),
-  );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'Submit',
-    '#title' => t('Submit'),
-  );
-
-  return $form;
-}
 
 
-
-function myngl_myngl_edit_theater_message($form, &$form_state, $nid) {
-  $myngl = node_load($nid);
-
-  $form['myngl_id'] = array (
-    '#type' => 'hidden',
-    '#value' => $myngl->nid,
-  );
-
-  $form['theater_message'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Update Theater Message'),
-    '#default_value' => $myngl->field_theater_message['und'][0]['value'],
-    '#description' => t('Leave message blank to hide from Myngl.'),
-  );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'Submit',
-    '#title' => t('Submit'),
-  );
-
-  $questions = '<h3>Questions:</h3>';	
-  foreach (array_reverse($myngl->field_theater_questions['und']) as $q) {
-	$questions .= $q['value'].'<hr style="margin-top:10px;" /><br />';
-  }
-
-  $form['questions'] = array(
-	'#markup' => $questions,
-  );
-
-  return $form;
-}
-
-
-function myngl_myngl_edit_message_submit($form, &$form_state) {
-  $v = $form_state['values'];
-  $myngl = node_load($v['myngl_id']);
-  $myngl->field_myngl_message['und'][0]['value'] = $v['message'];
-  node_save($myngl);
-  drupal_set_message('Messge Updated.  It will appear in the Myngl in a few seconds.');
-}
-
-
-function myngl_myngl_edit_theater_message_submit($form, &$form_state) {
-  $v = $form_state['values'];
-
-  $myngl = node_load($v['myngl_id']);
-  $myngl->field_theater_message['und'][0]['value'] = $v['theater_message'];
-  node_save($myngl);
-
-  drupal_set_message('Messge Updated.  It will appear in the Myngl in a few seconds.');
-}
-*/
 
 
 function myngl_myngl_ugc_list($form, &$form_state, $nid) {
