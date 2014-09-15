@@ -25,3 +25,20 @@
   </div>
 </div>
 
+<script type="text/javascript">
+(function ($) {
+  $(document).ready( function(){
+    if ($.cookie('myngl_event_ends_'+Drupal.settings.myngl_id)==1) {
+      $(".branded ul li#lounge").removeClass('inactive');
+      $(".branded ul li#theater").removeClass('inactive');
+      $(".branded ul li#play-room").removeClass('inactive');
+      $(".branded ul li#gifting-suite").removeClass('inactive');
+
+      $(".branded ul li#lounge a").attr("onclick", "return false;").css("cursor", "default");
+      $(".branded ul li#theater a").attr("onclick", "return false;").css("cursor", "default");
+      $(".branded ul li#play-room a").attr("onclick", "return false;").css("cursor", "default");
+      $(".branded ul li#gifting-suite a").attr("onclick", "return false;").css("cursor", "default");
+    }
+  });
+}(jQuery));
+</script>

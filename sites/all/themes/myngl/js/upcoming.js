@@ -150,6 +150,12 @@ var upcoming = (function ($) {
 
       var next_event_time = parseInt($("#upcoming-myngl-"+ next_scheduled_myngl_id+" #event-date-timestamp").text());
       var time_till_event = next_event_time - adjusted_current_server_time;
+      if ($.cookie("myngl_event_ends_"+next_scheduled_myngl_id) != null ) {
+        //code
+
+        $.removeCookie("myngl_event_ends_"+next_scheduled_myngl_id);
+
+      }
       //console.log("current_server_time = " + current_server_time);
       //console.log('next_event_time = '+ next_event_time);
 
@@ -160,6 +166,7 @@ var upcoming = (function ($) {
         // two lines.
         $("#content-right center #link").removeClass("hide");
         $("#content-right center #count-down").css("display","none");
+
         return false;
       }
 

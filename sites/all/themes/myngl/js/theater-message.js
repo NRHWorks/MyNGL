@@ -1,8 +1,6 @@
 (function ($) {
   $(document).ready( function(){
-
     setInterval(function(){
-      console.log ("node/"+ Drupal.settings.myngl_id+"/theater-message-ajax-fetch");
       $.ajax({
           type: "GET",
           url: "/node/"+ Drupal.settings.myngl_id+"/theater-message-ajax-fetch" ,
@@ -17,12 +15,6 @@
             //console.log(data);
           }
       });
-
-
-
-
-
     }, 3000);
-
   });
 }(jQuery));

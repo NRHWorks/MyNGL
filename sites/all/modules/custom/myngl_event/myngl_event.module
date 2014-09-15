@@ -93,6 +93,12 @@ function myngl_event_menu() {
     'access callback' => TRUE,
   );
 
+  $items['myngl-event/%/event-ends'] = array(
+    'title' => 'Check If Event Ends',
+    'page callback' => 'myngl_event_event_ends',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
   return $items;
 }
 
@@ -130,6 +136,7 @@ function myngl_event_exit($nid) {
                           ':user_id' => $user->uid,
                         )
                       )->fetchField();
+  drupal_add_js(array('myngl_id' => $nid), 'setting');
 
   return theme('myngl_event_exit', array('myngl' => $myngl, 'brand' => $brand, 'points' => $total_points));
 }
@@ -530,4 +537,44 @@ function myngl_event_theater_question_submit($myngl_id) {
 	$node->field_theater_questions['und'][]['value'] = $user->name.' : '.$_POST['question'];
 	node_save($node);
 	return;
+}
+
+function myngl_event_event_ends($nid){
+
+  $result = db_query("SELECT field_show_pov_and_ugc_borders_value FROM field_data_field_show_pov_and_ugc_borders
+                      WHERE entity_id = $nid")->fetchField();
+
+  if ($result ==1) {
+    return drupal_json_output(0);
+  }
+
+  // Get the dates of the events, convert to timestamp and find the index of the nearst past start time.
+  $result = db_query("SELECT field_myngl_dates_value FROM field_data_field_myngl_dates
+                      WHERE entity_id = $nid");
+
+  foreach($result as $r){
+    $dates[] = strtotime($r->field_myngl_dates_value) - ((date("I", time()))? 18000:18000); // Time is stored as UTC in the table,so it's always 5 hours.
+  }
+
+
+  $now = time() - ((date("I", time()))? 14400:18000); //adjust from UTC to edt/est
+  rsort($dates);
+  $this_date_index = 0;
+  while($this_date_index< count($dates)&& $dates[$this_date_index] > $now){
+    $this_date_index++;
+  }
+
+  $field_event_length = db_query("SELECT field_event_length_value FROM
+                                       field_data_field_event_length WHERE
+                                       entity_id = $nid")->fetchField() * 60;
+
+  //print $field_theater_start_time . "<br/>";
+
+  //$return_array['now'] = $now;
+  //$return_array['$field_theater_start_time'] = $field_theater_start_time;
+  //$return_array['daylight_saving'] = date("I", time());
+  //$return_array['this_date'] = $dates[$this_date_index];
+
+  return ( $now - $dates[$this_date_index] > $field_event_length)? drupal_json_output(1): drupal_json_output(0);
+
 }

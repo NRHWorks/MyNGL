@@ -1,5 +1,6 @@
 (function ($) {
   $(document).ready( function() {
+    setInterval(function(){myngl.event_ends();}, 20000);
 
     $("#terms-overlay-link").click(function() {
       myngl.overlay('terms-overlay', 500, 750);
@@ -99,18 +100,6 @@ var myngl = (function($) {
           $(".field-name-field-profile-gender input#edit-profile-profile-field-profile-gender-und").prop('checked',true);
         }
       }
-      /*
-      else {   // status
-        if ($(".field-name-field-relationship input#edit-profile-profile-field-relationship-und").prop('checked')==true) {
-          $("#status-switch-inner").animate({left: "10px"}, 200);
-          $(".field-name-field-relationship input#edit-profile-profile-field-relationship-und").prop('checked',false);
-        }
-        else {
-          $("#status-switch-inner").animate({left: "50px"}, 200);
-          $(".field-name-field-relationship input#edit-profile-profile-field-relationship-und").prop('checked',true);
-        }
-      }*/
-
     },
 
     overlay: function(content, height, width) {
@@ -144,9 +133,27 @@ var myngl = (function($) {
         url: "/myngl-event/" + myngl_id + "/" + user_id + "/" + status,
         success: function(data) {}
       });
+    },
+    event_ends: function (){
+      if (Drupal.settings.myngl_id == undefined) {
+        return;
+      }
+      if (window.location.href.indexOf("exit") > -1) {
+        return;
+      }
 
-
-    }
+      $.ajax({
+        type: "GET",
+        url: "/myngl-event/" + Drupal.settings.myngl_id + "/event-ends",
+        success: function(data) {
+          console.log(data);
+          if (data==1) {
+            $.cookie("myngl_event_ends_"+Drupal.settings.myngl_id, 1);
+            window.location="/myngl-event/" + Drupal.settings.myngl_id +"/exit";
+          }
+        }
+      });
+    },
 
   }
 

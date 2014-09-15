@@ -6,6 +6,12 @@
       header($redirect);
       exit;
     }
+		if (isset($_COOKIE['myngl_event_ends_'.$myngl->nid])){
+      global $base_url;
+      $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/exit";
+      header($redirect);
+      exit;
+    }
   }
 ?>
 <?php
