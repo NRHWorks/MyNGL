@@ -1497,15 +1497,9 @@ function myngl_myngl_invitee_group_reassign($node_id, $assign_all){
       $num_of_options ++;
     }
   }
-
-
-
-
-
   foreach ($myngl->field_myngl_invitees['und'] as $x => $i) {
 
     $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
-    $ic->field_invited_by_friend['und'][]['value'] = rand(0,1);
     if ($assign_all==1 || $ic->field_group_name_social['und'][0]['value'] == NULL ){
       $option_index = rand(0, $num_of_options -1);
       $ic->field_group_name_social['und'][0]['value'] = $myngl->field_invitee_group_name['und'][$option_index]['value'];
@@ -1563,7 +1557,7 @@ function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
   $field_collection_item->field_invitee_last_name['und'][]['value'] = $v['last_name'];
   $field_collection_item->field_invitee_email_address['und'][]['value'] = $v['email'];
   $field_collection_item->field_invitee_status['und'][]['value'] = 'New';
-
+  $field_collection_item->field_invited_by_friend['und'][]['vaule'] = 1;
   $field_collection_item->save();
 
   $node_reload = node_load($v['myngl_nid']);
@@ -1761,11 +1755,175 @@ function myngl_myngl_event_detail($myngl_id, $user_id){
 
 
 function myngl_myngl_insight($nid){
-  $output = theme('myngl_myngl_insight', array('data'=>null));
+
+  $result = db_query('SELECT user_id from myngl_participant_status
+                      WHERE myngl_id = :nid',array(":nid"=>$nid));
+  foreach ($result as $r){
+    $attendees[] = $r->user_id;
+  }
+
+  $result = db_query("SELECT from_user_id FROM myngl_solo_chat
+                      WHERE myngl_id = :nid", array(":nid"=>$nid));
+
+  foreach($result as $r){
+    if (!in_array($r->from_user_id, $solo_chatters)){
+      $solo_chatters [] = $r->from_user_id;
+    }
+  }
+
+
+  $result = db_query("SELECT user_id FROM myngl_chat_group_message
+                      WHERE myngl_id = :nid", array(":nid"=>$nid));
+
+  foreach($result as $r){
+    if (!in_array($r->user_id, $group_chatters)){
+      $group_chatters [] = $r->user_id;
+    }
+  }
+
+
+  $result = db_query("SELECT user_id, question, message FROM myngl_pov
+                      WHERE myngl_id = :nid ORDER BY date ASC", array(":nid"=>$nid));
+
+  $pov_posters = array();
+  foreach($result as $r){
+    if (!in_array($r->user_id, $pov_posters)){
+      $pov_posters[] = $r->user_id;
+    }
+    $pov = array(
+        'user_id' => $r->user_id,
+        'question' => $r->question,
+        'message' => $r->message,
+                 );
+    $povs[] = $pov;
+
+  }
+
+
+  $redeem_count = array();
+
+
+
+
+
+  $node = node_load($nid);
+  $total_count = array('by_admin' => 0, 'by_friend' =>0);
+  $attend_count = array('by_admin' => 0, 'by_friend' =>0);
+
+  //print "<pre>";
+  foreach ($node->field_myngl_invitees['und'] as $k => $i) {
+
+
+    $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
+
+    //print_r($ic);
+
+    $invitee['uid'] = $ic->field_invitee_user_account['und'][0]['uid'];
+    $invitee['attend'] = (in_array($invitee['uid'], $attendees))? 1:0;
+    $invitee['invited_by_friend'] = $ic->field_invited_by_friend['und'][0]['value'];
+    $invitee['uploads'] = count($ic->field_image_upload) + count($ic->field_video_upload) +count($ic->field_document_upload);
+    $invitee['solo_chat'] = (in_array($invitee['uid'],$solo_chatters))?1:0;
+    $invitee['group_chat'] = (in_array($invitee['uid'],$group_chatters))?1:0;
+    $invitee['post_pov'] = (in_array($invitee['uid'],$pov_posters))?1:0;
+
+    if ($invitee['invited_by_friend']==1){
+      $total_count['by_friend'] ++;
+      if ($invitee['attend'] ==1){
+        $attend_count['by_friend']++;
+      }
+    }
+    else {
+      $total_count['by_admin']++;
+      if($invitee['attend']==1){
+        $attend_count['by_admin']++;
+      }
+    }
+
+
+
+
+    $result = db_query("SELECT reward_title FROM myngl_rewards_redeem
+                        WHERE user_id = :uid AND myngl_id = :nid",
+                        array(":uid"=> $invitee['uid'],
+                              ":nid"=> $nid,
+                              ));
+    $rewards = array();
+    foreach($result as $r){
+      $rewards[] = $r->reward_title;
+      if (array_key_exists($r->reward_title,$redeem_count)){
+        $redeem_count[$r->reward_title] ++;
+      }
+      else {
+        $redeem_count[$r->reward_title] =1;
+      }
+
+    }
+    $invitee['redeem'] = $rewards;
+
+
+    $invitees[] = $invitee;
+  }
+  //die;
+
+  arsort($redeem_count);
+  $data['total_count'] = $total_count;
+  $data['attend_count'] = $attend_count;
+  $data['num_solo_chatters'] = count($solo_chatters);
+  $data['num_group_chatters'] = count($group_chatters);
+  $data['num_pov_posters'] = count($pov_posters);
+  $data['redeem_count'] = $redeem_count;
+  $data['pov_messages'] = $povs;
+  $data['invitees'] = $invitees;
+  $data['solo_chats'] = _myngl_myngl_solo_chat_data($nid);
+  $data['group_chats'] = _myngl_myngl_group_chat_data($nid);
+
+
+  $output = theme('myngl_myngl_insight', array('data'=>$data));
   return $output;
 
 
 }
+
+function _myngl_myngl_solo_chat_data($nid){
+  $chats = array();
+  $result = db_query('SELECT from_user_id, to_user_id, message
+                      FROM myngl_solo_chat
+                      WHERE myngl_id = :nid
+                      ORDER BY date ASC',
+                      array(":nid"=> $nid));
+
+  foreach($result as $r){
+    $uid_1 = min($r->from_user_id, $r->to_user_id);
+    $uid_2 = max($r->from_user_id, $r->to_user_id);
+    $key = $uid_1."_".$uid_2;
+    $chats[$key]['id_1'] = $uid_1;
+    $chats[$key]['id_2'] = $uid_2;
+
+    $chats[$key]['messages'][] = $r->from_user_id.": ".$r->message;
+  }
+
+  return $chats;
+}
+
+
+function _myngl_myngl_group_chat_data($nid){
+
+  $chats = array();
+  $result = db_query("SELECT user_id, chat_id, message
+                      FROM myngl_chat_group_message
+                      WHERE myngl_id = :nid
+                      ORDER BY timestamp ASC",
+                      array(":nid"=>$nid));
+
+  foreach ($result as $r){
+    if ($r->message!="Left the chat."){
+      $chats[$r->chat_id][] = $r->user_id.": ".$r->message;
+    }
+  }
+
+  return $chats;
+}
+
 
 
 
