@@ -6,6 +6,7 @@ function myngl_myngl_menu() {
     'page callback' => 'myngl_myngl_rsvp',
     'page arguments' => array(1),
     'access callback' => TRUE,
+
   );
 
   $items['node/%/invitee-group-reassign/%'] = array(
@@ -152,6 +153,15 @@ function myngl_myngl_menu() {
     'type' => MENU_LOCAL_TASK,
   );
 
+  $items['node/%/insight'] = array(
+    'title' => 'Analytics and Insight',
+    'page callback' => 'myngl_myngl_insight',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 100,
+  );
+
   $items['myngl/%/event-detail/%'] = array(
     'title' => '',
     'page callback' => 'myngl_myngl_event_detail',
@@ -218,8 +228,15 @@ function myngl_myngl_theme() {
                           'path' => 'sites/all/themes/myngl/templates',
                         );
 
+  $items['myngl_myngl_insight'] = array(
+                          'template' => 'myngl-myngl-insight',
+                          'variables' => array ('data' =>null),
+                          'path' => 'sites/all/themes/myngl/templates',
+                        );
+
   return $items;
 }
+
 
 function myngl_myngl_edit_theater_message($nid){
   //$myngl = node_load($nid);
@@ -1441,6 +1458,7 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
   $field_collection_item->field_invitee_last_name['und'][]['value'] = $v['last_name'];
   $field_collection_item->field_invitee_email_address['und'][]['value'] = $v['email'];
   $field_collection_item->field_invitee_status['und'][]['value'] = 'New';
+  $field_collection_item->field_invited_by_friend['und'][]['value'] = 0;
   //$field_collection_item->field_brand_rep['und'][]['value'] = $v['brand_rep'];
 
 
@@ -1482,12 +1500,12 @@ function myngl_myngl_invitee_group_reassign($node_id, $assign_all){
 
 
 
-  print "<pre>";
+
+
   foreach ($myngl->field_myngl_invitees['und'] as $x => $i) {
 
     $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
-    print_r($ic);
-
+    $ic->field_invited_by_friend['und'][]['value'] = rand(0,1);
     if ($assign_all==1 || $ic->field_group_name_social['und'][0]['value'] == NULL ){
       $option_index = rand(0, $num_of_options -1);
       $ic->field_group_name_social['und'][0]['value'] = $myngl->field_invitee_group_name['und'][$option_index]['value'];
@@ -1495,7 +1513,6 @@ function myngl_myngl_invitee_group_reassign($node_id, $assign_all){
     }
 
   }
-  //die;
 
 
 
@@ -1594,7 +1611,8 @@ function myngl_myngl_admin_paths() {
     'node/*/invitees' => TRUE,
     'node/*/participants-status' => TRUE,
     'node/*/theater-message' => TRUE,
-    'node/2' => TRUE,
+    'node/*' => TRUE,
+    'node/*/insight' => TRUE,
   );
 }
 
@@ -1740,3 +1758,15 @@ function myngl_myngl_event_detail($myngl_id, $user_id){
   //ajax_deliver($output);
 
 }
+
+
+function myngl_myngl_insight($nid){
+  $output = theme('myngl_myngl_insight', array('data'=>null));
+  return $output;
+
+
+}
+
+
+
+
