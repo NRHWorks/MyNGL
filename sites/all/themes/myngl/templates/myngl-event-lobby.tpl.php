@@ -2,9 +2,9 @@
   if ($myngl->field_show_pov_and_ugc_borders['und'][0]['value']!=1){
     if (isset($_COOKIE['myngl_event_ends_'.$myngl->nid])){
       global $base_url;
-      $redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/exit";
-      header($redirect);
-      exit;
+      //$redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/exit";
+      //header($redirect);
+      //exit;
     }
   }
 ?>
