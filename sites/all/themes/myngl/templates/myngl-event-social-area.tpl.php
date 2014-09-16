@@ -242,11 +242,10 @@
           <?php //endif; ?>
         <?php endforeach; ?>
 
-
         <!-- Beginning of the test code -->
         <?php for ($i = 0; $i < $num_of_test_icons; $i ++): ?>
           <div class="invitee-thumb-test-place-holder"
-             style=" float:left; width: 90px; height:120px;
+             style=" float:left; width: 90px; height:120px; margin-left: 10px;
              background-color:
              #<?php print str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT ) .
                           str_pad ( dechex (rand(0, 255)) , 2 ,"0", STR_PAD_LEFT ) .
