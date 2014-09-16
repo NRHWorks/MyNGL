@@ -122,7 +122,11 @@ function myngl_event_theme() {
   return $items;
 }
 
-function myngl_event_exit($nid) {
+function myngl_event_exit($nid = NULL) {
+  global $user;
+  if ($nid ==NULL){
+    return;
+  }
   global $user;
 
   $myngl = node_load($nid);

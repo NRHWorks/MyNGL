@@ -129,7 +129,7 @@ function myngl_myngl_menu() {
 
   $items['node/%/participants-status'] = array(
     'title' => 'Participants Status',
-    'page callback' => 'myngl_event_participants_status',
+    'page callback' => 'myngl_myngl_participants_status',
     'page arguments' => array(1),
     'access callback' => TRUE,
     'type' => MENU_LOCAL_TASK,
@@ -1571,7 +1571,7 @@ function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
   drupal_set_message('An invitation has been sent to '.$v['first_name'].' ('.$v['email']. '), would you like to invite another?');
 }
 
-function myngl_event_participants_status($myngl_id) {
+function myngl_myngl_participants_status($myngl_id) {
   $result = db_query('SELECT user_id, timestamp, status
                       FROM {myngl_participant_status} WHERE
                         myngl_id = :myngl_id',
@@ -1825,6 +1825,7 @@ function myngl_myngl_insight($nid){
     $invitee['solo_chat'] = (in_array($invitee['uid'],$solo_chatters))?1:0;
     $invitee['group_chat'] = (in_array($invitee['uid'],$group_chatters))?1:0;
     $invitee['post_pov'] = (in_array($invitee['uid'],$pov_posters))?1:0;
+    $invitee['room_record'] = _myngl_myngl_room_record($invitee['uid'],$nid);
 
     if ($invitee['invited_by_friend']==1){
       $total_count['by_friend'] ++;
@@ -1838,9 +1839,6 @@ function myngl_myngl_insight($nid){
         $attend_count['by_admin']++;
       }
     }
-
-
-
 
     $result = db_query("SELECT reward_title FROM myngl_rewards_redeem
                         WHERE user_id = :uid AND myngl_id = :nid",
@@ -1924,6 +1922,51 @@ function _myngl_myngl_group_chat_data($nid){
   return $chats;
 }
 
+function _myngl_myngl_room_record($uid,$nid){
+  $record = array(
+              'Lounge' =>0,
+              'Theater'=>0,
+              'PlayRoom'=>0,
+              'Gifting Suite' =>0,
+              'Lobby'=>0
+                  );
+
+  $result = db_query("SELECT enter_time, leave_time, room
+                      FROM myngl_participant_room_record
+                      WHERE myngl_id = :nid AND user_id = :uid
+                      ORDER BY enter_time ASC",
+                      array(":nid"=>$nid, ":uid"=>$uid)
+                      );
+
+  foreach($result as $r){
+    $result_array[] = array('enter_time'=>$r->enter_time,
+                            'leave_time'=>$r->leave_time,
+                            'room'=>$r->room);
+  }
+
+
+  for( $i = 0; $i< count($result_array)-1; $i ++){
+    if ($result_array[$i+1]['enter_time'] - $result_array[$i]['leave_time']<20){
+      $this_stay_time = $result_array[$i+1]['enter_time'] - $result_array[$i]['enter_time'];
+    }
+    else {
+      $this_stay_time = $result_array[$i]['leave_time'] - $result_array[$i]['enter_time'] + 20;
+    }
+    $record[$result_array[$i]['room']] += $this_stay_time;
+  }
+
+  $last_index = count($result_array) -1;
+  if ($last_index >=0){
+    $record[$result_array[$last_index]['room']] += $result_array[$last_index]['leave_time'] - $result_array[$last_index]['enter_time'] + 20;
+  }
+
+  $sum = 0;
+  foreach($record as $r){
+    $sum+= $r;
+  }
+  $record['sum'] = $sum;
+  return $record;
+}
 
 
 

@@ -54,6 +54,33 @@ h3 {
 </ul>
 
 
+
+<h3>Room and Time (min):</h3>
+<table>
+  <tr>
+    <th>User ID</th>
+    <th>Total</th>
+    <th>Lobby</th>
+    <th>Lounge</th>
+    <th>Theater</th>
+    <th>Activity Room</th>
+    <th>Gifting Suite</th>
+  </tr>
+  <?php foreach($data['invitees'] as $i): ?>
+    <?php if($i['attend']==1): ?>
+      <tr>
+        <td><?php print $i['uid'];?></td>
+        <td><?php printf("%.1f",$i['room_record']['sum'] / 60.0); ?></td>
+        <td><?php printf("%.1f",$i['room_record']['Lobby'] / 60.0); ?></td>
+        <td><?php printf("%.1f",$i['room_record']['Lounge'] / 60.0); ?></td>
+        <td><?php printf("%.1f",$i['room_record']['Theater'] / 60.0); ?></td>
+        <td><?php printf("%.1f",$i['room_record']['PlayRoom']/60.0); ?></td>
+        <td><?php printf("%.1f",$i['room_record']['Gifting Suite'] / 60.0); ?></td>
+      </tr>
+    <?php endif; ?>
+  <?php endforeach; ?>
+</table>
+
 <h3>Rewards:</h3>
 
 <table>
@@ -113,5 +140,5 @@ h3 {
 
 
 <pre>
-  <?php //print_r($data); ?>
+  <?php print_r($data); ?>
 </pre>
