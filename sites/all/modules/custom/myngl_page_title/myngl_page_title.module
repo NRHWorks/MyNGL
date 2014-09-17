@@ -8,8 +8,10 @@ function myngl_page_title_init() {
     case ($path == 'user' || $path == "") :
       global $user;
       if ($user->uid != 0){
-        $u = entity_metadata_wrapper('user', $user);
-        drupal_set_title(strtoupper($u->field_first_name->value())."'s DASHBOARD");
+        drupal_goto("user/".$user->uid);
+
+        //$u = entity_metadata_wrapper('user', $user);
+        //drupal_set_title(strtoupper($u->field_first_name->value())."'s DASHBOARD");
       }
       else {
         if (isset($_COOKIE['Drupal_visitor_rsvp'])) {
