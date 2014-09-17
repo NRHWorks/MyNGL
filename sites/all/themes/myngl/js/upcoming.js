@@ -28,9 +28,7 @@ var today_is_daylight_saving_time;
 
     next_scheduled_myngl_id = Drupal.settings.next_scheduled_myngl_id;
 
-    /*if ($.cookie("myngl_event_ends_"+next_scheduled_myngl_id) != null ) {
-        $.removeCookie("myngl_event_ends_"+next_scheduled_myngl_id);
-    }*/
+
 
     current_server_time = Drupal.settings.current_server_time;
     upcoming.update_overlay_short_date();
@@ -155,12 +153,7 @@ var upcoming = (function ($) {
 
       var next_event_time = parseInt($("#upcoming-myngl-"+ next_scheduled_myngl_id+" #event-date-timestamp").text());
       var time_till_event = next_event_time - adjusted_current_server_time;
-      if ($.cookie("myngl_event_ends_"+next_scheduled_myngl_id) != null ) {
 
-
-        $.removeCookie("myngl_event_ends_"+next_scheduled_myngl_id);
-
-      }
       //console.log("current_server_time = " + current_server_time);
       //console.log('next_event_time = '+ next_event_time);
 

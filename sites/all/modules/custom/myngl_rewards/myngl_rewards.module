@@ -97,6 +97,7 @@ function myngl_rewards_page() {
 function myngl_rewards_event_page($nid) {
   global $user;
 
+  myngl_event_is_taking_place($nid, $user->uid);
   drupal_add_js(path_to_theme() . '/js/rewards-event-page.js');
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');

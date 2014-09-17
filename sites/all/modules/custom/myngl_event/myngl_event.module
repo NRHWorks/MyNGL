@@ -128,6 +128,7 @@ function myngl_event_exit($nid = NULL) {
     return;
   }
   global $user;
+  $time_up = myngl_event_is_taking_place($nid, $user->uid, "exit");
 
   $myngl = node_load($nid);
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
@@ -147,8 +148,18 @@ function myngl_event_exit($nid = NULL) {
 
 function myngl_event_lobby($nid){
   global $user;
+
+  myngl_event_is_taking_place($nid, $user->uid);
+
+
   drupal_add_js(path_to_theme().'/js/lobby.js');
   drupal_add_js("https://www.youtube.com/iframe_api");
+  if ($time_up){
+    drupal_add_js(array('time_up' => 1), 'setting');
+  }
+  else {
+    drupal_add_js(array('time_up' => 0), 'setting');
+  }
   
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
@@ -162,7 +173,7 @@ function myngl_event_lobby($nid){
 
 function myngl_event_social_area($nid) {
   global $user;
-
+  myngl_event_is_taking_place($nid, $user->uid);
   drupal_add_library('system', 'ui.draggable');
   drupal_add_js(path_to_theme().'/js/social-area.js');
   drupal_add_js(path_to_theme().'/js/chat.js');
@@ -581,4 +592,19 @@ function myngl_event_event_ends($nid){
 
   return ( $now - $dates[$this_date_index] > $field_event_length)? drupal_json_output(1): drupal_json_output(0);
 
+
 }
+
+
+function myngl_event_is_taking_place($nid, $uid, $access_page = NULL){
+  //$access_page might be "exit"
+  /*
+   *Function event_taking_place(nid, uid, access_page){
+	check if the instance of the event the user RSVP to is taking place now. if not set drupal message "event is not in action", goto exit
+	if page is exit, allow another 15 minutes (no need for java script here) otherwise redirect back to /user
+	return disable_menu or not (for the exit page)
+	if node->developmode == true return false;
+}*/
+
+}
+

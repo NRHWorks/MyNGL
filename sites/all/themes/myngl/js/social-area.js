@@ -80,7 +80,7 @@ var filter_answers = [];
        myngl.overlay_close(true);
       return false;
     });
-
+    /*
     $("input#group").change(function(){
       //console.log($("input#group").prop('checked'));
       var my_class = 'group-' +Drupal.settings.group_name;
@@ -116,17 +116,44 @@ var filter_answers = [];
 
       }
     });
-
+    */
 
     $("input[name='filter']").change(function(){
       if ($("input[name='filter']:checked").val() == 'fb-friends'){
         //social_area.show_fb_friends();
-      } else if ($("input[name='filter']:checked").val() == 'other') {
+      }
+      else if ($("input[name='filter']:checked").val() == 'other') {
         social_area.show_other_filter();
-      } else if ($("input[name='filter']:checked").val() == 'all') {
+      }
+      else if ($("input[name='filter']:checked").val() == 'all') {
         $('.invitee-thumb').removeClass('filter-hide');
         $('form#social-area-chat-list .checkbox').removeClass('filter-hide');
-      } else if ($("input[name='filter']:checked").val() == 'reps') {
+      }
+      else if ($("input[name='filter']:checked").val()=='group') {
+        var my_class = 'group-' +Drupal.settings.group_name;
+        $('.invitee-thumb').each(function(){
+          if ($(this).hasClass(my_class)) {
+            $(this).removeClass('filter-hide');
+          }
+          else {
+            $(this).addClass('filter-hide');
+          }
+
+        });
+
+        $('form#social-area-chat-list .checkbox').each(function(){
+          if ($(this).hasClass(my_class)) {
+            $(this).removeClass('filter-hide');
+          }
+          else {
+            $(this).addClass('filter-hide');
+          }
+
+        });
+
+
+      }
+      else if ($("input[name='filter']:checked").val() == 'reps') {
 
         $('.invitee-thumb').each(function(){
           if ($(this).hasClass('brand-rep')) {

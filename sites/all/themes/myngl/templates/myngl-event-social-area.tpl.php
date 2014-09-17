@@ -6,12 +6,6 @@
       header($redirect);
       exit;
     }
-    if (isset($_COOKIE['myngl_event_ends_'.$myngl->nid])){
-      global $base_url;
-      //$redirect = 'Location: '. $base_url . '/myngl-event/' . $myngl->nid ."/exit";
-      //header($redirect);
-      //exit;
-    }
   }
 ?>
 <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
@@ -267,12 +261,13 @@
       <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
         <span id="people-total">0</span> PEOPLE TOTAL / <span id="people-in-lounge">0</span> IN THIS ROOM
         <form id='filters'>
-          <?php if ($myngl->field_enable_invitee_group['und'][0]['value']==1): ?>
-            <input id='group' type="checkbox"/> My Group
-          <?php endif; ?>
+
           <input id='all' type="radio" name="filter" value="all" checked/> Show All
           <input id='fb-friends' type="radio" name="filter" value="fb-friends" /> FB Friends
           <input id='reps' type="radio" name="filter" value="reps" /> Brand Reps
+          <?php if ($myngl->field_enable_invitee_group['und'][0]['value']==1): ?>
+            <input id='group' type="radio" name='filter' value='group'/> My Group
+          <?php endif; ?>
           <input id='other' type="radio" name="filter" value="other" onclick="social_area.show_other_filter();"/> Other Filters
           <!-- <input type="radio" name="filter" value="filter-options" /> Filter Options -->
         </form>
