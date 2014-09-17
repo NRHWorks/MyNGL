@@ -18,15 +18,20 @@ var today_is_daylight_saving_time;
 
     var today = new Date();
     if (today.dst()) {
-      console.log("Daylight savings time!");
+      //console.log("Daylight savings time!");
       today_is_daylight_saving_time = true;
     }
     else {
-      console.log("not daylight saving time");
+      //console.log("not daylight saving time");
       today_is_daylight_saving_time = false;
     }
 
     next_scheduled_myngl_id = Drupal.settings.next_scheduled_myngl_id;
+
+    /*if ($.cookie("myngl_event_ends_"+next_scheduled_myngl_id) != null ) {
+        $.removeCookie("myngl_event_ends_"+next_scheduled_myngl_id);
+    }*/
+
     current_server_time = Drupal.settings.current_server_time;
     upcoming.update_overlay_short_date();
     setInterval(function() {
@@ -151,7 +156,7 @@ var upcoming = (function ($) {
       var next_event_time = parseInt($("#upcoming-myngl-"+ next_scheduled_myngl_id+" #event-date-timestamp").text());
       var time_till_event = next_event_time - adjusted_current_server_time;
       if ($.cookie("myngl_event_ends_"+next_scheduled_myngl_id) != null ) {
-        //code
+
 
         $.removeCookie("myngl_event_ends_"+next_scheduled_myngl_id);
 

@@ -149,7 +149,7 @@ var myngl = (function($) {
           console.log(data);
           if (data==1) {
             $.cookie("myngl_event_ends_"+Drupal.settings.myngl_id, 1);
-            window.location="/myngl-event/" + Drupal.settings.myngl_id +"/exit";
+            //window.location="/myngl-event/" + Drupal.settings.myngl_id +"/exit";
           }
         }
       });
