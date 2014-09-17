@@ -198,9 +198,13 @@
     <form id="social-area-chat-list" style="margin-top:-10px;">
 
       <?php foreach ($invitees as $k => $i) : if ($i['uid'] != $user->uid) : ?>
-        <div class="checkbox" id="uid-<?php print $i['uid']?>"
+        <div class="checkbox
+                    <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>
+                    <?php if(isset($i['group_name'])){print ' group-'.$i['group_name'];} ?>
+                    "
+          id="uid-<?php print $i['uid']?>"
           onclick="chat.invitee_click(<?php print $i['uid']?>)"
-          style="height:40px; padding: 7px 0px 7px 20px; display:none;"
+          style="height:40px; padding: 7px 0px 7px 20px;"
           value="<?php print $i['uid']?>"
           >
 

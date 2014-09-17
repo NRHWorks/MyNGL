@@ -7,9 +7,7 @@ function myngl_page_title_init() {
   switch (TRUE) {
     case ($path == 'user' || $path == "") :
       global $user;
-
       if ($user->uid != 0){
-
         $u = entity_metadata_wrapper('user', $user);
         drupal_set_title(strtoupper($u->field_first_name->value())."'s DASHBOARD");
       }
@@ -46,10 +44,11 @@ function myngl_page_title_init() {
       break;
 
     case preg_match('|user/\d*$|', $path) :
+
       $user = user_load(arg(1));
       $u = entity_metadata_wrapper('user', $user);
-
       drupal_set_title(strtoupper($u->field_first_name->value())."'s DASHBOARD");
+
       break;
 
     case preg_match('|user/\d*/edit/profile$|', $path) :

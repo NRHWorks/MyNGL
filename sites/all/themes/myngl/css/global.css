@@ -1461,12 +1461,24 @@ body ::-webkit-scrollbar-thumb {
     box-shadow: 1px 1px 3px #b9b9b9;
   }
 
+  form#social-area-chat-list .checkbox {
+    display:none;
+  }
+  form#social-area-chat-list .checkbox.in-lounge{
+    display:block;
+  }
+
   form#social-area-chat-list .checkbox.selected{
     background-color:#CCC;
     border-top: 1px solid #BBB;
     border-bottom: 1px solid #BBB;
   }
 
+  form#social-area-chat-list .checkbox.not-in-lounge,
+  form#social-area-chat-list .checkbox.filter-hide,
+  form#social-area-chat-list .checkbox.group-hide{
+    display:none !important;
+  }
   .myngl-event-solo-chat-intro {
     height: 35px;
     font-size: 1.2em;
@@ -1615,19 +1627,6 @@ body ::-webkit-scrollbar-thumb {
 
 
   /* Theater Page */
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 .isotope {
@@ -2090,9 +2089,12 @@ form#user-profile-form .switch-knob{
 .invitee-thumb.in-lounge{
   display:block;
 }
+.invitee-thumb.not-in-lounge{
+  display:none !important;
+}
 .invitee-thumb.in-lounge.filter-hide,
- invitee-thumb.in-lounge.group-hide,
- invitee-thumb.in-lounge.this-user{
+.invitee-thumb.in-lounge.group-hide,
+.invitee-thumb.in-lounge.this-user{
   display:none !important;
 }
 /*  ----- END STYLE ------------------------------------------------- */
