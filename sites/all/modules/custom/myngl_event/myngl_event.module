@@ -17,7 +17,7 @@ function myngl_event_menu() {
   
   $items['myngl-event/%/exit'] = array(
     'title' => 'MyNGL Exit',
-    'page callback' => 'myngl_event_exit',
+    'page callback' => 'myngl_event_exit_page',
     'page arguments' => array(1),
     'access callback' => TRUE,
   );
@@ -109,7 +109,7 @@ function myngl_event_theme() {
                           'variables' => array ('myngl' => NULL, 'brand' => NULL),
                         );
 
-  $items['myngl_event_exit'] =  array(
+  $items['myngl_event_exit_page'] =  array(
                           'template' => 'myngl-event-exit',
                           'variables' => array ('myngl' => NULL, 'brand' => NULL, 'points' => NULL),
                         );
@@ -122,7 +122,7 @@ function myngl_event_theme() {
   return $items;
 }
 
-function myngl_event_exit($nid = NULL) {
+function myngl_event_exit_page($nid = NULL) {
   global $user;
   if ($nid ==NULL){
     return;
@@ -142,25 +142,24 @@ function myngl_event_exit($nid = NULL) {
                         )
                       )->fetchField();
   drupal_add_js(array('myngl_id' => $nid), 'setting');
-
-  return theme('myngl_event_exit', array('myngl' => $myngl, 'brand' => $brand, 'points' => $total_points));
-}
-
-function myngl_event_lobby($nid){
-  global $user;
-
-  myngl_event_is_taking_place($nid, $user->uid);
-
-
-  drupal_add_js(path_to_theme().'/js/lobby.js');
-  drupal_add_js("https://www.youtube.com/iframe_api");
   if ($time_up){
     drupal_add_js(array('time_up' => 1), 'setting');
   }
   else {
     drupal_add_js(array('time_up' => 0), 'setting');
   }
-  
+
+  return theme('myngl_event_exit_page', array('myngl' => $myngl, 'brand' => $brand, 'points' => $total_points));
+}
+
+function myngl_event_lobby($nid){
+  global $user;
+  file_put_contents("text123.txt", "lobby", FILE_APPEND);
+  myngl_event_is_taking_place($nid, $user->uid);
+
+
+  drupal_add_js(path_to_theme().'/js/lobby.js');
+  drupal_add_js("https://www.youtube.com/iframe_api");
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
   //drupal_add_js("http://survey.g.doubleclick.net/async_survey?site=ckqirtkixakm2hybneeuj6j7uq");
@@ -597,6 +596,59 @@ function myngl_event_event_ends($nid){
 
 
 function myngl_event_is_taking_place($nid, $uid, $access_page = NULL){
+  /*
+  if ($nid == NULL || $uid <1 ){
+    drupal_goto("");
+  }
+
+  $event_length = db_query("SELECT field_event_length_value
+                      FROM field_data_field_event_length
+                      WHERE entity_id = :nid LIMIT 1",
+                      array(":nid"=>$nid))->fetchField() * 60;
+
+  $result = db_query("SELECT entity_id
+                      FROM field_data_field_invitee_user_account
+                      WHERE field_invitee_user_account_uid = :uid",
+                      array(":uid"=>$uid));
+
+  $bla = 0;
+  foreach($result as $r){
+    file_put_contents("text123.txt", $bla, FILE_APPEND);
+    $bla++;
+    $e = db_query("SELECT field_myngl_invitees_value
+                     FROM field_data_field_myngl_invitees
+                     WHERE entity_id = :nid AND field_myngl_invitees_value = :cid
+                     ", array(":nid"=>$nid, ":cid"=> $r->entity_id));
+
+    if ($e->rowCount()!=0 ){
+      $eid = $r->entity_id;
+      break;
+    }
+  }
+
+  if($eid == NULL){
+    drupal_goto("");
+  }
+
+  $rsvpdate = db_query("SELECT field_invitee_rsvp_date_value
+                        FROM field_data_field_invitee_rsvp_date
+                        WHERE entity_id = :eid LIMIT 1",
+                        array(":eid" => $eid))->fetchField();
+  $rsvptimestamp = strtotime($rsvpdate);
+
+
+  $now = time();
+
+  print '<pre>';
+  print "rsvp timestamp = " .$rsvptimestamp. "\n";
+  print "rsvp date = ". $rsvpdate . "\n";
+
+  print "now = " . $now. "\n";
+  print "now date = ". date('m.d.Y @ h:i a', $now);
+  //print_r ($ic);
+  //print_r($event_length);
+  //print_r($node);
+  die;
   //$access_page might be "exit"
   /*
    *Function event_taking_place(nid, uid, access_page){
@@ -604,7 +656,9 @@ function myngl_event_is_taking_place($nid, $uid, $access_page = NULL){
 	if page is exit, allow another 15 minutes (no need for java script here) otherwise redirect back to /user
 	return disable_menu or not (for the exit page)
 	if node->developmode == true return false;
-}*/
+
+	(return time_up)
+  }*/
 
 }
 

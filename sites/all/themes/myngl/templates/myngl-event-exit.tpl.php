@@ -29,7 +29,8 @@
 (function ($) {
   $(document).ready( function(){
     // This condition has to change to a Drupal.settings.variable
-    if ($.cookie('myngl_event_ends_'+Drupal.settings.myngl_id)==1) {
+    if (Drupal.settings.time_up) {
+    //if ($.cookie('myngl_event_ends_'+Drupal.settings.myngl_id)==1) {
       $(".branded ul li#lounge").removeClass('inactive');
       $(".branded ul li#theater").removeClass('inactive');
       $(".branded ul li#play-room").removeClass('inactive');
