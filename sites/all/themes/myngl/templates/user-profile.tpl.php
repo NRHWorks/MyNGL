@@ -8,7 +8,8 @@
 
 ?>
 
-<?php if ($_GET['upload']) : ?>
+<?php // add the isset part to prevent warnings (added on Sep.18 by Ming. not tested.) ?>
+<?php if (isset($_GET['upload'])&&$_GET['upload']) : ?>
   <script type="text/javascript">
     jQuery(document).ready(function() {
       myngl.overlay('upcoming-myngls', 600, 750);
@@ -17,7 +18,8 @@
   </script>
 <?php endif; ?>
 
-<?php if ($_GET['view-detail']) : ?>
+<?php // add the isset part to prevent warnings (added on Sep.18 by Ming. not tested.) ?>
+<?php if (isset($_GET['view-detail'])&&$_GET['view-detail']) : ?>
   <script type="text/javascript">
     jQuery(document).ready(function() {
       myngl.overlay('upcoming-myngls', 600, 750);

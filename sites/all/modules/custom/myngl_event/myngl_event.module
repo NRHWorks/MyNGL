@@ -132,7 +132,6 @@ function myngl_event_exit_page($nid = NULL) {
 
   $myngl = node_load($nid);
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
-
   $total_points = db_query('SELECT total_points FROM {myngl_rewards_total} WHERE
                         myngl_id = :myngl_id AND
                         user_id = :user_id',
@@ -154,7 +153,7 @@ function myngl_event_exit_page($nid = NULL) {
 
 function myngl_event_lobby($nid){
   global $user;
-  file_put_contents("text123.txt", "lobby", FILE_APPEND);
+
   myngl_event_is_taking_place($nid, $user->uid);
 
 
@@ -185,8 +184,9 @@ function myngl_event_social_area($nid) {
 
   //print "<pre>";
   //print ;
-  drupal_add_js(array('lounge_background'=>file_create_url($myngl->field_lounge_background['und'][0]['uri'])),'setting');
-
+  if (isset($myngl->field_lounge_background['und'])){
+    drupal_add_js(array('lounge_background'=>file_create_url($myngl->field_lounge_background['und'][0]['uri'])),'setting');
+  }
   drupal_add_js(array('show_pov_and_ugc_borders'=>$myngl->field_show_pov_and_ugc_borders['und'][0]['value']),'setting');
 
 
@@ -219,10 +219,13 @@ function myngl_event_social_area($nid) {
 
 
   foreach ($myngl->field_myngl_invitees['und'] as $x => $i) {
-    $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
+    $ee = entity_load('field_collection_item', array($i['value']));
+    $ic = array_shift($ee);
 
-    $u = user_load($ic->field_invitee_user_account['und'][0]['uid']);
-    $p = profile2_load_by_user($u->uid, 'profile');
+    $u = (isset($ic->field_invitee_user_account['und']))? user_load($ic->field_invitee_user_account['und'][0]['uid']): NULL;
+    //$u = user_load($ic->field_invitee_user_account['und'][0]['uid']);
+    $p = ($u== NULL)?NULL : profile2_load_by_user($u->uid, 'profile');
+    //$p = profile2_load_by_user($u->uid, 'profile');
 
     $fb = false;
     $room = false;
@@ -233,21 +236,29 @@ function myngl_event_social_area($nid) {
       $pic = "<img src='/sites/default/files/styles/user_profile_circle_image/public/default_images/default-user-profile.png' class='myngl-event-profile-pic' />";
     }
 
-    $answers = unserialize($ic->field_pre_question_answers['und'][0]['value']);
+    $answers =(isset($ic->field_pre_question_answers['und']))? unserialize($ic->field_pre_question_answers['und'][0]['value']):"";
+    $first_name = (isset($u->field_first_name['und']))?$u->field_first_name['und'][0]['safe_value']:"";
+    $last_name = (isset($u->field_last_name['und']))?$u->field_last_name['und'][0]['safe_value']:"";
+
+
+    $brand_rep = ($u == NULL)? 0 : ((in_array($u->uid, $brand_reps_uids))?1:0);
+
+
+
     $invitee =  array (
-                  'uid' => $u->uid,
-                  'name' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
+                  'uid' => ($u == NULL)?"":$u->uid,
+                  'name' => $first_name. ' ' . $last_name,
                   'pic' => $pic,
                   'fb' => $fb,
                   'room' => $room,
-                  'tagline' =>  $ic->field_myngl_tagline['und'][0]['value'],
-                  'about_me' => $p->field_about['und'][0]['value'],
-                  'brand_rep' => (in_array($u->uid, $brand_reps_uids))?1:0,
-                  'city' => $p->field_city['und'][0]['value'],
+                  'tagline' => (isset($ic->field_myngl_tagline['und']))? $ic->field_myngl_tagline['und'][0]['value']:"",
+                  'about_me' => (isset($p->field_about['und']))?$p->field_about['und'][0]['value']:"",
+                  'brand_rep' => $brand_rep,
+                  'city' => (isset($p->field_city['und']))?$p->field_city['und'][0]['value']:"",
                 );
-    if ($myngl->field_enable_invitee_group['und'][0]['value']==1){
+    if (isset($myngl->field_enable_invitee_group['und'])&&$myngl->field_enable_invitee_group['und'][0]['value']==1){
       $invitee['group_name'] = $ic->field_group_name_social['und'][0]['value'];
-      if ($ic->field_invitee_user_account['und'][0]['uid'] == $user->uid){
+      if (isset($ic->field_invitee_user_account['und'])&&$ic->field_invitee_user_account['und'][0]['uid'] == $user->uid){
         drupal_add_js(array('group_name'=> $ic->field_group_name_social['und'][0]['value']), 'setting');
 
       }
@@ -296,8 +307,8 @@ function myngl_event_social_area($nid) {
 
   $pre_questions = array();
   foreach ($myngl->field_pre_myngl_questions['und'] as $x => $i) {
-
-    $j = array_shift(entity_load('field_collection_item', array($i['value'])));
+    $ee = entity_load('field_collection_item', array($i['value']));
+    $j = array_shift($ee);
 
     //Skip non-multichoice questions;
     if (!isset($j->field_answer['und'])) continue;
@@ -342,14 +353,14 @@ function myngl_event_alerts_ajax_message($nid, $time_passed, $page) {
     drupal_json_output($message);
   }
 
-  $eids = array();
-  foreach ($alert_collection_eids as $eid){
-    $eids[] = $eid->field_myngl_alerts_value;
-  }
-  $ents =entity_load('field_collection_item', array($eids));
   $msgs = array();
   $keys = array();
-  foreach($ents as $entity){
+
+  //$eids = array();
+  foreach ($alert_collection_eids as $eid){
+    //$eids[] = $eid->field_myngl_alerts_value;
+    $ee = entity_load('field_collection_item', array($eid->field_myngl_alerts_value));
+    $entity = array_shift($ee);
     if($entity->field_page['und'][0]['value'] == $page){
       $keys[] = $entity->field_time['und'][0]['value'];
       $msgs[] = array('time' =>$entity->field_time['und'][0]['value'],
@@ -357,6 +368,17 @@ function myngl_event_alerts_ajax_message($nid, $time_passed, $page) {
                     'duration' => $entity->field_duration['und'][0]['value']);
     }
   }
+  //$ents =entity_load('field_collection_item', array($eids));
+
+
+  /*foreach($ents as $entity){
+    if($entity->field_page['und'][0]['value'] == $page){
+      $keys[] = $entity->field_time['und'][0]['value'];
+      $msgs[] = array('time' =>$entity->field_time['und'][0]['value'],
+                    'message' => $entity->field_message['und'][0]['safe_value'],
+                    'duration' => $entity->field_duration['und'][0]['value']);
+    }
+  } */
 
   array_multisort($keys, $msgs);
 
@@ -381,9 +403,15 @@ function myngl_event_alerts_ajax_message($nid, $time_passed, $page) {
   }
   if ($msg != NULL){
     $message['message'] = ($msg['time'] + $msg['duration'] < $time_passed)?'':$msg['message'];
+    drupal_json_output($message);
   }
+  else {
+    $message['message'] = "";
+    drupal_json_output($message);
+  }
+
   //$message['message'] = db_query('SELECT field_myngl_message_value FROM {field_data_field_myngl_message} WHERE entity_id = :eid', array(':eid' => $nid))->fetchField();
-  drupal_json_output($message);
+
 }
 
 function myngl_event_theater_ajax_message($nid) {
@@ -529,13 +557,30 @@ function myngl_event_invitee_info_update($myngl_id){
   $invitees_ahh = array();
 
   foreach ($myngl->field_myngl_invitees['und'] as $x => $i) {
-    $j = array_shift(entity_load('field_collection_item', array($i['value'])));
+    $ee = entity_load('field_collection_item', array($i['value']));
+    $j = array_shift($ee);
 
-    $invitee['user_id'] = $j->field_invitee_user_account['und'][0]['uid'];
-    $invitee['tagline'] = $j->field_myngl_tagline['und'][0]['value'];
+    if (isset($j->field_invitee_user_account['und'])){
+      $invitee['user_id'] = $j->field_invitee_user_account['und'][0]['uid'];
+    }
+    else {
+      $invitee['user_id'] = NULL;
+    }
 
+    if (isset($j->field_myngl_tagline['und'])){
+      $invitee['tagline'] = $j->field_myngl_tagline['und'][0]['value'];
+    }
+    else {
+      $invitee['tagline'] = NULL;
+    }
+    // This if else control is added on Sep.18 to prevent warnings". not tested. might effect social-area performance.
+    if (isset($j->field_pre_question_answers['und'])){
+      $invitee['pre_question_answers'] = unserialize($j->field_pre_question_answers['und'][0]['value']);
+    }
+    else {
+      $invitee['pre_question_answers'] = NULL;
+    }
 
-    $invitee['pre_question_answers'] = unserialize($j->field_pre_question_answers['und'][0]['value']);
     /*
     $p = profile2_load_by_user($invitee['user_id'], 'profile');
     $invitee['city'] = $p->field_city['und'][0]['value'];*/

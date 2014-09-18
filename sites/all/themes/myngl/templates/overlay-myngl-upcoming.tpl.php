@@ -118,7 +118,8 @@ addthisevent.settings({
 
               <div id="myngl-myngl-image-upload-wrapper-<?php print $k; ?>">
                 <div id="myngl-upload-image-success-<?php print $k; ?>"></div>
-                <?php print render(drupal_get_form('myngl_myngl_image_upload', $k, $m['myngl']->nid, $user->uid)); ?>
+                <?php $this_form = drupal_get_form('myngl_myngl_image_upload', $k, $m['myngl']->nid, $user->uid);?>
+                <?php print render($this_form); ?>
               </div>
 
              <!--<a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a> -->
@@ -151,7 +152,8 @@ addthisevent.settings({
 
               <div id="myngl-myngl-doc-upload-wrapper-<?php print $k; ?>">
                 <div id="myngl-upload-doc-success-<?php print $k; ?>"></div>
-                <?php print render(drupal_get_form('myngl_myngl_doc_upload', $k, $m['myngl']->nid, $user->uid)); ?>
+                <?php $this_form = drupal_get_form('myngl_myngl_doc_upload', $k, $m['myngl']->nid, $user->uid);?>
+                <?php print render($this_form); ?>
               </div>
 
              <!--<a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a> -->
@@ -184,7 +186,8 @@ addthisevent.settings({
 
               <div id="myngl-myngl-youtube-embed-wrapper-<?php print $k; ?>">
                 <div id="myngl-upload-youtube-success-<?php print $k; ?>"></div>
-                <?php print render(drupal_get_form('myngl_myngl_youtube_embed', $k, $m['myngl']->nid, $user->uid)); ?>
+                <?php $this_form = drupal_get_form('myngl_myngl_youtube_embed', $k, $m['myngl']->nid, $user->uid);?>
+                <?php print render($this_form); ?>
               </div>
 
               <!--<a class="upload-add" href="#"><i class="fa fa-plus-circle"></i>Add Another</a>-->
@@ -212,7 +215,8 @@ addthisevent.settings({
                 This Myngl will also run on the following dates.  Pick one that will work for you: <br><br>-->
 
                 <div id="myngl-myngl-change-date-wrapper-<?php print $k; ?>">
-                  <?php print render(drupal_get_form('myngl_myngl_overlay_change_date', $k, $m['myngl']->nid, $user->uid)); ?>
+                  <?php $this_form = drupal_get_form('myngl_myngl_overlay_change_date', $k, $m['myngl']->nid, $user->uid) ?>
+                  <?php print render($this_form); ?>
                 </div>
               </div>
             </div>

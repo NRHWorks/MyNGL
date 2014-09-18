@@ -379,8 +379,19 @@ function myngl_rewards_invitee_redeem($myngl_id) {
     $rows[] = array($r->user_id, $user->field_first_name['und'][0]['value'], $user->field_last_name['und'][0]['value'],  $user->mail, $r->reward_id, $r->reward_title, date('m/d/Y g:ia', $r->timestamp));
   }
 
-  $table = array('header' => $header, 'rows' => $rows, 'attributes' => array());
-  return '<br /><a href="/node/'.$myngl_id.'/invitee-redeem/export">Export CSV</a><br /><br />'.theme_table($table);
+  //$table = array('header' => $header, 'rows' => $rows, 'attributes' => array());
+  $variables = array('header' => $header,
+                     'rows' => $rows,
+                     'attributes' => array(),
+                     'caption' => NULL,
+                     'colgroups' => array(),
+                     'sticky' => TRUE,
+                     'empty' => '');
+
+
+  $table = theme('table', $variables);
+
+  return '<br /><a href="/node/'.$myngl_id.'/invitee-redeem/export">Export CSV</a><br /><br />'.$table;
 }
 
 function myngl_rewards_invitee_redeem_export($myngl_id) {

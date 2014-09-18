@@ -375,9 +375,10 @@ function myngl_myngl_complete($nid) {
     $myngl_node = node_load($nid);
 
     foreach ($myngl_node->field_myngl_invitees['und'] as $i) {
-      $u = array_shift(entity_load('field_collection_item', array($i['value'])));
+      $ee = entity_load('field_collection_item', array($i['value']));
+      $u = array_shift($ee);
 
-      if ($u->field_invitee_email_address['und'][0]['safe_value'] == $email) {
+      if (isset($u->field_invitee_email_address['und'])&&$u->field_invitee_email_address['und'][0]['safe_value'] == $email) {
         $u->field_invitee_status['und'][0]['value'] = 'RSVP';
 
         if (isset($_COOKIE['Drupal_visitor_rsvp_date'])) {
@@ -496,8 +497,8 @@ function myngl_myngl_upcoming_overlay($uid) {
   foreach ($result as $r) {
     // based on invitee id get myngls
     $sub_result = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = :iid", array(':iid' => $r->entity_id));
-
-    $invitee_collection = array_shift(entity_load('field_collection_item', array($r->entity_id)));
+    $ee = entity_load('field_collection_item', array($r->entity_id));
+    $invitee_collection = array_shift($ee);
 
     foreach ($sub_result as $s) {
       $myngl = node_load($s->entity_id);
@@ -835,7 +836,10 @@ function myngl_myngl_pre_questions($nid) {
   $myngl = node_load($nid);
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
-  $output = theme('myngl_pre_questions_fix', array('user_id' => $user->uid, 'myngl' => $myngl, 'brand' => $brand, 'form' => render(drupal_get_form('myngl_myngl_pre_questions_form', $myngl->nid, $user->uid))));
+  $this_form = drupal_get_form('myngl_myngl_pre_questions_form', $myngl->nid, $user->uid);
+  $this_form = render ($this_form);
+  $output = theme('myngl_pre_questions_fix', array('user_id' => $user->uid, 'myngl' => $myngl, 'brand' => $brand,
+          'form' => $this_form));
 
   return $output;
 }
@@ -851,11 +855,12 @@ function myngl_myngl_pre_questions_form($form, &$form_state, $myngl_id, $user_id
 
   $form['user_id'] = array (
     '#type' => 'hidden',
-    '#value' => $user_id
+    '#value' => $user_id,
   );
 
   foreach ($myngl->field_pre_myngl_questions['und'] as $k => $v) {
-    $fc = array_shift(entity_load('field_collection_item', array($v['value'])));
+    $ee = entity_load('field_collection_item', array($v['value']));
+    $fc = array_shift($ee);
 
     if (isset($fc->field_answer['und'][0])) {
       $answers = array();
@@ -906,6 +911,9 @@ function myngl_myngl_pre_questions_form_submit($form, &$form_state) {
   $answers_for_user = serialize($q_arr);
 
   $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
+  if ($invitee == NULL) {
+    drupal_goto("");
+  }
 
   $invitee->field_myngl_tagline['und'][0]['value'] = $v['tagline'];
 
@@ -1005,12 +1013,14 @@ function _myngl_myngl_get_invitee_id($myngl_id, $user_id) {
   $myngl = node_load($myngl_id);
 
   foreach ($myngl->field_myngl_invitees['und'] as $v) {
-    $fc = array_shift(entity_load('field_collection_item', array($v['value'])));
+    $ee = entity_load('field_collection_item', array($v['value']));
+    $fc = array_shift($ee);
 
-    if ($fc->field_invitee_user_account['und'][0]['uid'] == $user_id) {
+    if (isset($fc->field_invitee_user_account['und']) && $fc->field_invitee_user_account['und'][0]['uid'] == $user_id) {
       return $fc;
     }
   }
+  return NULL;
 }
 
 
@@ -1057,6 +1067,7 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
             'path' => file_create_url($file_uri->fetchObject()->uri),
             'width' =>'120px',
             'height' =>'80px',
+            'attributes'=>array(),
                           ));
 
       if (in_array($fid, $approval_list)){
@@ -1328,7 +1339,8 @@ function myngl_myngl_invitees($nid) {
   $rows = array();
 
   foreach ($node->field_myngl_invitees['und'] as $k => $i) {
-    $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
+    $ee = entity_load('field_collection_item', array($i['value']));
+    $ic = array_shift($ee);
 
     $row = array();
 
@@ -1349,11 +1361,18 @@ function myngl_myngl_invitees($nid) {
       $actions .= ' | ' . l('Delete', 'myngl/'.$nid.'/delete-invitation/'.$k);
     }
 
+    $first_name = (isset($ic->field_invitee_first_name['und']))?$ic->field_invitee_first_name['und'][0]['value']:"";
+    $last_name = (isset($ic->field_invitee_last_name['und']))? $ic->field_invitee_last_name['und'][0]['value']:"";
+    $email = (isset($ic->field_invitee_email_address['und']))?$ic->field_invitee_email_address['und'][0]['value']:"";
+
     $row = array(
       $user_acct,
-      $ic->field_invitee_first_name['und'][0]['value'],
-      $ic->field_invitee_last_name['und'][0]['value'],
-      $ic->field_invitee_email_address['und'][0]['value'],
+      $first_name,
+      //$ic->field_invitee_first_name['und'][0]['value'],
+      $last_name,
+      //$ic->field_invitee_last_name['und'][0]['value'],
+      $email,
+      //$ic->field_invitee_email_address['und'][0]['value'],
       $ic->field_invitee_status['und'][0]['value'],
       //$actions
     );
@@ -1378,9 +1397,22 @@ function myngl_myngl_invitees($nid) {
     }
   $header[] = "Actions";
 
-  $table = theme_table(array('header' => $header, 'rows' => $rows, 'attributes' => array()));
 
-  $form = render(drupal_get_form('myngl_myngl_add_invitee', $nid));
+
+  $variables = array('header' => $header,
+                     'rows' => $rows,
+                     'attributes' => array(),
+                     'caption' => NULL,
+                     'colgroups' => array(),
+                     'sticky' => TRUE,
+                     'empty' => '');
+
+
+  $table = theme('table', $variables);
+  //$table = theme_table(array('header' => $header, 'rows' => $rows, 'attributes' => array()));
+
+  $this_form = drupal_get_form('myngl_myngl_add_invitee', $nid);
+  $form = render($this_form);
 
   return '<br />'.$table.'<br /><h2>Add Invitee:</h2>'.$form;
 }
@@ -1590,8 +1622,20 @@ function myngl_myngl_participants_status($myngl_id) {
     $rows[] = array($r->user_id, $r->status, date('n/d, Y - G:i:s', $r->timestamp));
   }
 
-  $table = array('header' => $header, 'rows' => $rows, 'attributes' => array());
-  return theme_table($table);
+
+  $variables = array('header' => $header,
+                     'rows' => $rows,
+                     'attributes' => array(),
+                     'caption' => NULL,
+                     'colgroups' => array(),
+                     'sticky' => TRUE,
+                     'empty' => '');
+
+
+  $table = theme('table', $variables);
+
+  //$table = array('header' => $header, 'rows' => $rows, 'attributes' => array());
+  return $table;
 }
 
 
@@ -1765,6 +1809,7 @@ function myngl_myngl_insight($nid){
   $result = db_query("SELECT from_user_id FROM myngl_solo_chat
                       WHERE myngl_id = :nid", array(":nid"=>$nid));
 
+  $solo_chatters  = array();
   foreach($result as $r){
     if (!in_array($r->from_user_id, $solo_chatters)){
       $solo_chatters [] = $r->from_user_id;
@@ -1774,7 +1819,7 @@ function myngl_myngl_insight($nid){
 
   $result = db_query("SELECT user_id FROM myngl_chat_group_message
                       WHERE myngl_id = :nid", array(":nid"=>$nid));
-
+  $group_chatters = array();
   foreach($result as $r){
     if (!in_array($r->user_id, $group_chatters)){
       $group_chatters [] = $r->user_id;
@@ -1813,12 +1858,13 @@ function myngl_myngl_insight($nid){
   //print "<pre>";
   foreach ($node->field_myngl_invitees['und'] as $k => $i) {
 
-
-    $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
+    $ee = entity_load('field_collection_item', array($i['value']));
+    $ic = array_shift($ee);
 
     //print_r($ic);
 
-    $invitee['uid'] = $ic->field_invitee_user_account['und'][0]['uid'];
+    $invitee_uid = (isset($ic->field_invitee_user_account['und']))?$ic->field_invitee_user_account['und'][0]['uid']:"";
+    $invitee['uid'] = $invitee_uid;
     $invitee['attend'] = (in_array($invitee['uid'], $attendees))? 1:0;
     $invitee['invited_by_friend'] = $ic->field_invited_by_friend['und'][0]['value'];
     $invitee['uploads'] = count($ic->field_image_upload) + count($ic->field_video_upload) +count($ic->field_document_upload);
@@ -1937,6 +1983,8 @@ function _myngl_myngl_room_record($uid,$nid){
                       ORDER BY enter_time ASC",
                       array(":nid"=>$nid, ":uid"=>$uid)
                       );
+
+  $result_array = array();
 
   foreach($result as $r){
     $result_array[] = array('enter_time'=>$r->enter_time,
