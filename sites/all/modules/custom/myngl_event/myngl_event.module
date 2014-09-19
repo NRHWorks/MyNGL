@@ -641,9 +641,17 @@ function myngl_event_event_ends($nid){
 
 
 function myngl_event_is_taking_place($nid, $uid, $access_page = NULL){
-  /*
+
   if ($nid == NULL || $uid <1 ){
     drupal_goto("");
+  }
+
+  $developer_mode = db_query("SELECT field_show_pov_and_ugc_borders_value
+                              FROM field_data_field_show_pov_and_ugc_borders
+                              WHERE entity_id = :nid LIMIT 1",
+                              array(":nid" => $nid))->fetchField();
+  if ($developer_mode ==1 || $uid ==1){
+    return false;
   }
 
   $event_length = db_query("SELECT field_event_length_value
@@ -656,10 +664,8 @@ function myngl_event_is_taking_place($nid, $uid, $access_page = NULL){
                       WHERE field_invitee_user_account_uid = :uid",
                       array(":uid"=>$uid));
 
-  $bla = 0;
+
   foreach($result as $r){
-    file_put_contents("text123.txt", $bla, FILE_APPEND);
-    $bla++;
     $e = db_query("SELECT field_myngl_invitees_value
                      FROM field_data_field_myngl_invitees
                      WHERE entity_id = :nid AND field_myngl_invitees_value = :cid
@@ -682,28 +688,18 @@ function myngl_event_is_taking_place($nid, $uid, $access_page = NULL){
   $rsvptimestamp = strtotime($rsvpdate);
 
 
-  $now = time();
+  $daylight_saving_offset =  (date("I",$rsvptimestamp)==1)?3600:0;
+  $now = time() + $daylight_saving_offset;
+  $event_end_timestamp = $rsvptimestamp + $event_length;
+  $event_exit_end_time = $event_end_timestamp + 10 * 60 ; //10 minutes to stay in exit page.
 
-  print '<pre>';
-  print "rsvp timestamp = " .$rsvptimestamp. "\n";
-  print "rsvp date = ". $rsvpdate . "\n";
-
-  print "now = " . $now. "\n";
-  print "now date = ". date('m.d.Y @ h:i a', $now);
-  //print_r ($ic);
-  //print_r($event_length);
-  //print_r($node);
-  die;
-  //$access_page might be "exit"
-  /*
-   *Function event_taking_place(nid, uid, access_page){
-	check if the instance of the event the user RSVP to is taking place now. if not set drupal message "event is not in action", goto exit
-	if page is exit, allow another 15 minutes (no need for java script here) otherwise redirect back to /user
-	return disable_menu or not (for the exit page)
-	if node->developmode == true return false;
-
-	(return time_up)
-  }*/
+  if ($now >= $rsvptimestamp && $now <= $event_end_timestamp){
+    return false;
+  }
+  if ($access_page == 'exit'&& $now >= $event_end_timestamp &&$now <= $event_exit_end_time){
+    return true;
+  }
+  drupal_goto("");
 
 }
 

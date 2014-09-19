@@ -146,7 +146,7 @@ var myngl = (function($) {
         type: "GET",
         url: "/myngl-event/" + Drupal.settings.myngl_id + "/event-ends",
         success: function(data) {
-          console.log(data);
+         // console.log(data);
           if (data==1) {
             window.location="/myngl-event/" + Drupal.settings.myngl_id +"/exit";
           }
