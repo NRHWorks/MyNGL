@@ -687,7 +687,6 @@ function myngl_event_is_taking_place($nid, $uid, $access_page = NULL){
                         array(":eid" => $eid))->fetchField();
   $rsvptimestamp = strtotime($rsvpdate);
 
-
   $daylight_saving_offset =  (date("I",$rsvptimestamp)==1)?3600:0;
   $now = time() + $daylight_saving_offset;
   $event_end_timestamp = $rsvptimestamp + $event_length;

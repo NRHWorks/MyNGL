@@ -48,16 +48,16 @@ $fb_count += 1;
 ?>
 
       <div class="social-icons">
-          <a href="mailto:?body=<?php print urlencode($u['path']); ?>&subject=<?php print $title; ?>">
+          <a href="mailto:?body=<?php print ($u != NULL)?urlencode($u['path']):""; ?>&subject=<?php print $title; ?>">
             <img src="/sites/all/themes/myngl/images/ucg-email.png" />
           </a>
 
-          <script>function fbs_click<?php print $fb_count; ?>() {u='<?php print $u['path']; ?>';t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+          <script>function fbs_click<?php print $fb_count; ?>() {u='<?php print ($u!= NULL)? $u['path']:""; ?>';t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
           <a href="http://www.facebook.com/share.php" onclick="return fbs_click_<?php print $fb_count; ?>()" target="_blank" title="Myngl">
             <img src="/sites/all/themes/myngl/images/ucg-facebook.png" />
           </a>
 
-          <script>function twt_click_<?php print $k; ?>() { window.open('https://twitter.com/share?url=<?php print urlencode($u['path']); ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
+          <script>function twt_click_<?php print $k; ?>() { window.open('https://twitter.com/share?url=<?php print ($u!= NULL)?urlencode($u['path']):""; ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
           <a href="https://twitter.com/share?url=<?php print urlencode($u['path']); ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>" onclick="return twt_click_<?php print $k; ?>()" target="_blank">
             <img src="/sites/all/themes/myngl/images/ucg-twitter.png" />
           </a>
@@ -74,8 +74,6 @@ $fb_count += 1;
       }
       print "</div>";
 
-      //print render($content);
-      //print_r($content);
     ?>
   </div>
 </div>

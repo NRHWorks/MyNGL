@@ -1314,8 +1314,12 @@ body ::-webkit-scrollbar-thumb {
     position:relative;
     width:100%;
     height:100px;
+    z-index:1000;
   }
 
+  #main-wrapper{
+    z-index:-40;
+  }
   div#myngl-event-chat-button-invitees #invitee-thumbs-wrapper #invitees-thumbs{
     position:relative;
     height: 100px;
@@ -1333,9 +1337,11 @@ body ::-webkit-scrollbar-thumb {
     min-width: 1080px;
   }
 
+
   @media only screen and (max-width:1050px) {
     #invitee-filters-wrapper {
       background-color: #d8c696;
+
     }
     #invitee-filters {
       width: 600px;
@@ -1513,6 +1519,11 @@ body ::-webkit-scrollbar-thumb {
     margin-left: 1px;
   }
 
+  .myngl-event-solo-chat,
+  .myngl-event-group-chat{
+    z-index:-20;
+  }
+
    .myngl-event-solo-chat .solo-message,
    .myngl-event-group-chat .group-message{
     min-height:50px;
@@ -1667,6 +1678,7 @@ body ::-webkit-scrollbar-thumb {
 
 /* -- quick fixes */
 
+
 #myngl-event-ugc-button {
   position:absolute;
   /*width: 15%;
@@ -1676,6 +1688,7 @@ body ::-webkit-scrollbar-thumb {
   margin-top: -250px;
   margin-left: -550px;*/
   cursor: pointer;
+  z-index:-25;
 
 }
 
@@ -1688,6 +1701,7 @@ body ::-webkit-scrollbar-thumb {
   margin-top: -200px;
   margin-left: -300px;*/
   cursor: pointer;
+  z-index:-25;
 
 }
 
