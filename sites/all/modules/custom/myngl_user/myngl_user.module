@@ -47,11 +47,14 @@ function myngl_user_user_login(&$edit, $account) {
       if ($u->field_invitee_email_address['und'][0]['safe_value'] == $email) {
         $u->field_invitee_status['und'][0]['value'] = 'RSVP';
 
+        $date_index = (isset($_COOKIE["Drupal_visitor_date_index"]))?$_COOKIE["Drupal_visitor_date_index"]:0;
+        $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][$date_index]['value'];
+        /*
         if (isset($_COOKIE['Drupal_visitor_rsvp_date'])) {
           $u->field_invitee_rsvp_date['und'][0]['value'] = $_COOKIE['Drupal_visitor_rsvp_date'];
         } else {
           $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][0]['value'];
-        }
+        }*/
         $u->field_invitee_user_account['und'][0]['uid'] = $account->uid;
         $u->save(TRUE);
 
@@ -241,7 +244,7 @@ function myngl_user_timezone_modify($form, &$form_state) {
   $old_options = $form['timezone']['timezone']['#options'];
   $new_options=array();
 
-  $new_options[''] = $old_options[''];
+  //$new_options[''] = $old_options[''];
   $new_options['America/Anchorage'] = $old_options['America/Anchorage'];
   $new_options['America/Chicago'] = $old_options['America/Chicago'];
   $new_options['America/Denver'] = $old_options['America/Denver'];

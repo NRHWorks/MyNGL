@@ -1,6 +1,6 @@
 <?php
   global $user;
-  $event_timestamp = strtotime($node->field_myngl_dates['und'][0]['value']);
+  $event_timestamp = strtotime($node->field_myngl_dates['und'][$date_index]['value']);
   $event_date = date('m.d.Y @ g:i a', $event_timestamp) . ((date("I",$event_timestamp)==1)?" EDT":" EST");
 ?>
 
