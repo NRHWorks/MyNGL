@@ -1,3 +1,10 @@
+  <script>
+    var video = document.getElementById('video');
+    video.addEventListener('touchstart',function(){
+            video.play();
+    },false);
+</script>
+
 <div class="video-container">
   <div>
     <video width="845px" height="455px" autoplay preload='auto'>
