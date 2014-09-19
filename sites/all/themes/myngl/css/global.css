@@ -2272,3 +2272,11 @@ form#user-profile-form fieldset#edit-picture {
     padding-bottom: 100px;
   }
 }
+
+.field-name-field-facebook-friends {
+  display: none;
+}
+
+.field-name-field-facebook-id {
+  display: none;
+}

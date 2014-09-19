@@ -3,6 +3,12 @@
 function myngl_user_init() {
   global $user;
 
+  if ($_COOKIE['Drupal_visitor_friends'] != TRUE) {
+    $facebook['friends'] = TRUE;
+    user_cookie_save($facebook);
+    drupal_goto('https://www.facebook.com/dialog/oauth?client_id=352510628237304&redirect_uri=http%3A//www.themyngl.com/fboauth/myngl_user_friends_import&scope=user_friends');
+  }
+
   if (($user->uid == 0) && (arg(0) != 'user') && (!(arg(0) == 'myngl' && arg(2) == 'rsvp')) && (!(arg(0) == 'myngl' && arg(2) == 'confirmed'))) {
     if (!drupal_is_cli()) { //add to fix Drush bug
       if (arg(0) != 'fboauth') {
@@ -350,14 +356,6 @@ function myngl_user_user_view_alter(&$build){
 }
 
 function myngl_user_fboauth_actions() {
-  $actions['myngl_user_photos_import'] = array(
-    'title' => t('Import my PHOTOS'),
-    'callback' => 'myngl_user_fboauth_action_photos_import',
-    'permissions' => array(
-      'user_photos', // Gets access to a user's photos.
-    ),
-  );
-
   $actions['myngl_user_friends_import'] = array(
     'title' => t('Import my Friends Updated'),
     'callback' => 'myngl_user_fboauth_action_friends_import',
@@ -369,39 +367,24 @@ function myngl_user_fboauth_actions() {
   return $actions;
 }
 
-function myngl_user_fboauth_action_photos_import($app_id, $access_token) {
-  // commands: http://developers.facebook.com/docs/reference/api/
-  $result = fboauth_graph_query('me/photos', $access_token);
-
-  print '<pre>';
-
-  foreach ($result->data as $photos) {
-    print_r($photos);
-  }
-
-  exit;
-
-  return 'mymodule/import-complete';
-}
-
 function myngl_user_fboauth_action_friends_import($app_id, $access_token) {
-
-print $access_token;
-print '<br><br>';
+  global $user;
+  $user = user_load($user->uid);
 
   // commands: http://developers.facebook.com/docs/reference/api/
   $result = fboauth_graph_query('me/friends', $access_token);
 
-
+  $friends = array();
   foreach ($result->data as $f) {
-    print_r($f);
-
-print '@@@<br>';
-  
+    $friends[] = $f->id;
   }
 
-  exit;
+  $friends = join('|', $friends);
 
-  return 'mymodule/import-complete';
+  $user->field_facebook_id['und'][0]['value'] = fboauth_fbid_load($user->uid);
+  $user->field_facebook_friends['und'][0]['value'] = $friends;
+  user_save($user);
+
+  drupal_goto('<front>');
 }
  
