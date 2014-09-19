@@ -382,12 +382,18 @@ function myngl_myngl_complete($nid) {
       if (isset($u->field_invitee_email_address['und'])&&$u->field_invitee_email_address['und'][0]['safe_value'] == $email) {
         $u->field_invitee_status['und'][0]['value'] = 'RSVP';
 
-        $date_index = (isset($_COOKIE["Drupal_visitor_date_index"]))?$_COOKIE["Drupal_visitor_date_index"]:0;
-        //if (isset($_COOKIE['Drupal_visitor_rsvp_date'])) {
-          $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][$date_index]['value'];
-        //} else {
-          //$u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][0]['value'];
-        //}
+         $date_index = (isset($_COOKIE["Drupal_visitor_date_index"]))?$_COOKIE["Drupal_visitor_date_index"]:0;
+         $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][$date_index]['value'];
+
+
+        /*
+        if (isset($_COOKIE['Drupal_visitor_rsvp_date'])) {
+          $u->field_invitee_rsvp_date['und'][0]['value'] = $_COOKIE['Drupal_visitor_rsvp_date'];
+
+          $myngl_node->field_myngl_dates['und'][$date_index]['value'];
+        } else {
+          $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][0]['value'];
+        }*/
 
         $u->field_invitee_user_account['und'][0]['uid'] = $user->uid;
         $u->save(TRUE);
@@ -422,7 +428,7 @@ function myngl_myngl_upcoming($uid) {
 
     drupal_add_js(array('current_server_time' => time()), 'setting');
     /*drupal_add_js(array('invitee_rsvp_date' => $rsvp_date), 'setting');*/
-    drupal_add_js(array('next_scheduled_myngl_id' => $myngl_id), 'setting');
+    drupal_add_js(array('next_scherduled_myngl_id' => $myngl_id), 'setting');
     drupal_add_js(array('uid'=> $uid),'setting');
     drupal_add_js(path_to_theme().'/js/upcoming.js');
 
@@ -1566,10 +1572,6 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
 
         )
       )->execute();
-
-
-
-
   drupal_set_message('Invitee Added.  Use the link in the invitee list to notify this user.');
 }
 
@@ -1591,19 +1593,7 @@ function myngl_myngl_invitee_group_reassign($node_id, $assign_all){
       $ic->field_group_name_social['und'][0]['value'] = $myngl->field_invitee_group_name['und'][$option_index]['value'];
       $ic->save();
     }
-
-    /*Run this once on the server to populate the invitation index table */ 
-    db_insert('myngl_invitee_invitation_date_index')->fields(
-        array(
-          'invitee_eid'      => $i['value'],
-          "date_index" =>rand(0,3),
-
-        )
-      )->execute();
-
   }
-
-
 
   drupal_set_message('Group Assigned.');
   drupal_goto("node/".$node_id."/invitees");

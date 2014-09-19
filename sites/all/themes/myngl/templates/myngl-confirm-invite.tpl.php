@@ -40,7 +40,8 @@
       </p>
       -->
       <?php
-        print render(drupal_get_form('myngl_myngl_confirm_add_invitee', arg(1)));
+        $this_form = drupal_get_form('myngl_myngl_confirm_add_invitee', arg(1));
+        print render($this_form);
       ?>
 
       <br /><br />

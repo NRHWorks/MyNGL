@@ -67,7 +67,9 @@
       $node = node_load(arg(1));
 
       print '<meta property="og:title" content="'.$node->title.'" />';
-      print '<meta property="og:image" content="'.file_create_url($node->field_lounge_background['und'][0]['uri']).'" />';
+      if (isset($node->field_lounge_background['und'])){
+        print '<meta property="og:image" content="'.file_create_url($node->field_lounge_background['und'][0]['uri']).'" />';
+      }
       print '<meta property="og:description" content="You friend is attending a really cool invite-only “Online Experiential Event” – '.$node->title.' – Socializing, Privileged Access Content and FREE “Gift Bags!!”. To find out more and get invited to other Myngls go to theMyngl.com" />';
     endif; 
   ?>

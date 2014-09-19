@@ -31,10 +31,12 @@ function myngl_preprocess_page(&$vars) {
 }
 
 function myngl_long_date($date) {
+  date_default_timezone_set("America/New_York");
   $timestamp = strtotime($date);
 
   // This thing will return EST if using EST.
-  $long_date = date('m.d.Y @ h:i a', $timestamp) . ((date("I",$timestamp)==1)?" EDT":" EST");
+  $long_date = date('m.d.Y @ h:i a T', $timestamp);// . ((date("I",$timestamp)==1)?" EDT":" EST");
+  date_default_timezone_set("UTC");
   return $long_date;
   //return date('m.d.Y @ h:i a',strtotime($date)) . ' EST';
   // Used to be  m.d.Y @ g:i a. I changed it so that upcoming.js upcoming.update_overlay_short_date works.

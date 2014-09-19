@@ -1,7 +1,10 @@
 <?php
   global $user;
   $event_timestamp = strtotime($node->field_myngl_dates['und'][$date_index]['value']);
-  $event_date = date('m.d.Y @ g:i a', $event_timestamp) . ((date("I",$event_timestamp)==1)?" EDT":" EST");
+  date_default_timezone_set("America/New_York");
+  $daylight_saving = (date("I",$event_timestamp)==1)?" EDT":" EST";
+  date_default_timezone_set("UTC");
+  $event_date = date('m.d.Y @ g:i a', $event_timestamp) . $daylight_saving;
 ?>
 
 <div id="rsvp-confirm-wrapper">
@@ -9,7 +12,7 @@
   <div id="rsvp-confirm-date"><?php print $event_date; ?></div>
   <div>
     <span class="additional-dates" style="font-size:14px; color:#957f57">Change date?
-      <a href="#" onclick="return myngl.overlay('switch-date', 300, 400);" style="font-size:16px; color:#555;">Click here</a>
+      <a href="#" onclick="return myngl.overlay('switch-date', <?php print 220 + 40* count($node->field_myngl_dates['und']);?>, 400);" style="font-size:16px; color:#555;">Click here</a>
     </span>
   </div>
   <div id="rsvp-confirm-description"><?php print $node->field_myngl_description['und'][0]['safe_value']; ?></div>
@@ -27,20 +30,22 @@
   <p><strong><?php print $node->title; ?></strong> will also be presented on the following dates. Please select the date that works best for you:</p>
   <form id="change-date-form" style="margin-top:30px;"
     onsubmit="  myngl.overlay_close();
+                console.log (jQuery('input:radio:checked').attr('count'));
+                jQuery.cookie('Drupal.visitor.date_index', null, { path: '/' });
+                jQuery.cookie('Drupal.visitor.date_index', jQuery('input:radio:checked').attr('count'));
                 jQuery.cookie('Drupal.visitor.rsvp_date', jQuery('input:radio:checked').val());
                 jQuery('#rsvp-confirm-date').html(jQuery('input:radio:checked').siblings('div').html());
                 return false;">
     <?php
+      $i = 0;
       foreach ($node->field_myngl_dates['und'] as $d) :
 
         $event_timestamp = strtotime($d['value']);
-        $daylight_saving = (date("I",$event_timestamp)==1)?" EDT":" EST";
-
-
         print "<div>";
-        print "<input type='radio' name='change-date-radio' value='".$d['value']. $daylight_saving ."' style='margin-left:60px;margin-right:10px;'>";
+        print "<input type='radio' name='change-date-radio' value='".$d['value']."' count='$i' style='margin-left:60px;margin-right:10px;'>";
         print '<div style="font-size: 18px; display: inline;">' . myngl_long_date($d['value']) . '</div><br /><br />';
         print "</div>";
+        $i++;
       endforeach;
     ?>
     <input type="submit" value="SUBMIT" style="font-size:24px; margin-left: 240px;"/>
