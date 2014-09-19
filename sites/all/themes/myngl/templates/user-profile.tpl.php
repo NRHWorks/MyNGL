@@ -49,9 +49,11 @@
     <br clear="both" />
     <div id="profile-info">
 
-
-<?php print fboauth_action_display('myngl_user_photo_import');  ?>
-
+<br><br>
+<?php print fboauth_action_display('myngl_user_photos_import');  ?>
+<br><br>
+<?php print fboauth_action_display('myngl_user_friends_import');  ?>
+<br><br>
 
       <span class="label">NAME:</span>
       <strong>
