@@ -48,6 +48,11 @@
     </div>-->
     <br clear="both" />
     <div id="profile-info">
+
+
+<?php print fboauth_action_display('myngl_user_photo_import');  ?>
+
+
       <span class="label">NAME:</span>
       <strong>
       <?php print $u->field_first_name->value().' '.$u->field_last_name->value(); ?><br />

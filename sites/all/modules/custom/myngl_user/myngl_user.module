@@ -345,3 +345,64 @@ function myngl_user_user_view_alter(&$build){
     myngl_myngl_complete($_COOKIE['Drupal_visitor_rsvp_through_registration']);
   }
 }
+
+function myngl_user_fboauth_actions() {
+  // Give each action a unique key, such as "mymodule_photo_import" for a photo
+  // import. This function should begin with the name of your module.
+  $actions['mymodule_photo_import'] = array(
+    // Give you action a human-readable name. This will be used when showing
+    // the user a link to start this action.
+    'title' => t('Import my Facebook photos'),
+   
+
+// Specify the name of your callback function that contains the import.
+    'callback' => 'mymodule_fboauth_action_photo_import',
+   
+
+// Specify permissions you need to do this action. See the Facebook API for
+    // a list: http://developers.facebook.com/docs/authentication/permissions/
+    'permissions' => array(
+      'user_photos', // Gets access to a user's photos.
+    ),
+   
+
+// Optionally specify a file that contains your callback function. If you
+    // put your callback function in the .module file, this is unnecessary.
+    // 'file' => 'mymodule.inc',
+    // Optionally define a theme function for printing out your link (not
+    // including the "theme_" prefix). If you use this option, you must register
+    // this function in hook_theme(). If you don't use this option, the link
+    // will be output with the theme_fboauth_action() function or the automatic
+    // suggestion theme_fboauth_action__[action_name]().
+    // 'theme' => 'mymodule_fboauth_action',
+ 
+
+);
+  return $actions;
+}
+
+function myngl_user_fboauth_action_photo_import($app_id, $access_token) {
+  // Query against the Facebook Graph API. See the Facebook API for a list of
+  // commands: http://developers.facebook.com/docs/reference/api/
+  $result = fboauth_graph_query('me/photos', $access_token);
+
+print '<pre>';
+
+  foreach ($result->data as $photo) {
+    print_r($photo);
+  }
+
+exit;
+ 
+
+// Optionally set a completion or error message.
+  drupal_set_message(t('Import complete!'));
+ 
+
+// Optionally return a path to which the user will be redirected. If not set
+  // the path in the $_REQUEST['destination'] variable will be used. If there
+  // is no path at all specified, the user will be redirected to the homepage.
+  return 'mymodule/import-complete';
+}
+
+ 
