@@ -271,10 +271,11 @@
           <input id='other' type="radio" name="filter" value="other" onclick="social_area.show_other_filter();"/> Other Filters
           <!-- <input type="radio" name="filter" value="filter-options" /> Filter Options -->
         </form>
-        <form>
+<!--
+        <form id="invitee-search">
           <input type="text" />
-          <!--<input type="submit" value="Search" />-->
         </form>
+-->
       </div>
     </div>
   </div>

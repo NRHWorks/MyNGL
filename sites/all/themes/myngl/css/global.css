@@ -1145,7 +1145,11 @@ body ::-webkit-scrollbar-thumb {
 
   .event-logo img {
     float:left;
-    margin: 0 0 100px 40px;
+    margin: 0 0 0px 40px;
+  }
+
+  .page-myngl-event-lobby .event-logo img {
+    position: absolute;
   }
 
   #myngl-event-menu {
@@ -1338,12 +1342,17 @@ body ::-webkit-scrollbar-thumb {
       min-width: 600px;
       height: 60px;
     }
-    input[value="other"] {
+    input[value="group"] {
       margin-left: 284px !important;
     }
     .fa-social-dock-arrow {
       bottom: -60px !important;
     }
+
+    #invitee-filters #invitee-search {
+      margin-left: 283px;
+    }
+
   }
 
   #invitee-filters form {
@@ -2240,3 +2249,12 @@ form#user-profile-form fieldset#edit-picture {
 }
 
 
+@media only screen and (max-width:1050px) {
+  #reward-wrapper {
+    padding-bottom: 50px;
+  }
+
+  body.page-myngl-event-rewards { 
+    padding-bottom: 100px;
+  }
+}
