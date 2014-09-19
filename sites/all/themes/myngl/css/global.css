@@ -1145,7 +1145,11 @@ body ::-webkit-scrollbar-thumb {
 
   .event-logo img {
     float:left;
-    margin: 0 0 100px 40px;
+    margin: 0 0 0px 40px;
+  }
+
+  .page-myngl-event-lobby .event-logo img {
+    position: absolute;
   }
 
   #myngl-event-menu {
