@@ -1,8 +1,8 @@
 <div class="video-container">
   <div>
     <video width="845px" height="455px" autoplay preload='auto'>
-      <source src="http://www.themyngl.com/sites/default/files/themynglgodiva-full1.mp4" type="video/mp4">
       <source src="http://www.themyngl.com/sites/default/files/themynglgodiva-full1.webmhd.webm" type="video/webm">
+      <source src="http://www.themyngl.com/sites/default/files/themynglgodiva-full1.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </div>
