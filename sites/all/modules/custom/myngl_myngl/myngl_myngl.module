@@ -1591,7 +1591,7 @@ function myngl_myngl_invitee_group_reassign($node_id, $assign_all){
       $ic->field_group_name_social['und'][0]['value'] = $myngl->field_invitee_group_name['und'][$option_index]['value'];
       $ic->save();
     }
-    /*
+
      *Run this once on the server to populate the invitation index table
     db_insert('myngl_invitee_invitation_date_index')->fields(
         array(
@@ -1600,7 +1600,7 @@ function myngl_myngl_invitee_group_reassign($node_id, $assign_all){
 
         )
       )->execute();
-    */
+
   }
 
 
