@@ -24,6 +24,7 @@
 
   body.page-myngl-event-activity-room {
     background-image: url(<?php print base_path() . 'sites/default/files/'.$background_image ?>);
+    background-size: cover !important;
   }
 
   #myngl-activity-room{
@@ -145,8 +146,6 @@ display:none;
 }
 
 </style>
-  <div class="activity-room-bg" > </div>
-
   <div id="myngl-activity-room">
 
 
