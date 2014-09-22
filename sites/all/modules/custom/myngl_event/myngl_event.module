@@ -112,6 +112,7 @@ function myngl_event_theme() {
   $items['myngl_event_exit_page'] =  array(
                           'template' => 'myngl-event-exit',
                           'variables' => array ('myngl' => NULL, 'brand' => NULL, 'points' => NULL),
+                          'path' => 'sites/all/themes/myngl/templates',
                         );
 
   $items['myngl_event_social_area'] =  array(
