@@ -120,7 +120,25 @@ var filter_answers = [];
 
     $("input[name='filter']").change(function(){
       if ($("input[name='filter']:checked").val() == 'fb-friends'){
-        //social_area.show_fb_friends();
+        $('.invitee-thumb').each(function(){
+          if ($(this).hasClass('fb-friend')) {
+            $(this).removeClass('filter-hide');
+          }
+          else {
+            $(this).addClass('filter-hide');
+          }
+
+        });
+
+        $('form#social-area-chat-list .checkbox').each(function(){
+          if ($(this).hasClass('fb-friend')) {
+            $(this).removeClass('filter-hide');
+          }
+          else {
+            $(this).addClass('filter-hide');
+          }
+
+        });
       }
       else if ($("input[name='filter']:checked").val() == 'other') {
         social_area.show_other_filter();

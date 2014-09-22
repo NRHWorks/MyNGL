@@ -195,6 +195,7 @@
         <div class="checkbox
                     <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>
                     <?php if(isset($i['group_name'])){print ' group-'.$i['group_name'];} ?>
+                    <?php if (in_array($i['fb_id'], $fb_friends)){print ' fb-friend';} ?>
                     "
           id="uid-<?php print $i['uid']?>"
           onclick="chat.invitee_click(<?php print $i['uid']?>)"
@@ -233,6 +234,7 @@
                          <?php if ($i['fb']) { print ' fb ';} ?>
                          <?php if ($i['brand_rep']==1) { print ' brand-rep ';} ?>
                          <?php if(isset($i['group_name'])){print ' group-'.$i['group_name'];} ?>
+                         <?php if (in_array($i['fb_id'], $fb_friends)){print ' fb-friend';} ?>
                          ">
             <a href="#" onmouseleave='chat.mouse_leave_thumb(<?php print $i['uid']; ?>)' onmouseover="return chat.show_invitee_info(<?php print $i['uid']; ?>)"><?php print $i['pic']; ?></a><br />
             <span id="invitee-name-<?php print $i['uid']; ?>"><?php print $i['name']; ?></span><br />
