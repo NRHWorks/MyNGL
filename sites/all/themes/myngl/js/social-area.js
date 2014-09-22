@@ -473,7 +473,9 @@ var social_area = (function ($) {
         var show = true; //initially set show = true. if a test fails, then hide it.
         for (var question_id in filter_answers){
           var key = 'question-' + question_id;
-          if (!(filter_answers[question_id]=='all')&&!(filter_answers[question_id]==users_tagline_and_prequestion_answers[i].pre_question_answers[key])){
+          if (!(filter_answers[question_id]=='all')&&
+              users_tagline_and_prequestion_answers[i].pre_question_answers!=null&&
+              !(filter_answers[question_id]==users_tagline_and_prequestion_answers[i].pre_question_answers[key])){
             show = false;
           }
         }
