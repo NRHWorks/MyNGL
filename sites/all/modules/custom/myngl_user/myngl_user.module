@@ -3,10 +3,14 @@
 function myngl_user_init() {
   global $user;
 
-  if ($_COOKIE['Drupal_visitor_friends'] != TRUE) {
-    $facebook['friends'] = TRUE;
-    user_cookie_save($facebook);
-    drupal_goto('https://www.facebook.com/dialog/oauth?client_id=352510628237304&redirect_uri=http%3A//www.themyngl.com/fboauth/myngl_user_friends_import&scope=user_friends');
+  if (fboauth_fbid_load($user->uid)) {
+    if ($_COOKIE['Drupal_visitor_friends'] != TRUE) {
+      $facebook['friends'] = TRUE;
+      setrawcookie('Drupal.visitor.' . 'friends', rawurlencode(TRUE), REQUEST_TIME + 86400, '/');
+      if (!drupal_is_cli()) {
+        drupal_goto('https://www.facebook.com/dialog/oauth?client_id=352510628237304&redirect_uri=http%3A//www.themyngl.com/fboauth/myngl_user_friends_import&scope=user_friends');
+      }
+    }
   }
 
   if (($user->uid == 0) && (arg(0) != 'user') && (!(arg(0) == 'myngl' && arg(2) == 'rsvp')) && (!(arg(0) == 'myngl' && arg(2) == 'confirmed'))) {
@@ -360,7 +364,7 @@ function myngl_user_fboauth_actions() {
     'title' => t('Import my Friends Updated'),
     'callback' => 'myngl_user_fboauth_action_friends_import',
     'permissions' => array(
-      'user_friends', 
+      'user_friends'
     ),
   );
 
