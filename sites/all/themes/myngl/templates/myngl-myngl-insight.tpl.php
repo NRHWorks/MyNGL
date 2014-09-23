@@ -81,7 +81,7 @@ h3 {
   <?php endforeach; ?>
 </table>
 
-<h3>Theater Questions</h3>
+<h3>Theater Questions:</h3>
 <ul>
   <?php foreach ($data['theater_questions'] as $q): ?>
     <li><?php print $q;?></li>
@@ -104,7 +104,10 @@ h3 {
 </table>
 
 <h3>POV Messages:</h3>
-
+<a href="<?php print base_path();?>node/<?php print $data['nid'];?>/insight/pov-download" target="_blank">
+  Download script
+</a>
+<br/>
 <table>
   <tr>
     <th>User ID</th>
@@ -196,6 +199,10 @@ h3 {
 
 
 <h3>One to One Chats:</h3>
+<a href="<?php print base_path();?>node/<?php print $data['nid'];?>/insight/solo-chat-download" target="_blank">
+  Download script
+</a>
+<br/>
 <?php foreach($data['solo_chats'] as $chat): ?>
 
   <h6>User <?php print $chat['id_1'];?> and User <?php print $chat['id_2'];?></h6>
@@ -207,6 +214,10 @@ h3 {
 
 
 <h3>Group Chats:</h3>
+<a href="<?php print base_path();?>node/<?php print $data['nid'];?>/insight/group-chat-download" target="_blank">
+  Download script
+</a>
+<br/>
 <?php foreach($data['group_chats'] as $chat_id =>$chat): ?>
   <hr/>
   <h6>Chat ID: <?php print $chat_id; ?></h6>

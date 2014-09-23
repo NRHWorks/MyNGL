@@ -176,6 +176,28 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
+  $items['node/%/insight/pov-download'] = array(
+    'title' => 'POV Data',
+    'page callback' => 'myngl_myngl_insight_pov_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+  $items['node/%/insight/solo-chat-download'] = array(
+    'title' => 'Solo Chat Data',
+    'page callback' => 'myngl_myngl_insight_solo_chat_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+  $items['node/%/insight/group-chat-download'] = array(
+    'title' => 'Group Chat Data',
+    'page callback' => 'myngl_myngl_insight_group_chat_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+
   return $items;
 }
 
@@ -1997,6 +2019,7 @@ function myngl_myngl_insight($nid){
 
   arsort($redeem_count);
   $data['total_count'] = $total_count;
+  $data['nid'] = $node->nid;
   $data['attend_count'] = $attend_count;
   $data['num_solo_chatters'] = count($solo_chatters);
   $data['num_group_chatters'] = count($group_chatters);
@@ -2105,6 +2128,73 @@ function _myngl_myngl_room_record($uid,$nid){
   return $record;
 }
 
+function myngl_myngl_insight_pov_download($nid){
+  $result = db_query("SELECT user_id, question, message FROM myngl_pov
+                      WHERE myngl_id = :nid ORDER BY date ASC", array(":nid"=>$nid));
 
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=pov.csv');
+  $fp = fopen('php://output', 'w');
+
+  fputcsv($fp, array("UID", "Question", "Message"), ",");
+  foreach($result as $r){
+
+    $pov = array(
+        'user_id' => $r->user_id,
+        'question' => $r->question,
+        'message' => $r->message,
+                 );
+
+    fputcsv($fp, $pov, ",");
+
+  }
+
+  fclose($fp);
+  drupal_exit();
+}
+
+function myngl_myngl_insight_solo_chat_download($nid){
+
+  $chats = _myngl_myngl_solo_chat_data($nid);
+
+  drupal_add_http_header('Content-Type', 'text');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=solo_chat.txt');
+  $fp = fopen('php://output', 'w');
+
+  foreach($chats as $chat){
+    fwrite($fp, "User " . $chat['id_1'] ." and User ".  $chat['id_2']."\n");
+
+    foreach($chat['messages'] as $m){
+      fwrite($fp, $m."\n");
+    }
+  fwrite($fp, "\n\n");
+
+  }
+
+  fclose($fp);
+  drupal_exit();
+}
+
+function myngl_myngl_insight_group_chat_download($nid){
+
+  $chats = _myngl_myngl_group_chat_data($nid);
+
+  drupal_add_http_header('Content-Type', 'text');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=group_chat.txt');
+  $fp = fopen('php://output', 'w');
+
+  foreach($chats as $chat_id =>$chat){
+    fwrite($fp, "Chat ID: ". $chat_id."\n");
+
+    foreach($chat as $m){
+      fwrite($fp,"User ". $m."\n");
+    }
+  fwrite($fp, "\n\n");
+
+  }
+
+  fclose($fp);
+  drupal_exit();
+}
 
 
