@@ -6,7 +6,9 @@ function myngl_user_init() {
   if ($_COOKIE['Drupal_visitor_friends'] != TRUE) {
     $facebook['friends'] = TRUE;
     user_cookie_save($facebook);
-    drupal_goto('https://www.facebook.com/dialog/oauth?client_id=352510628237304&redirect_uri=http%3A//www.themyngl.com/fboauth/myngl_user_friends_import&scope=user_friends');
+    if (!drupal_is_cli()) {
+      drupal_goto('https://www.facebook.com/dialog/oauth?client_id=352510628237304&redirect_uri=http%3A//www.themyngl.com/fboauth/myngl_user_friends_import&scope=user_friends');
+    }
   }
 
   if (($user->uid == 0) && (arg(0) != 'user') && (!(arg(0) == 'myngl' && arg(2) == 'rsvp')) && (!(arg(0) == 'myngl' && arg(2) == 'confirmed'))) {
