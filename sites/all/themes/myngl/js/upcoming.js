@@ -18,11 +18,11 @@ var today_is_daylight_saving_time;
 
     var today = new Date();
     if (today.dst()) {
-      //console.log("Daylight savings time!");
+      console.log("Daylight savings time!");
       today_is_daylight_saving_time = true;
     }
     else {
-      //console.log("not daylight saving time");
+      console.log("not daylight saving time");
       today_is_daylight_saving_time = false;
     }
 
@@ -134,28 +134,28 @@ var upcoming = (function ($) {
       return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
       }
 
-    Date.prototype.dst = function() {
-      return this.getTimezoneOffset() < this.stdTimezoneOffset();
-    }
-    var today_is_daylight_saving_time;
-    var today = new Date();
-    if (today.dst()) {
-      //console.log("Daylight savings time!");
-      today_is_daylight_saving_time = true;
-    }
-    else {
-      //console.log("not daylight saving time");
-      today_is_daylight_saving_time = false;
-    }
+      Date.prototype.dst = function() {
+        return this.getTimezoneOffset() < this.stdTimezoneOffset();
+      }
+      var today_is_daylight_saving_time;
+      var today = new Date();
+      if (today.dst()) {
+        //console.log("Daylight savings time!");
+        today_is_daylight_saving_time = true;
+      }
+      else {
+        //console.log("not daylight saving time");
+        today_is_daylight_saving_time = false;
+      }
 
       //UTC to EST / EDT
       var adjusted_current_server_time = current_server_time - ((today_is_daylight_saving_time)?14400:18000);
-
+      console.log("next_event_time text = " + "#upcoming-myngl-"+ next_scheduled_myngl_id+" #event-date-timestamp");
       var next_event_time = parseInt($("#upcoming-myngl-"+ next_scheduled_myngl_id+" #event-date-timestamp").text());
       var time_till_event = next_event_time - adjusted_current_server_time;
 
-      //console.log("current_server_time = " + current_server_time);
-      //console.log('next_event_time = '+ next_event_time);
+      console.log("current_server_time = " + current_server_time);
+      console.log('next_event_time = '+ next_event_time);
 
       if (time_till_event<0) {
 
