@@ -1004,15 +1004,11 @@ function myngl_myngl_post_questions_form_submit($form, &$form_state) {
       $q_arr[$k] = $val;
     }
   }
-
+  //file_put_contents("text123.txt", print_r($q_arr, TRUE));
   $answers_for_user = serialize($q_arr);
-
   $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
-
   $invitee->field_post_question_answer['und'][0]['value'] = $answers_for_user;
-
   $invitee->save();
-
   drupal_goto("myngl/".$v['myngl_id']."/rewards");
 }
 
@@ -1855,6 +1851,7 @@ function myngl_myngl_event_detail($myngl_id, $user_id){
 
 function myngl_myngl_insight($nid){
 
+
   $result = db_query('SELECT user_id from myngl_participant_status
                       WHERE myngl_id = :nid',array(":nid"=>$nid));
   foreach ($result as $r){
@@ -1927,6 +1924,13 @@ function myngl_myngl_insight($nid){
     $invitee['group_chat'] = (in_array($invitee['uid'],$group_chatters))?1:0;
     $invitee['post_pov'] = (in_array($invitee['uid'],$pov_posters))?1:0;
     $invitee['room_record'] = _myngl_myngl_room_record($invitee['uid'],$nid);
+    $invitee['pre_questions'] = (isset($ic->field_pre_question_answers['und']))?unserialize($ic->field_pre_question_answers['und'][0]['value']):array();
+    $invitee['post_questions'] = (isset($ic->field_post_question_answer['und']))?unserialize($ic->field_post_question_answer['und'][0]['value']):array();//
+    /*(if($invitee_uid = 21){
+      print "<pre>";
+      print_r($ic);
+      die;
+    }*/
 
     if ($invitee['invited_by_friend']==1){
       $total_count['by_friend'] ++;
@@ -1962,7 +1966,34 @@ function myngl_myngl_insight($nid){
 
     $invitees[] = $invitee;
   }
-  //die;
+
+  $theater_questions = array();
+
+  foreach ($node->field_theater_questions['und'] as $q){
+    $theater_questions[] = $q['value'];
+  }
+
+  $pre_questions = array();
+
+  foreach($node->field_pre_myngl_questions['und'] as $a){
+    $pre_questions[] = db_query("SELECT field_question_value
+                               FROM field_data_field_question
+                               WHERE entity_id = :eid
+                               LIMIT 1",
+                               array(":eid"=>$a['value']))->fetchField();
+  }
+
+
+
+  $post_questions = array();
+
+  foreach($node->field_post_myngl_questions['und'] as $a){
+    $post_questions[] = db_query("SELECT field_question_value
+                               FROM field_data_field_question
+                               WHERE entity_id = :eid
+                               LIMIT 1",
+                               array(":eid"=>$a['value']))->fetchField();
+  }
 
   arsort($redeem_count);
   $data['total_count'] = $total_count;
@@ -1975,6 +2006,9 @@ function myngl_myngl_insight($nid){
   $data['invitees'] = $invitees;
   $data['solo_chats'] = _myngl_myngl_solo_chat_data($nid);
   $data['group_chats'] = _myngl_myngl_group_chat_data($nid);
+  $data['theater_questions'] = $theater_questions;
+  $data['pre_questions'] = $pre_questions;
+  $data['post_questions'] = $post_questions;
 
 
   $output = theme('myngl_myngl_insight', array('data'=>$data));

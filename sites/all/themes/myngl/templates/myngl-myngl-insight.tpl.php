@@ -81,6 +81,13 @@ h3 {
   <?php endforeach; ?>
 </table>
 
+<h3>Theater Questions</h3>
+<ul>
+  <?php foreach ($data['theater_questions'] as $q): ?>
+    <li><?php print $q;?></li>
+  <?php endforeach; ?>
+</ul>
+
 <h3>Rewards:</h3>
 
 <table>
@@ -112,6 +119,80 @@ h3 {
     </tr>
   <?php endforeach;?>
 </table>
+
+<h3>Pre Myngl Questions</h3>
+
+<?php foreach($data['pre_questions'] as $index=>$q): ?>
+  <?php $answer_count = array(); ?>
+  <h5>Question <?php print $index + 1;?>:</h5>
+  <?php
+    foreach($data['invitees'] as $i){
+      if(isset($i['pre_questions']['question-'.$index])&&$i['pre_questions']['question-'.$index]!= NULL){
+        if(array_key_exists($i['pre_questions']['question-'.$index], $answer_count)){
+          $answer_count[$i['pre_questions']['question-'.$index]] ++;
+        }
+        else{
+          $answer_count[$i['pre_questions']['question-'.$index]] =1;
+        }
+      }
+    }
+    foreach($answer_count as $q =>$c){
+      print $q . ": " . $c . "<br/>";
+    }
+  ?>
+
+<?php endforeach; ?>
+<br/><br/><br/>
+<?php
+  foreach($data['invitees'] as $i){
+    if($i['uid']!= NULL){
+      print "<strong>UID: " . $i['uid']. "</strong><br/>";
+      foreach($data['pre_questions'] as $index=>$q){
+        print "Question ".$index . ": " .$q. " -- ". $i['pre_questions']['question-'.$index].'<br/>';
+      }
+    }
+    print "<br/>";
+  }
+?>
+
+
+<h3>Post Myngl Questions</h3>
+
+<?php foreach($data['post_questions'] as $index=>$q): ?>
+  <?php $answer_count = array(); ?>
+  <h5>Question <?php print $index + 1;?>:</h5>
+  <?php
+    foreach($data['invitees'] as $i){
+      if(isset($i['pre_questions']['question-'.$index])&&$i['post_questions']['question-'.$index]!= NULL){
+        if(array_key_exists($i['post_questions']['question-'.$index], $answer_count)){
+          $answer_count[$i['post_questions']['question-'.$index]] ++;
+        }
+        else{
+          $answer_count[$i['post_questions']['question-'.$index]] =1;
+        }
+      }
+    }
+    foreach($answer_count as $q =>$c){
+      print $q . ": " . $c . "<br/>";
+    }
+  ?>
+
+<?php endforeach; ?>
+<br/><br/><br/>
+<?php
+  foreach($data['invitees'] as $i){
+    if($i['uid']!= NULL){
+      print "<strong>UID: " . $i['uid']. "</strong><br/>";
+      foreach($data['post_questions'] as $index=>$q){
+        print "Question ".$index . ": " .$q. " -- ". $i['post_questions']['question-'.$index].'<br/>';
+      }
+    }
+    print "<br/>";
+  }
+?>
+
+
+
 
 
 <h3>One to One Chats:</h3>
