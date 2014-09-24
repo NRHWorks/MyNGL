@@ -56,10 +56,17 @@ body.page-myngl-event-theater{
 
 }
 
+#theater-body .media-youtube-player {
+  position:absolute;
+  top:105px;
+  left:100px;
+}
+
 #theater-body #player {
   position: absolute;
   top: 105px;
   left: 100px;
+  display: none;
 }
 
 #theater-body #question-form-wrapper{
@@ -129,6 +136,7 @@ body.page-myngl-event-theater #see-more{
 
 
 <div>
+
   <?php
 
     /* variables that will be useful for building this page */
@@ -142,8 +150,14 @@ body.page-myngl-event-theater #see-more{
 
   ?>
   
-  <div id="player"></div>
+    <div id="player"></div>
     <script>
+
+    jQuery(document).ready( function() {
+      var src = jQuery("#iframe-movie").attr('src');
+      jQuery("#iframe-movie").attr('src',src+"&enablejsapi=1");
+    });
+
     //Load player api asynchronously.
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -151,6 +165,7 @@ body.page-myngl-event-theater #see-more{
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     var done = false;
     var player;
+    var ytplayer;
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
           height: '479',
@@ -161,7 +176,16 @@ body.page-myngl-event-theater #see-more{
             'onStateChange': onPlayerStateChange
           }
         });
+
+        ytplayer = new YT.Player('iframe-movie', { events: { 'onStateChange' : onIframePlayerStateChange }});
     }
+
+    function onIframePlayerStateChange(evt) {
+      if (evt.data == 0) {
+        theater.show_menu_and_additional_items();
+      }
+    }
+
     function onPlayerReady(evt) {
         //evt.target.playVideo();
     }
@@ -178,6 +202,8 @@ body.page-myngl-event-theater #see-more{
     function startVideo() {
         player.startVideo();
     }
+
+
 </script>
 
 </div>
@@ -202,7 +228,7 @@ body.page-myngl-event-theater #see-more{
     position:absolute;
     margin-left:auto;
     margin-right:auto;
-    margin-top:600px;
+    margin-top:660px;
     z-index:50;
     top:0;
     bottom:0;
