@@ -1079,16 +1079,16 @@ function _myngl_myngl_get_invitee_id($myngl_id, $user_id) {
 
 function myngl_myngl_alerts($form, &$form_state, $nid){
   $myngl = node_load($nid);
-  $form['#prefix'] = "<div>
+  $form['#prefix'] = "<br/><br/><br/><div style='font-size:18px'>
                         Note: Before moving a row up or down, click the <strong>Submit</strong>
                         button to save any changed text. Otherwise, the changed text won't be
                         saved.
-                      </div><br/><br/><br/>
+                      </div><br/>
                       <table>
                         <tr>
                           <td>Message</td>
-                          <td>On Time</td>
-                          <td>Duration</td>
+                          <td>On Time(Sec.)</td>
+                          <td>Duration(Sec.)</td>
                           <td>Page</td>
                           <td>Re-order</td>
                         </tr>";
@@ -1108,7 +1108,7 @@ function myngl_myngl_alerts($form, &$form_state, $nid){
       '#suffix'=>'</td>',
       '#default_value' =>$ic->field_message['und'][0]['value'],
       '#weight' =>$weight ++,
-      '#attributes'=>array('size'=>array(90)),
+      '#attributes'=>array('size'=>array(80)),
       '#order' => $order,
         );
 
@@ -1159,7 +1159,7 @@ function myngl_myngl_alerts($form, &$form_state, $nid){
     '#suffix'=>'</td>',
     '#default_value' =>"",
     '#weight' =>$weight ++,
-    '#attributes'=>array('size'=>array(90)),
+    '#attributes'=>array('size'=>array(80)),
     '#order' => $order,
       );
 
@@ -2494,4 +2494,12 @@ function myngl_myngl_insight_group_chat_download($nid){
   drupal_exit();
 }
 
-
+function myngl_myngl_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'myngl_node_form') {
+    // myngl alerts are configured in the "Myngl Alerts" tag.
+    unset($form['field_myngl_alerts']);
+    unset($form['field_pov_question']);
+    unset($form['field_theater_questions']);
+    unset($form['field_myngl_invitees']);
+  }
+}

@@ -1,0 +1,103 @@
+
+Global
+  MyNGL	title	Node module element
+  Developer Mode	field_show_pov_and_ugc_borders	Boolean	Single on/off checkbox	edit	delete
+  Event Length	field_event_length	Integer	Text field	edit	delete
+  Brand	field_myngl_brand	Node reference	Select list	edit	delete
+  Facebook Event ID	field_facebook_event_id	Integer	Text field	edit	delete
+  Dates	field_myngl_dates	Date	Select list	edit	delete
+  Enable Invitee Group	field_enable_invitee_group	Boolean	Single on/off checkbox	edit	delete 
+  Invitee Group Name	field_invitee_group_name	Text	Text field	edit	delete
+  Points	group_points	
+    Points for Visiting Lobby	field_points_for_visiting_lobby	Integer	Text field	edit	delete 
+    Points for Visiting Social Area	field_points_for_visiting_social	Integer	Text field	edit	delete
+    Points for sending a chat message	field_points_for_sending_ct_msg	Integer	Text field	edit	delete
+    Points for opening UGC window	field_points_for_opening_ugc_win	Integer	Text field	edit	delete
+    Points for opening POV window	field_points_for_opening_pov_win	Integer	Text field	edit	delete
+    Points for Visiting Theater Page	field_points_for_visiting_theate	Integer	Text field	edit	delete
+    Points for Visiting Activity Room	field_points_for_visiting_activi	Integer	Text field	edit	delete
+    Points for participating a PlayRoom activity	field_points_for_playroom_activi	Text	Text field	edit	delete
+    Points for upload UGC	field_points_for_upload_ugc	Text	Text field	edit	delete  
+  
+
+
+
+Invitation:
+Invitation Email Title	field_invitation_email_title	Text	Text field	edit	delete
+Invitation Email Image	field_invitation_email_image	Image	Image	edit	delete
+Invitation Email Text	field_myngl_invitation_email	Long text	Text area (multiple rows)	edit	delete
+Sponsor	field_myngl_sponsor	Long text	Text area (multiple rows)	edit	delete
+Description	field_myngl_description	Long text	Text area (multiple rows)	edit	delete
+RSVP confirmed message	field_rsvp_confirmed_message	Long text	Text area (multiple rows)	edit	delete
+ 
+Assets	group_assets	 
+Soundtrack	field_audio	File	File	edit	delete
+Crowd Noise	field_crowd_noise	File	File	edit	delete
+Welcome Video	field_welcome_video	File	File	edit	delete
+Activity Room Activity	field_activity_room_activity	Field collection	Embedded	edit	delete
+Exit Text	field_exit_text	Long text	Text area (multiple rows)	edit	delete 
+Exit Google Survey	field_exit_google_survey	Text	Text field	edit	delete
+
+
+Questions:
+Pre Myngl Questions	field_pre_myngl_questions	Field collection	Embedded	edit	delete
+Post Myngl Questions	field_post_myngl_questions	Field collection	Embedded	edit	delete
+
+ 
+Lounge:
+Lounge Other Filter Title	field_lounge_other_filter_title	Text	Text field	edit	delete
+Lounge Background	field_lounge_background	Image	Image	edit	delete
+  POV and UGC Hot spots	group_pov_ugc_hot_spots	
+    UGC Height	field_ugc_height	Integer	Text field	edit	delete
+    UGC Width	field_ugc_width	Integer	Text field	edit	delete
+    UGC Top	field_ugc_top	Integer	Text field	edit	delete
+    UGC Left	field_ugc_left	Integer	Text field	edit	delete
+    POV Height	field_pov_height	Integer	Text field	edit	delete
+    POV Width	field_pov_width	Integer	Text field	edit	delete
+    POV Top	field_pov_top	Integer	Text field	edit	delete 
+    POV Left	field_pov_left	Integer	Text field	edit	delete
+  
+Theater	group_theater	
+Theater Start Time	field_theater_start_time	Integer	Text field	edit	delete 
+Theater Additional Video	field_theater_additional_video	YouTube video	YouTube	edit	delete
+Theater Download Box Copy	field_theater_download_box_copy	Text	Text field	edit	delete
+Theater Downloads	field_theater_downloads	Field collection	Embedded	edit	delete
+Theater above thumbs	field_theater_above_thumbs	Text	Text field	edit	delete
+Theater below thumbs	field_theater_below_thumbs	Text	Text field	edit	delete
+
+Gifting	Suite
+Gifting Series Background	field_gifting_series_background	Image	Image	edit	delete
+Gifting Series Bottom Right Image	field_gifting_series_bottom_righ	Image	Image	edit	delete
+Reward Congrats Image	field_reward_congrats_image	Image	Image	edit	delete
+Reward Congrats Text	field_reward_congrats_text	Long text	Text area (multiple rows)	edit	delete
+  Gifting Series External Site	group_gifting_series_ex_site
+  External Site Title	field_external_site_title	Text	Text field	edit	delete
+  External Site Subtitle	field_external_site_subtitle	Text	Text field	edit	delete
+  External Site Description	field_external_site_description	Long text	Text area (multiple rows)	edit	delete
+  External Site Link	field_external_site_link	Text	Text field	edit	delete 
+  Reward	field_reward	Field collection	Embedded	edit	delete
+ 
+Meta tags	metatags	Meta tag module form elements.		
+ 
+
+
+
+
+
+Delete 
+Twitter Canned Message	field_twitter_canned_message	Text	Text field	edit	delete
+Message	field_myngl_message	Text	Text field	edit	delete
+POV Question Suggestions	field_pov_question_suggestions	Text	Text field	edit	delete 
+POV Messages	field_pov_messages	Text	Text field	edit	delete
+Theater Message	field_theater_message	Text	Text field	edit	delete
+??(double check) Theater	field_theater	Multimedia asset (deprecated)	Media file selector	edit	delete
+Activity Room Message	field_activity_room_message	Long text	Text area (multiple rows)	edit	delete
+Activity Room Welcome Title	field_activity_room_welcome_titl	Text	Text field	edit	delete
+
+Hide
+POV Question	field_pov_question	Text	Text field	edit	delete  (pov question tag already there!)
+Invitees	field_myngl_invitees	Field collection	Embedded	edit	delete
+Theater Questions	field_theater_questions	Text	Text field	edit	delete
+(combine with invitees tag? )Brand Rep	field_brand_rep2	User reference	Autocomplete text field	edit	delete 
+  
+

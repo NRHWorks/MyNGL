@@ -28,14 +28,14 @@ function myngl_event_menu() {
     'page arguments' => array(1,4,5),
     'access callback' => TRUE,
   );
-
+  /*
   $items['myngl-event/%/ajax/theater-message'] = array(
     'title' => 'MyNGL Theater',
     'page callback' => 'myngl_event_theater_ajax_message',
     'page arguments' => array(1),
     'access callback' => TRUE,
   );
-
+  */
   $items['myngl-event/%/invitee-info-update'] = array(
     'title' => 'MyNGL Invitee Info Update',
     'page callback' => 'myngl_event_invitee_info_update',
@@ -423,13 +423,14 @@ function myngl_event_alerts_ajax_message($nid, $time_passed, $page) {
 
 }
 
+/*
 function myngl_event_theater_ajax_message($nid) {
   $message['message'] = db_query('SELECT field_theater_message_value FROM {field_data_field_theater_message} WHERE entity_id = :eid', array(':eid' => $nid))->fetchField();
 
   //$message['message']= $nid;
   drupal_json_output($message);
 }
-
+*/
 function myngl_event_social_area_ajax_post_pov_message($nid) {
   $node = node_load($nid);
 
