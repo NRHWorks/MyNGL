@@ -109,6 +109,31 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
+  $items['node/%/myngl-alerts'] = array(
+    'title' => 'Myngl Alerts',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('myngl_myngl_alerts', 1),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  $items['node/%/myngl-alerts/reorder/%/%'] = array(
+    'title' => 'Myngl Alert Reorder',
+    'page callback' => 'myngl_myngl_alert_reorder',
+    'page arguments' => array(1,4,5),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['node/%/myngl-alerts/delete/%'] = array(
+    'title' => 'Myngl Alert Delete',
+    'page callback' => 'myngl_myngl_alert_delete',
+    'page arguments' => array(1,4),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+
   $items['node/%/ugc-list'] = array(
     'title' => 'UGC List',
     'page callback' => 'drupal_get_form',
@@ -1052,8 +1077,283 @@ function _myngl_myngl_get_invitee_id($myngl_id, $user_id) {
 
 
 
+function myngl_myngl_alerts($form, &$form_state, $nid){
+  $myngl = node_load($nid);
+  $form['#prefix'] = "<div>
+                        Note: Before moving a row up or down, click the <strong>Submit</strong>
+                        button to save any changed text. Otherwise, the changed text won't be
+                        saved.
+                      </div><br/><br/><br/>
+                      <table>
+                        <tr>
+                          <td>Message</td>
+                          <td>On Time</td>
+                          <td>Duration</td>
+                          <td>Page</td>
+                          <td>Re-order</td>
+                        </tr>";
+
+  //print "<pre>";
+  $weight = 0;
+  foreach($myngl->field_myngl_alerts['und'] as $order =>$alert_eid){
+
+    $ee = entity_load('field_collection_item', array($alert_eid['value']));
+    $ic = array_shift($ee);
+    //print_r($ic);
 
 
+    $form[] = array(
+      '#type' => 'textfield',
+      '#prefix' =>'<tr><td style="overflow:hidden;width:700px;">',
+      '#suffix'=>'</td>',
+      '#default_value' =>$ic->field_message['und'][0]['value'],
+      '#weight' =>$weight ++,
+      '#attributes'=>array('size'=>array(90)),
+      '#order' => $order,
+        );
+
+    $form[] = array(
+      '#type' => 'textfield',
+      '#prefix' =>'<td style="overflow:hidden;width:50px;">',
+      '#suffix'=>'</td>',
+      '#default_value' =>$ic->field_time['und'][0]['value'],
+      '#weight' =>$weight ++,
+      '#attributes'=>array('size'=>array(5)),
+      '#order' => $order,
+      );
+
+    $form[] = array(
+      '#type' => 'textfield',
+      '#prefix' =>'<td style="overflow:hidden;width:50px;">',
+      '#suffix'=>'</td>',
+      '#default_value' =>$ic->field_duration['und'][0]['value'],
+      '#weight' =>$weight ++,
+      '#attributes'=>array('size'=>array(5)),
+      '#order' => $order,
+      );
+    $select = array(
+      '#type' => 'select',
+      '#prefix' =>'<td style="overflow:hidden;width:100px;">',
+      '#suffix'=>'</td><td><a href="'.base_path().'node/2/myngl-alerts/reorder/'.$order.'/1">Up</a>
+                           <a href="'.base_path().'node/2/myngl-alerts/reorder/'.$order.'/0">Down</a>
+                           <a href="'.base_path().'node/2/myngl-alerts/delete/'.$order.'">Delete</a>
+                       </td></tr>',
+      '#default_value' =>intval($ic->field_page['und'][0]['value']),
+      '#weight' =>$weight ++,
+      '#options' => array("Lounge","Theater", "PlayRoom"),
+      '#empty_option' => "Select",
+      '#order' => $order,
+      //'#attributes'=>array('size'=>array(5)),
+      );
+
+
+
+    $form[] = $select;
+  }
+
+  $order = NULL;
+
+  $form[] = array(
+    '#type' => 'textfield',
+    '#prefix' =>'<tr><td style="overflow:hidden;width:700px;">',
+    '#suffix'=>'</td>',
+    '#default_value' =>"",
+    '#weight' =>$weight ++,
+    '#attributes'=>array('size'=>array(90)),
+    '#order' => $order,
+      );
+
+  $form[] = array(
+    '#type' => 'textfield',
+    '#prefix' =>'<td style="overflow:hidden;width:50px;">',
+    '#suffix'=>'</td>',
+    '#default_value' =>"",
+    '#weight' =>$weight ++,
+    '#attributes'=>array('size'=>array(5)),
+    '#order' => $order,
+    );
+
+  $form[] = array(
+    '#type' => 'textfield',
+    '#prefix' =>'<td style="overflow:hidden;width:50px;">',
+    '#suffix'=>'</td>',
+    '#default_value' =>"",
+    '#weight' =>$weight ++,
+    '#attributes'=>array('size'=>array(5)),
+    '#order' => $order,
+    );
+  $select = array(
+    '#type' => 'select',
+    '#prefix' =>'<td style="overflow:hidden;width:100px;">',
+    '#suffix'=>'</td><td/></tr>',
+    //'#default_value' =>intval($ic->field_page['und'][0]['value']),
+    '#weight' =>$weight ++,
+    '#options' => array("Lounge","Theater", "PlayRoom"),
+    '#empty_option' => "Select",
+    '#order' => $order,
+    //'#attributes'=>array('size'=>array(5)),
+    );
+
+
+
+  $form[] = $select;
+  $form['#nid'] = $nid;
+
+  //die;
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#title' => t('Submit'),
+    '#prefix' =>'</table>',
+
+    '#weight' => $weight,
+
+  );
+  $form['#validate'][] = 'myngl_myngl_alerts_validate';
+  return $form;
+
+
+}
+
+function myngl_myngl_alerts_validate($form, &$form_state){
+  $values_flat = $form_state['values'];
+  $index = 0;
+  $values = array();
+  while(isset($values_flat[$index])){
+    $values[] = array(
+      "message"=>$values_flat[$index++],
+      "on_time"=>$values_flat[$index++],
+      "duration"=>$values_flat[$index++],
+      "page"=>$values_flat[$index++],
+    );
+
+  }
+  for($i = 0; $i < count($values)-1; $i ++){
+    $this_entry = $values[$i];
+    if (!is_numeric($this_entry['on_time'])||!is_numeric($this_entry['duration'])){
+      form_set_error("");
+       drupal_set_message("On Time and Duration must be integers.",'error');
+
+    }
+  }
+  //die;
+  $last_entry = end($values);
+  if (($last_entry['message']==NULL ||$last_entry['on_time']==NULL ||
+     $last_entry['duration']==NULL || $last_entry['page']==NULL )&&
+    !($last_entry['message']==NULL &&$last_entry['on_time']==NULL &&
+     $last_entry['duration']==NULL && $last_entry['page']==NULL)){
+    form_set_error("");
+    drupal_set_message("Please provide all four fields for the new alert.",'error');
+  }
+
+}
+
+
+function myngl_myngl_alerts_submit($form, &$form_state) {
+  $myngl = node_load($form['#nid']);
+
+  $values_flat = $form_state['values'];
+  $values = array();
+  $index = 0;
+  while(isset($values_flat[$index])){
+    $values[] = array(
+      "message"=>$values_flat[$index++],
+      "on_time"=>$values_flat[$index++],
+      "duration"=>$values_flat[$index++],
+      "page"=>$values_flat[$index++],
+    );
+  }
+
+  // Deal with the existing alerts
+  foreach($myngl->field_myngl_alerts['und'] as $order =>$alert_eid){
+    $ee = entity_load('field_collection_item', array($alert_eid['value']));
+    $ic = array_shift($ee);
+    // "<pre>";print_r($ic); die;
+
+
+    $ic->field_message['und'][0]['value'] = $values[$order]['message'];
+    $ic->field_time['und'][0]['value'] = $values[$order]['on_time'];
+    $ic->field_duration['und'][0]['value'] = $values[$order]['duration'];
+    $ic->field_page['und'][0]['value'] = $values[$order]['page'];
+    $ic->save();
+
+  }
+
+  // Deal with the last entry
+
+  $last_entry = end($values);
+
+  if($last_entry['message']!=NULL &&$last_entry['on_time']!=NULL &&
+     $last_entry['duration']!=NULL && $last_entry['page']!=NULL){
+
+    $field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_myngl_alerts'));
+    $field_collection_item->setHostEntity('node', $myngl);
+    $field_collection_item->field_message['und'][0]['value']  = $last_entry['message'];
+    $field_collection_item->field_time['und'][0]['value'] = $last_entry['on_time'];
+    $field_collection_item->field_duration['und'][0]['value'] = $last_entry['duration'];
+    $field_collection_item->field_page['und'][0]['value'] = $last_entry['page'];
+    $field_collection_item->save();
+
+  }
+  drupal_set_message("Myngl alerts are successfully updated.");
+  /*else{
+    drupal_set_message("Please provide all four fields for the ")
+
+  }
+
+  /*print "<pre>";
+  print_r($last_entry);
+  print_r($values);
+  print_r($form);
+  print_r($form_state);
+  die;*/
+}
+
+function myngl_myngl_alert_delete($nid, $order){
+
+  $myngl = node_load($nid);
+  $eid = $myngl->field_myngl_alerts['und'][$order]['value'];
+  unset($myngl->field_myngl_alerts['und'][$order]);
+  $myngl->field_myngl_alerts['und'] = array_values($myngl->field_myngl_alerts['und']);
+  node_save($myngl);
+
+  entity_delete("field_collection_item", $eid);
+
+  if(!drupal_is_cli()){
+    drupal_set_message("Myngl alert deleted.");
+    drupal_goto("node/".$nid."/myngl-alerts");
+  }
+
+
+}
+function myngl_myngl_alert_reorder($nid, $order, $direction){
+  // $direction: 1 = move up (decrement), 0 = move down (increment).
+  $switch = FALSE;
+  if (!($order ==0 && $direction =="1")){
+    $myngl = node_load($nid);
+    if (!($order == count($myngl->field_myngl_alerts['und'])-1 && $direction == "0")){
+      $switching_item = $myngl->field_myngl_alerts['und'][$order];
+      $switch_to_index = $order + (($direction=="1")?-1:1);
+
+      $myngl->field_myngl_alerts['und'][$order] = $myngl->field_myngl_alerts['und'][$switch_to_index];
+      $myngl->field_myngl_alerts['und'][$switch_to_index] = $switching_item;
+
+      node_save($myngl);
+      $switch = TRUE;
+
+    }
+
+  }
+  if ($switch){
+    drupal_set_message("Myngl alert re-ordered.");
+  }
+  else{
+    drupal_set_message("This myngl alert is already at the top/end of the list.", 'error');
+  }
+  if(!drupal_is_cli()){
+    drupal_goto("node/".$nid."/myngl-alerts");
+  }
+}
 function myngl_myngl_ugc_list($form, &$form_state, $nid) {
 
   $approved_result = db_query("SELECT fid, weight FROM myngl_invitee_ugc_approve
@@ -1183,10 +1483,6 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
 }
 
 function myngl_myngl_ugc_list_submit($form, &$form_state) {
-  //print "<pre>";
-
-  //print_r($form_state);
-  //die;
   $new_approved_list = array();
 
   $approved_result = db_query("SELECT fid FROM myngl_invitee_ugc_approve
@@ -1723,6 +2019,7 @@ function myngl_myngl_admin_paths() {
     'node/*/theater-message' => TRUE,
     'node/*' => TRUE,
     'node/*/insight' => TRUE,
+    'node/*/myngl-alerts' =>TRUE,
   );
 }
 
