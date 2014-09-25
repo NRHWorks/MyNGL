@@ -97,7 +97,8 @@ function myngl_myngl_menu() {
     'title' => 'Theater Message',
     'page callback' => 'myngl_myngl_edit_theater_message',
     'page arguments' => array(1),
-    'access callback' => TRUE,
+    'access callback' => 'myngl_myngl_node_edit_tag_access',
+    'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
   );
 
@@ -113,7 +114,8 @@ function myngl_myngl_menu() {
     'title' => 'Myngl Alerts',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('myngl_myngl_alerts', 1),
-    'access callback' => TRUE,
+    'access callback' => 'myngl_myngl_node_edit_tag_access',
+    'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
   );
 
@@ -138,7 +140,8 @@ function myngl_myngl_menu() {
     'title' => 'UGC List',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('myngl_myngl_ugc_list', 1),
-    'access callback' => TRUE,
+    'access callback' => 'myngl_myngl_node_edit_tag_access',
+    'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
   );
 
@@ -156,7 +159,8 @@ function myngl_myngl_menu() {
     'title' => 'Participants Status',
     'page callback' => 'myngl_myngl_participants_status',
     'page arguments' => array(1),
-    'access callback' => TRUE,
+    'access callback' => 'myngl_myngl_node_edit_tag_access',
+    'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
   );
 
@@ -165,7 +169,8 @@ function myngl_myngl_menu() {
     'title' => ' POV Question',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('myngl_myngl_edit_question', 1),
-    'access callback' => TRUE,
+    'access callback' => 'myngl_myngl_node_edit_tag_access',
+    'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
     'weight' => 99
   );
@@ -174,7 +179,8 @@ function myngl_myngl_menu() {
     'title' => 'Invitees',
     'page callback' => 'myngl_myngl_invitees',
     'page arguments' => array(1),
-    'access callback' => TRUE,
+    'access callback' => 'myngl_myngl_node_edit_tag_access',
+    'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
   );
 
@@ -182,7 +188,8 @@ function myngl_myngl_menu() {
     'title' => 'Analytics and Insight',
     'page callback' => 'myngl_myngl_insight',
     'page arguments' => array(1),
-    'access callback' => TRUE,
+    'access callback' => 'myngl_myngl_node_edit_tag_access',
+    'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
     'weight' => 100,
   );
@@ -282,6 +289,16 @@ function myngl_myngl_theme() {
                         );
 
   return $items;
+}
+
+function myngl_myngl_node_edit_tag_access($nid){
+  $this_node = node_load($nid);
+  if ($this_node->type!= "myngl"){
+    return FALSE;
+  }
+  else {
+    return TRUE;
+  }
 }
 
 

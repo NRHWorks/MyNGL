@@ -34,7 +34,8 @@ function myngl_rewards_menu() {
     'title' => 'Rewards',
     'page callback' => 'myngl_rewards_invitee_redeem',
     'page arguments' => array(1),
-    'access callback' => TRUE,
+    'access callback' => 'myngl_myngl_node_edit_tag_access',
+    'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
   );
   
