@@ -20,7 +20,7 @@ var filter_answers = [];
 
     }
 
-    $.getScript('https://www.youtube.com/iframe_api', function(){social_area.create_youtube_player()});
+    $.getScript('http://www.youtube.com/iframe_api', function(){social_area.create_youtube_player()});
 
 
     num_of_ugc = $(".myngl-event-ugc-content").length;

@@ -33,6 +33,7 @@ var viewer = null;
     setInterval(function() { theater.message(); }, 3000);
 
     $("iframe.media-ustream-player").width(852).height(479).attr('id','iframe-movie');
+    $("iframe.media-youtube-player").width(852).height(479).attr('id','iframe-movie');
 
     viewer = UstreamEmbed('iframe-movie');
     var slides = false;
@@ -81,6 +82,8 @@ var viewer = null;
           }
       });
     });
+
+    
 
     
     $("#player").hide();
