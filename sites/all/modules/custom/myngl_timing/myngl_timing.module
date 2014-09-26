@@ -25,18 +25,13 @@
  *
  * 2) Get the timestamp of this date in order to compare it with now()
  * $timestamp = strtotime(field_myngl_dates .  "America/New_York");
-
+ *
+ *
+ * Basically, all the dates stored in field_myngl_dates and invitee rsvp date are
+ * converted to timestamp of that time in NYC through myngl_timing_strtotime.
+ * and all the time stamp, when converted to date, are set to dispaly as NYC time.
+ *
  */
-
-function myngl_timing_menu(){
-  $items['myngl_timing_test'] = array(
-    'title' => 'Timing Test',
-    'page callback' => 'myngl_timing_test',
-    'page arguments' => array(),
-    'access callback' => TRUE,
-  );
-  return $items;
-}
 
 function myngl_timing_long_date($date){
   $timestamp= strtotime($date . " America/New_York");
@@ -74,59 +69,13 @@ function myngl_timing_addthis_end_date($date, $event_length_minutes) {
   return $r;
 }
 
-
-
 function myngl_timing_strtotime($date){
    return strtotime($date . " America/New_York");
 }
-
 
 function myngl_timing_timestamp_to_est($timestamp){
   date_default_timezone_set("America/New_York");
   $r = date('n/d, Y - G:i:s', $timestamp);
   date_default_timezone_set("UTC");
   return $r;
-
-
 }
-
-
-function myngl_timing_test(){
-  $node = node_load(16);
-  $str = $node->field_myngl_dates['und'][0]['value'];
-  $str_2 = $node->field_myngl_dates['und'][1]['value'];
-  //$timestamp = strtotime($str);
-  //$timestamp_est = strtotime($str. " America/New_York");
-
-  $timestamp= strtotime($str .  " America/New_York");
-  date_default_timezone_set("America/New_York");
-
-  $result = date('m.d.Y @ h:i a T', $timestamp);
-  date_default_timezone_set("UTC");
-
-  $timestamp_2= strtotime($str_2 .  " America/New_York");
-  date_default_timezone_set("America/New_York");
-
-  $result_2 = date('m.d.Y @ h:i a T', $timestamp_2);
-  date_default_timezone_set("UTC");
-  /*
-
-  date_default_timezone_set("America/New_York");
-  $daylight = ((date("I",$timestamp)==1)?" Daylight":" Not daylight");
-
-  $r = array(
-    'str' => $str,
-    'timestamp' => $timestamp,
-    'timestamp_est'=> $timestamp_est,
-    'daylight' => $daylight,
-    'now_in_EST' => date('m.d.Y @ h:i a T', $timestamp_est),
-    'daylight_in_2_months' =>((date("I",$timestamp_est + 5184000)==1)?" Daylight":" Not daylight"),
-    'in_two_month' => date('m.d.Y @ h:i a T', $timestamp_est + 5184000),
-  );
-  */
-  $k = "<pre>". $str . " : " .$result. "</pre>" ."<pre>". $str_2 . " : " .$result_2. "</pre>";
-  return $k;
-
-
-}
-
