@@ -1,12 +1,12 @@
+var event_ends_interval_id = null;
+
 (function ($) {
   $(document).ready( function() {
-    setInterval(function(){myngl.event_ends();}, 20000);
+    event_ends_interval_id =  setInterval(function(){myngl.event_ends();}, 20000);
 
     $("#terms-overlay-link").click(function() {
       myngl.overlay('terms-overlay', 500, 750);
     });
-
-
     if ($(".field-name-field-profile-gender input#edit-profile-profile-field-profile-gender-und").prop('checked')==true) {
       $("#gender-switch-inner").css('left','50px');
     }
@@ -20,8 +20,6 @@
     else {
       $("#status-switch-inner").css('left','10px');
     }
-
-
 
     $("#gender-switch").click(function(){
       myngl.profile_switch_clicked('gender');
@@ -135,13 +133,10 @@ var myngl = (function($) {
       });
     },
     event_ends: function (){
-      if (Drupal.settings.myngl_id == undefined) {
-        return;
+      if (Drupal.settings.myngl_id == undefined || window.location.href.indexOf("exit") > -1) {
+        clearInterval(event_ends_interval_id);
+        return false;
       }
-      if (window.location.href.indexOf("exit") > -1) {
-        return;
-      }
-
       $.ajax({
         type: "GET",
         url: "/myngl-event/" + Drupal.settings.myngl_id + "/event-ends",
@@ -149,9 +144,11 @@ var myngl = (function($) {
          // console.log(data);
           if (data==1) {
             window.location="/myngl-event/" + Drupal.settings.myngl_id +"/exit";
+            //consolel.log(data);
           }
         }
       });
+      return false;
     },
 
   }

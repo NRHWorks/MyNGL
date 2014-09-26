@@ -1,0 +1,4 @@
+name = MyNGL Timing
+package = MyNGL
+description = Sets up functionality for managing myngls timing functions
+core = 7.x 

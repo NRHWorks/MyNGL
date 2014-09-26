@@ -162,7 +162,6 @@ function myngl_event_lobby($nid){
   drupal_add_js("https://www.youtube.com/iframe_api");
   drupal_add_js(array('myngl_id' => $nid), 'setting');
   drupal_add_js(array('user_id' => $user->uid), 'setting');
-  //drupal_add_js("http://survey.g.doubleclick.net/async_survey?site=ckqirtkixakm2hybneeuj6j7uq");
   $myngl = node_load($nid);
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
 
@@ -181,52 +180,37 @@ function myngl_event_social_area($nid) {
   drupal_add_js(array('user_id' => $user->uid), 'setting');
 
   $myngl = node_load($nid);
-
-
-  //print "<pre>";
-  //print ;
   if (isset($myngl->field_lounge_background['und'])){
     drupal_add_js(array('lounge_background'=>file_create_url($myngl->field_lounge_background['und'][0]['uri'])),'setting');
   }
   drupal_add_js(array('show_pov_and_ugc_borders'=>$myngl->field_show_pov_and_ugc_borders['und'][0]['value']),'setting');
-
-
   drupal_add_js(array('ugc_height'=>$myngl->field_ugc_height['und'][0]['value']),'setting');
   drupal_add_js(array('ugc_width'=>$myngl->field_ugc_width['und'][0]['value']),'setting');
   drupal_add_js(array('ugc_top'=>$myngl->field_ugc_top['und'][0]['value']),'setting');
   drupal_add_js(array('ugc_left'=>$myngl->field_ugc_left['und'][0]['value']),'setting');
-
   drupal_add_js(array('pov_height'=>$myngl->field_pov_height['und'][0]['value']),'setting');
   drupal_add_js(array('pov_width'=>$myngl->field_pov_width['und'][0]['value']),'setting');
   drupal_add_js(array('pov_top'=>$myngl->field_pov_top['und'][0]['value']),'setting');
   drupal_add_js(array('pov_left'=>$myngl->field_pov_left['und'][0]['value']),'setting');
   drupal_add_js(array('developer_mode'=>$myngl->field_show_pov_and_ugc_borders['und'][0]['value']), 'setting');
   drupal_add_js('http://www.youtube.com/player_api');
-  //print_r($myngl);
-  //exit;
+
   $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
-
   $brand_reps = $myngl->field_brand_rep2['und'];
-
-
   $brand_reps_uids = array();
   foreach($brand_reps as $row){
     $brand_reps_uids[] = $row['uid'];
   }
 
-
   $invitees = array();
   $ucg = array();
-
 
   foreach ($myngl->field_myngl_invitees['und'] as $x => $i) {
     $ee = entity_load('field_collection_item', array($i['value']));
     $ic = array_shift($ee);
 
     $u = (isset($ic->field_invitee_user_account['und']))? user_load($ic->field_invitee_user_account['und'][0]['uid']): NULL;
-    //$u = user_load($ic->field_invitee_user_account['und'][0]['uid']);
     $p = ($u== NULL)?NULL : profile2_load_by_user($u->uid, 'profile');
-    //$p = profile2_load_by_user($u->uid, 'profile');
 
     $fb = false;
     $room = false;
@@ -240,11 +224,7 @@ function myngl_event_social_area($nid) {
     $answers =(isset($ic->field_pre_question_answers['und']))? unserialize($ic->field_pre_question_answers['und'][0]['value']):"";
     $first_name = (isset($u->field_first_name['und']))?$u->field_first_name['und'][0]['safe_value']:"";
     $last_name = (isset($u->field_last_name['und']))?$u->field_last_name['und'][0]['safe_value']:"";
-
-
     $brand_rep = ($u == NULL)? 0 : ((in_array($u->uid, $brand_reps_uids))?1:0);
-
-
 
     $invitee =  array (
                   'uid' => ($u == NULL)?"":$u->uid,
@@ -262,49 +242,40 @@ function myngl_event_social_area($nid) {
       $invitee['group_name'] = $ic->field_group_name_social['und'][0]['value'];
       if (isset($ic->field_invitee_user_account['und'])&&$ic->field_invitee_user_account['und'][0]['uid'] == $user->uid){
         drupal_add_js(array('group_name'=> $ic->field_group_name_social['und'][0]['value']), 'setting');
-
       }
     }
 
-
-
-
     $invitees[] = $invitee;
-    //for ($x=1;$x<=3;$x+=1) {
-      if (isset($ic->field_image_upload['und'])) {
-        foreach ($ic->field_image_upload['und'] as $image) {
-          $approve =db_query("SELECT weight FROM myngl_invitee_ugc_approve WHERE
-                        fid = :fid AND myngl_id =:myngl_id", array(":fid" => $image['fid'], ":myngl_id"=>$nid,));
-          if ($approve->rowCount()){
-            //print_r($approve);
-            //$weight = $approve->fetchField();
-            //print $weight. "<br/>";
+    if (isset($ic->field_image_upload['und'])) {
+      foreach ($ic->field_image_upload['und'] as $image) {
+        $approve =db_query("SELECT weight FROM myngl_invitee_ugc_approve WHERE
+                      fid = :fid AND myngl_id =:myngl_id", array(":fid" => $image['fid'], ":myngl_id"=>$nid,));
 
-            $ucg[$approve->fetchField()] = array(
-              'thumb' => theme_image_style(array('style_name' => 'user_generated_content_thumbs', 'path' => $image['uri'], 'attributes' => array('class' => 'ugc-pic'), 'height' => null, 'width' => null)),
-              'content' => theme_image_style(array('style_name' => 'user_generated_content_images', 'path' => $image['uri'], 'attributes' => array('class' => 'ugc-pic'), 'height' => null, 'width' => null)),
-              'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
-              'path' => file_create_url($image['uri']),
-            );
-          }
+        if ($approve->rowCount()){
+          $ucg[$approve->fetchField()] = array(
+            'thumb' => theme_image_style(array('style_name' => 'user_generated_content_thumbs', 'path' => $image['uri'], 'attributes' => array('class' => 'ugc-pic'), 'height' => null, 'width' => null)),
+            'content' => theme_image_style(array('style_name' => 'user_generated_content_images', 'path' => $image['uri'], 'attributes' => array('class' => 'ugc-pic'), 'height' => null, 'width' => null)),
+            'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
+            'path' => file_create_url($image['uri']),
+          );
         }
       }
+    }
 
-      if (isset($ic->field_video_upload['und'])) {
-        foreach ($ic->field_video_upload['und'] as $video) {
-          $approve =db_query("SELECT weight FROM myngl_invitee_ugc_approve WHERE
-                        fid = :vid AND myngl_id =:myngl_id", array(":vid" => $video['video_id'], ":myngl_id"=>$nid,));
-          if ($approve->rowCount()){
-            $ucg[$approve->fetchField()] = array (
-              'thumb' => theme('youtube_thumbnail', array('image_style' => 'user_generated_content_videos', 'video_id' => $video['video_id'])),
-              'content' => theme('youtube_video', array('video_id' => $video['video_id'], 'size' => 'custom', 'height' => '400px', 'width' => '600px')),
-              'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
-            );
-          }
+    if (isset($ic->field_video_upload['und'])) {
+      foreach ($ic->field_video_upload['und'] as $video) {
+        $approve =db_query("SELECT weight FROM myngl_invitee_ugc_approve WHERE
+                      fid = :vid AND myngl_id =:myngl_id", array(":vid" => $video['video_id'], ":myngl_id"=>$nid,));
+        if ($approve->rowCount()){
+          $ucg[$approve->fetchField()] = array (
+            'thumb' => theme('youtube_thumbnail', array('image_style' => 'user_generated_content_videos', 'video_id' => $video['video_id'])),
+            'content' => theme('youtube_video', array('video_id' => $video['video_id'], 'size' => 'custom', 'height' => '400px', 'width' => '600px')),
+            'user' => $u->field_first_name['und'][0]['safe_value'] . ' ' . $u->field_last_name['und'][0]['safe_value'],
+          );
         }
       }
-      ksort($ucg);
-    //}
+    }
+    ksort($ucg);
   }
 
   $pre_questions = array();
@@ -321,18 +292,13 @@ function myngl_event_social_area($nid) {
       'question' => $j->field_question['und'][0]['value'],
       'answers' =>$j->field_answer['und'],
     );
-
     $pre_questions[$x] = $question;
   }
 
-
   $pi = profile2_load_by_user($user->uid, 'profile');
-
   $user = user_load($user->uid);
   $fb_id = (isset($user->field_facebook_id['und']))? $user->field_facebook_id['und'][0]['value']:NULL;
   $fb_friends = ($fb_id !=NULL)?explode("|",$user->field_facebook_friends['und'][0]['value']):NULL;
-
-
 
   return theme('myngl_event_social_area', array(
                                                 'myngl' => $myngl,
@@ -377,18 +343,6 @@ function myngl_event_alerts_ajax_message($nid, $time_passed, $page) {
                     'duration' => $entity->field_duration['und'][0]['value']);
     }
   }
-  //$ents =entity_load('field_collection_item', array($eids));
-
-
-  /*foreach($ents as $entity){
-    if($entity->field_page['und'][0]['value'] == $page){
-      $keys[] = $entity->field_time['und'][0]['value'];
-      $msgs[] = array('time' =>$entity->field_time['und'][0]['value'],
-                    'message' => $entity->field_message['und'][0]['safe_value'],
-                    'duration' => $entity->field_duration['und'][0]['value']);
-    }
-  } */
-
   array_multisort($keys, $msgs);
 
   $i = 0;
@@ -418,38 +372,24 @@ function myngl_event_alerts_ajax_message($nid, $time_passed, $page) {
     $message['message'] = "";
     drupal_json_output($message);
   }
-
-  //$message['message'] = db_query('SELECT field_myngl_message_value FROM {field_data_field_myngl_message} WHERE entity_id = :eid', array(':eid' => $nid))->fetchField();
-
 }
 
-/*
-function myngl_event_theater_ajax_message($nid) {
-  $message['message'] = db_query('SELECT field_theater_message_value FROM {field_data_field_theater_message} WHERE entity_id = :eid', array(':eid' => $nid))->fetchField();
 
-  //$message['message']= $nid;
-  drupal_json_output($message);
-}
-*/
 function myngl_event_social_area_ajax_post_pov_message($nid) {
   $node = node_load($nid);
-
   $node->field_pov_messages['und'][] = array('value' => $_POST['pov_message']);
-
   node_save($node);
-  
-
 }
+
 
 function myngl_event_social_area_ajax_pov_message($nid) {
   $result = db_query('SELECT field_pov_messages_value FROM {field_data_field_pov_messages} WHERE entity_id = :eid ORDER BY delta DESC', array(':eid' => $nid));
-
   foreach ($result as $r) {
     $messages[] = $r->field_pov_messages_value;
   }
-
   drupal_json_output($messages);
 }
+
 
 function myngl_event_participant_status($myngl_id, $user_id, $status){
   $result = db_query('SELECT id FROM {myngl_participant_status} WHERE
@@ -460,7 +400,6 @@ function myngl_event_participant_status($myngl_id, $user_id, $status){
                           ':user_id' => $user_id,
                         )
                       );
-
   if ($result->rowCount()) {
     db_update('myngl_participant_status')->fields(
         array(
@@ -470,7 +409,6 @@ function myngl_event_participant_status($myngl_id, $user_id, $status){
       )->condition('myngl_id', $myngl_id, '=')
       ->condition('user_id', $user_id, '=')
       ->execute();
-
   }
   else{
     db_insert('myngl_participant_status')->fields(
@@ -486,7 +424,7 @@ function myngl_event_participant_status($myngl_id, $user_id, $status){
 
 
 function myngl_event_update_users_in_lounge($myngl_id){
-  /* Consider 3 mintes as beingoffline */
+  /* Consider 3 mintes as being offline */
 
   $result = db_query("SELECT user_id FROM {myngl_participant_status} WHERE
                      myngl_id = :myngl_id AND
@@ -504,7 +442,6 @@ function myngl_event_update_users_in_lounge($myngl_id){
                            ':myngl_id' => $myngl_id,
                            ':offline_time' =>  time() - 180,
                            ));
-
   $data[] = $result2->rowCount();
   foreach ($result as $r) {
     $data[] = $r->user_id;
@@ -514,42 +451,27 @@ function myngl_event_update_users_in_lounge($myngl_id){
 }
 
 function myngl_event_lounge_redirect_to_theater($myngl_id){
-  //print "<pre>";
-
   // Get the dates of the events, convert to timestamp and find the index of the nearst past start time.
   $result = db_query("SELECT field_myngl_dates_value FROM field_data_field_myngl_dates
                       WHERE entity_id = $myngl_id");
 
   foreach($result as $r){
-    $dates[] = strtotime($r->field_myngl_dates_value) - ((date("I", time()))? 18000:18000); // Time is stored as UTC in the table,so it's always 5 hours.
+    $dates[] = myngl_timing_strtotime($r->field_myngl_dates_value);
   }
 
 
-  $now = time() - ((date("I", time()))? 14400:18000); //adjust from UTC to edt/est
+  $now = time();
   rsort($dates);
-  //$return_array['dates'] = $dates;
   $this_date_index = 0;
   while($this_date_index< count($dates)&& $dates[$this_date_index] > $now){
     $this_date_index++;
   }
-  //$return_array['this_date_index'] = $this_date_index;
-
-  //print $this_date_index . "<br/>";
 
   $field_theater_start_time = db_query("SELECT field_theater_start_time_value FROM
                                        field_data_field_theater_start_time WHERE
                                        entity_id = $myngl_id")->fetchField() * 60;
 
-  //print $field_theater_start_time . "<br/>";
-
-  //$return_array['now'] = $now;
-  //$return_array['$field_theater_start_time'] = $field_theater_start_time;
-  //$return_array['daylight_saving'] = date("I", time());
-  //$return_array['this_date'] = $dates[$this_date_index];
-
-
-
-  if ( $now - $dates[$this_date_index] > $field_theater_start_time){
+  if ($now - $dates[$this_date_index] > $field_theater_start_time){
     $return_array['redirect'] = 1;
     return drupal_json_output($return_array);
   }
@@ -591,14 +513,13 @@ function myngl_event_invitee_info_update($myngl_id){
       $invitee['pre_question_answers'] = NULL;
     }
 
-    /*
-    $p = profile2_load_by_user($invitee['user_id'], 'profile');
-    $invitee['city'] = $p->field_city['und'][0]['value'];*/
+    $invitee['city'] = $p->field_city['und'][0]['value'];
     $invitees[]= $invitee;
   }
 
   echo json_encode($invitees);
 }
+
 
 function myngl_event_theater_question_submit($myngl_id) {
 	global $user;
@@ -608,25 +529,20 @@ function myngl_event_theater_question_submit($myngl_id) {
 	return;
 }
 
-function myngl_event_event_ends($nid){
 
+function myngl_event_event_ends($nid){
   $result = db_query("SELECT field_show_pov_and_ugc_borders_value FROM field_data_field_show_pov_and_ugc_borders
                       WHERE entity_id = $nid")->fetchField();
-
   if ($result ==1) {
     return drupal_json_output(0);
   }
-
   // Get the dates of the events, convert to timestamp and find the index of the nearst past start time.
   $result = db_query("SELECT field_myngl_dates_value FROM field_data_field_myngl_dates
                       WHERE entity_id = $nid");
-
   foreach($result as $r){
-    $dates[] = strtotime($r->field_myngl_dates_value) - ((date("I", time()))? 18000:18000); // Time is stored as UTC in the table,so it's always 5 hours.
+    $dates[] = myngl_timing_strtotime($r->field_myngl_dates_value); // Time is stored as UTC in the table,so it's always 5 hours.
   }
-
-
-  $now = time() - ((date("I", time()))? 14400:18000); //adjust from UTC to edt/est
+  $now = time(); //adjust from UTC to edt/est
   rsort($dates);
   $this_date_index = 0;
   while($this_date_index< count($dates)&& $dates[$this_date_index] > $now){
@@ -637,23 +553,16 @@ function myngl_event_event_ends($nid){
                                        field_data_field_event_length WHERE
                                        entity_id = $nid")->fetchField() * 60;
 
-  //print $field_theater_start_time . "<br/>";
-
-  //$return_array['now'] = $now;
-  //$return_array['$field_theater_start_time'] = $field_theater_start_time;
-  //$return_array['daylight_saving'] = date("I", time());
-  //$return_array['this_date'] = $dates[$this_date_index];
-
-  return ( $now - $dates[$this_date_index] > $field_event_length)? drupal_json_output(1): drupal_json_output(0);
-
+  return drupal_json_output(($now - $dates[$this_date_index] > $field_event_length)?1:0);
 
 }
 
 
 function myngl_event_is_taking_place($nid, $uid, $access_page = NULL){
-
   if ($nid == NULL || $uid <1 ){
-    drupal_goto("");
+    if (!drupal_is_cli()){
+      drupal_goto("");
+    }
   }
 
   $developer_mode = db_query("SELECT field_show_pov_and_ugc_borders_value
@@ -688,27 +597,38 @@ function myngl_event_is_taking_place($nid, $uid, $access_page = NULL){
   }
 
   if($eid == NULL){
-    drupal_goto("");
+    if (!drupal_is_cli()){
+      drupal_goto("");
+    }
   }
 
   $rsvpdate = db_query("SELECT field_invitee_rsvp_date_value
                         FROM field_data_field_invitee_rsvp_date
                         WHERE entity_id = :eid LIMIT 1",
                         array(":eid" => $eid))->fetchField();
-  $rsvptimestamp = strtotime($rsvpdate);
+  $rsvptimestamp = myngl_timing_strtotime($rsvpdate);
 
-  $daylight_saving_offset =  (date("I",$rsvptimestamp)==1)?3600:0;
-  $now = time() + $daylight_saving_offset;
+
+  $now = time();
   $event_end_timestamp = $rsvptimestamp + $event_length;
   $event_exit_end_time = $event_end_timestamp + 10 * 60 ; //10 minutes to stay in exit page.
+
+  if ($now >= $event_end_timestamp &&$now <= $event_exit_end_time){
+
+    if ($access_page == 'exit'){
+      return TRUE;
+    }
+    if(!drupal_is_cli()){
+      drupal_goto("myngl-event/".$nid."/exit");
+    }
+  }
 
   if ($now >= $rsvptimestamp && $now <= $event_end_timestamp){
     return false;
   }
-  if ($access_page == 'exit'&& $now >= $event_end_timestamp &&$now <= $event_exit_end_time){
-    return true;
-  }
-  drupal_goto("");
 
+  if (!drupal_is_cli()){
+    drupal_goto("");
+  }
 }
 

@@ -33,10 +33,7 @@ var filter_answers = [];
       $(".branded ul li#theater a").attr("onclick", "return false;").css("cursor", "default");
       $(".branded ul li#play-room a").attr("onclick", "return false;").css("cursor", "default");
       $(".branded ul li#gifting-suite a").attr("onclick", "return false;").css("cursor", "default");
-
     }
-
-
     $("#myngl-event-ugc-button").css("height", Drupal.settings.ugc_height + "%" );
     $("#myngl-event-ugc-button").css("width", Drupal.settings.ugc_width + "%");
     $("#myngl-event-ugc-button").css("left", Drupal.settings.ugc_left + "%" );
@@ -58,12 +55,8 @@ var filter_answers = [];
     if ($.cookie('lounge_entrance_time') == null) {
       $.cookie('lounge_entrance_time', $.now());
     }
-
-
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_social');
-
-
     $("#invitee-thumb-" + Drupal.settings.user_id).addClass('this-user');
     social_area.update_tagline_and_pre_question_answers();
     setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");},20000);
@@ -80,43 +73,6 @@ var filter_answers = [];
        myngl.overlay_close(true);
       return false;
     });
-    /*
-    $("input#group").change(function(){
-      //console.log($("input#group").prop('checked'));
-      var my_class = 'group-' +Drupal.settings.group_name;
-
-      if ($("input#group").prop('checked')) {
-        $(".invitee-thumb").each(function(){
-          //console.log(my_class);
-
-          if($(this).hasClass(my_class)){
-            $(this).removeClass('group-hide');
-
-          }
-          else {
-            $(this).addClass('group-hide');
-
-          }
-        });
-
-        $('form#social-area-chat-list .checkbox').each(function(){
-          if ($(this).hasClass(my_class)) {
-            $(this).removeClass('group-hide');
-          }
-          else {
-            $(this).addClass('group-hide').removeClass("selected");
-          }
-
-        });
-
-      }
-      else{
-        $(".invitee-thumb").removeClass('group-hide');
-        $("form#social-area-chat-list .checkbox").removeClass('group-hide');
-
-      }
-    });
-    */
 
     $("input[name='filter']").change(function(){
       if ($("input[name='filter']:checked").val() == 'fb-friends'){
@@ -437,10 +393,6 @@ var social_area = (function ($) {
         if (users_tagline_and_prequestion_answers[i].tagline!=null) {
           $("#myngl-event-invitee-info-"+ users_tagline_and_prequestion_answers[i].user_id + " span#tagline-holder").text(users_tagline_and_prequestion_answers[i].tagline);
         }
-        // The following line only work if myngl_event.module line 496 is un commented (search for "city")
-        //$("#myngl-event-invitee-info-"+ users_tagline_and_prequestion_answers[i].user_id + " span#city").text(users_tagline_and_prequestion_answers[i].city);
-        //console.log(users_tagline_and_prequestion_answers[i]);
-        //console.log((users_tagline_and_prequestion_answers[i].pre_question_answers));
 
       }
 
@@ -463,7 +415,7 @@ var social_area = (function ($) {
       $(("form#other-filter .question")).each(function(){
         var id_string =$(this).attr('id');
         var id = id_string.substring(id_string.lastIndexOf('-')+1, id_string.length);
-        //console.log(id);
+
         filter_answers[id] = $("form#other-filter #question-" + id+" input:checked").val();
 
       });
@@ -505,7 +457,7 @@ var social_area = (function ($) {
       }
     },
     ugc_left : function (value) {
-      //console.log("left clicked, currently_shown ugc is " + currently_shown_ugc);
+
       social_area.turn_off_all_youtube_videos();
 
 
@@ -525,7 +477,7 @@ var social_area = (function ($) {
       return false;
     },
     ugc_right : function (value) {
-      //console.log("right clicked, currently_shown ugc is " + currently_shown_ugc);
+
       social_area.turn_off_all_youtube_videos();
 
       if (currently_shown_ugc !=-1) {
@@ -571,27 +523,7 @@ var social_area = (function ($) {
 
       return false;
     },
-    /*
-    show_fb_friends : function() {
-      $('#close-invitee').hide();
-      $('#invitees-thumbs').css('height', '150px').css('margin-top','0px');
-      $('.invitee').hide();
-      $('.fb').show();
-      return false;
-    },
-    show_in_room : function() {
-      $('#close-invitee').hide();
-      $('#invitees-thumbs').css('height', '150px').css('margin-top','0px');
-      $('.invitee').hide();
-      $('.in_room').show();
-      return false;
-    },
-    show_all_invitees : function() {
-      $('#close-invitee').show();
-      $('#invitees-thumbs').css('height', '450px').css('margin-top','-300px');
-      $('.invitee').show();
-      return false;
-    },*/
+
     close_invitees : function() {
       $('#close-invitee').hide();
       $('.invitee').show();
@@ -600,7 +532,7 @@ var social_area = (function ($) {
       return false;
     },
     show_search : function() {
-      //console.log('show search');
+
       return false;
     },
     open_ucg: function() {
@@ -608,48 +540,27 @@ var social_area = (function ($) {
         myngl.overlay('myngl-event-ugc', 520, 900);
       });
       myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'opening_ugc_win');
-      /*
-      setTimeout(function() {
-        $('#myngl-event-ugc-thumbs').isotope({
-          itemSelector : '.item',
-          containerStyle: { 'overflow-x' :'scroll', 'overflow-y' : 'hidden', position: 'relative'},
-          resizesContainer: false,
-          layoutMode: 'masonryHorizontal',
-          masonryHorizontal: {
-            rowHeight: 150
-          }
-        });
-        console.log("CHANGE");
-      }, 250);
-      */
+
       return false;
     },
     ugc_show : function(id) {
       $("#myngl-event-ugc-thumbs").hide();
       $("#myngl-event-ugc-content-" + id).fadeIn(500);
       currently_shown_ugc = id;
-
-
-
       $('.halfCircleRight').show();
       $('.halfCircleLeft').show();
-
-
-
       return false;
     },
 
     message: function() {
       var myngl_id = Drupal.settings.myngl_id;
       var time_passed = $.now() - $.cookie('lounge_entrance_time');
-      //console.log (time_passed);
       $.ajax({
         type: "GET",
         url: "/myngl-event/" + myngl_id + "/ajax/message/" + time_passed + "/0",
         success: function(data) {
           if (data.message == '') {
             $("#myngl-event-message").css('border', '0').animate({"height": "0"}, 200);
-
           } else {
             if ($("#message-text").html() != data.message) {
               $("#myngl-event-message").css('border', '1px solid #000000').animate({"height": "0"}, 200, function() {
@@ -659,8 +570,6 @@ var social_area = (function ($) {
           }
         }
       });
-
-
     },
     update_users_in_lounge: function(){
       $.ajax({

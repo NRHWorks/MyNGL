@@ -1,6 +1,7 @@
 var group_chat_last_message_ids = [];
 var id_of_showing_invitee_info = -1;
 var id_of_hovered_invitee_info = -1;
+
 function slot_taken(left_array, min,max){
   var index = 0;
   while (index < left_array.length){
@@ -10,7 +11,6 @@ function slot_taken(left_array, min,max){
     index ++;
   }
   return false;
-
 }
 
 
@@ -18,39 +18,30 @@ function sortNumber(a,b) {
     return a - b;
 }
 
-
 (function ($) {
   $(document).ready( function() {
     setInterval(function() { chat.get_message(); }, 2000);
     setInterval(function() { chat.solo_fetch(); }, 2000);
     setInterval(function() { chat.group_fetch(); }, 2000);
-
-
     $('form#social-area-chat-list').submit(function(event){chat.name_list_submit(event);});
-
   });
 })(jQuery);
 
 var chat = (function ($) {
   var latest_mcsid = 0;
-
   return {
     set_id_of_showing_invitee_info: function(id){
       id_of_showing_invitee_info = id;
-
     },
     set_id_of_hovered_invitee_info: function(id){
       id_of_hovered_invitee_info = id;
-
     },
     mouse_leave_thumb: function(uid){
-
       setTimeout(function(){
         if (id_of_hovered_invitee_info != uid) {
           if ( id_of_showing_invitee_info==uid) {
             chat.reset_id_of_showing_invitee_info();
           }
-
           chat.close_invitee_info(uid);
         }
       },100);
@@ -84,14 +75,12 @@ var chat = (function ($) {
     },
     solo_minimize :function (uid){
       $("#myngl-event-solo-chat-" + uid).removeClass('visible').hide().addClass('minimized');
-
       if ($('#minimized-solo-chat-' + uid).length==0) {
 
         var minimized_icon =
           "<div class='minimized-solo-chat' id='minimized-solo-chat-" + uid + "' onclick='chat.solo_show(" +uid +")'>" +
           '<img src="' + $("#invitee-thumb-" + uid  + " img").attr('src') + '" class="minimized myngl-event-profile-pic"  />';
           + "</div>";
-
         $("#myngl-event-chat-button #minimized-chats").append(minimized_icon);
       }
       if ($(".myngl-chat.visible").length >1) {
@@ -109,10 +98,7 @@ var chat = (function ($) {
     },
 
     solo_show : function(uid) {
-
-
         if (!($("#myngl-event-solo-chat-" + uid).hasClass('visible'))) {
-
           var left_array = [];
           $(".myngl-chat.visible").each( function(){
             left_array.push($(this).offset().left);
@@ -131,19 +117,12 @@ var chat = (function ($) {
             }
           }
 
-
           $("#myngl-event-solo-chat-" + uid).css('left', left + 'px');
-
           chat.close_invitee_info(uid);
-
           $("#myngl-event-solo-chat-" + uid).fadeIn(100);
-
           $("#myngl-event-solo-chat-" + uid).addClass('visible').removeClass('minimized');
-
           $("#myngl-event-solo-chat-" + uid).draggable();
-
           $("#myngl-event-solo-chat-" + uid).css('top', '200px');
-
 
           // remove minimized button
           $('.minimized-solo-chat#minimized-solo-chat-' + uid).remove();
@@ -151,10 +130,7 @@ var chat = (function ($) {
           if ($(".myngl-chat.visible").length >1) {
             $("#close-and-minimize-all").show();
           }
-
-
         }
-
         return false;
       },
     invitee_click: function (uid){
@@ -175,11 +151,7 @@ var chat = (function ($) {
       $("#social-area-chat-list .selected.in-lounge").each(function() {
         $(this).removeClass('selected');
         selected_invitees[selected_invitees.length] = $(this).attr('value');
-
       });
-
-
-
       if (selected_invitees.length ==1) {
         chat.solo_show(selected_invitees[0]);
       }
@@ -197,15 +169,9 @@ var chat = (function ($) {
         });
       }
       return false;
-
     },
-
     group_show : function(new_chat) {
-      //console.log(new_chat);
-
-      //new chat div
       var new_chat_div = "<div id='myngl-event-group-chat-" + new_chat.chat_id + "' class='myngl-event-group-chat myngl-chat branded visible' style='width:325px; height:340px; clear:both;'>";
-
       var group_chat_user_list = "";
       for (var key in new_chat.users){
         if (key != Drupal.settings.user_id ) {
@@ -218,13 +184,11 @@ var chat = (function ($) {
       // name list and the close button
       new_chat_div = new_chat_div +
         "<div class='myngl-event-group-chat-intro branded'><a href='#' " +
-        //"onclick='jQuery(this).parent().parent().remove();' class='overlay-close'>X</a>" +
         "onclick='chat.group_leave(" + new_chat.chat_id + ");' class='overlay-close'>X</a>" +
         "<div style='color:#ffffff'> Chat with<div class='group_chat_user_list' style='inline-block;'>" + group_chat_user_list + "</div></div>";
       // messages
       new_chat_div = new_chat_div +
       "<div class='myngl-event-group-chat-messages myngl-chat-messages branded-tertiary' style='height:210px; overflow:scroll; border:1px solid #3c4350;background-color:#ffffff;'></div>";
-
       // submit form
 
       new_chat_div = new_chat_div +
@@ -266,7 +230,6 @@ var chat = (function ($) {
       $('#myngl-event-group-chat-'+new_chat.chat_id).css('top', '200px').css('position','absolute');
       $('#myngl-event-group-chat-'+new_chat.chat_id).draggable();
       $("#myngl-event-group-chat-" + new_chat.chat_id).css('left', left + 'px');
-
       return false;
     },
 
@@ -279,24 +242,22 @@ var chat = (function ($) {
       if ($("#myngl-event-group-chat-" + chat_id + " :text").val() == '') {
         $("#myngl-event-group-chat-" + chat_id + " :text").val($("#myngl-event-group-chat-" + chat_id + " :text").siblings('label').html().replace(/<span.*/,'')).addClass('form-light');
       }
-
     },
+
     open_chat : function() {
       $('#myngl-event-chat-button-invitees').fadeOut(200, function() {
         myngl.overlay('myngl-event-chat', 500, 450);
       });
       return false;
     },
+
     get_message : function() {
       if ($("#myngl-event-chat").is(':visible')) {
         var myngl_id = Drupal.settings.myngl_id;
-
         $.ajax({
           type: "GET",
           url: "/myngl-chat/get-message/" + myngl_id ,
           success: function(data) {
-
-
             $("#myngl-event-chat-messages").html('');
             data.forEach(function(entry) {
               $("#myngl-event-chat-messages").append('  <div id="chat-message - ' + entry.mcid + '" class="chat-message"> <img src="' + $("#invitee-thumb-" + entry.user_id  + " img").attr('src') + '" class="chat myngl-event-profile-pic"  /> <strong>' + $("#invitee-name-" + entry.user_id).html()  + ':</strong>  ' +  entry.message + '</div>');
@@ -304,11 +265,10 @@ var chat = (function ($) {
           }
         });
       }
-
     },
+
     send_message : function() {
       var myngl_id = Drupal.settings.myngl_id;
-
       if ($('#chat-message-input').val() != 'Enter Message') {
           $.ajax({
             type: "POST",
@@ -318,11 +278,10 @@ var chat = (function ($) {
 
           $('#chat-message-input').val('Enter Message');
           $('#chat-message-input').addClass('form-light');
-
-
         }
         return false;
       },
+
       solo_post : function(to_uid) {
         myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'sending_ct_msg');
         var myngl_id = Drupal.settings.myngl_id;
@@ -338,16 +297,13 @@ var chat = (function ($) {
           $('#solo-chat-message-input-' + to_uid).val('Enter Message');
           $('#solo-chat-message-input-' + to_uid).addClass('form-light');
         }
-
         return false;
       },
-
 
       group_post : function(chat_id) {
         myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'sending_ct_msg');
         var myngl_id = Drupal.settings.myngl_id;
         var from_uid = Drupal.settings.user_id;
-
 
         if ($('#group-chat-message-input-' + chat_id).val() != 'Enter Message' &&
             $('#group-chat-message-input-' + chat_id).val() != '') {
@@ -356,51 +312,37 @@ var chat = (function ($) {
             url: "/myngl-chat/group-post/" + myngl_id + "/" + from_uid + "/" + chat_id,
             data: {'message' : $('#group-chat-message-input-' + chat_id).val()}
           });
-
           $('#group-chat-message-input-' + chat_id).val('');
-          //$('#group-chat-message-input-' + chat_id).addClass('form-light');*/
         }
-
         return false;
       },
 
       group_fetch : function() {
-        //console.log(group_chat_last_message_ids);
         $.ajax({
           type: "POST",
           url: "/myngl-chat/group-fetch/" + Drupal.settings.myngl_id + "/" + Drupal.settings.user_id,
           data: {'last_message_ids': group_chat_last_message_ids},
           success: function (data) {
-
             chat.group_fetch_success(data);
-            //var parsed_data = jQuery.parseJSON(data );
-            //console.log(parsed_data);
           }
         });
       },
+
       group_fetch_success : function(data){
         var parsed_data = jQuery.parseJSON(data );
-        //console.log(parsed_data);
-
-        // create a new chat div if it doesn't exist but there are messages to show
         for (var chat_index in parsed_data.chats){
           group_chat_last_message_ids[parsed_data.chats[chat_index].chat_id] = parsed_data.chats[chat_index].last_message_id;
-
-
           if ($('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id ).length == 0 ) {
             if (parsed_data.chats[chat_index]['messages'].length !=0) {
               chat.group_show(parsed_data.chats[chat_index]);
             }
           }
 
-          // update name list
-
           var group_chat_user_list = "";
           for (var key in parsed_data.chats[chat_index]['users']){
             if (key != Drupal.settings.user_id ) {
               group_chat_user_list = group_chat_user_list + parsed_data.chats[chat_index]['users'][key] + ", ";
             }
-
           }
           group_chat_user_list = group_chat_user_list.slice(0, -2);
           group_chat_user_list = group_chat_user_list + ":";
@@ -408,10 +350,9 @@ var chat = (function ($) {
 
 
           for (var key in parsed_data.chats[chat_index]['messages']){
-            //BADDDDDDDDDD CHEATING FIX
+            //BADDDDDDDDDD CHEATING FIX.... it compares the existing message to the new-coming message and see if same string exist. .... it should be implemented by message ID instead.
 
             if ($('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages').text().indexOf(parsed_data.chats[chat_index]['messages'][key]['message'])==-1) {
-
               $('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages').append(
                 '<div class="group-message"> <img src="' +
                 $("#invitee-thumb-" + parsed_data.chats[chat_index]['messages'][key]['user_id']  +
@@ -419,17 +360,11 @@ var chat = (function ($) {
                 $("#invitee-name-" + parsed_data.chats[chat_index]['messages'][key]['user_id']).html()  +
                 ':</strong>  ' +  parsed_data.chats[chat_index]['messages'][key]['message'] + '</div></div>');
 
-
               $('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages').animate(
                 { scrollTop: $('#myngl-event-group-chat-' + parsed_data.chats[chat_index].chat_id + ' .myngl-event-group-chat-messages')[0].scrollHeight}, 10);
-
             }
           }
-
-
         }
-
-
       },
 
       group_leave: function (chat_id){
@@ -439,15 +374,11 @@ var chat = (function ($) {
           url: "/myngl-chat/group-leave/" + Drupal.settings.myngl_id + "/" + Drupal.settings.user_id + "/" + chat_id,
           success: function (data) {}
         });
-
-
-
       },
 
       solo_fetch : function () {
         var myngl_id = Drupal.settings.myngl_id;
         var user_id = Drupal.settings.user_id;
-
         $.ajax({
           type: "GET",
           url: "/myngl-chat/solo-fetch/" + myngl_id + "/" + user_id + "/" + latest_mcsid,
@@ -459,7 +390,6 @@ var chat = (function ($) {
                 chat.solo_show(entry.from_user_id);
               }
             });
-            
             data.forEach( function(entry) {
               if (entry.to_user_id != user_id) {
                 if (latest_mcsid == 0) {
@@ -472,7 +402,6 @@ var chat = (function ($) {
                 }
               }
             });
-
             data.forEach( function(entry) {
               if (parseInt(entry.mcsid) > latest_mcsid) {
                 latest_mcsid =  parseInt(entry.mcsid);
@@ -481,10 +410,8 @@ var chat = (function ($) {
 
             data.forEach( function(entry) {
               if (entry.to_user_id != user_id) {
-
-                //SUPER UGLY BAD BAD BAD CHEATING BUG FIX.  NEED TO REVISE!!!
+                //SUPER UGLY BAD BAD BAD CHEATING BUG FIX.  NEED TO REVISE!!!, same as line 353. (only if we have time though.)
                 if ($("#myngl-event-solo-chat-messages-" + entry.to_user_id).text().indexOf(entry.message) == -1) {
-
                   $("#myngl-event-solo-chat-messages-" + entry.to_user_id).append(
                       '<div id="solo-message-' + entry.mcsid + '" class="solo-message"> <img src="' +
                       $("#invitee-thumb-" + entry.from_user_id  + " img").attr('src') +
@@ -493,16 +420,12 @@ var chat = (function ($) {
                       ':</strong>  ' +  entry.message +
                       '</div></div>'
                   );
-
                   $("#myngl-event-solo-chat-messages-" + entry.to_user_id).animate({ scrollTop: $("#myngl-event-solo-chat-messages-" + entry.to_user_id)[0].scrollHeight}, 10);
                 }
               } else {
-
                 //SUPER UGLY BAD BAD BAD CHEATING BUG FIX.  NEED TO REVISE!!!
                 if ($("#myngl-event-solo-chat-messages-" + entry.from_user_id).text().indexOf(entry.message) == -1) {
-
                   $("#myngl-event-solo-chat-messages-" + entry.from_user_id).append('<div id="solo-message-' + entry.mcsid + '" class="solo-message"> <img src="' + $("#invitee-thumb-" + entry.from_user_id  + " img").attr('src') + '" class="solo-chat myngl-event-profile-pic"  /><div class="text"><strong>' + $("#invitee-name-" + entry.from_user_id).html()  + ':</strong>  ' +  entry.message + '</div></div>');
-
                   $("#myngl-event-solo-chat-messages-" + entry.from_user_id).animate({ scrollTop: $("#myngl-event-solo-chat-messages-" + entry.from_user_id)[0].scrollHeight}, 10);
                 }
               }
@@ -510,7 +433,6 @@ var chat = (function ($) {
           }
         });
       },
-
 
       show_invitee_info : function(uid) {
         if (uid==id_of_showing_invitee_info) {
@@ -540,6 +462,5 @@ var chat = (function ($) {
         }, 100);
         return false;
       }
-
     }
 }(jQuery));

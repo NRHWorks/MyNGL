@@ -55,25 +55,10 @@
 
   <div style="margin-bottom:40px;">Next Myngl on
     <?php //print $myngl->field_myngl_dates['und'][0]['value']; ?>
-    <?php print date("Y-m-d h:i:s a",$rsvp_date); ?>
+    <?php print myngl_timing_panel_date($rsvp_date); ?>
   </div>
   <?php print theme_image_style(array('style_name' => 'brand_logo', 'path' => $brand->field_brand_logo['und'][0]['uri'], 'height' => null, 'width' => null)).'<br><br>'; ?>
   <div id="count-down">
-    <?php
-      /*
-      $till_event = strtotime($myngl->field_myngl_dates['und'][0]['value']) - time();
-      $till_event_text = "";
-
-      if($till_event>172800){ // 2 days
-        $till_event_text = intval($till_event / 86400) . " days";
-      }
-      elseif($till_event>10800){ // 3 hours
-        $till_event_text = intval($till_event / 3600) . " hrs";
-      }
-      else {
-        $till_event_text = intval($till_event / 60). " min";
-      }*/
-    ?>
     Myngl Event will start in
     <div id="time"></div>
 

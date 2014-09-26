@@ -12,7 +12,6 @@
                 $("#question-list").prepend('<div class="question" id="question-' + delta + '">'+ data[i].question+"<hr/></div>");
               }
             }
-            //console.log(data);
           }
       });
     }, 3000);

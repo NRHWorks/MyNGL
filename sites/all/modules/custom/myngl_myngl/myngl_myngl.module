@@ -6,7 +6,6 @@ function myngl_myngl_menu() {
     'page callback' => 'myngl_myngl_rsvp',
     'page arguments' => array(1,3),
     'access callback' => TRUE,
-
   );
 
   $items['node/%/invitee-group-reassign/%'] = array(
@@ -15,6 +14,7 @@ function myngl_myngl_menu() {
     'page arguments' => array(1,3),
     'access callback' => TRUE,
   );
+
   $items['myngl/%/confirmed'] = array(
     'title' => 'RSVP CONFIRMED!',
     'page callback' => 'myngl_myngl_confirmed',
@@ -29,12 +29,14 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
+  /*  It seems that it's never called.
   $items['myngl/%/change_date/%/%'] = array(
     'title' => 'RSVP CONFIRMED!',
     'page callback' => 'myngl_myngl_change_date',
     'page arguments' => array(1,3,4),
     'access callback' => TRUE,
   );
+  */
 
   $items['myngl/%/pre-questions'] = array(
     'title' => 'Pre Myngl Questions',
@@ -135,7 +137,6 @@ function myngl_myngl_menu() {
     'type' => MENU_CALLBACK,
   );
 
-
   $items['node/%/ugc-list'] = array(
     'title' => 'UGC List',
     'page callback' => 'drupal_get_form',
@@ -153,8 +154,6 @@ function myngl_myngl_menu() {
     'type' => MENU_CALLBACK,
   );
 
-
-
   $items['node/%/participants-status'] = array(
     'title' => 'Participants Status',
     'page callback' => 'myngl_myngl_participants_status',
@@ -163,7 +162,6 @@ function myngl_myngl_menu() {
     'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
   );
-
 
   $items['node/%/question'] = array(
     'title' => ' POV Question',
@@ -228,7 +226,6 @@ function myngl_myngl_menu() {
     'page arguments' => array(1),
     'access callback' => TRUE,
   );
-
 
   return $items;
 }
@@ -303,9 +300,6 @@ function myngl_myngl_node_edit_tag_access($nid){
 
 
 function myngl_myngl_edit_theater_message($nid){
-  //$myngl = node_load($nid);
-
-
   $result = db_query("SELECT delta, field_theater_questions_value
                       FROM field_data_field_theater_questions
                       WHERE entity_id = :nid
@@ -315,14 +309,11 @@ function myngl_myngl_edit_theater_message($nid){
     $questions[] = array('delta'=>$r->delta, 'question'=>$r->field_theater_questions_value);
   }
 
-
-
   drupal_add_js('sites/all/themes/myngl/js/theater-message.js');
   drupal_add_js(array('myngl_id'=> $nid),'setting');
   $output = theme('myngl_myngl_theater_message', array('questions'=> $questions));
 
   return $output;
-
 }
 
 function myngl_myngl_theater_message_fetch($nid){
@@ -334,18 +325,13 @@ function myngl_myngl_theater_message_fetch($nid){
   foreach($result as $r){
     $questions[] = array('delta'=>$r->delta, 'question'=>$r->field_theater_questions_value);
   }
-
-
   return drupal_json_output( $questions);
 }
 
 
 function myngl_myngl_brand_rep_area(){
   global $user;
-
   $rep_nodes = array();
-
-
   $result = db_query("SELECT nid FROM {node} WHERE type = 'myngl'");
 
   foreach ($result as $r) {
@@ -360,7 +346,6 @@ function myngl_myngl_brand_rep_area(){
         'title' => $myngl->title,
         'link'  => l("EDIT", "node/".$myngl->nid."/edit"),
       );
-
       $rep_nodes[] = $n;
     }
   }
@@ -375,62 +360,30 @@ function myngl_myngl_brand_rep_area(){
                      'align' => 'center',
                      'style' =>'width:80%',
                     ),
-
-
-
                      "");
 
   return theme("table",array('header' => $headers, 'rows' => $rep_nodes, 'attributes' =>$attributes, ) );
-
-
-
-}
-function myngl_myngl_change_date($myngl_id, $user_id, $date_id) {
-
-  $node = node_load($myngl_id);
-
-  foreach ($node->field_myngl_invitees['und'] as $i) {
-    $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
-
-    if ($ic->field_invitee_user_account['und'][0]['uid'] == $user_id) {
-      $ic->field_invitee_rsvp_date['und'][0]['value'] = $node->field_myngl_dates['und'][$date_id]['value'];
-      $ic->save();
-    }
-  }
-
-
-  $daylight_saving = (date("I", strtotime($node->field_myngl_dates['und'][$date_id]['value']))==1)?" EDT":" EST";
-
-  print  date('m.d.Y @ g:i a',strtotime($node->field_myngl_dates['und'][$date_id]['value'])) . $daylight_saving;
 }
 
 function myngl_myngl_rsvp($nid, $date_index =0) {
   $cookie['rsvp'] = $nid;
   $cookie['date_index'] = $date_index;
   user_cookie_save($cookie);
-
   $node = node_load($nid);
-
   $output = theme('myngl_confirm', array('node' => $node, 'date_index'=> $date_index));
-
   return $output;
 }
 
 function myngl_myngl_confirmed($nid) {
   $node = node_load($nid);
-
   $output = theme('myngl_confirm_invite', array('node' => $node));
-
   return $output;
 }
 
 function myngl_myngl_brand_logo($nid) {
   $node = node_load($nid);
-
   $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
-
   $image = theme_image_style(array('style_name' => 'brand_logo', 'path' => $brand->field_brand_logo['und'][0]['uri'], 'height' => null, 'width' => null));
-
   return $image;
 }
 
@@ -445,20 +398,8 @@ function myngl_myngl_complete($nid) {
 
       if (isset($u->field_invitee_email_address['und'])&&$u->field_invitee_email_address['und'][0]['safe_value'] == $email) {
         $u->field_invitee_status['und'][0]['value'] = 'RSVP';
-
-         $date_index = (isset($_COOKIE["Drupal_visitor_date_index"]))?$_COOKIE["Drupal_visitor_date_index"]:0;
-         $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][$date_index]['value'];
-
-
-        /*
-        if (isset($_COOKIE['Drupal_visitor_rsvp_date'])) {
-          $u->field_invitee_rsvp_date['und'][0]['value'] = $_COOKIE['Drupal_visitor_rsvp_date'];
-
-          $myngl_node->field_myngl_dates['und'][$date_index]['value'];
-        } else {
-          $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][0]['value'];
-        }*/
-
+        $date_index = (isset($_COOKIE["Drupal_visitor_date_index"]))?$_COOKIE["Drupal_visitor_date_index"]:0;
+        $u->field_invitee_rsvp_date['und'][0]['value'] = $myngl_node->field_myngl_dates['und'][$date_index]['value'];
         $u->field_invitee_user_account['und'][0]['uid'] = $user->uid;
         $u->save(TRUE);
 
@@ -466,7 +407,9 @@ function myngl_myngl_complete($nid) {
         user_cookie_delete('rsvp_through_registration');
         user_cookie_delete('date_index');
 
-        drupal_goto("myngl/$nid/confirmed");
+        if (!drupal_is_cli()){
+          drupal_goto("myngl/$nid/confirmed");
+        }
       }
     }
 
@@ -484,26 +427,20 @@ function myngl_myngl_upcoming($uid) {
 
   if (isset($myngl_id)) {
     $node = node_load($myngl_id);
-
     $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
-
     $rsvp_date = $next_scheduled_myngl['timestamp'];
 
-
     drupal_add_js(array('current_server_time' => time()), 'setting');
-    /*drupal_add_js(array('invitee_rsvp_date' => $rsvp_date), 'setting');*/
     drupal_add_js(array('next_scheduled_myngl_id' => $myngl_id), 'setting');
     drupal_add_js(array('uid'=> $uid),'setting');
     drupal_add_js(path_to_theme().'/js/upcoming.js');
-
-
     $output = theme('panel_myngl_upcoming', array('myngl' => $node, 'brand' => $brand, 'rsvp_date' =>$rsvp_date));
 
     return $output;
-  } else {
+  }
+  else {
     return 'No Upcoming Myngls';
   }
-
 }
 
 
@@ -523,14 +460,12 @@ function _myngl_myngl_get_next_scheduled_myngl($uid){
 
   $myngl_event_dates = array();
   foreach($invitee_ids as $i){
-    $myngl_event_dates[$i->entity_id] = strtotime(db_query(
+    $myngl_event_dates[$i->entity_id] = myngl_timing_strtotime(db_query(
       "SELECT field_invitee_rsvp_date_value from {field_data_field_invitee_rsvp_date} WHERE entity_id = :eid",
       array(':eid'=>$i->entity_id))->fetchField());
   }
   asort($myngl_event_dates,SORT_NUMERIC);
   $next_event_invitee_id = key($myngl_event_dates);
-
-  //$next_scheduled_event_timestamp = $myngl_event_dates[$next_event_invitee_id];
   $return_array['timestamp'] = $myngl_event_dates[$next_event_invitee_id];
   $return_array['nid'] = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = $next_event_invitee_id LIMIT 1")->fetchField();
   return $return_array;
@@ -544,17 +479,13 @@ function myngl_myngl_next_scheduled_event_nid($uid){
 function myngl_myngl_upcoming_overlay_upload_id($uid, $nid) {
   //find myngls for this user
   $result = db_query("SELECT entity_id FROM {field_data_field_invitee_user_account} WHERE field_invitee_user_account_uid = :uid", array(':uid' => $uid));
-
   $myngls = array();
   foreach ($result as $r) {
     // based on invitee id get myngls
     $sub_result = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = :iid", array(':iid' => $r->entity_id));
-
     $invitee_collection = array_shift(entity_load('field_collection_item', array($r->entity_id)));
-
     foreach ($sub_result as $k => $s) {
       $myngl = node_load($s->entity_id);
-
       if ($myngl->nid == $nid) {
         return $k;
       }
@@ -576,7 +507,6 @@ function myngl_myngl_upcoming_overlay($uid) {
     foreach ($sub_result as $s) {
       $myngl = node_load($s->entity_id);
 
-      $myngl_brand = array();
       $myngl_brand = array(
         'myngl' => $myngl,
         'date' => $invitee_collection->field_invitee_rsvp_date['und'][0]['value'],
@@ -587,9 +517,7 @@ function myngl_myngl_upcoming_overlay($uid) {
       $myngls[] = $myngl_brand;
     }
   }
-
   $output = theme('overlay_myngl_upcoming', array('myngls' => $myngls));
-
   return $output;
 }
 
@@ -613,7 +541,7 @@ function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $us
   $dates = array();
 
   foreach ($myngl->field_myngl_dates['und'] as $d) :
-    $dates[$d['value']] = myngl_long_date($d['value']);
+    $dates[$d['value']] = myngl_timing_long_date($d['value']);
   endforeach;
 
   $form['date'] = array(
@@ -637,14 +565,18 @@ function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $us
     ),
   );
 
-  // BUG?
-  date_default_timezone_set('UTC');
+  $addthis_date = "<div class='start'>" .
+                    myngl_timing_addthis_date($invitee->field_invitee_rsvp_date['und'][0]['value']) .
+                  "</div><div class='end'>" .
+                   myngl_timing_addthis_end_date($invitee->field_invitee_rsvp_date['und'][0]['value'], $myngl->field_event_length['und'][0]['value']).'</div>
+                   <div id="event-date-timestamp">'. myngl_timing_strtotime($invitee->field_invitee_rsvp_date['und'][0]['value']) . "</div>";
+
   $form['#prefix'] = '<div id="success-message-' . $k . '">
-                        <span class="date change-date">Current <span class="date">'. myngl_long_date($invitee->field_invitee_rsvp_date['und'][0]['value']) .'</span></span>
+                        <span class="date change-date">Current <span class="date">'. myngl_timing_long_date($invitee->field_invitee_rsvp_date['und'][0]['value']) .'</span></span>
                         <br/><br/>
                         This Myngl will also be presented on the following dates. Please select the date that works best for you:
                         <br/><br/>
-                        <div id="event-date-timestamp" style="display:none">'. strtotime($invitee->field_invitee_rsvp_date['und'][0]['value']).'</div>
+                        <div id="addthis-date-hidden" style="display:none">'. $addthis_date.'</div>
                       </div>'
                        ;
 
@@ -660,25 +592,27 @@ function myngl_myngl_overlay_change_date_ajax_submit($form_id, &$form_state) {
   $invitee->save();
 
   // This section get the $k for calling the drupal_get_form again
-
   $wrapper = $form_id['submit']['#ajax']['wrapper'];
   $pos = strrpos ( $wrapper , '-' );
   $k =substr($wrapper, $pos+1, strlen($wrapper)-$pos -1);
 
+  $addthis_date = "<div class='start'>" .
+                    myngl_timing_addthis_date($v['date']) .
+                  "</div><div class='end'>" .
+                   myngl_timing_addthis_end_date($v['date'], $myngl->field_event_length['und'][0]['value']).'</div>
+                   <div id="event-date-timestamp">'. myngl_timing_strtotime($v['date']) . "</div>";
 
 
   $return_string = '<div id="success-message-'.$k.'">
-                      <span class="date change-date">Current <span class="date">'.myngl_long_date($v['date']).'</span></span>
+                      <span class="date change-date">Current <span class="date">'.myngl_timing_long_date($v['date']).'</span></span>
                       <br/><br/>
                       <strong>Date Updated</strong>
                       <br/></br>
                       This Myngl will also be presented on the following dates. Please select the date that works best for you:
-                      <br/><br/>';
-  date_default_timezone_set('UTC'); // have to call this function after calling myngl_long_date...
-  $return_string .=   '<div id="event-date-timestamp" style="display:none">'. strtotime($v['date']).'</div>
-                    </div>'
-                     ;
-;
+                      <br/><br/>
+                      <div id="addthis-date-hidden" style="display:none">'. $addthis_date.'</div>
+                    </div>';
+
 
           return $return_string;
 
@@ -987,11 +921,8 @@ function myngl_myngl_pre_questions_form_submit($form, &$form_state) {
   if ($invitee == NULL) {
     drupal_goto("");
   }
-
   $invitee->field_myngl_tagline['und'][0]['value'] = $v['tagline'];
-
   $invitee->field_pre_question_answers['und'][0]['value'] = $answers_for_user;
-
   $invitee->save();
 
   drupal_goto("myngl-event/".$v['myngl_id']."/lobby");
@@ -1044,9 +975,6 @@ function myngl_myngl_post_questions_form($form, &$form_state, $myngl_id, $user_i
     }
   }
 
-
-
-
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'GO TO REWARDS',
@@ -1068,30 +996,27 @@ function myngl_myngl_post_questions_form_submit($form, &$form_state) {
       $q_arr[$k] = $val;
     }
   }
-  //file_put_contents("text123.txt", print_r($q_arr, TRUE));
   $answers_for_user = serialize($q_arr);
   $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
   $invitee->field_post_question_answer['und'][0]['value'] = $answers_for_user;
   $invitee->save();
-  drupal_goto("myngl/".$v['myngl_id']."/rewards");
+  if(!drupal_is_cli()){
+    drupal_goto("myngl/".$v['myngl_id']."/rewards");
+  }
 }
-
 
 
 function _myngl_myngl_get_invitee_id($myngl_id, $user_id) {
   $myngl = node_load($myngl_id);
-
   foreach ($myngl->field_myngl_invitees['und'] as $v) {
     $ee = entity_load('field_collection_item', array($v['value']));
     $fc = array_shift($ee);
-
     if (isset($fc->field_invitee_user_account['und']) && $fc->field_invitee_user_account['und'][0]['uid'] == $user_id) {
       return $fc;
     }
   }
   return NULL;
 }
-
 
 
 function myngl_myngl_alerts($form, &$form_state, $nid){
@@ -1110,14 +1035,11 @@ function myngl_myngl_alerts($form, &$form_state, $nid){
                           <td>Re-order</td>
                         </tr>";
 
-  //print "<pre>";
   $weight = 0;
   foreach($myngl->field_myngl_alerts['und'] as $order =>$alert_eid){
 
     $ee = entity_load('field_collection_item', array($alert_eid['value']));
     $ic = array_shift($ee);
-    //print_r($ic);
-
 
     $form[] = array(
       '#type' => 'textfield',
@@ -1160,10 +1082,8 @@ function myngl_myngl_alerts($form, &$form_state, $nid){
       '#options' => array("Lounge","Theater", "PlayRoom"),
       '#empty_option' => "Select",
       '#order' => $order,
-      //'#attributes'=>array('size'=>array(5)),
+
       );
-
-
 
     $form[] = $select;
   }
@@ -1236,6 +1156,7 @@ function myngl_myngl_alerts_validate($form, &$form_state){
   $values_flat = $form_state['values'];
   $index = 0;
   $values = array();
+
   while(isset($values_flat[$index])){
     $values[] = array(
       "message"=>$values_flat[$index++],
@@ -1243,17 +1164,16 @@ function myngl_myngl_alerts_validate($form, &$form_state){
       "duration"=>$values_flat[$index++],
       "page"=>$values_flat[$index++],
     );
-
   }
+
   for($i = 0; $i < count($values)-1; $i ++){
     $this_entry = $values[$i];
     if (!is_numeric($this_entry['on_time'])||!is_numeric($this_entry['duration'])){
       form_set_error("");
        drupal_set_message("On Time and Duration must be integers.",'error');
-
     }
   }
-  //die;
+
   $last_entry = end($values);
   if (($last_entry['message']==NULL ||$last_entry['on_time']==NULL ||
      $last_entry['duration']==NULL || $last_entry['page']==NULL )&&
@@ -1262,15 +1182,14 @@ function myngl_myngl_alerts_validate($form, &$form_state){
     form_set_error("");
     drupal_set_message("Please provide all four fields for the new alert.",'error');
   }
-
 }
 
 
 function myngl_myngl_alerts_submit($form, &$form_state) {
   $myngl = node_load($form['#nid']);
-
   $values_flat = $form_state['values'];
   $values = array();
+
   $index = 0;
   while(isset($values_flat[$index])){
     $values[] = array(
@@ -1285,21 +1204,15 @@ function myngl_myngl_alerts_submit($form, &$form_state) {
   foreach($myngl->field_myngl_alerts['und'] as $order =>$alert_eid){
     $ee = entity_load('field_collection_item', array($alert_eid['value']));
     $ic = array_shift($ee);
-    // "<pre>";print_r($ic); die;
-
-
     $ic->field_message['und'][0]['value'] = $values[$order]['message'];
     $ic->field_time['und'][0]['value'] = $values[$order]['on_time'];
     $ic->field_duration['und'][0]['value'] = $values[$order]['duration'];
     $ic->field_page['und'][0]['value'] = $values[$order]['page'];
     $ic->save();
-
   }
 
   // Deal with the last entry
-
   $last_entry = end($values);
-
   if($last_entry['message']!=NULL &&$last_entry['on_time']!=NULL &&
      $last_entry['duration']!=NULL && $last_entry['page']!=NULL){
 
@@ -1313,36 +1226,22 @@ function myngl_myngl_alerts_submit($form, &$form_state) {
 
   }
   drupal_set_message("Myngl alerts are successfully updated.");
-  /*else{
-    drupal_set_message("Please provide all four fields for the ")
-
-  }
-
-  /*print "<pre>";
-  print_r($last_entry);
-  print_r($values);
-  print_r($form);
-  print_r($form_state);
-  die;*/
 }
 
 function myngl_myngl_alert_delete($nid, $order){
-
   $myngl = node_load($nid);
   $eid = $myngl->field_myngl_alerts['und'][$order]['value'];
   unset($myngl->field_myngl_alerts['und'][$order]);
   $myngl->field_myngl_alerts['und'] = array_values($myngl->field_myngl_alerts['und']);
   node_save($myngl);
-
   entity_delete("field_collection_item", $eid);
 
   if(!drupal_is_cli()){
     drupal_set_message("Myngl alert deleted.");
     drupal_goto("node/".$nid."/myngl-alerts");
   }
-
-
 }
+
 function myngl_myngl_alert_reorder($nid, $order, $direction){
   // $direction: 1 = move up (decrement), 0 = move down (increment).
   $switch = FALSE;
@@ -1357,10 +1256,9 @@ function myngl_myngl_alert_reorder($nid, $order, $direction){
 
       node_save($myngl);
       $switch = TRUE;
-
     }
-
   }
+
   if ($switch){
     drupal_set_message("Myngl alert re-ordered.");
   }
@@ -1371,15 +1269,14 @@ function myngl_myngl_alert_reorder($nid, $order, $direction){
     drupal_goto("node/".$nid."/myngl-alerts");
   }
 }
-function myngl_myngl_ugc_list($form, &$form_state, $nid) {
 
+function myngl_myngl_ugc_list($form, &$form_state, $nid) {
   $approved_result = db_query("SELECT fid, weight FROM myngl_invitee_ugc_approve
                              WHERE myngl_id = $nid ORDER BY weight ASC");
 
   $approval_list = array();
   foreach($approved_result as $r){
     $approval_list[$r->weight] = $r->fid;
-
   }
 
   $not_approved_list = array();
@@ -1401,7 +1298,6 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
           '#title' =>'Image: fid = ' . $fid,
           '#type' => 'checkbox',
           '#prefix'=>"<div style='float:left;padding:30px;height:180px; width:270px;'>",
-          //'#suffix' =>"</div>",
           '#default_value' => (in_array($fid, $approval_list))?1:0,
           );
 
@@ -1422,7 +1318,6 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
               $fid . '/1">&gt;</a>' .
               '</div>';
         $approve_list_form_item[array_search($fid, $approval_list)]= $this_item;
-        //$form[array_search($fid, $approval_list)] = $this_item;
       }
       else{
         // Leave it till the end.
@@ -1430,9 +1325,7 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
         $not_approved_list[] = $this_item;
       }
     }
-
   }
-
 
   // Deal with videos.
   foreach($myngl->field_myngl_invitees['und'] as $i){
@@ -1449,7 +1342,6 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
         '#title' =>  "Youtube: " .$vid,
         '#type' => 'checkbox',
         '#prefix'=>"<div style='float:left;padding:30px;height:180px; width:270px;'>",
-        //'#suffix' =>"</div>",
         '#default_value' => (in_array($vid, $approval_list))?1:0,
         '#description' => "<img src='http://img.youtube.com/vi/". $vid."/0.jpg' height='80' width='120' />",
         );
@@ -1463,7 +1355,6 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
               '</div>';
 
         $approve_list_form_item[array_search($vid, $approval_list)]= $this_item;
-        //$form[array_search($vid, $approval_list)] = $this_item;
       }
       else{
         // Leave it till the end.
@@ -1471,7 +1362,6 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
         $not_approved_list[] = $this_item;
       }
     }
-
   }
 
   ksort($approve_list_form_item);
@@ -1481,12 +1371,9 @@ function myngl_myngl_ugc_list($form, &$form_state, $nid) {
   }
 
   // Add back the unapproved items
-
   foreach($not_approved_list as $r){
     $form[] = $r;
   }
-
-
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -1534,7 +1421,6 @@ function myngl_myngl_ugc_list_submit($form, &$form_state) {
         )
       )->condition('myngl_id', ARG(1), '=')->condition('fid', $fid, '=')
       ->execute();
-
     }
     else{
       db_insert('myngl_invitee_ugc_approve')->fields(
@@ -1544,47 +1430,19 @@ function myngl_myngl_ugc_list_submit($form, &$form_state) {
           'weight'  => $weight,
         )
       )->execute();
-
     }
-
-
-    //in the above function. if item value = 1, print arrows and make function to change it.
   }
-  /*
-  if($approve->rowCount()==0){
-        db_insert('myngl_invitee_ugc_approve')->fields(
-          array('fid' => $item['#fid'],
-                'weight' => intval($weight),
-                'myngl_id' => intval(ARG(1)),
-                )
-          )->execute();
-      }
-  */
   drupal_set_message("UGC approval is successfully updated.");
-
-
-
 }
 
 
 function myngl_myngl_ugc_list_reorder($myngl_id, $fid, $direction){
-  //print '<pre>';
-
   $original_weight = db_query("SELECT weight FROM myngl_invitee_ugc_approve WHERE
                               fid=:fid LIMIT 1", array(":fid"=>$fid))->fetchField();
-  //print "original weight: ". $original_weight;
   if ($direction == 0){ // decrease
-    if ($original_weight == 0){
-      //Do Nothing.
-      //print "original weight = 0!";
-
-    }
-    else{
-      //print "original weight !=0 !";
+    if ($original_weight != 0){
       $switch_fid = db_query("SELECT fid FROM myngl_invitee_ugc_approve WHERE
                              weight=:weight", array(":weight"=>$original_weight-1))->fetchField();
-
-      //print "switch id = " . $switch_fid;
 
       db_update('myngl_invitee_ugc_approve')->fields(
         array(
@@ -1599,18 +1457,12 @@ function myngl_myngl_ugc_list_reorder($myngl_id, $fid, $direction){
         )
       )->condition('fid', $fid, '=')
       ->execute();
-
     }
   }
   else{
-
     $switch_fid = db_query("SELECT fid FROM myngl_invitee_ugc_approve WHERE
                              weight=:weight", array(":weight"=>$original_weight+1));
-    if ($switch_fid->rowCount()==0){
-      // Do nothing
-    }
-
-    else{
+    if ($switch_fid->rowCount()!=0){
       $switch_fid = $switch_fid->fetchField();
       db_update('myngl_invitee_ugc_approve')->fields(
         array(
@@ -1625,7 +1477,6 @@ function myngl_myngl_ugc_list_reorder($myngl_id, $fid, $direction){
         )
       )->condition('fid', $fid, '=')
       ->execute();
-
     }
   }
   drupal_goto ('node/'. $myngl_id.'/ugc-list');
@@ -1675,7 +1526,6 @@ function myngl_myngl_edit_question_submit($form, &$form_state) {
 
 function myngl_myngl_invitees($nid) {
   $node = node_load($nid);
-
   $rows = array();
 
   foreach ($node->field_myngl_invitees['und'] as $k => $i) {
@@ -1683,7 +1533,6 @@ function myngl_myngl_invitees($nid) {
     $ic = array_shift($ee);
 
     $row = array();
-
     $user_acct = '';
 
     if (isset($ic->field_invitee_user_account['und'][0]['uid'])) {
@@ -1696,8 +1545,6 @@ function myngl_myngl_invitees($nid) {
                                   FROM myngl_invitee_invitation_date_index
                                   WHERE  invitee_eid = :eid LIMIT 1",
                                   array(":eid"=> $ic->item_id))->fetchField();
-
-
 
     if ($ic->field_invitee_status['und'][0]['value'] == 'New') {
       $actions = l('Send Invitation', 'myngl/'.$nid.'/send-invitation/'.$k.'/'.$invitation_index);
@@ -1714,14 +1561,10 @@ function myngl_myngl_invitees($nid) {
     $row = array(
       $user_acct,
       $first_name,
-      //$ic->field_invitee_first_name['und'][0]['value'],
       $last_name,
-      //$ic->field_invitee_last_name['und'][0]['value'],
       $email,
-      //$ic->field_invitee_email_address['und'][0]['value'],
       $ic->field_invitee_status['und'][0]['value'],
       $rsvp_date,
-      //$actions
     );
     if ($node->field_enable_invitee_group['und'][0]['value']==1){
       $row[] = $ic->field_group_name_social['und'][0]['value'];
@@ -1746,8 +1589,6 @@ function myngl_myngl_invitees($nid) {
 
   $header[] = "Actions";
 
-
-
   $variables = array('header' => $header,
                      'rows' => $rows,
                      'attributes' => array(),
@@ -1758,11 +1599,8 @@ function myngl_myngl_invitees($nid) {
 
 
   $table = theme('table', $variables);
-  //$table = theme_table(array('header' => $header, 'rows' => $rows, 'attributes' => array()));
-
   $this_form = drupal_get_form('myngl_myngl_add_invitee', $nid);
   $form = render($this_form);
-
   return '<br />'.$table.'<br /><h2>Add Invitee:</h2>'.$form;
 }
 
@@ -1790,8 +1628,6 @@ function myngl_myngl_add_invitee($form, &$form_state, $nid) {
     '#title' => t('Email'),
     '#description' => t('Enter invitees email address.'),
   );
-
-
 
   $myngl = node_load($nid);
   if ($myngl->field_enable_invitee_group['und'][0]['value']==1){
@@ -1855,8 +1691,6 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
   $field_collection_item->field_invitee_email_address['und'][]['value'] = $v['email'];
   $field_collection_item->field_invitee_status['und'][]['value'] = 'New';
   $field_collection_item->field_invited_by_friend['und'][]['value'] = 0;
-  //$field_collection_item->field_brand_rep['und'][]['value'] = $v['brand_rep'];
-
 
   if(isset($v['group'])){
     if ($v['group']==0){
@@ -1872,12 +1706,10 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
     else{
       $field_collection_item->field_group_name_social['und'][]['value'] = $node->field_invitee_group_name['und'][$v['group']-1]['value'];
     }
-
   }
   else {
     $field_collection_item->field_group_name_social['und'][]['value'] = "";
   }
-
 
   // Invitation Time
   if ($v['invitation_date']==0){
@@ -1888,7 +1720,6 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
         }
       }
       $invitation_date_index = rand(0, $num_of_dates -1);
-
     }
     else{
       $invitation_date_index = $v['invitation_date'] -1;
@@ -1900,7 +1731,6 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
         array(
           'invitee_eid'      => $field_collection_item->item_id,
           "date_index" =>$invitation_date_index ,
-
         )
       )->execute();
   drupal_set_message('Invitee Added.  Use the link in the invitee list to notify this user.');
@@ -1908,7 +1738,6 @@ function myngl_myngl_add_invitee_submit($form_id, &$form_state) {
 
 
 function myngl_myngl_invitee_group_reassign($node_id, $assign_all){
-
   $myngl = node_load($node_id);
   $num_of_options = 0;
   foreach ($myngl->field_invitee_group_name['und'] as $key => $group_name){
@@ -1925,14 +1754,14 @@ function myngl_myngl_invitee_group_reassign($node_id, $assign_all){
       $ic->save();
     }
   }
-
   drupal_set_message('Group Assigned.');
-  drupal_goto("node/".$node_id."/invitees");
+  if(!drupal_is_cli()){
+    drupal_goto("node/".$node_id."/invitees");
+  }
 }
 
 
 function myngl_myngl_confirm_add_invitee($form, &$form_state, $nid) {
-
   $form['myngl_nid'] = array(
     '#type' => 'hidden',
     '#value' => $nid,
@@ -1968,7 +1797,6 @@ function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
 
   $field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_myngl_invitees'));
   $field_collection_item->setHostEntity('node', $node);
-
   $field_collection_item->field_invitee_first_name['und'][]['value'] = $v['first_name'];
   $field_collection_item->field_invitee_last_name['und'][]['value'] = $v['last_name'];
   $field_collection_item->field_invitee_email_address['und'][]['value'] = $v['email'];
@@ -1982,9 +1810,10 @@ function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
     $invitee_id = $k;
   }
 
-  // 0 is invitation index. eventually this need to be the same as inviter's rsvp date
-  myngl_myngl_send_invitation($node->nid, $invitee_id, 0, FALSE);
 
+  // 0 is invitation index. eventually this need to be the same as inviter's rsvp date (or not?)
+
+  myngl_myngl_send_invitation($node->nid, $invitee_id, 0, FALSE);
   drupal_set_message('An invitation has been sent to '.$v['first_name'].' ('.$v['email']. '), would you like to invite another?');
 }
 
@@ -2003,10 +1832,10 @@ function myngl_myngl_participants_status($myngl_id) {
     'Time',
   );
   $rows = array();
-  foreach ($result as $r) {
-    $rows[] = array($r->user_id, $r->status, date('n/d, Y - G:i:s', $r->timestamp));
-  }
 
+  foreach ($result as $r) {
+    $rows[] = array($r->user_id, $r->status, myngl_timing_timestamp_to_est( $r->timestamp));
+  }
 
   $variables = array('header' => $header,
                      'rows' => $rows,
@@ -2016,19 +1845,14 @@ function myngl_myngl_participants_status($myngl_id) {
                      'sticky' => TRUE,
                      'empty' => '');
 
-
   $table = theme('table', $variables);
-
-  //$table = array('header' => $header, 'rows' => $rows, 'attributes' => array());
   return $table;
 }
 
 
 function myngl_myngl_admin_paths() {
   return array(
-    //'node/*/message' => TRUE,
     'node/*/question' => TRUE,
-    //'node/*/theater-message' =>TRUE,
     'node/*/ugc-list' =>TRUE,
     'node/*/invitee-redeem' => TRUE,
     'node/*/invitees' => TRUE,
@@ -2041,102 +1865,74 @@ function myngl_myngl_admin_paths() {
 }
 
 function myngl_myngl_delete_invitation($myngl_id, $invitee_id) {
-
-    $node = node_load($myngl_id);
-   
-    unset($node->field_myngl_invitees['und'][$invitee_id]);
-
-    node_save($node);
-
-    drupal_set_message('Invitee deleted.');
-
+  $node = node_load($myngl_id);
+  unset($node->field_myngl_invitees['und'][$invitee_id]);
+  node_save($node);
+  drupal_set_message('Invitee deleted.');
+  if(!drupal_is_cli()){
     drupal_goto('node/'.$myngl_id.'/invitees');
+  }
 }
 
 function myngl_myngl_cancel_invitation($myngl_id) {
     global $user;
-
     $node = node_load($myngl_id);
- 
     foreach ($node->field_myngl_invitees['und'] as $k => $i) {
       $ic = array_shift(entity_load('field_collection_item', array($i['value'])));
-
       if ($ic->field_invitee_user_account['und'][0]['uid'] == $user->uid) {
         unset($node->field_myngl_invitees['und'][$k]);
       }
     }
+  node_save($node);
+  drupal_set_message('Invitation Canceled.');
 
-    node_save($node);
-
-    drupal_set_message('Invitation Canceled.');
-
+  if(!drupal_is_cli()){
     drupal_goto('user');
+  }
 }
 
 function myngl_myngl_send_invitation($myngl_id, $invitee_id, $date_index = 0, $redirect = TRUE) {
-    global $user;
-    $user = user_load($user->uid);    
+  global $user;
+  $user = user_load($user->uid);
+  $friend = $user->field_first_name['und'][0]['value'];
+  $node = node_load($myngl_id);
+  $subject = $node->field_invitation_email_title['und'][0]['value'];
+  $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
+  $banner = file_create_url($brand->field_brand_logo['und'][0]['uri']);
+  $gift_image = file_create_url($node->field_invitation_email_image['und'][0]['uri']);
 
-    $friend = $user->field_first_name['und'][0]['value'];
+  $ic = array_shift(entity_load('field_collection_item', array($node->field_myngl_invitees['und'][$invitee_id]['value'])));
+  $ic->field_invitee_status['und'][0]['value'] = 'Invitation Delivered';
+  $ic->save(TRUE);
+  $to = $ic->field_invitee_email_address['und'][0]['value'];
+  $firstname = $ic->field_invitee_first_name['und'][0]['value'];
+  $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'friend' => $friend, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $node->field_myngl_invitation_email['und'][0]['value'],'date_index'=>$date_index));
+  myngl_myngl_sendMail($to, $subject, $html, $alt);
 
-    $node = node_load($myngl_id);
-    
-    //$subject = 'Your\'re invited to the '.$node->title;
-    //$subject = 'You have been invited by your friend to a Myngl';
-    $subject = $node->field_invitation_email_title['und'][0]['value'];
-    $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
-
-    $banner = file_create_url($brand->field_brand_logo['und'][0]['uri']);
-
-    $gift_image = file_create_url($node->field_invitation_email_image['und'][0]['uri']);
-    //$gift_image = file_create_url($node->field_reward_congrats_image['und'][0]['uri']);
-   
-    $ic = array_shift(entity_load('field_collection_item', array($node->field_myngl_invitees['und'][$invitee_id]['value'])));
- 
-    $ic->field_invitee_status['und'][0]['value'] = 'Invitation Delivered';
-    $ic->save(TRUE);
-
-    $to = $ic->field_invitee_email_address['und'][0]['value'];
-
-    $firstname = $ic->field_invitee_first_name['und'][0]['value'];
-
-    $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'friend' => $friend, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $node->field_myngl_invitation_email['und'][0]['value'],'date_index'=>$date_index));
-
-    myngl_myngl_sendMail($to, $subject, $html, $alt);
-
-    if ($redirect != FALSE) {
-      drupal_set_message('Invitation Sent.');
-      drupal_goto('node/'.$myngl_id.'/invitees');
-    }
+  if ($redirect != FALSE) {
+    drupal_set_message('Invitation Sent.');
+    drupal_goto('node/'.$myngl_id.'/invitees');
+  }
 }
 
 function myngl_myngl_resend_invitation($myngl_id, $invitee_id, $date_index = 0, $redirect = TRUE) {
 
-    $node = node_load($myngl_id);
-    
-    $subject = $node->field_invitation_email_title['und'][0]['value'];
-    //$subject = 'Your\'re invited to the '.$node->title;
+  $node = node_load($myngl_id);
+  $subject = $node->field_invitation_email_title['und'][0]['value'];
+  $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
+  $banner = file_create_url($brand->field_brand_logo['und'][0]['uri']);
+  $gift_image = file_create_url($node->field_reward_congrats_image['und'][0]['uri']);
 
-    $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
+  $ic = array_shift(entity_load('field_collection_item', array($node->field_myngl_invitees['und'][$invitee_id]['value'])));
+  $to = $ic->field_invitee_email_address['und'][0]['value'];
+  $firstname = $ic->field_invitee_first_name['und'][0]['value'];
+  $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $node->field_myngl_invitation_email['und'][0]['value'],'date_index'=>$date_index));
+  myngl_myngl_sendMail($to, $subject, $html, $alt);
 
-    $banner = file_create_url($brand->field_brand_logo['und'][0]['uri']);
-
-    $gift_image = file_create_url($node->field_reward_congrats_image['und'][0]['uri']);
-   
-    $ic = array_shift(entity_load('field_collection_item', array($node->field_myngl_invitees['und'][$invitee_id]['value'])));
- 
-    $to = $ic->field_invitee_email_address['und'][0]['value'];
-
-    $firstname = $ic->field_invitee_first_name['und'][0]['value'];
-
-    $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $node->field_myngl_invitation_email['und'][0]['value'],'date_index'=>$date_index));
-
-    myngl_myngl_sendMail($to, $subject, $html, $alt);
-
-    if ($redirect != FALSE) {
-      drupal_set_message('Invitation Sent.');
-      drupal_goto('node/'.$myngl_id.'/invitees');
-    }
+  if ($redirect != FALSE) {
+    drupal_set_message('Invitation Sent.');
+    drupal_goto('node/'.$myngl_id.'/invitees');
+  }
 }
 
 function myngl_myngl_sendMail($to, $subject, $html, $alt) {
@@ -2173,21 +1969,14 @@ function myngl_myngl_sendMail($to, $subject, $html, $alt) {
 }
 
 function myngl_myngl_event_detail($myngl_id, $user_id){
-
   $myngl= node_load($myngl_id);
   $account = user_load($user_id);
-
   $output =  theme('overlay_myngl_event_detail', array('myngl' => $myngl, 'account' =>$account,));
-
   return $output;
-  //ajax_deliver($output);
-
 }
 
 
 function myngl_myngl_insight($nid){
-
-
   $result = db_query('SELECT user_id from myngl_participant_status
                       WHERE myngl_id = :nid',array(":nid"=>$nid));
   foreach ($result as $r){
@@ -2204,7 +1993,6 @@ function myngl_myngl_insight($nid){
     }
   }
 
-
   $result = db_query("SELECT user_id FROM myngl_chat_group_message
                       WHERE myngl_id = :nid", array(":nid"=>$nid));
   $group_chatters = array();
@@ -2213,7 +2001,6 @@ function myngl_myngl_insight($nid){
       $group_chatters [] = $r->user_id;
     }
   }
-
 
   $result = db_query("SELECT user_id, question, message FROM myngl_pov
                       WHERE myngl_id = :nid ORDER BY date ASC", array(":nid"=>$nid));
@@ -2229,27 +2016,16 @@ function myngl_myngl_insight($nid){
         'message' => $r->message,
                  );
     $povs[] = $pov;
-
   }
 
-
   $redeem_count = array();
-
-
-
-
-
   $node = node_load($nid);
   $total_count = array('by_admin' => 0, 'by_friend' =>0);
   $attend_count = array('by_admin' => 0, 'by_friend' =>0);
 
-  //print "<pre>";
   foreach ($node->field_myngl_invitees['und'] as $k => $i) {
-
     $ee = entity_load('field_collection_item', array($i['value']));
     $ic = array_shift($ee);
-
-    //print_r($ic);
 
     $invitee_uid = (isset($ic->field_invitee_user_account['und']))?$ic->field_invitee_user_account['und'][0]['uid']:"";
     $invitee['uid'] = $invitee_uid;
@@ -2262,11 +2038,6 @@ function myngl_myngl_insight($nid){
     $invitee['room_record'] = _myngl_myngl_room_record($invitee['uid'],$nid);
     $invitee['pre_questions'] = (isset($ic->field_pre_question_answers['und']))?unserialize($ic->field_pre_question_answers['und'][0]['value']):array();
     $invitee['post_questions'] = (isset($ic->field_post_question_answer['und']))?unserialize($ic->field_post_question_answer['und'][0]['value']):array();//
-    /*(if($invitee_uid = 21){
-      print "<pre>";
-      print_r($ic);
-      die;
-    }*/
 
     if ($invitee['invited_by_friend']==1){
       $total_count['by_friend'] ++;
@@ -2286,6 +2057,7 @@ function myngl_myngl_insight($nid){
                         array(":uid"=> $invitee['uid'],
                               ":nid"=> $nid,
                               ));
+
     $rewards = array();
     foreach($result as $r){
       $rewards[] = $r->reward_title;
@@ -2295,22 +2067,17 @@ function myngl_myngl_insight($nid){
       else {
         $redeem_count[$r->reward_title] =1;
       }
-
     }
     $invitee['redeem'] = $rewards;
-
-
     $invitees[] = $invitee;
   }
 
   $theater_questions = array();
-
   foreach ($node->field_theater_questions['und'] as $q){
     $theater_questions[] = $q['value'];
   }
 
   $pre_questions = array();
-
   foreach($node->field_pre_myngl_questions['und'] as $a){
     $pre_questions[] = db_query("SELECT field_question_value
                                FROM field_data_field_question
@@ -2319,10 +2086,7 @@ function myngl_myngl_insight($nid){
                                array(":eid"=>$a['value']))->fetchField();
   }
 
-
-
   $post_questions = array();
-
   foreach($node->field_post_myngl_questions['und'] as $a){
     $post_questions[] = db_query("SELECT field_question_value
                                FROM field_data_field_question
@@ -2347,11 +2111,8 @@ function myngl_myngl_insight($nid){
   $data['pre_questions'] = $pre_questions;
   $data['post_questions'] = $post_questions;
 
-
   $output = theme('myngl_myngl_insight', array('data'=>$data));
   return $output;
-
-
 }
 
 function _myngl_myngl_solo_chat_data($nid){
@@ -2368,10 +2129,8 @@ function _myngl_myngl_solo_chat_data($nid){
     $key = $uid_1."_".$uid_2;
     $chats[$key]['id_1'] = $uid_1;
     $chats[$key]['id_2'] = $uid_2;
-
     $chats[$key]['messages'][] = $r->from_user_id.": ".$r->message;
   }
-
   return $chats;
 }
 
@@ -2390,7 +2149,6 @@ function _myngl_myngl_group_chat_data($nid){
       $chats[$r->chat_id][] = $r->user_id.": ".$r->message;
     }
   }
-
   return $chats;
 }
 
@@ -2402,7 +2160,6 @@ function _myngl_myngl_room_record($uid,$nid){
               'Gifting Suite' =>0,
               'Lobby'=>0
                   );
-
   $result = db_query("SELECT enter_time, leave_time, room
                       FROM myngl_participant_room_record
                       WHERE myngl_id = :nid AND user_id = :uid
@@ -2417,7 +2174,6 @@ function _myngl_myngl_room_record($uid,$nid){
                             'leave_time'=>$r->leave_time,
                             'room'=>$r->room);
   }
-
 
   for( $i = 0; $i< count($result_array)-1; $i ++){
     if ($result_array[$i+1]['enter_time'] - $result_array[$i]['leave_time']<20){
@@ -2449,71 +2205,53 @@ function myngl_myngl_insight_pov_download($nid){
   drupal_add_http_header('Content-Type', 'text/csv');
   drupal_add_http_header('Content-Disposition', 'attachment;filename=pov.csv');
   $fp = fopen('php://output', 'w');
-
   fputcsv($fp, array("UID", "Question", "Message"), ",");
   foreach($result as $r){
-
     $pov = array(
         'user_id' => $r->user_id,
         'question' => $r->question,
         'message' => $r->message,
                  );
-
     fputcsv($fp, $pov, ",");
-
   }
-
   fclose($fp);
   drupal_exit();
 }
 
 function myngl_myngl_insight_solo_chat_download($nid){
-
   $chats = _myngl_myngl_solo_chat_data($nid);
-
   drupal_add_http_header('Content-Type', 'text');
   drupal_add_http_header('Content-Disposition', 'attachment;filename=solo_chat.txt');
   $fp = fopen('php://output', 'w');
-
   foreach($chats as $chat){
     fwrite($fp, "User " . $chat['id_1'] ." and User ".  $chat['id_2']."\n");
-
     foreach($chat['messages'] as $m){
       fwrite($fp, $m."\n");
     }
   fwrite($fp, "\n\n");
-
   }
-
   fclose($fp);
   drupal_exit();
 }
 
 function myngl_myngl_insight_group_chat_download($nid){
-
   $chats = _myngl_myngl_group_chat_data($nid);
-
   drupal_add_http_header('Content-Type', 'text');
   drupal_add_http_header('Content-Disposition', 'attachment;filename=group_chat.txt');
   $fp = fopen('php://output', 'w');
-
   foreach($chats as $chat_id =>$chat){
     fwrite($fp, "Chat ID: ". $chat_id."\n");
-
     foreach($chat as $m){
       fwrite($fp,"User ". $m."\n");
     }
   fwrite($fp, "\n\n");
-
   }
-
   fclose($fp);
   drupal_exit();
 }
 
 function myngl_myngl_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'myngl_node_form') {
-    // myngl alerts are configured in the "Myngl Alerts" tag.
     unset($form['field_myngl_alerts']);
     unset($form['field_pov_question']);
     unset($form['field_theater_questions']);

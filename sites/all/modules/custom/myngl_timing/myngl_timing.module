@@ -1,0 +1,132 @@
+<?php
+
+/*
+ * The original timing handling is scattered in diffirent files
+ * and make it hard to organized.
+ * We decided to refactor the code to make the timing handling more
+ * straightfoward.
+ *
+ * Currently, the timezone conversion of the field field_myngl_dates
+ * are set to "no conversion". Hence, everything will be stored as it is.
+ *
+ * This stored string is converted to an UTC timestamp when using strtotime
+ * function.
+ *
+ * However, we treated the entered time string as Eastern time, some manipulations
+ * are needed to keep things consistant.
+ *
+ * Here are the methods to get the wanted time:
+ *
+ * 1) Convert stored date to eastern time with timezone shorthand:
+ * $timestamp= strtotime(field_myngl_dates .  "America/New_York");
+ * date_default_timezone_set("America/New_York"); // In order to make "T" work.
+ * $result = date('m.d.Y @ h:i a T', $timestamp);
+ * date_default_timezone_set("UTC");
+ *
+ * 2) Get the timestamp of this date in order to compare it with now()
+ * $timestamp = strtotime(field_myngl_dates .  "America/New_York");
+
+ */
+
+function myngl_timing_menu(){
+  $items['myngl_timing_test'] = array(
+    'title' => 'Timing Test',
+    'page callback' => 'myngl_timing_test',
+    'page arguments' => array(),
+    'access callback' => TRUE,
+  );
+  return $items;
+}
+
+function myngl_timing_long_date($date){
+  $timestamp= strtotime($date . " America/New_York");
+  date_default_timezone_set("America/New_York");
+  $result = date('m.d.Y @ h:i a T', $timestamp);
+  date_default_timezone_set("UTC");
+  return $result;
+}
+
+
+function myngl_timing_short_date($date){
+  return date('m.d.Y',strtotime($date));
+}
+
+
+function myngl_timing_panel_date($timestamp){
+  date_default_timezone_set("America/New_York");
+  $result = date("Y-m-d h:i:s a",$timestamp);
+  date_default_timezone_set("UTC");
+  return $result;
+}
+
+
+function myngl_timing_addthis_date($date) {
+  date_default_timezone_set("America/New_York");
+  $r = date('d-m-Y G:i:s',myngl_timing_strtotime($date));
+  date_default_timezone_set("UTC");
+  return $r;
+}
+
+function myngl_timing_addthis_end_date($date, $event_length_minutes) {
+  date_default_timezone_set("America/New_York");
+  $r = date('d-m-Y G:i:s', myngl_timing_strtotime($date) + intval($event_length_minutes) * 60 );
+  date_default_timezone_set("UTC");
+  return $r;
+}
+
+
+
+function myngl_timing_strtotime($date){
+   return strtotime($date . " America/New_York");
+}
+
+
+function myngl_timing_timestamp_to_est($timestamp){
+  date_default_timezone_set("America/New_York");
+  $r = date('n/d, Y - G:i:s', $timestamp);
+  date_default_timezone_set("UTC");
+  return $r;
+
+
+}
+
+
+function myngl_timing_test(){
+  $node = node_load(16);
+  $str = $node->field_myngl_dates['und'][0]['value'];
+  $str_2 = $node->field_myngl_dates['und'][1]['value'];
+  //$timestamp = strtotime($str);
+  //$timestamp_est = strtotime($str. " America/New_York");
+
+  $timestamp= strtotime($str .  " America/New_York");
+  date_default_timezone_set("America/New_York");
+
+  $result = date('m.d.Y @ h:i a T', $timestamp);
+  date_default_timezone_set("UTC");
+
+  $timestamp_2= strtotime($str_2 .  " America/New_York");
+  date_default_timezone_set("America/New_York");
+
+  $result_2 = date('m.d.Y @ h:i a T', $timestamp_2);
+  date_default_timezone_set("UTC");
+  /*
+
+  date_default_timezone_set("America/New_York");
+  $daylight = ((date("I",$timestamp)==1)?" Daylight":" Not daylight");
+
+  $r = array(
+    'str' => $str,
+    'timestamp' => $timestamp,
+    'timestamp_est'=> $timestamp_est,
+    'daylight' => $daylight,
+    'now_in_EST' => date('m.d.Y @ h:i a T', $timestamp_est),
+    'daylight_in_2_months' =>((date("I",$timestamp_est + 5184000)==1)?" Daylight":" Not daylight"),
+    'in_two_month' => date('m.d.Y @ h:i a T', $timestamp_est + 5184000),
+  );
+  */
+  $k = "<pre>". $str . " : " .$result. "</pre>" ."<pre>". $str_2 . " : " .$result_2. "</pre>";
+  return $k;
+
+
+}
+

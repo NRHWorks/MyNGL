@@ -1,4 +1,3 @@
-
 (function ($) {
   $(document).ready( function() {
     setInterval(function() { pov.fetch(); }, 2000); 
@@ -35,7 +34,6 @@ var pov = (function ($) {
           }
         });
       }
-
     }, 
     post : function(uid) {
       var myngl_id = Drupal.settings.myngl_id;

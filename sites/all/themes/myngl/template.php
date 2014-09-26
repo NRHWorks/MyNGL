@@ -26,30 +26,6 @@ function myngl_preprocess_page(&$vars) {
 
     $brand = node_load($myngl->field_myngl_brand['und'][0]['nid']);
     $vars['brand'] = $brand;
-
   }
 }
 
-function myngl_long_date($date) {
-  date_default_timezone_set("America/New_York");
-  $timestamp = strtotime($date);
-
-  // This thing will return EST if using EST.
-  $long_date = date('m.d.Y @ h:i a T', $timestamp);// . ((date("I",$timestamp)==1)?" EDT":" EST");
-  date_default_timezone_set("UTC");
-  return $long_date;
-  //return date('m.d.Y @ h:i a',strtotime($date)) . ' EST';
-  // Used to be  m.d.Y @ g:i a. I changed it so that upcoming.js upcoming.update_overlay_short_date works.
-}
-
-function myngl_short_date($date) {
-  return date('m.d.Y',strtotime($date));
-}
-
-function myngl_addthis_date($date) {
-  return date('d-m-Y G:i:00',strtotime($date));
-}
-
-function myngl_addthis_end_date($date) {
-  return date('d-m-Y G:i:00',(strtotime($date)+3600));
-}

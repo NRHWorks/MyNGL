@@ -210,16 +210,6 @@ var theater = (function ($) {
           }
         }
       });
-
-    },
-    downloads_left : function (value) {
-      //console.log("downloads_left called");
-      return false;
-    },
-
-    downloads_right : function (value) {
-      //console.log("downloads.right called");
-      return false;
     }
   }
 }(jQuery));

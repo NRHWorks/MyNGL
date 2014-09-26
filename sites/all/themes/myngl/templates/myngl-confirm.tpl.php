@@ -1,10 +1,6 @@
 <?php
   global $user;
-  $event_timestamp = strtotime($node->field_myngl_dates['und'][$date_index]['value']);
-  date_default_timezone_set("America/New_York");
-  $daylight_saving = (date("I",$event_timestamp)==1)?" EDT":" EST";
-  date_default_timezone_set("UTC");
-  $event_date = date('m.d.Y @ g:i a', $event_timestamp) . $daylight_saving;
+  $event_date = myngl_timing_long_date($node->field_myngl_dates['und'][$date_index]['value']);
 ?>
 
 <div id="rsvp-confirm-wrapper">
@@ -39,11 +35,9 @@
     <?php
       $i = 0;
       foreach ($node->field_myngl_dates['und'] as $d) :
-
-        $event_timestamp = strtotime($d['value']);
         print "<div>";
         print "<input type='radio' name='change-date-radio' value='".$d['value']."' count='$i' style='margin-left:60px;margin-right:10px;'>";
-        print '<div style="font-size: 18px; display: inline;">' . myngl_long_date($d['value']) . '</div><br /><br />';
+        print '<div style="font-size: 18px; display: inline;">' . myngl_timing_long_date($d['value']) . '</div><br /><br />';
         print "</div>";
         $i++;
       endforeach;

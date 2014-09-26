@@ -21,7 +21,7 @@ addthisevent.settings({
       <div class="upcoming-myngl" id='upcoming-myngl-<?php print $m['myngl']->nid;?>'>
         <div class="upcoming-myngl-wrapper" id="upcoming-myngl-wrapper-<?php print $m['myngl']->nid;?>">
           <span class="title"><?php print $m['brand']->title; ?></span><br />
-          <span class="date short-date"><?php print myngl_short_date($m['date']); ?></span><br />
+          <span class="date short-date"><?php print myngl_timing_short_date($m['date']); ?></span><br />
           <div class="upcoming-myngl-border">
             <div class="upcoming-myngl-background" style="background-image: url(<?php print image_style_url('myngl_upcoming_overlay', $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri']); ?>)" onclick="jQuery('#upcoming-myngl-cover-<?php print $k; ?>').toggle();">
               <div class="upcoming-myngl-cover" id="upcoming-myngl-cover-<?php print $k; ?>">
@@ -63,7 +63,7 @@ addthisevent.settings({
               <span class="title"><?php print $m['myngl']->title; ?></span><br>
               <?php print theme_image_style(array('style_name' => 'myngl_upcoming_overlay_small', 'path' => $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri'], 'height' => null, 'width' => null)); ?><br />
               <div class="upcoming-myngls-pane-info">
-                <span class="date long-date"><?php print myngl_long_date($m['date']); ?></span>&nbsp;
+                <span class="date long-date"><?php print myngl_timing_long_date($m['date']); ?></span>&nbsp;
                 <a href="#" onclick="return myngl_upcoming.change_date(<?php print $k; ?>)">Select Another Date</a><br><br>
                 <span class="info-header">SUMMARY</span><br>
                 <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br><br>
@@ -76,9 +76,9 @@ addthisevent.settings({
               <a href="<?php global $base_url; print $base_url;?>"
                  title="Add to Calendar"
                  class="addthisevent">
-                <span class="_start"><?php print myngl_addthis_date($m['date']); ?></span>
-                <span class="_end"><?php print myngl_addthis_end_date($m['date']); ?></span>
-                <span class="_zonecode"><?php print (date("I", strtotime($m['date']))==1)?15:15 ;?></span>   <!--15 is UTC-5 (EST), or 11 is UTC-6 (EDT) ... never mind. i think 11 is the right code. DST doesn't matter it seems..-->
+                <span class="_start"></span>
+                <span class="_end"></span>
+                <span class="_zonecode">15</span>
                 <span class="_summary"><?php print $m['myngl']->title; ?></span>
                 <span class="_description"><?php print strip_tags($m['myngl']->field_myngl_description['und'][0]['safe_value']); ?></span>
                 <span class="_location"><?php print $m['brand']->title; ?>.myngl.com</span>
@@ -211,7 +211,7 @@ addthisevent.settings({
               <span class="title"><?php print $m['myngl']->title; ?></span><br>
               <?php print theme_image_style(array('style_name' => 'myngl_upcoming_overlay_small', 'path' => $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri'], 'height' => null, 'width' => null)); ?><br />
               <div id="upcoming-myngls-pane-info-<?php print $k; ?>">
-                <!--<span class="date">Current <?php print myngl_long_date($m['date']); ?></span><br><br>
+                <!--<span class="date">Current <?php print myngl_timing_long_date($m['date']); ?></span><br><br>
                 This Myngl will also run on the following dates.  Pick one that will work for you: <br><br>-->
 
                 <div id="myngl-myngl-change-date-wrapper-<?php print $k; ?>">

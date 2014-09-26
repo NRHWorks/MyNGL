@@ -1,22 +1,15 @@
 var selected_reward_id = -1;
 var update_status_interval;
 
-
-
-
 (function ($) {
   $(document).ready( function() {
     if (Drupal.settings.developer_mode==1) {
       $('audio').trigger('pause');
         $('.fa-pause').removeClass('fa-pause').addClass('fa-play');
         background_music_playing = false;
-
     }
 
-
-
     $('li#gifting-suite').removeClass("inactive").addClass("active");
-
     $('form#myngl-myngl-post-questions-form input#edit-submit').attr("value", "NEXT");
     $('form#myngl-myngl-post-questions-form').removeAttr('method').removeAttr('action');//.attr("onsubmit",'rewards_overlay.form_submit()');
     $('form#myngl-myngl-post-questions-form').submit(function(event){rewards_overlay.form_submit(event);});
@@ -24,7 +17,7 @@ var update_status_interval;
 
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Gifting Suite");
     update_status_interval = setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Gifting Suite");},20000);
-    
+
     $("#share-facebook").click(function(event) {  
         event.preventDefault();
         fb_href = $(this).attr('href');
@@ -37,7 +30,6 @@ var update_status_interval;
   })
 }(jQuery));
 
-
 var rewards_overlay = (function($){
   return {
     show : function (entity_id, points_needed){
@@ -45,9 +37,7 @@ var rewards_overlay = (function($){
       $('#gifting-series-overlay #questions').css('display','none');
       $('#gifting-series-overlay #gift-and-points-info').css('display','block');
       $('#reward-id-'+entity_id).css('display', 'block');
-
       var myngl_total_points = Drupal.settings.total_points;
-
       if (myngl_total_points < points_needed) {
         $('#gifting-series-overlay #redeem').css('display','none');
       }
@@ -55,9 +45,7 @@ var rewards_overlay = (function($){
         $('#gifting-series-overlay #redeem').css('display','block');
         selected_reward_id = entity_id;
       }
-
       $("#gifting-series-overlay").fadeIn(500);
-
     },
 
     close : function(){
@@ -90,12 +78,10 @@ var rewards_overlay = (function($){
 
       $('#gifting-series-overlay #questions').fadeOut(500);
       $('#gifting-series-overlay #congrats').fadeIn(500);
-      //$('#gifting-series-overlay .close').fadeOut(500);
 
       myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Gift Redeemed");
       clearInterval(update_status_interval);
       return false;
-
     },
 
     email_form_submit : function(event){
