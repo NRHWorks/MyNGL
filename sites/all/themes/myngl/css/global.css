@@ -372,12 +372,20 @@ body ::-webkit-scrollbar-thumb {
     margin: 50px auto 0 auto;
     padding: 60px 60px 10px 60px;
     width: 730px;
+    position:relative;
   }
 
-  #content-left, #content-right {
+  #content-left{
     float: left;
     padding: 15px;
     width: 330px;
+  }
+
+  #content-right{
+    position:absolute;
+
+    left:440px;
+    top:127px;
   }
 
   #content-left {
@@ -1146,6 +1154,8 @@ body ::-webkit-scrollbar-thumb {
   .event-logo img {
     float:left;
     margin: 0 0 0px 40px;
+    width:100px;
+    height:80px;
   }
 
   .page-myngl-event-lobby .event-logo img {

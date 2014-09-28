@@ -6,7 +6,7 @@ var next_scheduled_event_update_in_progress = false;
   $(document).ready( function() {
     next_scheduled_myngl_id = Drupal.settings.next_scheduled_myngl_id;
     current_server_time = Drupal.settings.current_server_time;
-    upcoming.update_overlay_short_date();
+    //upcoming.update_overlay_short_date();
     setInterval(function() {
           current_server_time ++ ;
           upcoming.count_down();
@@ -40,9 +40,10 @@ var upcoming = (function ($) {
         $(this).find('.addthisevent-drop ._start').html(calendar_date);
         $(this).find('.addthisevent-drop ._end').html(calendar_end_date);
         $(this).find('span.addthisevent_dropdown').remove();
-        addthisevent.refresh();
+
 
       });
+      addthisevent.refresh();
     },
 
     count_down: function(){

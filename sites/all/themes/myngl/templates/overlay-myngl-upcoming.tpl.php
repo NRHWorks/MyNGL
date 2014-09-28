@@ -109,7 +109,9 @@ addthisevent.settings({
               <span class="title"><?php print $m['myngl']->title; ?></span><br><br>
 
               <span class="info-header">SUMMARY</span><br>
-              <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br /><br />
+              <div style="height:190px; overflow: auto;">
+                <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?>
+              </div><br /><br />
               <hr>
               <strong>IMAGES <i class="fa fa-picture-o"></i></strong></a>
               <a href="#" onclick="return myngl_upcoming.upload_videos(<?php print $k; ?>);">VIDEO <i class="fa fa-film"></i></a>
@@ -143,7 +145,9 @@ addthisevent.settings({
                <span class="title"><?php print $m['myngl']->title; ?></span><br><br>
 
               <span class="info-header">SUMMARY</span><br>
-              <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br /><br />
+              <div style="height:190px; overflow: auto;">
+                <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?>
+              </div><br /><br />
               <hr>
               <a href="#" onclick="return myngl_upcoming.upload_images(<?php print $k; ?>);">IMAGES <i class="fa fa-picture-o"></i></a>
               <a href="#" onclick="return myngl_upcoming.upload_videos(<?php print $k; ?>);">VIDEO <i class="fa fa-film"></i></a>
@@ -177,7 +181,9 @@ addthisevent.settings({
                <span class="title"><?php print $m['myngl']->title; ?></span><br><br>
 
               <span class="info-header">SUMMARY</span><br>
-              <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?><br /><br />
+              <div style="height:190px; overflow: auto;">
+                <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?>
+              </div><br /><br />
               <hr>
               <a href="#" onclick="return myngl_upcoming.upload_images(<?php print $k; ?>);">IMAGES <i class="fa fa-picture-o"></i></a>
               <strong>VIDEO <i class="fa fa-film"></i></strong>

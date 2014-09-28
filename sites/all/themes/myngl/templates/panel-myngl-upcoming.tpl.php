@@ -53,11 +53,13 @@
   <div style="position:absolute; width:340px; height:1px; background-color:#999999; left:2px;top:363px;"></div>
   <div style="position:absolute; width:340px; height:1px; background-color:#999999; left:2px;top:417px;"></div>
 
-  <div style="margin-bottom:40px;">Next Myngl on
-    <?php //print $myngl->field_myngl_dates['und'][0]['value']; ?>
-    <?php print myngl_timing_panel_date($rsvp_date); ?>
+  <div style = "margin-left:30px">
+    <div style="margin-bottom:40px;">Next Myngl on
+      <?php //print $myngl->field_myngl_dates['und'][0]['value']; ?>
+      <?php print myngl_timing_panel_date($rsvp_date); ?>
+    </div>
+    <?php print theme_image_style(array('style_name' => 'brand_logo', 'path' => $brand->field_brand_logo['und'][0]['uri'], 'height' => null, 'width' => null)).'<br><br>'; ?>
   </div>
-  <?php print theme_image_style(array('style_name' => 'brand_logo', 'path' => $brand->field_brand_logo['und'][0]['uri'], 'height' => null, 'width' => null)).'<br><br>'; ?>
   <div id="count-down">
     Myngl Event will start in
     <div id="time"></div>
