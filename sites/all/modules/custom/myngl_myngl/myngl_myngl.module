@@ -459,14 +459,53 @@ function _myngl_myngl_get_next_scheduled_myngl($uid){
   }
 
   $myngl_event_dates = array();
+
   foreach($invitee_ids as $i){
     $myngl_event_dates[$i->entity_id] = myngl_timing_strtotime(db_query(
       "SELECT field_invitee_rsvp_date_value from {field_data_field_invitee_rsvp_date} WHERE entity_id = :eid",
       array(':eid'=>$i->entity_id))->fetchField());
   }
+
   asort($myngl_event_dates,SORT_NUMERIC);
-  $next_event_invitee_id = key($myngl_event_dates);
-  $return_array['timestamp'] = $myngl_event_dates[$next_event_invitee_id];
+
+  $myngl_event_dates_sorted = array();
+  foreach($myngl_event_dates as $eid => $timestamp){
+    $myngl_event_dates_sorted[] = array('eid'=>$eid, 'timestamp' => $timestamp);
+  }
+
+  $next_event_found = FALSE;
+  $this_index = 0;
+
+  $now = time();
+  while(!$next_event_found && $this_index < count($myngl_event_dates_sorted) - 1){
+
+    // This index timestamp is in the future
+    if ($myngl_event_dates_sorted[$this_index]['timestamp'] > $now){
+      $next_event_found = TRUE;
+    }
+    // Check if this event is still in progress
+    else {
+      $this_nid = db_query("SELECT entity_id
+                            FROM {field_data_field_myngl_invitees}
+                            WHERE field_myngl_invitees_value = :eid LIMIT 1",
+                            array(":eid" =>$myngl_event_dates_sorted[$this_index]['eid']))->fetchField();
+
+      $this_event_length = db_query ("SELECT field_event_length_value
+                                      FROM field_data_field_event_length
+                                      WHERE entity_id = :nid LIMIT 1",
+                                      array(":nid"=>$this_nid))->fetchField() * 60;
+
+      if ($myngl_event_dates_sorted[$this_index]['timestamp'] + $this_event_length > $now){
+        $next_event_found = TRUE;
+      }
+      else{
+        $this_index++;
+      }
+    }
+  }
+
+  $next_event_invitee_id = $myngl_event_dates_sorted[$this_index]['eid'];
+  $return_array['timestamp'] = $myngl_event_dates_sorted[$this_index]['timestamp'];
   $return_array['nid'] = db_query("SELECT entity_id FROM {field_data_field_myngl_invitees} WHERE field_myngl_invitees_value = $next_event_invitee_id LIMIT 1")->fetchField();
   return $return_array;
 }
@@ -507,14 +546,20 @@ function myngl_myngl_upcoming_overlay($uid) {
     foreach ($sub_result as $s) {
       $myngl = node_load($s->entity_id);
 
-      $myngl_brand = array(
-        'myngl' => $myngl,
-        'date' => $invitee_collection->field_invitee_rsvp_date['und'][0]['value'],
-        'brand' => node_load($myngl->field_myngl_brand['und'][0]['nid']),
-        'facebook_event_id' => $myngl->field_facebook_event_id['und'][0]['value'],
-      );
+      // Skip the ones which already passed. (if the node is not in developer mode
 
-      $myngls[] = $myngl_brand;
+      $event_end_time = myngl_timing_strtotime( $invitee_collection->field_invitee_rsvp_date['und'][0]['value']) +
+                        $myngl->field_event_length['und'][0]['value'] * 60;
+      if ($event_end_time > time() || $myngl->field_show_pov_and_ugc_borders['und'][0]['value'] == 1){
+        $myngl_brand = array(
+                      'myngl' => $myngl,
+                      'date' => $invitee_collection->field_invitee_rsvp_date['und'][0]['value'],
+                      'brand' => node_load($myngl->field_myngl_brand['und'][0]['nid']),
+                      'facebook_event_id' => $myngl->field_facebook_event_id['und'][0]['value'],
+                      );
+        $myngls[] = $myngl_brand;
+      }
+
     }
   }
   $output = theme('overlay_myngl_upcoming', array('myngls' => $myngls));
