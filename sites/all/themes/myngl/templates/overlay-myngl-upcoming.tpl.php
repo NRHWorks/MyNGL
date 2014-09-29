@@ -55,7 +55,7 @@ addthisevent.settings({
 
         </div>
 
-        <div class="upcoming-myngls-pane" id="upcoming-myngls-pane-details-<?php print $k; ?>">
+        <div class="upcoming-myngls-pane upcoming-myngls-pane-details-<?php print $m['myngl']->nid; ?>" id="upcoming-myngls-pane-details-<?php print $k; ?>">
           <div class="upcoming-myngls-pane-content">
             <a href="#" onclick="return myngl_upcoming.close_pane();" class="overlay-close">X</a>
             <div class="upcoming-pane-details">
@@ -101,7 +101,7 @@ addthisevent.settings({
           </div>
         </div>
 
-        <div class="upcoming-myngls-pane" id="upcoming-myngls-pane-upload-images-<?php print $k; ?>">
+        <div class="upcoming-myngls-pane upcoming-myngls-pane-upload-images-<?php print $m['myngl']->nid; ?>" id="upcoming-myngls-pane-upload-images-<?php print $k; ?>">
           <div class="upcoming-myngls-pane-content upload-pane">
             <a href="#" onclick="return myngl_upcoming.close_pane();" class="overlay-close">X</a>
             <div class="upcoming-pane-details">

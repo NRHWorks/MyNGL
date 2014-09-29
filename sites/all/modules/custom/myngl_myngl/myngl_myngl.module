@@ -530,6 +530,9 @@ function myngl_myngl_upcoming_overlay_upload_id($uid, $nid) {
       }
     }
   }
+
+  
+
 }
 
 function myngl_myngl_upcoming_overlay($uid) {

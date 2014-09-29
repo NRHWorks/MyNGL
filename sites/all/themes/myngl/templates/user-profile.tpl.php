@@ -13,7 +13,8 @@
   <script type="text/javascript">
     jQuery(document).ready(function() {
       myngl.overlay('upcoming-myngls', 600, 750);
-      myngl_upcoming.upload_images(<?php print myngl_myngl_upcoming_overlay_upload_id($uid, $_GET['upload']); ?>);
+      //myngl_upcoming.upload_images(<?php print myngl_myngl_upcoming_overlay_upload_id($uid, $_GET['upload']); ?>);
+      myngl_upcoming.upload_images_auto(<?php print $_GET['upload']; ?>);
     });
   </script>
 <?php endif; ?>
@@ -23,7 +24,8 @@
   <script type="text/javascript">
     jQuery(document).ready(function() {
       myngl.overlay('upcoming-myngls', 600, 750);
-      myngl_upcoming.details(<?php print myngl_myngl_upcoming_overlay_upload_id($uid, $_GET['view-detail']); ?>);
+      //myngl_upcoming.details(<?php print myngl_myngl_upcoming_overlay_upload_id($uid, $_GET['view-detail']); ?>);
+      myngl_upcoming.details_auto(<?php print $_GET['view-detail']; ?>);
     });
   </script>
 <?php endif; ?>
