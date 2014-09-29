@@ -20,7 +20,7 @@ var filter_answers = [];
 
     }
 
-    $.getScript('http://www.youtube.com/iframe_api', function(){social_area.create_youtube_player()});
+    $.getScript('https://www.youtube.com/iframe_api', function(){social_area.create_youtube_player()});
 
 
     num_of_ugc = $(".myngl-event-ugc-content").length;
@@ -209,6 +209,13 @@ var social_area = (function ($) {
   return {
 
     create_youtube_player: function(){
+
+      if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined') {
+        window.onYouTubeIframeAPIReady = function() {
+          social_area.create_youtube_player();
+        };
+        return false;
+      }
 
       $("iframe").each(function(){
 

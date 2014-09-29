@@ -65,7 +65,9 @@ body.page-myngl-event-theater{
 #theater-body #player {
   position: absolute;
   top: 105px;
-  left: 100px;
+  left: 105px;
+  height:490px;
+  width:830px;
   display: none;
 }
 
@@ -150,61 +152,8 @@ body.page-myngl-event-theater #see-more{
 
   ?>
   
-    <div id="player"></div>
-    <script>
+    <iframe id="player"></iframe>
 
-    jQuery(document).ready( function() {
-      var src = jQuery("#iframe-movie").attr('src');
-      jQuery("#iframe-movie").attr('src',src+"&enablejsapi=1");
-    });
-
-    //Load player api asynchronously.
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    var done = false;
-    var player;
-    var ytplayer;
-    function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '479',
-          width: '852',
-          playerVars: { 'autoplay': 1, 'controls': 0 },
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
-        });
-
-        ytplayer = new YT.Player('iframe-movie', { events: { 'onStateChange' : onIframePlayerStateChange }});
-    }
-
-    function onIframePlayerStateChange(evt) {
-      if (evt.data == 0) {
-        theater.show_menu_and_additional_items();
-      }
-    }
-
-    function onPlayerReady(evt) {
-        //evt.target.playVideo();
-    }
-    function onPlayerStateChange(evt) {
-//        if (evt.data == YT.PlayerState.PLAYING && !done) {
-//            setTimeout(stopVideo, 6000);
-//            done = true;
-//        }
-      player.startVideo();
-    }
-    function stopVideo() {
-        player.stopVideo();
-    }
-    function startVideo() {
-        player.startVideo();
-    }
-
-
-</script>
 
 </div>
 <div id="question-form-wrapper">

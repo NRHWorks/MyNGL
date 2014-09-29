@@ -1,9 +1,20 @@
 var additional_videos_offset = 0;
 var newest_video = null;
 var viewer = null;
+var main_youtube_player = null;
+
 
 (function ($) {
   $(document).ready( function(){
+
+    if ($("iframe.media-youtube-player").length !=0) {
+      var src = $("iframe.media-youtube-player").attr('src');
+      $("iframe.media-youtube-player").attr("src", src + '&enablejsapi=1');
+      $.getScript('http://www.youtube.com/iframe_api', function(){
+        theater.create_youtube_player()});
+    }
+
+
     if ($.cookie("myngl_done_theater_"+Drupal.settings.myngl_id)==1) {
       $('#myngl-theater-see-more').css('display','block');
       $("#question-form-wrapper").hide();
@@ -90,6 +101,7 @@ var viewer = null;
     $("#myngl-theater-see-more .additional-video a").click(function(event) {
         event.preventDefault();       
         $("#player").show();
+
         $("#theater-body .field-name-field-theater").hide();
                 
         var aID = $(this).attr('href');
@@ -158,6 +170,51 @@ var viewer = null;
 
 var theater = (function ($) {
   return {
+
+    create_youtube_player: function(){
+      // Wait untill the api is loaded.
+      if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined') {
+        window.onYouTubeIframeAPIReady = function() {
+          theater.create_youtube_player();
+        };
+        return false;
+      }
+
+
+
+      $("iframe").each(function(){
+        if ($(this).attr("id")!= 'player') {
+          var id = $(this).attr('id');
+        console.log(id);
+        main_youtube_player = new YT.Player(id, {
+          events: {
+          'onStateChange': theater.onPlayerStateChange
+          }
+        });
+        }
+
+
+      });
+
+
+    },
+    onPlayerStateChange: function(e){
+      if (e.data ==0) {
+
+        theater.show_menu_and_additional_items()
+      }
+      /*  e.data can be:
+        -1 (unstarted)
+         0 (ended)
+         1 (playing)
+         2 (paused)
+         3 (buffering)
+      */
+
+    },
+
+
+
     show_latest_video: function(){
       //console.log(newest_video);
       viewer.callMethod('load', 'video', parseInt(newest_video.id));
