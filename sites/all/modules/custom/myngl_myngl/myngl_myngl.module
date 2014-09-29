@@ -2078,6 +2078,23 @@ function myngl_myngl_insight($nid){
 
 function myngl_myngl_insight_analytic_get_data($nid){
 
+
+  $description_mapping = array(
+
+      'visiting_lobby' => "Visit lobby",
+      'visiting_social' => "Visit lounge",
+      'opening_ugc_win' => "View UGC window",
+      'opening_pov_win' => "View POV window",
+      'visiting_theate' => "Visit theater",
+      'visiting_activi' => "Visit playroom",
+      'playroom_activi' => "Play game",
+      'sending_ct_msg' => "Send chat message",
+      'upload_ugc'=>"Upload UGC content",
+
+
+  );
+
+
   $result = db_query('SELECT user_id from myngl_participant_status
                       WHERE myngl_id = :nid',array(":nid"=>$nid));
   foreach ($result as $r){
@@ -2170,6 +2187,23 @@ function myngl_myngl_insight_analytic_get_data($nid){
       }
     }
     $invitee['redeem'] = $rewards;
+
+
+    $result2 = db_query("SELECT points, description FROM myngl_rewards_history
+                WHERE user_id =:uid AND myngl_id = :nid
+                ORDER BY timestamp ASC",
+                array(":uid"=>$invitee_uid,
+                      ":nid"=>$nid));
+
+
+    $history = array();
+
+    foreach($result2 as $r){
+      $description = isset($description_mapping[$r->description])? $description_mapping[$r->description]: $r->description;
+      $history[] = array('points'=>$r->points,'description'=>$description);
+    }
+    $invitee['activity_history'] = $history;
+
     $invitees[] = $invitee;
   }
 

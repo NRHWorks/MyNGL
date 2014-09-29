@@ -96,8 +96,19 @@ h3 {
   <?php endforeach; ?>
 </table>
 
+<h3>User Activities:</h3>
 
-
+<?php
+  foreach ($data['invitees'] as $i){
+    if($i['uid']!=NULL){
+      print "<h5>User " . $i['uid'] . "</h5>";
+      foreach($i['activity_history'] as $h){
+        print $h['points']." points -- ".$h['description']."<br/>";
+      }
+    print "<br/><br/><hr/>";
+    }
+  }
+?>
 
 
 
