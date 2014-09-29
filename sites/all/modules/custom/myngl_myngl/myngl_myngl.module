@@ -170,7 +170,7 @@ function myngl_myngl_menu() {
     'access callback' => 'myngl_myngl_node_edit_tag_access',
     'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
-    'weight' => 99
+    'weight' => 97
   );
 
   $items['node/%/invitees'] = array(
@@ -182,15 +182,27 @@ function myngl_myngl_menu() {
     'type' => MENU_LOCAL_TASK,
   );
 
+
+
+  $items['node/%/analytics'] = array(
+    'title' => 'Analytics',
+    'page callback' => 'myngl_myngl_analytics',
+    'page arguments' => array(1),
+    'access callback' => 'myngl_myngl_node_edit_tag_access',
+    'access arguments' => array(1),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 98,
+  );
   $items['node/%/insight'] = array(
-    'title' => 'Analytics and Insight',
+    'title' => 'Insight',
     'page callback' => 'myngl_myngl_insight',
     'page arguments' => array(1),
     'access callback' => 'myngl_myngl_node_edit_tag_access',
     'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
-    'weight' => 100,
+    'weight' => 99,
   );
+
 
   $items['myngl/%/event-detail/%'] = array(
     'title' => '',
@@ -223,6 +235,27 @@ function myngl_myngl_menu() {
   $items['node/%/insight/group-chat-download'] = array(
     'title' => 'Group Chat Data',
     'page callback' => 'myngl_myngl_insight_group_chat_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+  $items['node/%/insight/theater-questions-download'] = array(
+    'title' => 'Theater Questions Data',
+    'page callback' => 'myngl_myngl_insight_theater_questions_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+  $items['node/%/insight/pre-questions-download'] = array(
+    'title' => 'Pre-Myngl Questions Data',
+    'page callback' => 'myngl_myngl_insight_pre_questions_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+  $items['node/%/insight/post-questions-download'] = array(
+    'title' => 'Post-Myngl Questions Data',
+    'page callback' => 'myngl_myngl_insight_post_questions_download',
     'page arguments' => array(1),
     'access callback' => TRUE,
   );
@@ -281,6 +314,11 @@ function myngl_myngl_theme() {
 
   $items['myngl_myngl_insight'] = array(
                           'template' => 'myngl-myngl-insight',
+                          'variables' => array ('data' =>null),
+                          'path' => 'sites/all/themes/myngl/templates',
+                        );
+  $items['myngl_myngl_analytics'] = array(
+                          'template' => 'myngl-myngl-analytics',
                           'variables' => array ('data' =>null),
                           'path' => 'sites/all/themes/myngl/templates',
                         );
@@ -1908,6 +1946,7 @@ function myngl_myngl_admin_paths() {
     'node/*/theater-message' => TRUE,
     'node/*' => TRUE,
     'node/*/insight' => TRUE,
+    'node/*/analytics' => TRUE,
     'node/*/myngl-alerts' =>TRUE,
   );
 }
@@ -2024,7 +2063,21 @@ function myngl_myngl_event_detail($myngl_id, $user_id){
 }
 
 
+function myngl_myngl_analytics($nid){
+  $data = myngl_myngl_insight_analytic_get_data($nid);
+  $output = theme('myngl_myngl_analytics', array('data'=>$data));
+  return $output;
+}
+
+
 function myngl_myngl_insight($nid){
+  $data = myngl_myngl_insight_analytic_get_data($nid);
+  $output = theme('myngl_myngl_insight', array('data'=>$data));
+  return $output;
+}
+
+function myngl_myngl_insight_analytic_get_data($nid){
+
   $result = db_query('SELECT user_id from myngl_participant_status
                       WHERE myngl_id = :nid',array(":nid"=>$nid));
   foreach ($result as $r){
@@ -2159,8 +2212,7 @@ function myngl_myngl_insight($nid){
   $data['pre_questions'] = $pre_questions;
   $data['post_questions'] = $post_questions;
 
-  $output = theme('myngl_myngl_insight', array('data'=>$data));
-  return $output;
+  return $data;
 }
 
 function _myngl_myngl_solo_chat_data($nid){
@@ -2246,6 +2298,23 @@ function _myngl_myngl_room_record($uid,$nid){
   return $record;
 }
 
+
+function myngl_myngl_insight_theater_questions_download($nid){
+  $result = db_query("SELECT field_theater_questions_value FROM field_data_field_theater_questions
+                      WHERE entity_id = :nid", array(":nid"=>$nid));
+
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=theater-questions.txt');
+  $fp = fopen('php://output', 'w');
+
+  foreach($result as $r){
+     fwrite($fp, $r->field_theater_questions_value."\n");
+  }
+  fclose($fp);
+  drupal_exit();
+}
+
+
 function myngl_myngl_insight_pov_download($nid){
   $result = db_query("SELECT user_id, question, message FROM myngl_pov
                       WHERE myngl_id = :nid ORDER BY date ASC", array(":nid"=>$nid));
@@ -2297,6 +2366,75 @@ function myngl_myngl_insight_group_chat_download($nid){
   fclose($fp);
   drupal_exit();
 }
+
+
+function myngl_myngl_insight_pre_questions_download($nid){
+  $node = node_load($nid);
+
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=pre-myngl-questions.csv');
+
+  $fp = fopen('php://output', 'w');
+  $pre_questions = array('User ID');
+  foreach($node->field_pre_myngl_questions['und'] as $a){
+    $pre_questions[] = db_query("SELECT field_question_value
+                               FROM field_data_field_question
+                               WHERE entity_id = :eid
+                               LIMIT 1",
+                               array(":eid"=>$a['value']))->fetchField();
+  }
+  fputcsv($fp, $pre_questions, ",");
+
+  foreach ($node->field_myngl_invitees['und'] as $k => $i) {
+    $ee = entity_load('field_collection_item', array($i['value']));
+    $ic = array_shift($ee);
+    $invitee_uid = (isset($ic->field_invitee_user_account['und']))?$ic->field_invitee_user_account['und'][0]['uid']:"";
+    $answers =(isset($ic->field_pre_question_answers['und']))?unserialize($ic->field_pre_question_answers['und'][0]['value']):array();
+
+    array_unshift($answers, $invitee_uid);
+    if ($invitee_uid != NULL){
+        fputcsv($fp, $answers, ",");
+    }
+  }
+  fclose($fp);
+  drupal_exit();
+}
+
+
+function myngl_myngl_insight_post_questions_download($nid){
+  $node = node_load($nid);
+
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=post-myngl-questions.csv');
+
+  $fp = fopen('php://output', 'w');
+  $post_questions = array('User ID');
+  foreach($node->field_post_myngl_questions['und'] as $a){
+    $post_questions[] = db_query("SELECT field_question_value
+                               FROM field_data_field_question
+                               WHERE entity_id = :eid
+                               LIMIT 1",
+                               array(":eid"=>$a['value']))->fetchField();
+  }
+  fputcsv($fp, $post_questions, ",");
+
+  foreach ($node->field_myngl_invitees['und'] as $k => $i) {
+    $ee = entity_load('field_collection_item', array($i['value']));
+    $ic = array_shift($ee);
+    $invitee_uid = (isset($ic->field_invitee_user_account['und']))?$ic->field_invitee_user_account['und'][0]['uid']:"";
+    $answers =(isset($ic->field_post_question_answer['und']))?unserialize($ic->field_post_question_answer['und'][0]['value']):array();
+
+    array_unshift($answers, $invitee_uid);
+    if ($invitee_uid != NULL){
+        fputcsv($fp, $answers, ",");
+    }
+  }
+  fclose($fp);
+  drupal_exit();
+}
+
+
+
 
 function myngl_myngl_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'myngl_node_form') {
