@@ -3,7 +3,8 @@
 <div class="video-container">
   <div style="max-width:80%; width:845px;">
     <video style="max-width:95%;" width="845px" height="455px" autoplay='true' preload='auto' <?php if ($isiPad) { print ' controls ';} ?>>
-      <source src="<?php echo file_create_url($myngl->field_welcome_video['und'][0]['uri']) ?>" type="video/webm"
+      <source src="<?php echo file_create_url($myngl->field_video_mp4['und'][0]['uri']) ?>" type="video/mp4" />
+      <source src="<?php echo file_create_url($myngl->field_welcome_video['und'][0]['uri']) ?>" type="video/webm" />
       Your browser does not support the video tag.
     </video>
   </div>
