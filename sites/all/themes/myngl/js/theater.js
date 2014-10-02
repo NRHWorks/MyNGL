@@ -256,12 +256,12 @@ var theater = (function ($) {
         url: "/myngl-event/" + myngl_id + "/ajax/message/" + time_passed + "/1",
         success: function(data) {
           if (data.message == '') {
-            $("#myngl-event-message").css('border', '0').animate({"height": "0"}, 200);
-
-          } else {
+            $("#myngl-event-message").animate({"height": "0"}, 200).hide();
+          }
+          else {
             if ($("#message-text").html() != data.message) {
-              $("#myngl-event-message").css('border', '1px solid #000000').animate({"height": "0"}, 200, function() {
-                $(this).html('<div id="message-text">' + data.message + '</div>').animate({"height": "90px"}, 1000);
+              $("#myngl-event-message").animate({"height": "0"}, 200, function() {
+                $(this).show().html('<div id="message-text">' + data.message + '</div>').animate({"height": "90px"}, 1000);
               });
             }
           }

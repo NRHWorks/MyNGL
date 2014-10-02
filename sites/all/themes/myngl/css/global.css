@@ -1200,19 +1200,6 @@ body ::-webkit-scrollbar-thumb {
     background-image: linear-gradient(rgba(42, 28, 24, 0.1), rgba(42, 28, 24, 0.3));
   }
 
-
-  #myngl-event-message {
-    float:left;
-    width: auto;
-
-    /*font-weight:bold;*/
-    height:0px;
-    background-color: rgba(200,200,150,0.9);
-    overflow:hidden;
-
-  }
-
-
   #myngl-event-message #message-text {
     position: relative;
     width:200px;

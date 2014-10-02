@@ -164,6 +164,27 @@
     .activity-room-thumb .field-name-field-title{
        font-family:<?php print $secondary_font;?> !important;
     }
+
+
+
+    #myngl-event-message {
+      float:left;
+      width: auto;
+      border-radius:15px;
+      border: 3px solid <?php print $tertiary_color;?>;
+      display:none;
+      /*font-weight:bold;*/
+      height:0px;
+      background-color: rgba(200,200,150,0.9);
+      overflow:hidden;
+
+      background: -webkit-linear-gradient(<?php print $brand->field_myngl_alert_gradient_color['und'][0]['rgb'].",".$brand->field_myngl_alert_gradient_color['und'][1]['rgb']?>); /* For Safari 5.1 to 6.0 */
+      background: -o-linear-gradient(<?php print $brand->field_myngl_alert_gradient_color['und'][0]['rgb'].",".$brand->field_myngl_alert_gradient_color['und'][1]['rgb']?>); /* For Opera 11.1 to 12.0 */
+      background: -moz-linear-gradient(<?php print $brand->field_myngl_alert_gradient_color['und'][0]['rgb'].",".$brand->field_myngl_alert_gradient_color['und'][1]['rgb']?>); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(<?php print $brand->field_myngl_alert_gradient_color['und'][0]['rgb'].",".$brand->field_myngl_alert_gradient_color['und'][1]['rgb']?>); /* Standard syntax */
+    }
+
+
     </style>
   <? endif; ?>
   <?php 
