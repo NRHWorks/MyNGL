@@ -20,6 +20,10 @@
 ?>
 
 <style>
+  #invitee-filters{
+    clear:both;
+    background-color: <?php print $brand->field_myngl_alert_gradient_color['und'][1]['rgb']?>
+  }
   #close-and-minimize-all{
     display:none;
     position:absolute;
@@ -187,7 +191,10 @@
         <?php drupal_add_js(array('brand_rep_ids'=> $brand_rep_ids),'setting'); ?>
     </div>
     <div id="minimized-chats">    </div>
-    <div id="expand-all" style="float:right; margin-top:5px;padding-right:2px;cursor:pointer;" onclick="chat.expand_all()"><img src="/sites/all/themes/myngl/images/expand_all.png" /></div>
+    <div id="expand-all" style="float:right; margin-top:5px;padding-right:2px;cursor:pointer;" onclick="chat.expand_all()">
+      <?php $expand_all_image = (isset($brand->field_myngl_lounge_chat_button['und']))?file_create_url($brand->field_myngl_lounge_chat_button['und'][0]['uri']):"/sites/all/themes/myngl/images/expand_all.png"; ?>
+      <img src="<?php print $expand_all_image;?>"  style="height:50px; width:50px;"/>
+    </div>
 
 
   </div>
@@ -279,7 +286,7 @@
     </div> <!-- /#invitee-thumb-wrapper-->
 
     <div id="invitee-filters-wrapper">
-      <div id="invitee-filters" style="clear:both; background-color: #d8c696;">
+      <div id="invitee-filters">
         <span id="people-total">0</span> PEOPLE TOTAL / <span id="people-in-lounge">0</span> IN THIS ROOM
         <form id='filters'>
 
