@@ -66,19 +66,37 @@ h3 {
     <th>Activity Room</th>
     <th>Gifting Suite</th>
   </tr>
+  <?php $sum = array(
+    'sum' =>0,
+    'lobby'=>0,
+    'lounge'=>0,
+    'theater'=>0,
+    'playroom'=>0,
+    'gifting'=>0,
+    );
+  ?>
   <?php foreach($data['invitees'] as $i): ?>
     <?php if($i['attend']==1): ?>
       <tr>
         <td><?php print $i['uid'];?></td>
-        <td><?php printf("%.1f",$i['room_record']['sum'] / 60.0); ?></td>
-        <td><?php printf("%.1f",$i['room_record']['Lobby'] / 60.0); ?></td>
-        <td><?php printf("%.1f",$i['room_record']['Lounge'] / 60.0); ?></td>
-        <td><?php printf("%.1f",$i['room_record']['Theater'] / 60.0); ?></td>
-        <td><?php printf("%.1f",$i['room_record']['PlayRoom']/60.0); ?></td>
-        <td><?php printf("%.1f",$i['room_record']['Gifting Suite'] / 60.0); ?></td>
+        <td><?php printf("%.1f",$i['room_record']['sum'] / 60.0); $sum['sum']+= $i['room_record']['sum'];?></td>
+        <td><?php printf("%.1f",$i['room_record']['Lobby'] / 60.0); $sum['lobby']+= $i['room_record']['Lobby'];?></td>
+        <td><?php printf("%.1f",$i['room_record']['Lounge'] / 60.0); $sum['lounge']+= $i['room_record']['Lounge'];?></td>
+        <td><?php printf("%.1f",$i['room_record']['Theater'] / 60.0); $sum['theater']+= $i['room_record']['Theater'];?></td>
+        <td><?php printf("%.1f",$i['room_record']['PlayRoom']/60.0); $sum['playroom']+= $i['room_record']['PlayRoom'];?></td>
+        <td><?php printf("%.1f",$i['room_record']['Gifting Suite'] / 60.0); $sum['gifting']+= $i['room_record']['Gifting Suite'];?></td>
       </tr>
     <?php endif; ?>
   <?php endforeach; ?>
+  <tr style="background-color:#cccccc">
+    <td>Total</td>
+    <td><?php printf("%.1f",$sum['sum'] / 60.0);?></td>
+    <td><?php printf("%.1f",$sum['lobby'] / 60.0);?></td>
+    <td><?php printf("%.1f",$sum['lounge'] / 60.0);?></td>
+    <td><?php printf("%.1f",$sum['theater'] / 60.0);?></td>
+    <td><?php printf("%.1f",$sum['playroom'] / 60.0);?></td>
+    <td><?php printf("%.1f",$sum['gifting'] / 60.0);?></td>
+  </tr>
 </table>
 
 <h3>Rewards:</h3>
