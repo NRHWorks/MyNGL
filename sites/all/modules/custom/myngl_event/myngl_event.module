@@ -228,7 +228,7 @@ function myngl_event_social_area($nid) {
 
     $invitee =  array (
                   'uid' => ($u == NULL)?"":$u->uid,
-                  'name' => $first_name. ' ' . $last_name,
+                  'name' => $first_name. ' ' . substr($last_name, 0,1) . ".",
                   'pic' => $pic,
                   'fb' => $fb,
                   'room' => $room,
