@@ -591,6 +591,7 @@ var social_area = (function ($) {
       console.log("update user in lounge done");
     },
     update_users_in_lounge_success : function (users){
+      console.log(users);
       //The first element of the array is the total count. rest of the elements are the user_ids in lounge.
       $("#invitee-filters span#people-total").text(users[0]);
       $("#invitee-filters span#people-in-lounge").text(users.length -1);
