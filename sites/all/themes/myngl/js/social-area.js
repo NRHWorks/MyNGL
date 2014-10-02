@@ -194,8 +194,8 @@ var filter_answers = [];
     $("#myngl-event-ugc-thumbs-row-2").css("width", len_row[2]+"px");
 
     $("#myngl-event-ugc-thumbs").css('width', Math.max(len_row[0],len_row[1], len_row[2]) + 'px');
-
-    if (Math.max(len_row[0],len_row[1], len_row[2]) <= 830) {
+    ugc_width = Math.max(len_row[0],len_row[1], len_row[2]);
+    if ( ugc_width<= 830) {
       $('.halfCircleRight').hide();
       $('.halfCircleLeft').hide();
     }
