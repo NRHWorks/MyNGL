@@ -43,6 +43,7 @@
   }) (jQuery);
 </script>
 
+<?php print $myngl->field_google_analytics_script['und'][0]['value']; ?>
 
 <?php /* TODO: MOVE THIS TO A MODULE */ ?>
 

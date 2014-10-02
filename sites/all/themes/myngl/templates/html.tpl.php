@@ -75,12 +75,12 @@
 
       .branded-background {
         background-color: #d8c696;
-        color: <?php print $primary_color; ?>;
+        color: <?php print $background_color; ?>;
       }
 
       .branded-tertiary {
         background-color: <?php print $background_color; ?>;
-        color: <?php print $primary_color; ?>;
+        color: #000000;<?php //print $tertiary_color; according to what warren wants. ?>;
       }
 
 
