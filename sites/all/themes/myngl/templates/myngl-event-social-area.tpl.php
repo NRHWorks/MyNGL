@@ -323,17 +323,17 @@
     <?php foreach ($ucg as $k => $u) : ?>
       <div id="myngl-event-ugc-content-<?php print $k; ?>" class="myngl-event-ugc-content" style="display:none;">
         <div style='text-align:right; width:800px;'>
-          <a href="mailto:?body=<?php print (isset($u['path']))?urlencode($u['path']):""; ?>&subject=<?php print $myngl->title; ?>">
+          <a  onclick="myngl.share_click('email','lounge');" href="mailto:?body=<?php print (isset($u['path']))?urlencode($u['path']):""; ?>&subject=<?php print $myngl->title; ?>">
             <img src="/sites/all/themes/myngl/images/ucg-email.png" />
           </a>
 
           <script>function fbs_click_<?php print $k; ?>() {u='<?php print (isset($u['path']))?$u['path']:""; ?>';t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
-          <a href="http://www.facebook.com/share.php" onclick="return fbs_click_<?php print $k; ?>()" target="_blank" title="Myngl">
+          <a href="http://www.facebook.com/share.php" onclick=" myngl.share_click('facebook','lounge'); return fbs_click_<?php print $k; ?>()" target="_blank" title="Myngl">
             <img src="/sites/all/themes/myngl/images/ucg-facebook.png" />
           </a>
 
           <script>function twt_click_<?php print $k; ?>() { window.open('https://twitter.com/share?url=<?php print (isset($u['path']))?urlencode($u['path']):""; ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
-          <a href="https://twitter.com/share?url=<?php print(isset($u['path']))?urlencode($u['path']):""; ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>" onclick="return twt_click_<?php print $k; ?>()" target="_blank">
+          <a href="https://twitter.com/share?url=<?php print(isset($u['path']))?urlencode($u['path']):""; ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>" onclick=" myngl.share_click('twitter','lounge'); return twt_click_<?php print $k; ?>()" target="_blank">
             <img src="/sites/all/themes/myngl/images/ucg-twitter.png" />
           </a>
         </div>

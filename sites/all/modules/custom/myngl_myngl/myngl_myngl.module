@@ -8,6 +8,15 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
+
+  $items['myngl/social-sharing-record/%/%/%/%'] = array(
+    'title' => "",
+    'page callback' => 'myngl_myngl_social_sharing_record',
+    'page arguments' => array(2,3,4,5),
+    'access callback' => TRUE,
+  );
+
+
   $items['node/%/invitee-group-reassign/%'] = array(
     'title' => 'Invitee Group Reassign',
     'page callback' => 'myngl_myngl_invitee_group_reassign',
@@ -2232,7 +2241,26 @@ function myngl_myngl_insight_analytic_get_data($nid){
                                array(":eid"=>$a['value']))->fetchField();
   }
 
+
   arsort($redeem_count);
+
+
+
+
+  $result = db_query("SELECT * FROM myngl_social_sharing_records WHERE
+                      myngl_id = :nid ORDER BY timestamp ASC",array(":nid" => $node->nid));
+
+  $social_sharings = array();
+
+  foreach($result as $r){
+    $social_sharings[] = array(
+      'user_id'=> $r->user_id,
+      'media_type' => $r->media_type,
+      'page' => $r->page,
+    );
+  }
+
+
   $data['total_count'] = $total_count;
   $data['nid'] = $node->nid;
   $data['attend_count'] = $attend_count;
@@ -2247,6 +2275,7 @@ function myngl_myngl_insight_analytic_get_data($nid){
   $data['theater_questions'] = $theater_questions;
   $data['pre_questions'] = $pre_questions;
   $data['post_questions'] = $post_questions;
+  $data['social_sharings'] = $social_sharings;
 
   return $data;
 }
@@ -2479,4 +2508,18 @@ function myngl_myngl_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_theater_questions']);
     unset($form['field_myngl_invitees']);
   }
+}
+
+
+function myngl_myngl_social_sharing_record($user_id, $myngl_id, $media_type, $page){
+  db_insert('myngl_social_sharing_records')->fields(
+        array(
+          'user_id'      => $user_id,
+          "myngl_id" =>$myngl_id,
+          'media_type' => $media_type,
+          'page'=>$page,
+          'timestamp'=>time(),
+        )
+      )->execute();
+
 }

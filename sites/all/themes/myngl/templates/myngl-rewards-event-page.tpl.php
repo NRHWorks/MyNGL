@@ -623,17 +623,17 @@ form#myngl-myngl-post-questions-form #edit-submit{
     <div class="short-line"></div>
     <div id='social'>
       <div style="float:right">
-          <a href="mailto:?body=<?php print urlencode(file_create_url($myngl->field_reward_congrats_image['und'][0]['uri'])); ?>&subject=<?php print $myngl->title; ?>">
+          <a onclick="myngl.share_click('email','gifting');" href="mailto:?body=<?php print urlencode(file_create_url($myngl->field_reward_congrats_image['und'][0]['uri'])); ?>&subject=<?php print $myngl->title; ?>">
             <img src="/sites/all/themes/myngl/images/ucg-email.png" />
           </a>
 
           <script>function fbs_click_<?php print $k; ?>() {u='<?php print file_create_url($myngl->field_reward_congrats_image['und'][0]['uri']); ?>';t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
-          <a href="http://www.facebook.com/share.php" onclick="return fbs_click_<?php print $k; ?>()" target="_blank" title="Myngl">
+          <a href="http://www.facebook.com/share.php" onclick=" myngl.share_click('facebook','gifting'); return fbs_click_<?php print $k; ?>()" target="_blank" title="Myngl">
             <img src="/sites/all/themes/myngl/images/ucg-facebook.png" />
           </a>
 
           <script>function twt_click_<?php print $k; ?>() { window.open('https://twitter.com/share?url=<?php print urlencode(file_create_url($myngl->field_reward_congrats_image['und'][0]['uri'])); ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
-          <a href="https://twitter.com/share?url=<?php print urlencode(file_create_url($myngl->field_reward_congrats_image['und'][0]['uri'])); ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>" onclick="return twt_click_<?php print $k; ?>()" target="_blank">
+          <a href="https://twitter.com/share?url=<?php print urlencode(file_create_url($myngl->field_reward_congrats_image['und'][0]['uri'])); ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>" onclick=" myngl.share_click('twitter','gifting');return twt_click_<?php print $k; ?>()" target="_blank">
             <img src="/sites/all/themes/myngl/images/ucg-twitter.png" />
           </a>
 

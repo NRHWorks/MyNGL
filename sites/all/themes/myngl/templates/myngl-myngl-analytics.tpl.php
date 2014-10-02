@@ -96,6 +96,62 @@ h3 {
   <?php endforeach; ?>
 </table>
 
+
+<h3>Social Sharings</h3>
+<?php
+  $social_sharings = $data['social_sharings'];
+  $counts = array(
+    'lounge' => array(
+      'facebook'=>0,
+      'twitter' =>0,
+      'email' => 0,
+    ),
+    'confirmed' => array(
+      'facebook'=>0,
+      'twitter' =>0,
+      'email' => 0,
+    ),
+    'gifting' => array(
+      'facebook'=>0,
+      'twitter' =>0,
+      'email' => 0,
+    ),
+  );
+
+  foreach($social_sharings as $v){
+    $counts[$v['page']][$v['media_type']] ++;
+  }
+?>
+
+<table>
+  <tr>
+    <th></td>
+    <th>Facebook</td>
+    <th>Twitter</td>
+    <th>Email</td>
+  </tr>
+  <tr>
+    <td>Confirm Page</td>
+    <td><?php print $counts['confirmed']['facebook'];?></td>
+    <td><?php print $counts['confirmed']['twitter'];?></td>
+    <td><?php print $counts['confirmed']['email'];?></td>
+  </tr>
+  <tr>
+    <td>Lounge</td>
+    <td><?php print $counts['lounge']['facebook'];?></td>
+    <td><?php print $counts['lounge']['twitter'];?></td>
+    <td><?php print $counts['lounge']['email'];?></td>
+  </tr>
+  <tr>
+    <td>Gifting Suite</td>
+    <td><?php print $counts['gifting']['facebook'];?></td>
+    <td><?php print $counts['gifting']['twitter'];?></td>
+    <td><?php print $counts['gifting']['email'];?></td>
+  </tr>
+</table>
+
+
+
 <h3>User Activities:</h3>
 
 <?php

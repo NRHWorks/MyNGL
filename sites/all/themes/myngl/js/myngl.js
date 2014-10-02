@@ -150,6 +150,16 @@ var myngl = (function($) {
       });
       return false;
     },
+    share_click: function (media, page) {
+      $.ajax({
+        type: "GET",
+        url: "/myngl/social-sharing-record/"+ Drupal.settings.user_id +'/' +Drupal.settings.myngl_id + "/" +media+"/" + page,
+        success: function(data) {
+        }
+      });
+      return false;
+
+    }
 
   }
 

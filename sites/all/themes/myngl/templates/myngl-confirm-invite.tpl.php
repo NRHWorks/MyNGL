@@ -1,4 +1,5 @@
 
+
 <?php $brand = node_load($node->field_myngl_brand['und'][0]['nid']);  ?>
 
 <div class="event-detail-overlay" ></div>
@@ -23,7 +24,22 @@
         print render($m);
       ?>
 
+<script>
+var confirm = (function ($) {
+        return {
+          share_click: function (media) {
+            $.ajax({
+              type: "GET",
+              url: "/myngl/social-sharing-record/<?php print $user->uid .'/'. $node->nid . '/';?>"+media+"/confirmed",
+              success: function(data) {
+              }
+            });
+            return false;
 
+          }
+        }
+      }(jQuery));
+</script>
 
       <!--
       <p>RSVP CONFIRMED!</p>
@@ -52,7 +68,7 @@
     <div id="confirm-invite-invite-graphic">
 
       <script>function fbs_click() {u='<?php print 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REDIRECT_URL']; ?>';t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
-      <a href="http://www.facebook.com/share.php" onclick="return fbs_click()" target="_blank" title="Myngl"> 
+      <a href="http://www.facebook.com/share.php" onclick="confirm.share_click('facebook'); return fbs_click()" target="_blank" title="Myngl">
         <span class="fa-stack fa-lg" id="facebook-share">
           <i class="fa fa-circle fa-stack-2x"></i>
           <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
@@ -60,7 +76,7 @@
       </a> 
 
       <script>function twt_click() { window.open('https://twitter.com/share?url=<?php print 'http://'.$_SERVER['HTTP_HOST']; ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>','sharer','toolbar=0,status=0,width=626,height=436');return false;}</script>
-        <a href="https://twitter.com/share?url=<?php print 'http://'.$_SERVER['HTTP_HOST']; ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>" onclick="return twt_click()" target="_blank">
+        <a href="https://twitter.com/share?url=<?php print 'http://'.$_SERVER['HTTP_HOST']; ?>&text=<?php print urlencode('At theMyngl – Cool new Online Experiential Event! Exclusive content, Chat, FREE gifts! theMyngl.com #'. $brand->title .'Myngl'); ?>" onclick=" confirm.share_click('twitter');return twt_click()" target="_blank">
         <span class="fa-stack fa-lg" id="twitter-share">
           <i class="fa fa-circle fa-stack-2x"></i>
           <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
