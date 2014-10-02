@@ -168,6 +168,8 @@
 
 
     #myngl-event-message {
+      margin:5px;
+      margin-top:10px;
       float:left;
       width: auto;
       border-radius:15px;

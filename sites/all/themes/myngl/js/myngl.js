@@ -128,7 +128,7 @@ var myngl = (function($) {
     update_participant_status: function(myngl_id, user_id, status){
       $.ajax({
         type: "GET",
-        url: "/myngl-event/" + myngl_id + "/" + user_id + "/" + status,
+        url: "/myngl-event/update-status/" + myngl_id + "/" + user_id + "/" + status,
         success: function(data) {}
       });
     },
