@@ -169,7 +169,7 @@
 
     #myngl-event-message {
       margin:5px;
-      margin-top:10px;
+      margin-top:7px;
       float:left;
       width: auto;
       border-radius:15px;
