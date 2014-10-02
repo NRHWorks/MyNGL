@@ -1309,17 +1309,6 @@ body ::-webkit-scrollbar-thumb {
   }
 
 
-
-  div#myngl-event-chat-button-invitees .thumb-background {
-    content: '';
-    background: #e2dbd2;
-    width: 100%;
-    height: 55px;
-    position: absolute;
-    bottom: 0;
-    z-index: -999;
-  }
-
   div#myngl-event-chat-button-invitees #invitee-thumbs-wrapper{
     position:relative;
     width:100%;
@@ -2060,15 +2049,6 @@ form#user-profile-form .switch-knob{
 }
 
 
-#invitee-chat-selector {
-  border: 15px  solid #53302a;
-  background-color: #e2dbd2;
-  float: right;
-  clear: right;
-  margin-right: 50px;
-  margin-top: 30px;
-  display: none;
-}
 
 #invitee-chat-selector a {
   color: #666;

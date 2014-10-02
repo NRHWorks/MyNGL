@@ -43,51 +43,12 @@
  *
  * @ingroup themeable
  */
+  global $brand;
+  global $node;
+  print_r($node);
 ?>
 
-<style type="text/css">
 
-#help-overlay-inner{
-	position:absolute;
-  z-index:300;
-	left:0;
-	right:0;
-  height:500px;
-  width:800px;
-	margin-left:auto;
-	margin-right:auto;
-  background-color:#e2dbd2;
-	border:solid 20px #53302a;
-  border-top: solid 35px #53302a;
-  overflow: scroll;
-}
-#help-overlay-close{
-  position:absolute;
-  right:-10px;
-  top:10px;
-  z-index:1000;
-  color:#cccccc;
-}
-#help-title{
-  color: #a38d50;
-  font-size:30px;
-  font-family:"georgia";
-  margin-left:20px;
-  margin-top:20px;
-
-}
-#help-overlay-inner ol li{
-  margin-bottom:10px;
-}
-
-#help-overlay-inner .short-line{
-  width:50px;
-  height:1px;
-  border-top:2px #555555 solid;
-  margin-left:20px;
-  margin-top:10px;
-}
-</style>
 <div id="help-overlay-close" onclick="myngl.help_overlay_close()">X</div>
 <div id="help-overlay-inner" >
 

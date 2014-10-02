@@ -6,8 +6,15 @@
       header($redirect);
       exit;
     }
+
+
   }
+    $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
+    $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
+    $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
+    $tertiary_color = $brand->field_brand_tertiary_color['und'][0]['rgb'];
 ?>
+
 <style type="text/css">
   .field-name-field-theater .field-label{
     display:none;
@@ -24,7 +31,7 @@ body.page-myngl-event-theater{
   width: 1020px;
   min-height: 888px;
   position: relative;
-  top: 80px;
+  top: 40px;
 
   margin-left:auto;
   margin-right:auto;
@@ -165,6 +172,9 @@ body.page-myngl-event-theater #see-more{
 </div><!-- /#form-wrapper -->
 </div><!-- /#theater-body -->
 
+
+
+
 <style type="text/css">
   #myngl-event-menu {
     display: none;
@@ -190,7 +200,7 @@ body.page-myngl-event-theater #see-more{
   
   #myngl-theater-see-more p {
     text-align: center; 
-    color: #a38d50;
+    color: <?php print $secondary_color; ?>;
   }
 
   #myngl-theater-see-more .additional-video{
@@ -199,7 +209,7 @@ body.page-myngl-event-theater #see-more{
 }
 
   #myngl-theater-see-more .additional-video img{
-  border:2px solid <?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
+  border:2px solid  <?php print $secondary_color; ?>;
   width: 180px;
   height: 104px;
   }
@@ -214,7 +224,7 @@ body.page-myngl-event-theater #see-more{
   }
   #myngl-theater-see-more .fa{
     font-size:50px;
-    color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
+    color: <?php print $secondary_color; ?>;
     position:absolute;
   }
   #myngl-theater-see-more .fa.fa-chevron-circle-left{
@@ -276,7 +286,7 @@ body.page-myngl-event-theater #see-more{
     position: absolute;
     top:200px;
 
-    background-color:#3a2b29;
+    background-color: <?php print $tertiary_color; ?>;
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
@@ -293,9 +303,9 @@ body.page-myngl-event-theater #see-more{
 
 
 #myngl-theater-downloads{
-  background-color:<?php print $brand->field_brand_background_color['und'][0]['rgb'];?>;
-  border:solid 20px <?php print $brand->field_brand_tertiary_color['und'][0]['rgb'];?>;
-  border-top: solid 35px <?php print $brand->field_brand_tertiary_color['und'][0]['rgb'];?>;;
+  background-color: <?php print $background_color; ?>;
+  border:solid 20px  <?php print $tertiary_color; ?>;
+  border-top: solid 35px <?php print $tertiary_color; ?>;
   display:none; /* should be none after done developming */
   height:500px;
   width:800px ;
@@ -313,7 +323,7 @@ body.page-myngl-event-theater #see-more{
 }
 
 i.fa {
-  color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
+  color:<?php print $secondary_color; ?>;
 }
 
 #downloads-slides-wrapper{

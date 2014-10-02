@@ -16,7 +16,7 @@
   $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
   $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
   $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
-  $tertiary_color = "#e2dbd2";
+  $tertiary_color = $brand->field_brand_tertiary_color['und'][0]['rgb'];
 ?>
 
 <style>
@@ -95,6 +95,25 @@
     text-align:center;
     padding-top:5px;
     border-radius:5px;
+  }
+
+  #invitee-chat-selector {
+    border: 15px  solid <?php print $primary_color;?>;
+    background-color: <?php print $background_color;?>;
+    float: right;
+    clear: right;
+    margin-right: 50px;
+    margin-top: 30px;
+    display: none;
+  }
+  div#myngl-event-chat-button-invitees .thumb-background {
+    content: '';
+    background: <?php print $background_color;?> ;
+    width: 100%;
+    height: 55px;
+    position: absolute;
+    bottom: 0;
+    z-index: -999;
   }
 
 </style>

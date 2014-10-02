@@ -15,7 +15,7 @@
   $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
   $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
   $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
-  $tertiary_color = "#e2dbd2";
+  $tertiary_color = $brand->field_brand_tertiary_color['und'][0]['rgb'];
   $background_image = file_create_url($myngl->field_gifting_series_background['und'][0]['uri']);
 ?>
 <style type="text/css">

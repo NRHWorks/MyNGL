@@ -8,60 +8,122 @@
   <?php print $scripts; ?>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <?php if (ARG(0)== "myngl-event"): ?>
+  <?php
+    $nid = ARG(1);
+    $n = node_load($nid);
+    $brand_id = $n->field_myngl_brand['und'][0][nid];
+    $brand = node_load($brand_id);
+
+    $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
+    $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
+    $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
+    $tertiary_color = $brand->field_brand_tertiary_color['und'][0]['rgb'];
+
+  ?>
   <style>
 
-    div.branded {
-      background-color: #53302a;
-      color: #a38d50;
+
+      div.branded {
+        background-color:<?php print $primary_color; ?>;
+        color: <?php print $secondary_color; ?>;
+      }
+
+      div.branded-secondary {
+        background-color:<?php print $secondary_color; ?>;
+        color: <?php print $primary_color; ?>;
+      }
+
+      .branded ul li.active{
+        background-color:<?php print $tertiary_color;?>;
+      }
+      .branded ul li.inactive:hover {
+        background-color: <?php print $secondary_color; ?>;
+      }
+
+      .branded ul li.inactive a {
+       color: <?php print $secondary_color; ?>;
+       border-right: 1px groove <?php print $secondary_color; ?>;
+      }
+
+      .branded ul li.active a {
+       color: <?php print $primary_color; ?>;
+       border-right: 1px groove <?php print $secondary_color; ?>;
+      }
+
+
+      .branded ul li.inactive a:hover {
+        color: <?php print $primary_color; ?>;
+      }
+
+      .btn-branded a {
+        background-color: <?php print $primary_color; ?>;
+        color: <?php print $secondary_color; ?>;
+      }
+
+      .btn-branded a:hover {
+        background-color: <?php print $secondary_color; ?>;
+        color: <?php print $primary_color; ?>;
+      }
+
+      .branded-background {
+        background-color: #d8c696;
+        color: <?php print $primary_color; ?>;
+      }
+
+      .branded-tertiary {
+        background-color: <?php print $background_color; ?>;
+        color: <?php print $primary_color; ?>;
+      }
+
+
+
+
+    #help-overlay-inner{
+      position:absolute;
+      z-index:300;
+      left:0;
+      right:0;
+      height:500px;
+      width:800px;
+      margin-left:auto;
+      margin-right:auto;
+      background-color:<?php print $background_color; ?>;
+      border:solid 20px <?php print $primary_color; ?>;
+      border-top: solid 35px <?php print $primary_color; ?>;
+      overflow: scroll;
+    }
+    #help-overlay-close{
+      position:absolute;
+      right:-10px;
+      top:10px;
+      z-index:1000;
+      color:#cccccc;
+    }
+    #help-title{
+      color: <?php print $secondary_color; ?>;
+      font-size:30px;
+      font-family:"georgia";
+      margin-left:20px;
+      margin-top:20px;
+
+    }
+    #help-overlay-inner ol li{
+      margin-bottom:10px;
     }
 
-    div.branded-secondary {
-      background-color:#a38d50;
-      color: #53302a;
-    }
-
-    .branded ul li.active{
-      background-color:#191313;
-    }
-    .branded ul li.inactive:hover {
-      background-color: #a38d50;
-    }
-
-    .branded ul li.inactive a {
-     color: #a38d50;
-     border-right: 1px groove #a38d50;
-    }
-
-    .branded ul li.active a {
-     color: #53302a;
-     border-right: 1px groove #a38d50;
+    #help-overlay-inner .short-line{
+      width:50px;
+      height:1px;
+      border-top:2px #555555 solid;
+      margin-left:20px;
+      margin-top:10px;
     }
 
 
-    .branded ul li.inactive a:hover {
-      color: #53302a;
-    }
-
-    .btn-branded a {
-      background-color: #53302a;
-      color: #a38d50;
-    }
-
-    .btn-branded a:hover {
-      background-color: #a38d50;
-      color: #53302a;
-    }
-
-    .branded-background {
-      background-color: #d8c696;
-      color: #53302a;
-    }
-
-    .branded-tertiary {
-      background-color: #e2dbd2;
-      color: #53302a;
-    }
-  </style>
+    </style>
+  <? endif; ?>
   <?php 
     if (arg(0) == 'myngl' && arg(2) == 'confirmed') :
       $node = node_load(arg(1));
