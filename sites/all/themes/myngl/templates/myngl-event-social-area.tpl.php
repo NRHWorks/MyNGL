@@ -419,10 +419,10 @@
       <div style="width:100%; height:1px; margin:3px 0 8px 0; background-color:#ffffff;"> </div>
       <!--<span style="font-size:14px; font-family:'lato'; color:#ffffff;"><?php print $i['about_me'] ; ?></span><br /><br />-->
       <?php //if (isset($i['city']) && ($i['city'] != 'null')) : ?>
-        <span id='city' style="font-size:14px; font-family:'lato'; color:#ffffff;">Hometown: <?php print $i['city'];?></span><br /><br />
+        <span id='city' style="font-size:14px; color:#ffffff;">Hometown: <?php print $i['city'];?></span><br /><br />
       <?php //endif; ?>
       <?php //if (isset($i['tagline']) && ($i['tagline'] != 'null')) : ?>
-        <span style="font-size:14px; font-family:'lato'; color:#ffffff;">Reason to Myngl: <span id="tagline-holder"><?php print $i['tagline'] ; ?></span></span><br /><br />
+        <span id='reason-to-myngl' style="font-size:14px;  color:#ffffff;">Reason to Myngl: <span id="tagline-holder"><?php print $i['tagline'] ; ?></span></span><br /><br />
       <?php //endif; ?>
       <a href="#" onclick="chat.reset_id_of_showing_invitee_info(); return chat.solo_show(<?php print $i['uid']; ?>)"
                   style="font-size:14px;position:absolute;right:10px;bottom:10px;text-decoration:underline;color:#ffffff; ">

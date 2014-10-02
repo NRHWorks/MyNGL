@@ -41,7 +41,6 @@ body ::-webkit-scrollbar-thumb {
   }
 
   input {
-    font-family: Lato;
     font-style: italic;
     font-weight: 100;
   }
@@ -255,7 +254,6 @@ body ::-webkit-scrollbar-thumb {
 
     #rsvp-confirm-wrapper div#rsvp-confirm-date {
       font-size: 28px;
-      font-family: Georgia;
       margin-bottom: 0;
     }
 
@@ -1198,7 +1196,6 @@ body ::-webkit-scrollbar-thumb {
     padding: 10px 15px;
     padding-left: 25px;
     padding-right: 25px;
-    font-family: Georgia;
     /*text-transform: uppercase;*/
     background-image: linear-gradient(rgba(42, 28, 24, 0.1), rgba(42, 28, 24, 0.3));
   }
@@ -1222,7 +1219,6 @@ body ::-webkit-scrollbar-thumb {
     margin: 20px 20px 20px 20px;
     /*top: 25px;*/
 
-    font-family:'lato' !important;
   }
 
   /* --- lobby event --- */
@@ -1295,7 +1291,6 @@ body ::-webkit-scrollbar-thumb {
   .point-badge p {
     text-align:center;
     font-size: 1.5em;
-    font-family: Georgia;
     /*margin-top: 12px;
     margin-left: 16px;*/
   }
@@ -1328,7 +1323,6 @@ body ::-webkit-scrollbar-thumb {
     background: transparent;
   }
   #invitee-filters {
-    font-family: Georgia;
     padding-left: 40px;
     padding-right: 50px;
     padding-top: 10px;
@@ -1362,7 +1356,7 @@ body ::-webkit-scrollbar-thumb {
 
   #invitee-filters form {
     display: inline;
-    font-family: 'Lato';
+
     margin-left: 25px;
     font-size: 16.5px;
   }
@@ -1463,7 +1457,6 @@ body ::-webkit-scrollbar-thumb {
     float: right;
     margin-right: 5px;
     background-image: none;
-    font-family: Georgia;
     font-size: 1.35em;
     color: inherit;
     padding: 5px;
@@ -1889,7 +1882,6 @@ body ::-webkit-scrollbar-thumb {
       line-height: 30px;
     }
     .invite-graphic-text span {
-      font-family: Georgia;
       font-size: 75px;
       font-weight: 100;
     }
@@ -2206,7 +2198,6 @@ div#exit-div #exit-points #exit-points-circle {
 }
 
 div#exit-div #exit-points #exit-points-circle .exit-points-points {
-  font-family: georgia;
   font-size: 46px;
   line-height: 60px;
 }

@@ -37,7 +37,6 @@ body.page-myngl-event-rewards {
   text-align:center;
   color:<?php print $primary_color; ?>;
   font-size:32px;
-  font-family:'georgia';
   font-style:italic;
 
 
@@ -75,7 +74,6 @@ body.page-myngl-event-rewards {
   padding-left:20px;
   padding-top:15px;
   height:25px;
-  font-family:"georgia";
 
 }
 
@@ -146,7 +144,6 @@ body.page-myngl-event-rewards {
 #reward-wrapper .field-collection-item-field-reward .redeem{
   position:absolute;
   top:100px;
-  font-family:"georgia";
   font-style:italic;
   font-size:18px;
   margin-left:50px;
@@ -157,7 +154,6 @@ body.page-myngl-event-rewards {
   left:135px;
   top:-1px;
   font-size:20px;
-  font-family:'lato';
   width:12px !important;
   height:24px !important;
   font-style:normal;
@@ -191,7 +187,6 @@ body.page-myngl-event-rewards {
   position:relative;
   padding-top:10px;
   padding-left:20px;
-  font-family: "georgia";
   font-size:24px;
 }
 
@@ -210,7 +205,6 @@ body.page-myngl-event-rewards {
 #reward-wrapper #buy-now{
   position:absolute;
   top:156px;
-  font-family:"georgia";
   font-style:italic;
   font-size:18px;
   margin-left:260px;
@@ -321,7 +315,6 @@ body.page-myngl-event-rewards {
 
 #gifting-series-overlay #gift-redeem{
   color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
-  font-family:'georgia';
   font-size:28px;
   width:auto;
 
@@ -387,7 +380,6 @@ body.page-myngl-event-rewards {
 }
 
 #gifting-series-overlay #redeem {
-  font-family:'georgia';
   font-style:italic;
   color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
   float:right;
@@ -404,7 +396,6 @@ body.page-myngl-event-rewards {
   left:115px;
   top:-1px;
   font-size:20px;
-  font-family:'lato';
   font-style:normal;
   font-weight: bold;
   color:<?php print $brand->field_brand_tertiary_color['und'][0]['rgb'];?>;
@@ -427,7 +418,6 @@ body.page-myngl-event-rewards {
 #gifting-series-overlay #you-need{
   float:right;
   position:relative;
-  font-family:"georgia";
   width:145px;
   padding:30px;
   height:170px;
@@ -479,7 +469,6 @@ body.page-myngl-event-rewards {
 #gifting-series-overlay #questions #title,
 #gifting-series-overlay #congrats #title{
   color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
-  font-family:'georgia';
   font-size:28px;
   width:auto;
 
@@ -500,7 +489,6 @@ form#myngl-myngl-post-questions-form .form-actions{
 }
 
 form#myngl-myngl-post-questions-form #edit-submit{
-  font-family:'georgia';
   color:<?php print $brand->field_brand_secondary_color['und'][0]['rgb'];?>;
   font-style:italic;
   font-size:20px;

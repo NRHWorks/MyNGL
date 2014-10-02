@@ -16,11 +16,17 @@
     $brand_id = $n->field_myngl_brand['und'][0][nid];
     $brand = node_load($brand_id);
 
+
     $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
     $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
     $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
     $tertiary_color = $brand->field_brand_tertiary_color['und'][0]['rgb'];
 
+    $primary_font = $brand->field_primary_font['und'][0]['value'];
+    $primary_font = ($primary_font != NULL)? $primary_font:'georgia';
+
+    $secondary_font = $brand->field_secondary_font['und'][0]['value'];
+    $secondary_font = ($secondary_font != NULL)? $secondary_font:'lato';
   ?>
   <style>
 
@@ -104,7 +110,6 @@
     #help-title{
       color: <?php print $secondary_color; ?>;
       font-size:30px;
-      font-family:"georgia";
       margin-left:20px;
       margin-top:20px;
 
@@ -122,6 +127,43 @@
     }
 
 
+    #thank-you,
+    #reward-wrapper .field-collection-item-field-reward .level-and-points-wrapper,
+    #reward-wrapper .field-collection-item-field-reward .redeem,
+    #reward-wrapper #external-site .field-name-field-external-site-title,
+    #reward-wrapper #buy-now,
+    #gifting-series-overlay #gift-redeem,
+    #gifting-series-overlay #redeem,
+    #gifting-series-overlay #you-have,
+    #gifting-series-overlay #you-need,
+    #gifting-series-overlay #questions #title,
+    #gifting-series-overlay #congrats #title,
+    form#myngl-myngl-post-questions-form #edit-submit,
+    #invitee-filters,
+    #myngl-event-pov #myngl-event-pov-messages form input[type="submit"],
+    .myngl-chat-form form input[type="submit"] ,
+    .invite-graphic-text span,
+    div#exit-div #exit-points #exit-points-circle .exit-points-points,
+    #rsvp-confirm-wrapper div#rsvp-confirm-date,
+    #myngl-event-menu ul li a,
+    .point-badge p,
+    .downloads-element .file-download a,
+    #myngl-theater-downloads h1,
+    #help-title{
+      font-family:<?php print $primary_font;?> !important;
+    }
+
+    #reward-wrapper .field-collection-item-field-reward .redeem-button,
+    #gifting-series-overlay #redeem #button,
+    #invitee-filters form,
+    input,
+    #myngl-event-message #message-text,
+    #city,
+    #reason-to-myngl,
+    .downloads-element .field-name-field-title,
+    .activity-room-thumb .field-name-field-title{
+       font-family:<?php print $secondary_font;?> !important;
+    }
     </style>
   <? endif; ?>
   <?php 
