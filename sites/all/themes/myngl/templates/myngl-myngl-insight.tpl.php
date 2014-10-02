@@ -31,7 +31,7 @@ h3 {
   <div id='menu-4' onclick='insight.show(4)'>Chats</div>
 </div>
 
-<div style="clear:both"/>
+<div style="clear:both"></div>
 <div class = "insight-tag" id="tag-0" style="display:block">
   <h3>Theater Questions:</h3>
   <a href="<?php print base_path();?>node/<?php print $data['nid'];?>/insight/theater-questions-download" target="_blank">
@@ -71,28 +71,6 @@ h3 {
   <a href="<?php print base_path();?>node/<?php print $data['nid'];?>/insight/pre-questions-download" target="_blank">
     Download script
   </a>
-<?php /* ?>
-  <?php foreach($data['pre_questions'] as $index=>$q): ?>
-    <?php $answer_count = array(); ?>
-    <h5>Question <?php print $index + 1;?>:</h5>
-    <?php
-      foreach($data['invitees'] as $i){
-        if(isset($i['pre_questions']['question-'.$index])&&$i['pre_questions']['question-'.$index]!= NULL){
-          if(array_key_exists($i['pre_questions']['question-'.$index], $answer_count)){
-            $answer_count[$i['pre_questions']['question-'.$index]] ++;
-          }
-          else{
-            $answer_count[$i['pre_questions']['question-'.$index]] =1;
-          }
-        }
-      }
-      foreach($answer_count as $q =>$c){
-        print $q . ": " . $c . "<br/>";
-      }
-    ?>
-
-  <?php endforeach; ?>
-<?php */ ?>
   <br/><br/><br/>
   <?php
     foreach($data['invitees'] as $i){
@@ -113,28 +91,6 @@ h3 {
   <a href="<?php print base_path();?>node/<?php print $data['nid'];?>/insight/post-questions-download" target="_blank">
     Download script
   </a>
-  <?php /* ?>
-  <?php foreach($data['post_questions'] as $index=>$q): ?>
-    <?php $answer_count = array(); ?>
-    <h5>Question <?php print $index + 1;?>:</h5>
-    <?php
-      foreach($data['invitees'] as $i){
-        if(isset($i['pre_questions']['question-'.$index])&&$i['post_questions']['question-'.$index]!= NULL){
-          if(array_key_exists($i['post_questions']['question-'.$index], $answer_count)){
-            $answer_count[$i['post_questions']['question-'.$index]] ++;
-          }
-          else{
-            $answer_count[$i['post_questions']['question-'.$index]] =1;
-          }
-        }
-      }
-      foreach($answer_count as $q =>$c){
-        print $q . ": " . $c . "<br/>";
-      }
-    ?>
-
-  <?php endforeach; ?>
-  <?php */ ?>
   <br/><br/><br/>
   <?php
     foreach($data['invitees'] as $i){

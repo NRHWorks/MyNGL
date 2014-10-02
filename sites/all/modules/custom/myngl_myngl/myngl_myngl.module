@@ -270,6 +270,49 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
+
+  $items['node/%/analytics/users-download'] = array(
+    'title' => 'Users Data',
+    'page callback' => 'myngl_myngl_analytics_users_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+
+  $items['node/%/analytics/usage-download'] = array(
+    'title' => 'Usage Data',
+    'page callback' => 'myngl_myngl_analytics_usage_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+  $items['node/%/analytics/room-and-time-download'] = array(
+    'title' => 'Room and Time Data',
+    'page callback' => 'myngl_myngl_analytics_room_and_time_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+  $items['node/%/analytics/rewards-download'] = array(
+    'title' => 'Rewards Data',
+    'page callback' => 'myngl_myngl_analytics_rewards_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+  $items['node/%/analytics/social-sharing-download'] = array(
+    'title' => 'Social Sharings Data',
+    'page callback' => 'myngl_myngl_analytics_social_sharings_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+
+  $items['node/%/analytics/user-activities-download'] = array(
+    'title' => 'Users Data',
+    'page callback' => 'myngl_myngl_analytics_user_activities_download',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
   return $items;
 }
 
@@ -2523,3 +2566,221 @@ function myngl_myngl_social_sharing_record($user_id, $myngl_id, $media_type, $pa
       )->execute();
 
 }
+
+
+
+function myngl_myngl_analytics_users_download($nid){
+  $data = myngl_myngl_insight_analytic_get_data($nid);
+
+
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=users.csv');
+
+  $fp = fopen('php://output', 'w');
+  $headers = array("", 'Total', "Invited by admin", "Invited by friend");
+
+
+  $row1 = array('Invitees',
+                $data['total_count']['by_admin'] + $data['total_count']['by_friend'],
+                $data['total_count']['by_admin'],
+                $data['total_count']['by_friend']);
+  $row2 = array('Participants',
+                $data['attend_count']['by_admin'] + $data['attend_count']['by_friend'],
+                $data['attend_count']['by_admin'],
+                $data['attend_count']['by_friend']);
+  fputcsv($fp, $headers, ",");
+  fputcsv($fp, $row1, ",");
+  fputcsv($fp, $row2, ",");
+
+  fclose($fp);
+  drupal_exit();
+
+
+
+
+}
+
+function myngl_myngl_analytics_usage_download($nid){
+  $data = myngl_myngl_insight_analytic_get_data($nid);
+
+  $ugc_posters = 0;
+  $gift_getters = 0;
+  foreach($data['invitees'] as $i){
+    if ($i['uploads'] !=0){
+      $ugc_posters++;
+    }
+    if (count($i['redeem'])!=0){
+      $gift_getters ++;
+    }
+  }
+
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=usage.csv');
+
+  $fp = fopen('php://output', 'w');
+
+  $content = array(
+    array("Number of users who participated in one-to-one chat(s)",$data['num_solo_chatters'],),
+    array("Number of users who participated in group chat(s)",$data['num_group_chatters']),
+    array("umber of users who posted on POV wall",$data['num_pov_posters']),
+    array("Number of users who uploaded content",$ugc_posters),
+    array("Number of users who redeemed gift(s)",$gift_getters),
+  );
+
+  foreach($content as $r){
+    fputcsv($fp, $r, ",");
+  }
+
+
+  fclose($fp);
+  drupal_exit();
+
+}
+
+function myngl_myngl_analytics_social_sharings_download($nid){
+  $data = myngl_myngl_insight_analytic_get_data($nid);
+
+  $social_sharings = $data['social_sharings'];
+  $counts = array(
+    'confirmed' => array(
+      'title' => "Confirm Page",
+      'facebook'=>0,
+      'twitter' =>0,
+      'email' => 0,
+    ),
+    'lounge' => array(
+      'title' => 'Lounge',
+      'facebook'=>0,
+      'twitter' =>0,
+      'email' => 0,
+    ),
+
+    'gifting' => array(
+      'title' => 'Gifting Suite',
+      'facebook'=>0,
+      'twitter' =>0,
+      'email' => 0,
+    ),
+  );
+
+  foreach($social_sharings as $v){
+    $counts[$v['page']][$v['media_type']] ++;
+  }
+
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=social-sharing.csv');
+
+  $fp = fopen('php://output', 'w');
+  $headers = array("", 'Facebook', "Twitter", "Email");
+  fputcsv($fp, $headers, ",");
+
+  foreach($counts as $r){
+     fputcsv($fp, $r, ",");
+  }
+
+  fclose($fp);
+  drupal_exit();
+}
+
+
+function myngl_myngl_analytics_rewards_download($nid){
+  $data = myngl_myngl_insight_analytic_get_data($nid);
+
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=rewards.csv');
+
+  $fp = fopen('php://output', 'w');
+  $headers = array("Reward", 'Redeem count');
+  fputcsv($fp, $headers, ",");
+
+  foreach($data['redeem_count'] as $name => $count){
+    fputcsv($fp, array($name,$count), ",");
+  }
+
+
+  fclose($fp);
+  drupal_exit();
+
+
+}
+
+function myngl_myngl_analytics_room_and_time_download($nid){
+  $data = myngl_myngl_insight_analytic_get_data($nid);
+
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=room-and-time.csv');
+
+  $fp = fopen('php://output', 'w');
+  $headers = array("User ID",
+      "Total",
+      "Lobby",
+      "Lounge",
+      "Theater",
+      "Activity Room",
+      "Gifting Suite",);
+  fputcsv($fp, $headers, ",");
+
+  $sum = array(
+      'total'=>"Total",
+      'sum' =>0,
+      'Lobby'=>0,
+      'Lounge'=>0,
+      'Theater'=>0,
+      'PlayRoom'=>0,
+      'Gifting Suite'=>0,
+      );
+
+  $mapping = array(
+    'Total' => 0,
+    'Lobby' => 1,
+    'Lounge' =>2,
+    'Theater' =>3,
+    'PlayRoom'=>4,
+    'Gifting Suite' =>5,
+  );
+  foreach($data['invitees'] as $i){
+    if($i['attend']==1){
+      $r = array();
+      foreach ($i['room_record'] as $k =>$t){
+        $sum[$k] +=$t / 60.0;
+        $r[$mapping[$k]] = $t / 60.0;
+      }
+      ksort($r);
+      array_unshift($r,$i['uid']);
+      fputcsv($fp, $r, ",");
+    }
+  }
+  fputcsv($fp, $sum, ",");
+
+  fclose($fp);
+  drupal_exit();
+
+
+}
+
+
+function myngl_myngl_analytics_user_activities_download($nid){
+  $data = myngl_myngl_insight_analytic_get_data($nid);
+
+  drupal_add_http_header('Content-Type', 'text/csv');
+  drupal_add_http_header('Content-Disposition', 'attachment;filename=user-activities.txt');
+  $fp = fopen('php://output', 'w');
+
+  foreach ($data['invitees'] as $i){
+    if($i['uid']!=NULL){
+      fwrite($fp, "User " .$i['uid']."\n\n");
+      foreach($i['activity_history'] as $h){
+        fwrite($fp, $h['points']." points -- ".$h['description']."\n");
+      }
+      fwrite($fp, "\n\n\n===========================\n");
+    }
+  }
+  fclose($fp);
+  drupal_exit();
+
+}
+
+
+
+
+
