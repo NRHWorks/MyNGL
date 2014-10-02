@@ -8,6 +8,7 @@ function myngl_event_menu() {
     'access callback' => TRUE,
   );
 
+
   $items['myngl-event/%/social-area'] = array(
     'title' => 'MyNGL Lounge',
     'page callback' => 'myngl_event_social_area',
@@ -28,14 +29,14 @@ function myngl_event_menu() {
     'page arguments' => array(1,4,5),
     'access callback' => TRUE,
   );
-  /*
-  $items['myngl-event/%/ajax/theater-message'] = array(
-    'title' => 'MyNGL Theater',
-    'page callback' => 'myngl_event_theater_ajax_message',
-    'page arguments' => array(1),
+
+  $items['myngl-event/update-status/%/%/%'] = array(
+    'title' => '',
+    'page callback' => 'myngl_event_update_status',
+    'page arguments' => array(2,3,4),
     'access callback' => TRUE,
   );
-  */
+
   $items['myngl-event/%/invitee-info-update'] = array(
     'title' => 'MyNGL Invitee Info Update',
     'page callback' => 'myngl_event_invitee_info_update',
@@ -632,3 +633,65 @@ function myngl_event_is_taking_place($nid, $uid, $access_page = NULL){
   }
 }
 
+function myngl_event_update_status($myngl_id, $user_id, $status){
+  $result = db_query("SELECT * FROM myngl_participant_room_record
+                      WHERE myngl_id = :nid AND user_id = :uid
+                      ORDER BY enter_time DESC LIMIT 1",
+                      array(":nid"=> $myngl_id,
+                            ":uid"=> $user_id));
+
+  if ($result->rowCount()==0){
+    db_insert('myngl_participant_room_record')->fields(
+        array(
+          'myngl_id'      => $myngl_id,
+          'user_id'       => $user_id,
+          'enter_time'  => time(),
+          'leave_time'  => time() + 20,
+          'room'=> $status
+        )
+      )->execute();
+
+  }
+
+  else {
+    $r = $result->fetchObject();
+
+    if ($r->room == $status){
+
+      db_update('myngl_participant_room_record')->fields(
+        array(
+          'leave_time' => time() +20,
+        )
+      )->condition('id', $r->id, '=')
+      ->execute();
+    }
+
+    else {
+
+      db_update('myngl_participant_room_record')->fields(
+        array(
+          'leave_time' => time(),
+        )
+      )->condition('id', $r->id, '=')
+      ->execute();
+
+
+      db_insert('myngl_participant_room_record')->fields(
+        array(
+          'myngl_id'      => $myngl_id,
+          'user_id'       => $user_id,
+          'enter_time'  => time(),
+          'leave_time'  => time() + 20,
+          'room'=> $status
+        )
+      )->execute();
+    }
+
+  }
+
+
+
+
+
+
+}
