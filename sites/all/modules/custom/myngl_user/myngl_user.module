@@ -82,15 +82,20 @@ function myngl_user_user_login(&$edit, $account) {
 }
 
 function myngl_user_register_validate($element, &$form_state, $form){
-  //print "<pre>";
-  //print_r($element);
-
-  //die;
   if ($element['und']['#value']==0) {
-
      form_error($element, t('Must agree to Terms and Conditions.'));
    }
+}
 
+
+
+function myngl_user_register_email_validate ($element, &$form_state, $form){
+  $email = strtolower($element['#value']);
+  $r = db_query("SELECT * FROM field_data_field_invitee_email_address
+                WHERE field_invitee_email_address_value = :email", array(":email"=> $email));
+  if ( $r->rowCount()==0) {
+     form_error($element, t('Email not on the invitees list.'));
+   }
 }
 
 function myngl_user_form_alter(&$form, &$form_state, $form_id) {
@@ -159,6 +164,7 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
       break;
 
     case 'user_register_form' :
+
       $form['actions']['submit']['#value'] = 'REGISTER';
       //$form['#validate'][] = 'myngl_user_register_validate';
 
@@ -191,6 +197,7 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
       $form['field_terms_and_condition']['und']['#title']='I have read and agree to the <a href="#" id="terms-overlay-link">Terms & Conditions</a>.';
       $form['field_terms_and_condition']['#element_validate'] = array('myngl_user_register_validate');
 
+      $form['account']['mail']['#element_validate'] = array('myngl_user_register_email_validate');
 
       $form['facebook_signin'] = array (
         '#markup' => '<div id="registration-facebook">
@@ -210,6 +217,7 @@ function myngl_user_form_alter(&$form, &$form_state, $form_id) {
 
         '#weight' => 900
       );
+
       break;
 
     case 'user_profile_form' :
