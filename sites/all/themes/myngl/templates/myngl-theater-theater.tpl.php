@@ -24,7 +24,7 @@ body.page-myngl-event-theater{
   width: 1020px;
   min-height: 888px;
   position: relative;
-  top: 0;
+  top: 80px;
 
   margin-left:auto;
   margin-right:auto;

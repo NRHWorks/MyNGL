@@ -109,7 +109,7 @@ addthisevent.settings({
               <span class="title"><?php print $m['myngl']->title; ?></span><br><br>
 
               <span class="info-header">SUMMARY</span><br>
-              <div style="height:190px; overflow: auto;">
+              <div style="height:170px; overflow: auto;">
                 <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?>
               </div><br /><br />
               <hr>
@@ -145,7 +145,7 @@ addthisevent.settings({
                <span class="title"><?php print $m['myngl']->title; ?></span><br><br>
 
               <span class="info-header">SUMMARY</span><br>
-              <div style="height:190px; overflow: auto;">
+              <div style="height:170px; overflow: auto;">
                 <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?>
               </div><br /><br />
               <hr>
@@ -181,7 +181,7 @@ addthisevent.settings({
                <span class="title"><?php print $m['myngl']->title; ?></span><br><br>
 
               <span class="info-header">SUMMARY</span><br>
-              <div style="height:190px; overflow: auto;">
+              <div style="height:170px; overflow: auto;">
                 <?php print $m['myngl']->field_myngl_description['und'][0]['safe_value']; ?>
               </div><br /><br />
               <hr>

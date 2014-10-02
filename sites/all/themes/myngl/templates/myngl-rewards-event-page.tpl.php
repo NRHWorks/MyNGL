@@ -569,7 +569,7 @@ form#myngl-myngl-post-questions-form #edit-submit{
   <div class = "short-line" id="short-line-1"></div>
   <div id="text-wrapper">
 
-    <div id="text-wrapper-inner" style="position:relative; top:50%; transform:translateY(-100%)">
+    <div id="text-wrapper-inner" style="position:relative; top:20%; ">
         <?php
           $counter = 0;
           $reward_collections = $myngl->field_reward['und'];
