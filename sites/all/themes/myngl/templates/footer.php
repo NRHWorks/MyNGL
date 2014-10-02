@@ -43,7 +43,11 @@
   }) (jQuery);
 </script>
 
-<?php print $myngl->field_google_analytics_script['und'][0]['value']; ?>
+<?php
+    $block = block_load('block', '3');
+    $renderable = _block_get_renderable_array(_block_render_blocks(array($block)));
+    print render ($renderable);
+  ?>
 
 <?php /* TODO: MOVE THIS TO A MODULE */ ?>
 
