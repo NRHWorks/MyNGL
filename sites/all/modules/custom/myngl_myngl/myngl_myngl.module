@@ -1900,7 +1900,7 @@ function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
 
   // 0 is invitation index. eventually this need to be the same as inviter's rsvp date (or not?)
 
-  myngl_myngl_send_invitation($node->nid, $invitee_id, 0, FALSE);
+  myngl_myngl_send_invitation($node->nid, $invitee_id, 0, FALSE, TRUE);
   drupal_set_message('An invitation has been sent to '.$v['first_name'].' ('.$v['email']. '), would you like to invite another?');
 }
 
@@ -1979,22 +1979,23 @@ function myngl_myngl_cancel_invitation($myngl_id) {
   }
 }
 
-function myngl_myngl_send_invitation($myngl_id, $invitee_id, $date_index = 0, $redirect = TRUE) {
+function myngl_myngl_send_invitation($myngl_id, $invitee_id, $date_index = 0, $redirect = TRUE, $sent_by_friend = FALSE) {
   global $user;
   $user = user_load($user->uid);
-  $friend = $user->field_first_name['und'][0]['value'];
+  $friend = ($sent_by_friend == TRUE)? $user->field_first_name['und'][0]['value']:NULL;
   $node = node_load($myngl_id);
   $subject = $node->field_invitation_email_title['und'][0]['value'];
   $brand = node_load($node->field_myngl_brand['und'][0]['nid']);
   $banner = file_create_url($brand->field_brand_logo['und'][0]['uri']);
   $gift_image = file_create_url($node->field_invitation_email_image['und'][0]['uri']);
+  $email_text = ($sent_by_friend)? $node->field_myngl_invi_email_frm_frien['und'][0]['value'] :$node->field_myngl_invitation_email['und'][0]['value'];
 
   $ic = array_shift(entity_load('field_collection_item', array($node->field_myngl_invitees['und'][$invitee_id]['value'])));
   $ic->field_invitee_status['und'][0]['value'] = 'Invitation Delivered';
   $ic->save(TRUE);
   $to = $ic->field_invitee_email_address['und'][0]['value'];
   $firstname = $ic->field_invitee_first_name['und'][0]['value'];
-  $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'friend' => $friend, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $node->field_myngl_invitation_email['und'][0]['value'],'date_index'=>$date_index));
+  $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'friend' => $friend, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $email_text,'date_index'=>$date_index));
   myngl_myngl_sendMail($to, $subject, $html, $alt);
 
   if ($redirect != FALSE) {

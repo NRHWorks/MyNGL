@@ -1,3 +1,5 @@
+<?php
+      ?>
 <html>
   <head>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -11,7 +13,7 @@
         <img src="<?php print $gift_image; ?>" style="float:left; margin-right:25px; width:150px; height:auto;">
         <h1 style="font-famiy:'helvetica';font-weight:normal; color: #957f57; font-size: 34px; text-transform: uppercase; letter-spacing: 1px;">YOU'RE INVITED TO <?php print $title; ?></h1>
         <div style="clear:both; padding-top:25px;">
-          <?php print str_replace('[friend-name]',$friend,str_replace('[first-name]',$invitee,$text)); ?>
+          <?php print str_replace('[friend-name]', $friend ,str_replace('[first-name]',$invitee,$text)); ?>
         </div>
         <div style="text-align:center; color:#555;">
           <a href="http://www.themyngl.com/myngl/<?php print $myngl_id; ?>/rsvp/<?php print $date_index;?>" style="color:#555;text-decoration:none;">
