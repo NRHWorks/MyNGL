@@ -158,7 +158,8 @@ function myngl_myngl_menu() {
     'title' => 'Participants Status',
     'page callback' => 'myngl_myngl_participants_status',
     'page arguments' => array(1),
-    'access callback' => 'myngl_myngl_node_edit_tag_access',
+    //'access callback' => 'myngl_myngl_node_edit_tag_access',
+    'access callback' => FALSE,
     'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
   );

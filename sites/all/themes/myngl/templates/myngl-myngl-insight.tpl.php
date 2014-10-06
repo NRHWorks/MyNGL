@@ -71,6 +71,7 @@ h3 {
   <a href="<?php print base_path();?>node/<?php print $data['nid'];?>/insight/pre-questions-download" target="_blank">
     Download script
   </a>
+<?php /* ?>
   <?php foreach($data['pre_questions'] as $index=>$q): ?>
     <?php $answer_count = array(); ?>
     <h5>Question <?php print $index + 1;?>:</h5>
@@ -91,6 +92,7 @@ h3 {
     ?>
 
   <?php endforeach; ?>
+<?php */ ?>
   <br/><br/><br/>
   <?php
     foreach($data['invitees'] as $i){
@@ -111,6 +113,7 @@ h3 {
   <a href="<?php print base_path();?>node/<?php print $data['nid'];?>/insight/post-questions-download" target="_blank">
     Download script
   </a>
+  <?php /* ?>
   <?php foreach($data['post_questions'] as $index=>$q): ?>
     <?php $answer_count = array(); ?>
     <h5>Question <?php print $index + 1;?>:</h5>
@@ -131,6 +134,7 @@ h3 {
     ?>
 
   <?php endforeach; ?>
+  <?php */ ?>
   <br/><br/><br/>
   <?php
     foreach($data['invitees'] as $i){
