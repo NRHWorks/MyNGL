@@ -38,14 +38,6 @@ function myngl_myngl_menu() {
     'access callback' => TRUE,
   );
 
-  /*  It seems that it's never called.
-  $items['myngl/%/change_date/%/%'] = array(
-    'title' => 'RSVP CONFIRMED!',
-    'page callback' => 'myngl_myngl_change_date',
-    'page arguments' => array(1,3,4),
-    'access callback' => TRUE,
-  );
-  */
 
   $items['myngl/%/pre-questions'] = array(
     'title' => 'Pre Myngl Questions',
@@ -163,15 +155,7 @@ function myngl_myngl_menu() {
     'type' => MENU_CALLBACK,
   );
 
-  $items['node/%/participants-status'] = array(
-    'title' => 'Participants Status',
-    'page callback' => 'myngl_myngl_participants_status',
-    'page arguments' => array(1),
-    //'access callback' => 'myngl_myngl_node_edit_tag_access',
-    'access callback' => FALSE,
-    'access arguments' => array(1),
-    'type' => MENU_LOCAL_TASK,
-  );
+
 
   $items['node/%/question'] = array(
     'title' => ' POV Question',
@@ -1956,37 +1940,6 @@ function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
   drupal_set_message('An invitation has been sent to '.$v['first_name'].' ('.$v['email']. '), would you like to invite another?');
 }
 
-function myngl_myngl_participants_status($myngl_id) {
-  $result = db_query('SELECT user_id, timestamp, status
-                      FROM {myngl_participant_status} WHERE
-                        myngl_id = :myngl_id',
-                        array(
-                          ':myngl_id' => $myngl_id,
-                        )
-                      );
-
-  $header = array(
-    'User ID',
-    'Status',
-    'Time',
-  );
-  $rows = array();
-
-  foreach ($result as $r) {
-    $rows[] = array($r->user_id, $r->status, myngl_timing_timestamp_to_est( $r->timestamp));
-  }
-
-  $variables = array('header' => $header,
-                     'rows' => $rows,
-                     'attributes' => array(),
-                     'caption' => NULL,
-                     'colgroups' => array(),
-                     'sticky' => TRUE,
-                     'empty' => '');
-
-  $table = theme('table', $variables);
-  return $table;
-}
 
 
 function myngl_myngl_admin_paths() {
@@ -1995,7 +1948,6 @@ function myngl_myngl_admin_paths() {
     'node/*/ugc-list' =>TRUE,
     'node/*/invitee-redeem' => TRUE,
     'node/*/invitees' => TRUE,
-    'node/*/participants-status' => TRUE,
     'node/*/theater-message' => TRUE,
     'node/*' => TRUE,
     'node/*/insight' => TRUE,
@@ -2149,8 +2101,11 @@ function myngl_myngl_insight_analytic_get_data($nid){
   );
 
 
-  $result = db_query('SELECT user_id from myngl_participant_status
-                      WHERE myngl_id = :nid',array(":nid"=>$nid));
+
+  $result = db_query("SELECT user_id FROM myngl_participant_room_record
+                      WHERE myngl_id = :nid AND
+                      most_recent_status = 1",
+                      array(":nid"=> $nid,));
   foreach ($result as $r){
     $attendees[] = $r->user_id;
   }
