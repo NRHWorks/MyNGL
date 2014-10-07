@@ -1,4 +1,4 @@
-
+<?php print "<pre>". print_r( libraries_get_path('bgrins-spectrum'), TRUE) . "</pre>"; ?>
 <style type="text/css">
 h3 {
   margin-top:90px;
