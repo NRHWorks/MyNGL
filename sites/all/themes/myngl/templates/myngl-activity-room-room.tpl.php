@@ -144,6 +144,17 @@ display:none;
   border:0px;
 }
 
+
+.field-name-field-activity-room-welcome-titl{
+	text-align:center
+}
+.field-name-field-activity-room-welcome-titl .field-items{
+	margin-top:10px;
+	font-weight:bold;
+	font-size:24px !important;
+	display:inline-block;
+}
+
 </style>
   <div id="myngl-activity-room">
 
