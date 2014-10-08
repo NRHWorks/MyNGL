@@ -1776,13 +1776,14 @@ function myngl_myngl_add_invitee($form, &$form_state, $nid) {
       '#description' => t('Select the invitation date of the event'),
       '#default_value' => "",
     );
-  $options[0] = "Randomize";
+
+  $options2[0] = "Randomize";
   foreach ($myngl->field_myngl_dates['und'] as $key => $group_name){
     if ($group_name['value'] != NULL){
-      $options[$key+1] = $group_name['value'];
+      $options2[$key+1] = $group_name['value'];
     }
   }
-  $form['invitation_date']['#options'] = $options;
+  $form['invitation_date']['#options'] = $options2;
 
 
   $form['submit'] = array(
