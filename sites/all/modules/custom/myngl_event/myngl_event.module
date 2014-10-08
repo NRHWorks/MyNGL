@@ -66,14 +66,6 @@ function myngl_event_menu() {
     'access callback' => TRUE,
   );
   
-  $items['myngl-event/theater/question/%'] = array(
-    'title' => 'MyNGL Lobby',
-    'page callback' => 'myngl_event_theater_question_submit',
-    'page arguments' => array(3,4),
-    'access callback' => TRUE,
-  );
-
-
 
   $items['myngl-event/%/update-users-in-lounge'] = array(
     'title' => 'Update users in lounge',
@@ -478,15 +470,6 @@ function myngl_event_invitee_info_update($myngl_id){
   }
 
   echo json_encode($invitees);
-}
-
-
-function myngl_event_theater_question_submit($myngl_id) {
-	global $user;
-	$node = node_load($myngl_id);
-	$node->field_theater_questions['und'][]['value'] = $user->name.' : '.$_POST['question'];
-	node_save($node);
-	return;
 }
 
 

@@ -283,7 +283,7 @@ var question = (function ($) {
       if ($('#question-input').val() != '') {
         $.ajax({
           type: "POST",
-          url: "/myngl-event/theater/question/" + myngl_id,
+          url: "/myngl-event/theater/question/" + myngl_id + "/"+from_uid,
           data: {'question' : $('#question-input').val()}
         });
 

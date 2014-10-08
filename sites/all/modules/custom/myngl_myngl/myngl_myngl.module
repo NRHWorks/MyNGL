@@ -375,13 +375,13 @@ function myngl_myngl_node_edit_tag_access($nid){
 
 
 function myngl_myngl_edit_theater_message($nid){
-  $result = db_query("SELECT delta, field_theater_questions_value
-                      FROM field_data_field_theater_questions
-                      WHERE entity_id = :nid
-                      ORDER BY delta DESC", array(':nid'=>$nid));
+  $result = db_query("SELECT *
+                      FROM myngl_theater_question
+                      WHERE myngl_id = :nid
+                      ORDER BY question_date ASC", array(':nid'=>$nid));
 
   foreach($result as $r){
-    $questions[] = array('delta'=>$r->delta, 'question'=>$r->field_theater_questions_value);
+    $questions[] = array('date'=>$r->question_date, 'question'=>$r->question);
   }
 
   drupal_add_js('sites/all/themes/myngl/js/theater-message.js');
@@ -392,13 +392,13 @@ function myngl_myngl_edit_theater_message($nid){
 }
 
 function myngl_myngl_theater_message_fetch($nid){
-  $result = db_query("SELECT delta, field_theater_questions_value
-                      FROM field_data_field_theater_questions
-                      WHERE entity_id = :nid
-                      ORDER BY delta ASC", array(':nid'=>$nid));
+  $result = db_query("SELECT *
+                      FROM myngl_theater_question
+                      WHERE myngl_id = :nid
+                      ORDER BY question_date ASC", array(':nid'=>$nid));
 
   foreach($result as $r){
-    $questions[] = array('delta'=>$r->delta, 'question'=>$r->field_theater_questions_value);
+    $questions[] = array('date'=>$r->question_date, 'question'=>$r->question);
   }
   return drupal_json_output( $questions);
 }
@@ -783,8 +783,10 @@ function myngl_myngl_image_upload($form, &$form_state, $k, $myngl_id, $user_id) 
 
 function myngl_myngl_image_upload_ajax_submit($form_id, &$form_state) {
   $v = $form_state['values'];
+
   $myngl = node_load($v['myngl_id']);
   $invitee = _myngl_myngl_get_invitee_id($v['myngl_id'], $v['user_id']);
+
 
   if ($_FILES['files']['tmp_name']['file']) {
     $file_data = file_get_contents($_FILES['files']['tmp_name']['file']);
@@ -794,8 +796,9 @@ function myngl_myngl_image_upload_ajax_submit($form_id, &$form_state) {
     $invitee->field_image_upload['und'][] = (array) $file;
     $invitee->save();
 
+    myngl_rewards_add($v['myngl_id'], $v['user_id'], "upload_ugc");
 
-  return '<div id="myngl-upload-image-success-' . $form_state['triggering_element']['#k'] .'">'.
+    return '<div id="myngl-upload-image-success-' . $form_state['triggering_element']['#k'] .'">'.
            'File '. $_FILES['files']['name']['file'] .' successfully uploaded' .
          '</div>';
   }
@@ -860,6 +863,7 @@ function myngl_myngl_doc_upload_ajax_submit($form_id, &$form_state) {
     $invitee->field_document_upload['und'][] = (array) $file;
     $invitee->save();
 
+    myngl_rewards_add($v['myngl_id'], $v['user_id'], "upload_ugc");
     return '<div id="myngl-upload-doc-success-' . $form_state['triggering_element']['#k'] .'">'.
            'File '. $_FILES['files']['name']['file'] .' successfully uploaded' .
          '</div>';
@@ -952,7 +956,7 @@ function myngl_myngl_youtube_embed_ajax_submit($form_id, &$form_state){
                                                   'video_id' => $video_id);
 
   $invitee->save();
-
+  myngl_rewards_add($v['myngl_id'], $v['user_id'], "upload_ugc");
    return  '<div id="myngl-upload-youtube-success-' . $form_state['triggering_element']['#k'] .'">'.
            'Youtube '. $title .' successfully submitted' .
          '</div>';
@@ -1030,6 +1034,8 @@ function myngl_myngl_pre_questions_form($form, &$form_state, $myngl_id, $user_id
 function myngl_myngl_pre_questions_form_submit($form, &$form_state) {
 
   $v = $form_state['values'];
+
+  myngl_rewards_add($v['myngl_id'], $v['user_id'], "answering_pre_q");
 
   $q_arr = array();
   foreach ($v as $k => $val) {
@@ -1915,9 +1921,13 @@ function myngl_myngl_confirm_add_invitee($form, &$form_state, $nid) {
 }
 
 function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
+  global $user;
+
   $v = $form_state['values'];
 
   $node = node_load($v['myngl_nid']);
+
+  myngl_rewards_add($v['myngl_nid'], $user->uid, "invititing_frie");
 
   $field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_myngl_invitees'));
   $field_collection_item->setHostEntity('node', $node);
@@ -2086,23 +2096,6 @@ function myngl_myngl_insight($nid){
 function myngl_myngl_insight_analytic_get_data($nid){
 
 
-  $description_mapping = array(
-
-      'visiting_lobby' => "Visit lobby",
-      'visiting_social' => "Visit lounge",
-      'opening_ugc_win' => "View UGC window",
-      'opening_pov_win' => "View POV window",
-      'visiting_theate' => "Visit theater",
-      'visiting_activi' => "Visit playroom",
-      'playroom_activi' => "Play game",
-      'sending_ct_msg' => "Send chat message",
-      'upload_ugc'=>"Upload UGC content",
-
-
-  );
-
-
-
   $result = db_query("SELECT user_id FROM myngl_participant_room_record
                       WHERE myngl_id = :nid AND
                       most_recent_status = 1",
@@ -2209,7 +2202,8 @@ function myngl_myngl_insight_analytic_get_data($nid){
     $history = array();
 
     foreach($result2 as $r){
-      $description = isset($description_mapping[$r->description])? $description_mapping[$r->description]: $r->description;
+      $description = myngl_activities_activity_name_to_desc_mapping($r->description);
+      $description = ($description == NULL)? $r->description : $description;
       $history[] = array('points'=>$r->points,'description'=>$description);
     }
     $invitee['activity_history'] = $history;
@@ -2217,9 +2211,16 @@ function myngl_myngl_insight_analytic_get_data($nid){
     $invitees[] = $invitee;
   }
 
+
+
   $theater_questions = array();
-  foreach ($node->field_theater_questions['und'] as $q){
-    $theater_questions[] = $q['value'];
+  $result = db_query("SELECT *
+                      FROM myngl_theater_question
+                      WHERE myngl_id = :nid
+                      ORDER BY question_date ASC", array(':nid'=>$nid));
+
+  foreach($result as $r){
+    $theater_questions [] =$r->question;
   }
 
   $pre_questions = array();
@@ -2364,15 +2365,22 @@ function _myngl_myngl_room_record($uid,$nid){
 
 
 function myngl_myngl_insight_theater_questions_download($nid){
-  $result = db_query("SELECT field_theater_questions_value FROM field_data_field_theater_questions
-                      WHERE entity_id = :nid", array(":nid"=>$nid));
+
+  $theater_questions = array();
+  $result = db_query("SELECT *
+                      FROM myngl_theater_question
+                      WHERE myngl_id = :nid
+                      ORDER BY question_date ASC", array(':nid'=>$nid));
+
+
+
 
   drupal_add_http_header('Content-Type', 'text/csv');
   drupal_add_http_header('Content-Disposition', 'attachment;filename=theater-questions.txt');
   $fp = fopen('php://output', 'w');
 
   foreach($result as $r){
-     fwrite($fp, $r->field_theater_questions_value."\n");
+     fwrite($fp, $r->question."\n");
   }
   fclose($fp);
   drupal_exit();
@@ -2504,13 +2512,14 @@ function myngl_myngl_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'myngl_node_form') {
     unset($form['field_myngl_alerts']);
     unset($form['field_pov_question']);
-    unset($form['field_theater_questions']);
     unset($form['field_myngl_invitees']);
   }
 }
 
 
 function myngl_myngl_social_sharing_record($user_id, $myngl_id, $media_type, $page){
+
+  myngl_rewards_add($myngl_id, $user_id,'social_sharing');
   db_insert('myngl_social_sharing_records')->fields(
         array(
           'user_id'      => $user_id,

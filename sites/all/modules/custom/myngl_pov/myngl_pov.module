@@ -46,6 +46,10 @@ function myngl_pov_fetch($myngl_id, $mpovid) {
 }
 
 function myngl_pov_post($myngl_id, $user_id) {
+
+  myngl_rewards_add($myngl_id, $user_id, 'sending_shoutou');
+
+
   $question = db_query("SELECT field_pov_question_value FROM {field_data_field_pov_question} WHERE entity_id = :eid", array(':eid' => $myngl_id))->fetchField();
 
   db_query("  INSERT INTO {myngl_pov} 

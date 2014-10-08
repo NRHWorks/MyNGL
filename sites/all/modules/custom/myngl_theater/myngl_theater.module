@@ -59,11 +59,16 @@ function myngl_theater_theater($nid) {
  * Recieves users questions.
  */
 function myngl_theater_question_post($myngl_id, $from_user_id) {
+
+
+
+  myngl_rewards_add($myngl_id, $from_user_id, 'submitting_thea');
+
   $k = db_insert('myngl_theater_question')->fields(
     array(
       'myngl_id' => $myngl_id,
       'user_id'  => $from_user_id,
-      'question' => $_POST['question'],
+      'question' => 'User ' . $from_user_id . ": " .$_POST['question'],
       'question_date' => time(),
     )
   )->execute();

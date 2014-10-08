@@ -19,7 +19,31 @@ function myngl_activities_theme() {
   return $items;
 }
 
-function myngl_activities_page() {
+
+
+
+function myngl_activities_activity_repeatable($field_name){
+  $repeatable_array = array(
+      'invititing_frie' =>1,
+      'answering_pre_q' =>0,
+      'social_sharing' =>1,
+      'attending_myngl' =>0,
+      'visiting_lobby' => 0,
+      'visiting_social' => 0,
+      'opening_ugc_win' => 0,
+      'opening_pov_win' => 0,
+      'visiting_theate' => 0,
+      'visiting_activi' => 0,
+      'playroom_activi' => 1,
+      'sending_ct_msg' => 1,
+      'sending_shoutou' =>1,
+      'upload_ugc' =>1,
+      'submitting_thea' => 1,
+   );
+  return $repeatable_array[$field_name];
+}
+
+function myngl_activities_activity_name_to_desc_mapping($field_name){
   $description_mapping = array(
 
       'visiting_lobby' => "Visit lobby",
@@ -31,9 +55,22 @@ function myngl_activities_page() {
       'playroom_activi' => "Play game",
       'sending_ct_msg' => "Send chat message",
       'upload_ugc'=>"Upload UGC content",
-
-
+      'invititing_frie' => "Invite friend",
+      'social_sharing' => 'Share on social network',
+      'attending_myngl' => 'Attend MYNGL',
+      'answering_pre_q' => "Answer Pre MYNGL questions",
+      'sending_shoutou' => "Submit Shout Out",
+      'submitting_thea' => "Submit theater question"
   );
+
+  return $description_mapping[$field_name];
+
+}
+
+
+
+function myngl_activities_page() {
+
   global $user;
 
   $activities = array();
@@ -53,10 +90,11 @@ function myngl_activities_page() {
       $day = floor((time() - $r->timestamp) / 86400).' DAYS AGO';
     }
 
+    $description =myngl_activities_activity_name_to_desc_mapping($r->description);
     $activities[] = array(
       'date' => $r->timestamp,
       'day' => $day,
-      'description' => (isset($description_mapping[$r->description]))?$description_mapping[$r->description]:$r->description,
+      'description' => ($description==NULL)?$r->description: $description,
       'points' => $r->points,
     );
 

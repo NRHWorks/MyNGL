@@ -136,24 +136,12 @@ function myngl_rewards_event_page($nid) {
  */
 function myngl_rewards_add($myngl_id, $user_id, $activity_field_name) {
   // Field names: field_points_for_+ key       Repeatable?
-   $repeatable_array = array(
-      'visiting_lobby' => 0,
-      'visiting_social' => 0,
-      'opening_ugc_win' => 0,
-      'opening_pov_win' => 0,
-      'visiting_theate' => 0,
-      'visiting_activi' => 0,
-      'playroom_activi' => 1,
-      'sending_ct_msg' => 1,
-      'upload_ugc' =>1,
-   );
-
   $myngl = node_load($myngl_id);
 
 
   $field_name = "field_points_for_".$activity_field_name;
   $points = $myngl->{$field_name}['und'][0]['value'];
-  $repeatable = $repeatable_array[$activity_field_name];
+  $repeatable = myngl_activities_activity_repeatable($activity_field_name);
 
 
   if ($repeatable) {
