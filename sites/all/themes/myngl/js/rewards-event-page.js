@@ -34,10 +34,41 @@ var rewards_overlay = (function($){
   return {
     show : function (entity_id, points_needed){
       $('#you-need .points').text(points_needed);
+      if (points_needed> 99999) {
+        $('#you-need .points').css("font-size","43px").css("margin-top", "30px");
+      }
+      else if (points_needed >9999) {
+        $('#you-need .points').css("font-size","50px").css("margin-top", "25px");
+      }
+      else if (points_needed >999) {
+        $('#you-need .points').css("font-size","68px").css("margin-top", "15px");
+      }
+      else {
+        $('#you-need .points').css("font-size","90px").css("margin-top", "0");
+      }
+
       $('#gifting-series-overlay #questions').css('display','none');
       $('#gifting-series-overlay #gift-and-points-info').css('display','block');
       $('#reward-id-'+entity_id).css('display', 'block');
       var myngl_total_points = Drupal.settings.total_points;
+
+
+
+      if (myngl_total_points> 99999) {
+        $('#you-have .points').css("font-size","43px").css("margin-top", "30px");
+      }
+      else if (myngl_total_points >9999) {
+        $('#you-have .points').css("font-size","50px").css("margin-top", "25px");
+      }
+      else if (myngl_total_points >999) {
+        $('#you-have .points').css("font-size","68px").css("margin-top", "15px");
+      }
+      else {
+        $('#you-have .points').css("font-size","90px").css("margin-top", "0");
+      }
+
+
+
       if (myngl_total_points < points_needed) {
         $('#gifting-series-overlay #redeem').css('display','none');
       }
