@@ -372,7 +372,7 @@
 
 <div id="myngl-event-chat" class="myngl-chat overlay branded" style="width:500px; height:450px;">
   <a href="#" onclick="myngl.overlay_close(true);" class="overlay-close">X</a>
-  <div id="myngl-event-chat-messages" class="myngl-chat-messages" style="height:430px; overflow:scroll; border:1px solid #3c4350 "></div>
+  <div id="myngl-event-chat-messages" class="myngl-chat-messages" style="height:430px; overflow:scroll; "></div>
   <div id="myngl-event-chat-form" class="myngl-chat-form" style="height:40px;">
     <form action="#" onsubmit="return chat.send_message();" style="margin-top:10px;">
       <label>Enter Message</label>
@@ -392,7 +392,7 @@
         <a href="#" onclick="chat.solo_minimize(<?php print $i['uid']; ?>);" class="overlay-close">_</a>
         <div style = "color:#ffffff;">Chat with <?php print $i['name']; ?>:</div>
       </div>
-      <div id="myngl-event-solo-chat-messages-<?php print $i['uid']; ?>" class="myngl-event-solo-chat-messages myngl-chat-messages branded-tertiary" style="height:210px; overflow:scroll; border:1px solid #3c4350; background-color:#ffffff;"></div>
+      <div id="myngl-event-solo-chat-messages-<?php print $i['uid']; ?>" class="myngl-event-solo-chat-messages myngl-chat-messages branded-tertiary" style="height:210px; overflow:scroll; background-color:#ffffff;"></div>
       <div class="myngl-event-solo-chat-form myngl-chat-form">
         <form action="#" onsubmit="return chat.solo_post(<?php print $i['uid']; ?>);" style="margin-top:10px;">
           <label>Enter Message</label>
