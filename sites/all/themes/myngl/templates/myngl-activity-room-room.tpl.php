@@ -96,7 +96,7 @@ i.fa {  /* arrows in the half circles */
   float:left;
   margin-left:2.5%;
   margin-right:0;
-  margin-top:80px;
+  margin-top:160px;
   width:45%;
   text-align: center;
 
@@ -145,15 +145,16 @@ display:none;
 }
 
 
-.field-name-field-activity-room-welcome-titl{
+.field-name-field-activity-room-welcome-tit2{
 	text-align:center
 }
-.field-name-field-activity-room-welcome-titl .field-items{
+
+.field-name-field-activity-room-welcome-tit2 .field-items{
 	margin-top:10px;
-	font-weight:bold;
-	font-size:24px !important;
+	/*font-weight:bold;
+	/font-size:24px !important; */
 	display:inline-block;
-}
+}*/
 
 </style>
   <div id="myngl-activity-room">
@@ -162,7 +163,7 @@ display:none;
     <div id="myngl-activity-room-inside" style="overflow:hidden">
       <div style="position:absolute; width:800px;">
       <?php
-        $welcome_title =field_view_field('node', $myngl, 'field_activity_room_welcome_titl','full' );
+        $welcome_title =field_view_field('node', $myngl, 'field_activity_room_welcome_tit2','full' );
         print render($welcome_title);
       ?>
       </div>
