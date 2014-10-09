@@ -2,12 +2,14 @@
 
 function myngl_user_init() {
   global $user;
+  $user = user_load($user->uid);
 
-  if (fboauth_fbid_load($user->uid)) {
-    if ($_COOKIE['Drupal_visitor_friends'] != TRUE) {
-      $facebook['friends'] = TRUE;
-      setrawcookie('Drupal.visitor.' . 'friends', rawurlencode(TRUE), REQUEST_TIME + 86400, '/');
-      if (!drupal_is_cli()) {
+  if (!drupal_is_cli()) { //add to fix Drush bug
+    if (fboauth_fbid_load($user->uid)) {
+      if (!isset($user->field_facebook_id['und'][0]['value'])) {
+        $user->field_facebook_id['und'][0]['value'] = fboauth_fbid_load($user->uid);
+        user_save($user);
+
         drupal_goto('https://www.facebook.com/dialog/oauth?client_id=352510628237304&redirect_uri=http%3A//www.themyngl.com/fboauth/myngl_user_friends_import&scope=user_friends');
       }
     }
@@ -389,11 +391,31 @@ function myngl_user_fboauth_action_friends_import($app_id, $access_token) {
   $friends = array();
   foreach ($result->data as $f) {
     $friends[] = $f->id;
+
+    $id = $f->id;
+  
+    if (isset($id)) {
+
+      $find_friend = db_query("SELECT uid FROM {fboauth_users} WHERE fbid = :fbid", array(':fbid' => $id))->fetchField();
+
+      if (isset($find_friend)) {
+
+        $user_found = user_load($find_friend);
+
+        $user_found_friends = explode('|', $user_found->field_facebook_friends['und'][0]['value']);
+
+        if (!in_array($user->field_facebook_id['und'][0]['value'], $user_found_friends)) {
+          $user_found_friends[] = $user->field_facebook_id['und'][0]['value'];
+        }
+
+        $user_found->field_facebook_friends['und'][0]['value'] =  join('|', $user_found_friends);
+        user_save($user_found);
+      }
+    }
   }
 
   $friends = join('|', $friends);
 
-  $user->field_facebook_id['und'][0]['value'] = fboauth_fbid_load($user->uid);
   $user->field_facebook_friends['und'][0]['value'] = $friends;
   user_save($user);
 

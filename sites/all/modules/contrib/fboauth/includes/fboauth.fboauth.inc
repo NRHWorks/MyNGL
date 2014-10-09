@@ -81,6 +81,9 @@ function fboauth_action_connect($app_id, $access_token) {
   // If the Facebook e-mail address matches an existing account, bind them
   // together and log in as that account.
   elseif (!empty($fbuser->email) && ($account = user_load_by_mail($fbuser->email))) {
+
+    fboauth_save($account->uid, $fbuser->id);
+
     // If the user is already logged in, associate the two accounts.
     if ($user->uid) {
       fboauth_save($user->uid, $fbuser->id);
