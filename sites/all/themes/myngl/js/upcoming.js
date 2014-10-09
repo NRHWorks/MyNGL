@@ -2,8 +2,12 @@ var next_scheduled_myngl_id;
 var current_server_time;
 var next_scheduled_event_update_in_progress = false;
 
+var scroller_index = 0;
+var num_of_myngls;
+
 (function ($) {
   $(document).ready( function() {
+    num_of_myngls = $('div.upcoming-myngl').length;
     next_scheduled_myngl_id = Drupal.settings.next_scheduled_myngl_id;
     current_server_time = Drupal.settings.current_server_time;
     //upcoming.update_overlay_short_date();
@@ -11,6 +15,8 @@ var next_scheduled_event_update_in_progress = false;
           current_server_time ++ ;
           upcoming.count_down();
         }, 1000);
+
+    upcoming.reorder_icons();
   });
 
   $( document ).ajaxComplete(function(event, xhr, settings) {
@@ -25,25 +31,55 @@ var next_scheduled_event_update_in_progress = false;
 })(jQuery);
 
 
+
 var upcoming = (function ($) {
   return {
     update_overlay_short_date: function(){
       $(".upcoming-myngl").each(function(){
-        var long_date = $(this).find('span.change-date span.date').text();
-        $(this).find('span.long-date').text(long_date);
+        console.log("updating short date");
+        var id = $(this).attr("id").substring(15);;
+
+
+
+        var long_date = $('#upcoming-myngl-details-'+id).find('span.change-date span.date').text();
+        $('#upcoming-myngl-details-'+id).find('span.long-date').text(long_date);
         $(this).find('span.short-date').text(long_date.substring(0, 10) );
 
-        var calendar_date = $(this).find("#addthis-date-hidden .start").text();
-        var calendar_end_date = $(this).find("#addthis-date-hidden .end").text();
+        var calendar_date = $('#upcoming-myngl-details-'+id).find("#addthis-date-hidden .start").text();
+        var calendar_end_date = $('#upcoming-myngl-details-'+id).find("#addthis-date-hidden .end").text();
         //var day_light_saving = ($(this).find('span.date.long-date').text().slice(-3)=="EDT")?true:false;
 
-        $(this).find('.addthisevent-drop ._start').html(calendar_date);
-        $(this).find('.addthisevent-drop ._end').html(calendar_end_date);
-        $(this).find('span.addthisevent_dropdown').remove();
+        $('#upcoming-myngl-details-'+id).find('.addthisevent-drop ._start').html(calendar_date);
+        $('#upcoming-myngl-details-'+id).find('.addthisevent-drop ._end').html(calendar_end_date);
+        $('#upcoming-myngl-details-'+id).find('span.addthisevent_dropdown').remove();
 
 
       });
       addthisevent.refresh();
+      upcoming.reorder_icons();
+    },
+    reorder_icons:function(){
+      var dates = new Array();
+
+      $('.upcoming-myngl-detail-panels').each(function(){
+         var date = $(this).find("#event-date-timestamp").text();
+         var nid = $(this).attr('id').substring(23);
+         dates.push({time: parseInt(date), nid: nid});
+
+       });
+
+      dates.sort(function(a,b){return a.time - b.time});
+
+      var thumbs= new Array();
+
+      for (var i = 0; i < dates.length; i ++){
+       thumbs[i] = $('#upcoming-myngl-'+dates[i].nid);
+       thumbs[i].remove();
+
+      }
+      for (var i = 0; i < thumbs.length; i ++){
+        $("#myngl-icons-inner").append(thumbs[i]);
+      }
     },
 
     count_down: function(){
@@ -51,7 +87,8 @@ var upcoming = (function ($) {
       //UTC to EST / EDT
 
       //console.log("next_event_time text = " + "#upcoming-myngl-"+ next_scheduled_myngl_id+" #event-date-timestamp");
-      var next_event_time = parseInt($("#upcoming-myngl-"+ next_scheduled_myngl_id+" #event-date-timestamp").text());
+      var next_event_time = parseInt($("#upcoming-myngl-details-"+ next_scheduled_myngl_id+" #event-date-timestamp").text());
+
       var time_till_event = next_event_time - current_server_time;
 
       //console.log("current_server_time = " + current_server_time);
@@ -114,5 +151,37 @@ var upcoming = (function ($) {
   }
 })(jQuery);
 
+var upcoming_scroll =(function ($) {
+  return {
+    left:function(){
 
 
+
+      if (scroller_index==0) {
+        return false;
+      }
+      scroller_index--;
+
+      $( "#myngl-icons-inner" ).animate({left: 0 - scroller_index*249}, 400);
+
+
+
+
+    },
+    right:function(){
+
+      if (scroller_index == num_of_myngls-3) {
+        return false;
+      }
+      scroller_index++;
+
+
+      $( "#myngl-icons-inner" ).animate({left: 0 - scroller_index*249}, 400);
+
+     //$("#invitees-thumbs").animate({left: 0 - dock_position}, 400);
+
+
+
+    }
+  }
+})(jQuery);

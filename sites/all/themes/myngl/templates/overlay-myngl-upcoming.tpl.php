@@ -16,45 +16,88 @@ addthisevent.settings({
 <div id="upcoming-myngls" class="overlay">
   <a href="#" onclick="return myngl.overlay_close();" class="overlay-close">X</a>
   <div id="upcoming-myngls-landing">
-    <h1 class="title">YOUR UPCOMING MYNGLS</h1>
-    <?php foreach ($myngls as $k => $m) : ?>
-      <div class="upcoming-myngl" id='upcoming-myngl-<?php print $m['myngl']->nid;?>'>
-        <div class="upcoming-myngl-wrapper" id="upcoming-myngl-wrapper-<?php print $m['myngl']->nid;?>">
-          <span class="title"><?php print $m['brand']->title; ?></span><br />
-          <span class="date short-date"><?php print myngl_timing_short_date($m['date']); ?></span><br />
-          <div class="upcoming-myngl-border">
-            <div class="upcoming-myngl-background" style="background-image: url(<?php print image_style_url('myngl_upcoming_overlay', $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri']); ?>)" onclick="jQuery('#upcoming-myngl-cover-<?php print $k; ?>').toggle();">
-              <div class="upcoming-myngl-cover" id="upcoming-myngl-cover-<?php print $k; ?>">
-                <div class="upcoming-myngl-link upcoming-myngl-details">
-                  <a href="#" onclick="return myngl_upcoming.details(<?php print $k; ?>);">
-                    <i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;View Details
-                  </a>
-                </div>
-                <div class="upcoming-myngl-link upcoming-myngl-upload">
-                  <a href="#" onclick="return myngl_upcoming.upload_images(<?php print $k; ?>);">
-                    <i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;Upload Content
-                  </a>
-                </div>
-                <div class="upcoming-myngl-link upcoming-myngl-attendance">
-                  <a href="#" onclick="myngl.cancel_invitation(<?php print $m['myngl']->nid; ?>)">
-                    <i class="fa fa-times-circle"></i>&nbsp;&nbsp;&nbsp;Cancel Attendance</a>
+    <h1 class="title" >YOUR UPCOMING MYNGLS</h1>
+
+    <?php if (count($myngls)>3): ?>
+      <style>
+        .upcoming-fa{
+          font-size:35px;
+          position:absolute;
+          top:470px;
+
+        }
+        .fa-chevron-circle-left.upcoming-fa{
+          left:40px;
+        }
+        .fa-chevron-circle-right.upcoming-fa{
+          left:720px;
+        }
+      </style>
+      <div class="fa fa-chevron-circle-left upcoming-fa" id="left" onclick="upcoming_scroll.left();"></div>
+      <div class="fa fa-chevron-circle-right upcoming-fa" id="right" onclick="upcoming_scroll.right();"></div>
+    <?php endif; ?>
+
+    <div id='myngl-icons-wrapper' style="overflow:hidden;position:relative;">
+      <div id='myngl-icons-inner' style=" width:<?php print count($myngls)*249; ?>px; position:relative;">
+        <?php foreach ($myngls as $k => $m) : ?>
+          <div class="upcoming-myngl" id='upcoming-myngl-<?php print $m['myngl']->nid;?>'>
+            <div class="upcoming-myngl-wrapper" id="upcoming-myngl-wrapper-<?php print $m['myngl']->nid;?>">
+              <span class="title"><?php print $m['brand']->title; ?></span><br />
+              <span class="date short-date"><?php print myngl_timing_short_date($m['date']); ?></span><br />
+              <div class="upcoming-myngl-border">
+                <div class="upcoming-myngl-background" style="background-image: url(<?php print image_style_url('myngl_upcoming_overlay', $m['brand']->field_myngl_upcoming_graphic['und'][0]['uri']); ?>)" onclick="jQuery('#upcoming-myngl-cover-<?php print $k; ?>').toggle();">
+                  <div class="upcoming-myngl-cover" id="upcoming-myngl-cover-<?php print $k; ?>">
+                    <div class="upcoming-myngl-link upcoming-myngl-details">
+                      <a href="#" onclick="return myngl_upcoming.details(<?php print $k; ?>);">
+                        <i class="fa fa-align-left"></i>&nbsp;&nbsp;&nbsp;View Details
+                      </a>
+                    </div>
+                    <div class="upcoming-myngl-link upcoming-myngl-upload">
+                      <a href="#" onclick="return myngl_upcoming.upload_images(<?php print $k; ?>);">
+                        <i class="fa fa-upload"></i>&nbsp;&nbsp;&nbsp;Upload Content
+                      </a>
+                    </div>
+                    <div class="upcoming-myngl-link upcoming-myngl-attendance">
+                      <a href="#" onclick="myngl.cancel_invitation(<?php print $m['myngl']->nid; ?>)">
+                        <i class="fa fa-times-circle"></i>&nbsp;&nbsp;&nbsp;Cancel Attendance</a>
+                      </div>
                   </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div class="confirm-cancel" id="confirm-cancel-<?php print $m['myngl']->nid; ?>">
-            <p>Are you sure that you want to cancel the event <?php print $m['myngl']->title?>?</p>
-            <a style="float:left; margin-top:50px;" href="/myngl/<?php print $m['myngl']->nid; ?>/cancel-invitation">
-              <i class="fa fa-times-circle"></i>&nbsp;&nbsp;&nbsp;Cancel Attendance</a>
-            </a>
-            <a style="float:right;margin-top:50px;" href="#" onclick="myngl.cancel_cancel(<?php print $m['myngl']->nid; ?>)">
-              <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Keep my RSVP</a>
-            </a>
-          </div><!-- /.confirm-cancel -->
+              <div class="confirm-cancel" id="confirm-cancel-<?php print $m['myngl']->nid; ?>">
+                <p>Are you sure that you want to cancel the event <?php print $m['myngl']->title?>?</p>
+                <a style="float:left; margin-top:50px;" href="/myngl/<?php print $m['myngl']->nid; ?>/cancel-invitation">
+                  <i class="fa fa-times-circle"></i>&nbsp;&nbsp;&nbsp;Cancel Attendance</a>
+                </a>
+                <a style="float:right;margin-top:50px;" href="#" onclick="myngl.cancel_cancel(<?php print $m['myngl']->nid; ?>)">
+                  <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Keep my RSVP</a>
+                </a>
+              </div><!-- /.confirm-cancel -->
 
-        </div>
+            </div><!-- /.upcoming-myngl-wrapper -->
 
+
+          </div> <!-- /#upcoming-myngl -->
+        <?php endforeach; ?>
+
+
+      </div> <!-- /#myngl-icons-inner-->
+    </div><!-- /#myngl-icons-wrapper -->
+    <style>
+      .upcoming-myngl-detail-panels .form-type-radio.form-item-date{
+        display:block !important;
+        float:none !important;
+        width:400px !important;
+        margin-left:90px;
+      }
+      .upcoming-myngl-detail-panels .form-type-radios.form-item-date .description{
+        margin-left:90px;
+        margin-top:20px;
+      }
+    </style>
+    <?php foreach($myngls as $k => $m):?>
+      <div class="upcoming-myngl-detail-panels" id='upcoming-myngl-details-<?php print $m['myngl']->nid;?>' >
         <div class="upcoming-myngls-pane upcoming-myngls-pane-details-<?php print $m['myngl']->nid; ?>" id="upcoming-myngls-pane-details-<?php print $k; ?>">
           <div class="upcoming-myngls-pane-content">
             <a href="#" onclick="return myngl_upcoming.close_pane();" class="overlay-close">X</a>
@@ -233,7 +276,7 @@ addthisevent.settings({
             </div>
           </div>
         </div>
-      </div> <!-- /#upcoming-myngl -->
+      </div>      <!-- /..upcoming-myngl-detail-panels -->
     <?php endforeach; ?>
   </div>
   

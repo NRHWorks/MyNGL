@@ -1,11 +1,15 @@
+<?php global $user; ?>
+
+<?php if ($brand ==NULL):?>
+  No Upcoming Myngls
+<? else: ?>
 <?php
-  global $user;
   $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
   $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
   $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
   $tertiary_color = $brand->field_brand_tertiary_color['und'][0]['rgb'];
-
 ?>
+
 
 <style>
   #link{
@@ -74,4 +78,4 @@
   ?>
   <div id='arrow'><?php print l(">",'myngl/' . $myngl->nid . '/pre-questions' )?></div>
 </div>
-
+<?endif; ?>
