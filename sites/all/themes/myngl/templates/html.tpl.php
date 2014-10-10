@@ -13,7 +13,7 @@
     if( (ARG(0)=='myngl' && ARG(2) =='confirmed')||ARG(0)== "myngl-event"){
       $nid = ARG(1);
       $n = node_load($nid);
-      $facebook_metadata = $n->field_facebook_sharing_metadata['und'][0]['value'];
+      //$facebook_metadata = $n->field_facebook_sharing_metadata['und'][0]['value'];
 
 
 
@@ -21,7 +21,7 @@
       if (isset($n->field_lounge_background['und'])){
         print '<meta property="og:image" content="'.file_create_url($n->field_lounge_background['und'][0]['uri']).'" />';
       }
-      print '<meta property="og:description" content="'. $facebook_metadata.'"/>';
+      //print '<meta property="og:description" content="'. $facebook_metadata.'"/>';
 
 
 
