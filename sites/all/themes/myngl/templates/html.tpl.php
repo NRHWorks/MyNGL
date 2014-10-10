@@ -21,7 +21,7 @@
       if (isset($n->field_lounge_background['und'])){
         print '<meta property="og:image" content="'.file_create_url($n->field_lounge_background['und'][0]['uri']).'" />';
       }
-      print '<meta property="og:description" content="'. $facebook_metadata.'”/>';
+      print '<meta property="og:description" content="'. $facebook_metadata.'"/>';
 
 
 
