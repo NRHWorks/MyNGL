@@ -1866,19 +1866,9 @@ body ::-webkit-scrollbar-thumb {
       text-align: center;
       margin-top: 5%;
       margin-left: 5px;
-      line-height: 30px;
-    }
-    .invite-graphic-text span {
-      font-size: 75px;
-      font-weight: 100;
+      /*line-height: 30px;*/
     }
 
-    .invite-graphic-text span span{
-      font-size: 35px;
-      position: absolute;
-      top: 30px;
-      left: -10px;
-    }
 
     .confirm-invite-points-graphic {
         background: #b5a065;

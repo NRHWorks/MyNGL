@@ -4,6 +4,49 @@
 
 <div class="event-detail-overlay" ></div>
 
+
+
+
+<?php
+  $points_invite_friend = $node->field_points_for_invititing_frie['und'][0]['value'];
+
+
+  if ($points_invite_friend<100){
+    $font_size=70;
+    $margin_top=-13;
+    $margin_bottom=-10;
+  }
+  else if ($points_invite_friend <1000){
+    $font_size=60;
+    $margin_top=-5;
+    $margin_bottom=-10;
+  }
+  else if ($points_invite_friend< 10000){
+    $font_size=50;
+    $margin_top=-5;
+    $margin_bottom=0;
+  }
+  else if ($points_invite_friend< 100000){
+    $font_size=40;
+    $margin_top=0;
+    $margin_bottom=5;
+  }
+  else{
+    $font_size=30;
+    $margin_top=10;
+    $margin_bottom=1;
+  }
+
+?>
+
+<style>
+  #friend_invite_points{
+    font-size:<?php print $font_size ?>px;
+    margin-top:<?php print $margin_top;?>px;
+    margin-bottom:<?php print $margin_bottom;?>px;
+  }
+</style>
+
 <div id="confirm-invite-wrapper">
   <div id="confirm-invite-invite">
     <div class="invite-graphic-container">
@@ -11,10 +54,10 @@
         <div id="confirm-invite-points-graphic-2" class="confirm-invite-points-graphic">
         </div>
       </div>
-      <div class="invite-graphic-text">
-        Earn<br>
-        <span><span>+</span>30</span><br>
-        Points per Invite
+      <div class="invite-graphic-text" style = "height:120px;text-align: center;">
+        <div style="display:block;">Earn</div>
+        <div id="friend_invite_points" style="display:inline-block;"><?php print $points_invite_friend; ?></div>
+        <div style="display:inline-block;">Points per Invite</div>
       </div>
     </div>
     <div class="content">
