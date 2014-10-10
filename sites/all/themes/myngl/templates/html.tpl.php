@@ -9,14 +9,29 @@
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
 
+  <?php
+    if( (ARG(0)=='myngl' && ARG(2) =='confirmed')||ARG(0)== "myngl-event"){
+      $nid = ARG(1);
+      $n = node_load($nid);
+      $facebook_metadata = $n->field_facebook_sharing_metadata['und'][0]['value'];
+
+
+
+      print '<meta property="og:title" content="'.$n->title.'" />';
+      if (isset($n->field_lounge_background['und'])){
+        print '<meta property="og:image" content="'.file_create_url($n->field_lounge_background['und'][0]['uri']).'" />';
+      }
+      print '<meta property="og:description" content="'. $facebook_metadata.'”/>';
+
+
+
+
+    }
+  ?>
   <?php if (ARG(0)== "myngl-event"): ?>
   <?php
-    $nid = ARG(1);
-    $n = node_load($nid);
     $brand_id = $n->field_myngl_brand['und'][0][nid];
     $brand = node_load($brand_id);
-
-
     $primary_color = $brand->field_brand_primary_color['und'][0]['rgb'];
     $secondary_color = $brand->field_brand_secondary_color['und'][0]['rgb'];
     $background_color = $brand->field_brand_background_color['und'][0]['rgb'];
@@ -189,17 +204,6 @@
 
     </style>
   <? endif; ?>
-  <?php 
-    if (arg(0) == 'myngl' && arg(2) == 'confirmed') :
-      $node = node_load(arg(1));
-
-      print '<meta property="og:title" content="'.$node->title.'" />';
-      if (isset($node->field_lounge_background['und'])){
-        print '<meta property="og:image" content="'.file_create_url($node->field_lounge_background['und'][0]['uri']).'" />';
-      }
-      print '<meta property="og:description" content="You friend is attending a really cool invite-only “Online Experiential Event” – '.$node->title.' – Socializing, Privileged Access Content and FREE “Gift Bags!!”. To find out more and get invited to other Myngls go to theMyngl.com" />';
-    endif; 
-  ?>
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
 
