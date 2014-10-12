@@ -86,6 +86,8 @@ function myngl_chat_send_message($myngl_id, $user_id) {
   return;
 }
 
+
+// New solo fetch and solo post
 function myngl_chat_solo_fetch($myngl_id, $user_id, $latest) {
   $result = db_query("SELECT * FROM {myngl_solo_chat} WHERE mcsid > :mcsid AND (from_user_id = :user_id OR to_user_id = :user_id) ORDER BY mcsid DESC", array(':mcsid' => $latest, ':user_id' => $user_id));
 
@@ -105,7 +107,76 @@ function myngl_chat_solo_fetch($myngl_id, $user_id, $latest) {
 }
 
 function myngl_chat_solo_post($myngl_id, $from_user_id, $to_user_id) {
-  print 'here';
+  $mcsid=time();
+
+  db_query("  INSERT INTO {myngl_solo_chat}
+              (myngl_id, from_user_id, to_user_id, message, date)
+              VALUES
+              (:myngl_id, :from_user_id, :to_user_id, :message, :mcsid)",
+              array(  ':myngl_id'     => $myngl_id,
+                      ':from_user_id' => $from_user_id,
+                      ':to_user_id'   => $to_user_id,
+                      ':message'       => $_POST['message'],
+                      ':mcsid' => $mcsid));
+
+
+  $result = db_query("SELECT * FROM {myngl_solo_chat} WHERE (from_user_id = :user_id OR to_user_id = :user_id)
+                      ORDER BY mcsid DESC", array(':user_id' => $from_user_id));
+
+  $data = array();
+  foreach ($result as $r) {
+    $chat = array(
+      'mcsid' => $r->mcsid,
+      'from_user_id' => $r->from_user_id,
+      'to_user_id' => $r->to_user_id,
+      'message' => $r->message,
+    );
+
+    $data[] = $chat;
+  }
+
+  $data = json_encode($data);
+  file_put_contents("chats/solo/".$myngl_id."_". $from_user_id.".json", $data);
+
+
+  $result = db_query("SELECT * FROM {myngl_solo_chat} WHERE (from_user_id = :user_id OR to_user_id = :user_id)
+                      ORDER BY mcsid DESC", array(':user_id' => $to_user_id));
+
+  $data = array();
+  foreach ($result as $r) {
+    $chat = array(
+      'mcsid' => $r->mcsid,
+      'from_user_id' => $r->from_user_id,
+      'to_user_id' => $r->to_user_id,
+      'message' => $r->message,
+    );
+
+    $data[] = $chat;
+  }
+
+  $data = json_encode($data);
+  file_put_contents("chats/solo/".$myngl_id."_". $to_user_id.".json", $data);
+}
+/*  These two functions are being refactored. Make sure to go to myngl_chat.module and uncomment the redirect statement (line 21)
+function myngl_chat_solo_fetch($myngl_id, $user_id, $latest) {
+  $result = db_query("SELECT * FROM {myngl_solo_chat} WHERE mcsid > :mcsid AND (from_user_id = :user_id OR to_user_id = :user_id) ORDER BY mcsid DESC", array(':mcsid' => $latest, ':user_id' => $user_id));
+
+  $data = array();
+  foreach ($result as $r) {
+    $chat = array(
+      'mcsid' => $r->mcsid,
+      'from_user_id' => $r->from_user_id,
+      'to_user_id' => $r->to_user_id,
+      'message' => $r->message,
+    );
+
+    $data[] = $chat;
+  }
+
+  return drupal_json_output($data);
+}
+
+function myngl_chat_solo_post($myngl_id, $from_user_id, $to_user_id) {
 
   db_query("  INSERT INTO {myngl_solo_chat}
               (myngl_id, from_user_id, to_user_id, message, date)
@@ -117,11 +188,10 @@ function myngl_chat_solo_post($myngl_id, $from_user_id, $to_user_id) {
                       'message'       => $_POST['message'])
   );
 
-  print '?????';
 
   return;
 }
-
+*/
 function myngl_chat_group_create($myngl_id){
 
   //Get the largest chat group id number

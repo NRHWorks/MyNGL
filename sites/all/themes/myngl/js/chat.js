@@ -376,12 +376,15 @@ var chat = (function ($) {
         });
       },
 
+
+      // New Solo fetch
       solo_fetch : function () {
         var myngl_id = Drupal.settings.myngl_id;
         var user_id = Drupal.settings.user_id;
         $.ajax({
           type: "GET",
-          url: "/myngl-chat/solo-fetch/" + myngl_id + "/" + user_id + "/" + latest_mcsid,
+          dataType: "json",
+          url: "/chats/solo/" + myngl_id + "_" + user_id + ".json",
           success: function (data) {
             data.forEach( function(entry) {
               if (entry.to_user_id != user_id) {
@@ -433,6 +436,64 @@ var chat = (function ($) {
           }
         });
       },
+      /* This function is being refactored
+      solo_fetch : function () {
+        var myngl_id = Drupal.settings.myngl_id;
+        var user_id = Drupal.settings.user_id;
+        $.ajax({
+          type: "GET",
+          url: "/myngl-chat/solo-fetch/" + myngl_id + "/" + user_id + "/" + latest_mcsid,
+          success: function (data) {
+            data.forEach( function(entry) {
+              if (entry.to_user_id != user_id) {
+                chat.solo_show(entry.to_user_id);
+              } else {
+                chat.solo_show(entry.from_user_id);
+              }
+            });
+            data.forEach( function(entry) {
+              if (entry.to_user_id != user_id) {
+                if (latest_mcsid == 0) {
+                  //BUGGY!! This causes the window to minimize after first message is sent.
+                  //chat.solo_minimize(entry.to_user_id);
+                }
+              } else {
+                if (latest_mcsid == 0) {
+                  chat.solo_minimize(entry.from_user_id);
+                }
+              }
+            });
+            data.forEach( function(entry) {
+              if (parseInt(entry.mcsid) > latest_mcsid) {
+                latest_mcsid =  parseInt(entry.mcsid);
+              }
+            });
+
+            data.forEach( function(entry) {
+              if (entry.to_user_id != user_id) {
+                //SUPER UGLY BAD BAD BAD CHEATING BUG FIX.  NEED TO REVISE!!!, same as line 353. (only if we have time though.)
+                if ($("#myngl-event-solo-chat-messages-" + entry.to_user_id).text().indexOf(entry.message) == -1) {
+                  $("#myngl-event-solo-chat-messages-" + entry.to_user_id).append(
+                      '<div id="solo-message-' + entry.mcsid + '" class="solo-message"> <img src="' +
+                      $("#invitee-thumb-" + entry.from_user_id  + " img").attr('src') +
+                      '" class="solo-chat myngl-event-profile-pic"  /><div class="text"><strong>' +
+                      $("#invitee-name-" + entry.from_user_id).html()  +
+                      ':</strong>  ' +  entry.message +
+                      '</div></div>'
+                  );
+                  $("#myngl-event-solo-chat-messages-" + entry.to_user_id).animate({ scrollTop: $("#myngl-event-solo-chat-messages-" + entry.to_user_id)[0].scrollHeight}, 10);
+                }
+              } else {
+                //SUPER UGLY BAD BAD BAD CHEATING BUG FIX.  NEED TO REVISE!!!
+                if ($("#myngl-event-solo-chat-messages-" + entry.from_user_id).text().indexOf(entry.message) == -1) {
+                  $("#myngl-event-solo-chat-messages-" + entry.from_user_id).append('<div id="solo-message-' + entry.mcsid + '" class="solo-message"> <img src="' + $("#invitee-thumb-" + entry.from_user_id  + " img").attr('src') + '" class="solo-chat myngl-event-profile-pic"  /><div class="text"><strong>' + $("#invitee-name-" + entry.from_user_id).html()  + ':</strong>  ' +  entry.message + '</div></div>');
+                  $("#myngl-event-solo-chat-messages-" + entry.from_user_id).animate({ scrollTop: $("#myngl-event-solo-chat-messages-" + entry.from_user_id)[0].scrollHeight}, 10);
+                }
+              }
+            });
+          }
+        });
+      }, */
 
       show_invitee_info : function(uid) {
         if (uid==id_of_showing_invitee_info) {
