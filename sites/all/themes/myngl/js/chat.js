@@ -317,11 +317,157 @@ var chat = (function ($) {
         return false;
       },
 
+      group_fetch_my_group_chats: function (data){
+        var r = [];
+        for (var i = 0;  i < data.length; i ++){
+          if (data[i][0]== Drupal.settings.user_id) {
+            r.push(data[i][1]);
+          }
+        }
+        return r;
+      },
+      group_chat_users_in_chat:function (data, chat_id){
+        var r = new Object();
+        for (var i = 0; i < data.length; i ++){
+          if (data[i][1] == chat_id) {
+
+            r[data[i][0]] = $("span#invitee-name-"+data[i][0]).text();
+          }
+        }
+        return r;
+      },
+      //new version
+      group_fetch : function() {
+        $.ajax({
+          type: "GET",
+          url: "/chats/group/group_list_"+Drupal.settings.myngl_id+".json",
+          success: function (data) {
+            /*
+              data = array(
+                [0] => array(a0, b0)
+                [1] => array(a1, b1)
+              )
+              where ai = user id, and bi = chat id.
+
+              From here, we need to construct two list:
+              1. what chat room this user is in
+              2. for each chat room the use is in, what users are also in the chat room.
+            */
+            var my_group_chats = chat.group_fetch_my_group_chats(data);
+
+            for(var i = 0; i < my_group_chats.length; i ++){
+
+              var users_list = chat.group_chat_users_in_chat(data, my_group_chats[i]);
+
+               $.ajax({
+                type: "GET",
+                url: "/chats/group/"+Drupal.settings.myngl_id+"_"+my_group_chats[i],
+                chat_id:my_group_chats[i],
+                users:  users_list,
+                success: function (data) {
+                  chat.group_fetch_success(data, this.chat_id, this.users);
+                }
+              });
+
+
+            }
+
+          }
+        });
+      },
+
+      preprocess_group_fetch_data: function(data, chat_id, users){
+
+        /*right now it is:
+          data = array(
+            [0] array(
+              id=>
+              message=>
+              user_id=>
+            )
+          )
+        /* should be like:
+        data = object(
+          [chat_id] => num,
+            [users] => array(
+              uid => name,
+              uid => name,
+              uid => name,
+            )
+          [last_message_id] => 0,
+          [messages] =>array(
+            [0] => array(
+              user_id =>
+              name =>
+              message=>
+
+            )
+            [1] => array(
+            user_id,
+            name=>
+            message =>
+            )
+          )
+         */
+
+
+        for(var i = 0; i < data.length; i ++){
+          data[i].name = users[data[i].user_id];
+        }
+        var chat = new Object();
+        chat.chat_id = chat_id;
+        chat.users = users;
+        chat.messages = data;
+        return chat;
+      },
+      group_fetch_success : function(data, chat_id, users){
+        var c = chat.preprocess_group_fetch_data(data, chat_id, users);
+
+
+        if ($('#myngl-event-group-chat-' + chat_id ).length == 0 ) {
+          if (c.messages.length !=0) {
+
+
+          chat.group_show(c);
+          }
+        }
+
+        var group_chat_user_list = "";
+        for (var key in c.users){
+          if (key != Drupal.settings.user_id ) {
+            group_chat_user_list = group_chat_user_list + c.users[key] + ", ";
+          }
+        }
+        group_chat_user_list = group_chat_user_list.slice(0, -2);
+        group_chat_user_list = group_chat_user_list + ":";
+
+
+        $('#myngl-event-group-chat-' + c.chat_id + ' .group_chat_user_list').text(group_chat_user_list) ;
+
+
+        for (var key in c.messages){
+
+          var element = $('#myngl-event-group-chat-' + c.chat_id).find('.group-message#group-message-'+ c.chat_id+'-'+c.messages[key].id).length;
+          if (element ==0) {
+            $('#myngl-event-group-chat-' + c.chat_id + ' .myngl-event-group-chat-messages').append(
+              '<div class="group-message" id="group-message-'+ c.chat_id+'-'+c.messages[key].id+'"> <img src="' +
+              $("#invitee-thumb-" + c.messages[key]['user_id']  +
+                " img").attr('src') + '" class="group-chat myngl-event-profile-pic"  /><div class="text"> <strong>' +
+              $("#invitee-name-" + c.messages[key]['user_id']).html()  +
+              ':</strong>  ' +  c.messages[key]['message'] + '</div></div>');
+
+            $('#myngl-event-group-chat-' + c.chat_id + ' .myngl-event-group-chat-messages').animate(
+              { scrollTop: $('#myngl-event-group-chat-' + c.chat_id + ' .myngl-event-group-chat-messages')[0].scrollHeight}, 10);
+          }
+        }
+
+      },
+      /*  being refactored
       group_fetch : function() {
         $.ajax({
           type: "POST",
           url: "/myngl-chat/group-fetch/" + Drupal.settings.myngl_id + "/" + Drupal.settings.user_id,
-          data: {'last_message_ids': group_chat_last_message_ids},
+          data: {'last_message_ids': group_chat_last_message_ids },
           success: function (data) {
             chat.group_fetch_success(data);
           }
@@ -366,7 +512,7 @@ var chat = (function ($) {
           }
         }
       },
-
+      */
       group_leave: function (chat_id){
         $('#myngl-event-group-chat-' + chat_id ).remove();
         $.ajax({
@@ -410,11 +556,13 @@ var chat = (function ($) {
                 latest_mcsid =  parseInt(entry.mcsid);
               }
             });
-
+            //console.log(data);
             data.forEach( function(entry) {
+
               if (entry.to_user_id != user_id) {
-                //SUPER UGLY BAD BAD BAD CHEATING BUG FIX.  NEED TO REVISE!!!, same as line 353. (only if we have time though.)
-                if ($("#myngl-event-solo-chat-messages-" + entry.to_user_id).text().indexOf(entry.message) == -1) {
+                var element = $(".myngl-event-solo-chat#myngl-event-solo-chat-"+entry.to_user_id).find("#solo-message-"+entry.mcsid).length;
+
+                if (element == 0) {
                   $("#myngl-event-solo-chat-messages-" + entry.to_user_id).append(
                       '<div id="solo-message-' + entry.mcsid + '" class="solo-message"> <img src="' +
                       $("#invitee-thumb-" + entry.from_user_id  + " img").attr('src') +
@@ -426,8 +574,8 @@ var chat = (function ($) {
                   $("#myngl-event-solo-chat-messages-" + entry.to_user_id).animate({ scrollTop: $("#myngl-event-solo-chat-messages-" + entry.to_user_id)[0].scrollHeight}, 10);
                 }
               } else {
-                //SUPER UGLY BAD BAD BAD CHEATING BUG FIX.  NEED TO REVISE!!!
-                if ($("#myngl-event-solo-chat-messages-" + entry.from_user_id).text().indexOf(entry.message) == -1) {
+                var element = $(".myngl-event-solo-chat#myngl-event-solo-chat-"+entry.from_user_id).find("#solo-message-"+entry.mcsid).length;
+                if (element ==0) {
                   $("#myngl-event-solo-chat-messages-" + entry.from_user_id).append('<div id="solo-message-' + entry.mcsid + '" class="solo-message"> <img src="' + $("#invitee-thumb-" + entry.from_user_id  + " img").attr('src') + '" class="solo-chat myngl-event-profile-pic"  /><div class="text"><strong>' + $("#invitee-name-" + entry.from_user_id).html()  + ':</strong>  ' +  entry.message + '</div></div>');
                   $("#myngl-event-solo-chat-messages-" + entry.from_user_id).animate({ scrollTop: $("#myngl-event-solo-chat-messages-" + entry.from_user_id)[0].scrollHeight}, 10);
                 }
