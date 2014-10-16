@@ -15,7 +15,6 @@ var server_time;
 (function ($) {
   $(document).ready( function() {
     server_time = Drupal.settings.server_time;
-    setInterval(function(){server_time ++;console.log(server_time);},1000);
     if (Drupal.settings.developer_mode==1) {
       $('audio').trigger('pause');
         $('.fa-pause').removeClass('fa-pause').addClass('fa-play');
