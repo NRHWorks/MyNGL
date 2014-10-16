@@ -188,7 +188,7 @@ var chat = (function ($) {
         "<div style='color:#ffffff'> Chat with<div class='group_chat_user_list' style='inline-block;'>" + group_chat_user_list + "</div></div>";
       // messages
       new_chat_div = new_chat_div +
-      "<div class='myngl-event-group-chat-messages myngl-chat-messages branded-tertiary' style='height:210px; overflow:scroll; border:1px solid #3c4350;background-color:#ffffff;'></div>";
+      "<div class='myngl-event-group-chat-messages myngl-chat-messages branded-tertiary' style='height:210px; overflow:scroll; background-color:#ffffff;'></div>";
       // submit form
 
       new_chat_div = new_chat_div +
