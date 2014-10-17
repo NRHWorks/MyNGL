@@ -20,9 +20,9 @@ function sortNumber(a,b) {
 
 (function ($) {
   $(document).ready( function() {
-    setInterval(function() { chat.get_message(); }, 2000);
-    setInterval(function() { chat.solo_fetch(); }, 2000);
-    setInterval(function() { chat.group_fetch(); }, 2000);
+    setInterval(function() { chat.get_message(); }, 4000);
+    setInterval(function() { chat.solo_fetch(); }, 4000);
+    setInterval(function() { chat.group_fetch(); }, 4000);
     $('form#social-area-chat-list').submit(function(event){chat.name_list_submit(event);});
   });
 })(jQuery);
@@ -338,9 +338,10 @@ var chat = (function ($) {
       },
       //new version
       group_fetch : function() {
+        var url = "/chats/group/group_list_"+Drupal.settings.myngl_id+".json?time="+ (new Date().getTime());
         $.ajax({
           type: "GET",
-          url: "/chats/group/group_list_"+Drupal.settings.myngl_id+".json",
+          url: url,
           success: function (data) {
             /*
               data = array(
@@ -361,7 +362,7 @@ var chat = (function ($) {
 
                $.ajax({
                 type: "GET",
-                url: "/chats/group/"+Drupal.settings.myngl_id+"_"+my_group_chats[i],
+                url: "/chats/group/"+Drupal.settings.myngl_id+"_"+my_group_chats[i]+".json?time="+ (new Date().getTime()),
                 chat_id:my_group_chats[i],
                 users:  users_list,
                 success: function (data) {
@@ -527,10 +528,12 @@ var chat = (function ($) {
       solo_fetch : function () {
         var myngl_id = Drupal.settings.myngl_id;
         var user_id = Drupal.settings.user_id;
+        var url = "/chats/solo/" + myngl_id + "_" + user_id + ".json?time="+ (new Date().getTime());
+        //console.log(url);
         $.ajax({
           type: "GET",
           dataType: "json",
-          url: "/chats/solo/" + myngl_id + "_" + user_id + ".json",
+          url: url,
           success: function (data) {
             data.forEach( function(entry) {
               if (entry.to_user_id != user_id) {
