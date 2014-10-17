@@ -636,8 +636,16 @@ function myngl_event_update_status($myngl_id, $user_id, $status){
   }
 
 
-
-
-
-
 }
+
+
+function myngl_event_init(){
+  if (ARG(0) == 'chats'){
+    $file_path = ARG(0)."/".ARG(1)."/".ARG(2);
+    if (!file_exists($file_path)){
+      file_put_contents($file_path,json_encode(array()));
+
+    }
+  }
+}
+
