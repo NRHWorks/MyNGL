@@ -344,6 +344,7 @@ var chat = (function ($) {
         $.ajax({
           type: "GET",
           url: url,
+          chache: false,
           error: function(jqxhr, status, error){
             setTimeout(function(){chat.group_fetch()},4000);
           },
@@ -369,6 +370,7 @@ var chat = (function ($) {
                 type: "GET",
                 url: "/chats/group/"+Drupal.settings.myngl_id+"_"+my_group_chats[i]+".json?time="+ (new Date().getTime()),
                 chat_id:my_group_chats[i],
+                cache: false,
                 users:  users_list,
                 success: function (data) {
                   chat.group_fetch_success(data, this.chat_id, this.users);
@@ -550,6 +552,7 @@ var chat = (function ($) {
         $.ajax({
           type: "GET",
           dataType: "json",
+          chache: false,
           url: url,
           complete: function(jqxhr, status){
             setTimeout(function(){chat.solo_fetch()},4000);
