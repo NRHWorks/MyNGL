@@ -344,7 +344,7 @@ var chat = (function ($) {
         $.ajax({
           type: "GET",
           url: url,
-          chache: false,
+          cache: false,
           error: function(jqxhr, status, error){
             setTimeout(function(){chat.group_fetch()},4000);
           },
