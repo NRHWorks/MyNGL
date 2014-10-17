@@ -62,12 +62,12 @@ var server_time;
     $("#invitee-thumb-" + Drupal.settings.user_id).addClass('this-user');
     social_area.update_tagline_and_pre_question_answers();
     setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");},20000);
-    setInterval(function(){social_area.update_tagline_and_pre_question_answers();},10000);
+    setInterval(function(){social_area.update_tagline_and_pre_question_answers();},20000);
 
     $('li#lounge').removeClass("inactive").addClass("active");
-    setInterval(function() { social_area.message(); }, 3000);
-    setInterval(function() { social_area.update_users_in_lounge(); }, 5000);
-    redirect_setinterval_id = setInterval(function(){social_area.check_redirect_to_theater();},5000);
+    setInterval(function() { social_area.message(); }, 15000);
+    setInterval(function() { social_area.update_users_in_lounge(); }, 20000);
+    redirect_setinterval_id = setInterval(function(){social_area.check_redirect_to_theater();},10000);
 
     $('#overlay-background').bind('click', function() {
       social_area.other_filter_close();
