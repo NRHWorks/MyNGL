@@ -346,9 +346,11 @@ var chat = (function ($) {
           url: url,
           cache: false,
           error: function(jqxhr, status, error){
+            console.log('group fetch error');
             setTimeout(function(){chat.group_fetch()},4000);
           },
           success: function (data) {
+            console.log("group fetch success");
             /*
               data = array(
                 [0] => array(a0, b0)
@@ -361,8 +363,13 @@ var chat = (function ($) {
               2. for each chat room the use is in, what users are also in the chat room.
             */
             var my_group_chats = chat.group_fetch_my_group_chats(data);
-            waiting_group_chat_update == my_group_chats.length;
+            waiting_group_chat_update = my_group_chats.length;
+            if (waiting_group_chat_update==0) {
+              console.log("no group chaaat");
+              setTimeout(function(){chat.group_fetch()},4000);
+            }
             for(var i = 0; i < my_group_chats.length; i ++){
+              console.log("waiting group # = " +waiting_group_chat_update);
 
               var users_list = chat.group_chat_users_in_chat(data, my_group_chats[i]);
 
@@ -377,8 +384,9 @@ var chat = (function ($) {
                 },
                 complete: function(jqxhr, status){
                   waiting_group_chat_update --;
-                  console.log("waiting group # = " + waiting_group_chat_update);
+                  console.log("waiting group # = " +waiting_group_chat_update);
                   if (waiting_group_chat_update==0) {
+
                     setTimeout(function(){chat.group_fetch()},4000);
                   }
 
@@ -544,7 +552,6 @@ var chat = (function ($) {
 
       // New Solo fetch
       solo_fetch : function () {
-        console.log("solo fetching!");
         var myngl_id = Drupal.settings.myngl_id;
         var user_id = Drupal.settings.user_id;
         var url = "/chats/solo/" + myngl_id + "_" + user_id + ".json?time="+ (new Date().getTime());

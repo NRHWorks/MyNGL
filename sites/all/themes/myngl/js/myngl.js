@@ -128,7 +128,7 @@ var myngl = (function($) {
         type: "GET",
         url: "/myngl-event/update-status/" + myngl_id + "/" + user_id + "/" + status,
         success: function(data) {},
-        complete: function(jqxhr, status){
+        complete: function(jqxhr, statuss){
             setTimeout(function(){myngl.update_participant_status(myngl_id, user_id, status)},20000);
           },
       });

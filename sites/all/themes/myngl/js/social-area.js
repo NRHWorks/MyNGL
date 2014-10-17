@@ -596,6 +596,7 @@ var social_area = (function ($) {
           social_area.update_users_in_lounge_success(users);
         },
         complete: function(jqxhr, status){
+
             setTimeout(function(){social_area.update_users_in_lounge()},20000);
           },
       });
