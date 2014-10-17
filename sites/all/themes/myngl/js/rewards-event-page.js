@@ -16,7 +16,7 @@ var update_status_interval;
     $('#congrats form#email').submit(function(event){rewards_overlay.email_form_submit(event);});
 
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Gifting Suite");
-    update_status_interval = setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Gifting Suite");},20000);
+
 
     $("#share-facebook").click(function(event) {  
         event.preventDefault();

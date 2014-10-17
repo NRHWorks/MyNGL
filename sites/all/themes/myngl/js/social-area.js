@@ -5,7 +5,6 @@ var selected_other_filter;
 var ugc_width=0;
 var dock_shape = 0; //0 = single row at the bottom, 1 = full screen, -1 = completely hide
 var dock_position = 0;
-var redirect_setinterval_id;
 var num_of_ugc;
 var youtube_players = [];
 var filter_answers = [];
@@ -61,13 +60,12 @@ var server_time;
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_social');
     $("#invitee-thumb-" + Drupal.settings.user_id).addClass('this-user');
     social_area.update_tagline_and_pre_question_answers();
-    setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lounge");},20000);
-    setInterval(function(){social_area.update_tagline_and_pre_question_answers();},20000);
+
 
     $('li#lounge').removeClass("inactive").addClass("active");
-    setInterval(function() { social_area.message(); }, 15000);
-    setInterval(function() { social_area.update_users_in_lounge(); }, 20000);
-    redirect_setinterval_id = setInterval(function(){social_area.check_redirect_to_theater();},10000);
+    social_area.message();
+    social_area.update_users_in_lounge();
+    social_area.check_redirect_to_theater();
 
     $('#overlay-background').bind('click', function() {
       social_area.other_filter_close();
@@ -263,7 +261,6 @@ var social_area = (function ($) {
     check_redirect_to_theater: function(){
 
       if ($.cookie('myngl_done_theater_'+Drupal.settings.myngl_id) == 1 ||Drupal.settings.developer_mode==1){
-        clearInterval(redirect_setinterval_id);
         return false;
       }
 
@@ -277,7 +274,10 @@ var social_area = (function ($) {
               window.location="/myngl-event/" + Drupal.settings.myngl_id +"/theater";
 
           }
-        }
+        },
+        complete: function(jqxhr, status){
+            setTimeout(function(){social_area.check_redirect_to_theater()},20000);
+          },
       });
       return false;
     },
@@ -392,7 +392,10 @@ var social_area = (function ($) {
         success: function(data) {
           users_tagline_and_prequestion_answers = jQuery.parseJSON(data);
           social_area.update_tagline_and_pre_question_answers_success();
-        }
+        },
+        complete: function(jqxhr, status){
+            setTimeout(function(){social_area.update_tagline_and_pre_question_answers()},20000);
+          },
       });
     },
     update_tagline_and_pre_question_answers_success: function(){
@@ -567,6 +570,9 @@ var social_area = (function ($) {
       $.ajax({
         type: "GET",
         url: "/myngl-event/" + myngl_id + "/ajax/message/" + time_passed + "/0",
+        complete: function(jqxhr, status){
+            setTimeout(function(){social_area.message()},10000);
+          },
         success: function(data) {
           if (data.message == '') {
             $("#myngl-event-message").animate({"height": "0"}, 200).hide();
@@ -588,7 +594,10 @@ var social_area = (function ($) {
         url: "/myngl-event/"+ Drupal.settings.myngl_id + "/update-users-in-lounge",
         success: function(users) {
           social_area.update_users_in_lounge_success(users);
-        }
+        },
+        complete: function(jqxhr, status){
+            setTimeout(function(){social_area.update_users_in_lounge()},20000);
+          },
       });
       //console.log("update user in lounge done");
     },

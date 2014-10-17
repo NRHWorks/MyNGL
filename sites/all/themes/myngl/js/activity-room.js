@@ -8,7 +8,7 @@ var scrollPosition = 0;
 
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_activi');
     $('li#play-room').removeClass("inactive").addClass("active");
-    setInterval(function() { activity_room.message(); }, 3000);
+    activity_room.message();
 
     var activity_room_width = 0;
     $('.activity-room-thumb').each( function() {
@@ -19,7 +19,6 @@ var scrollPosition = 0;
     activity_room_width= Math.max((Math.floor( activity_room_width / (160 * 3)) + 1)*160, 800) ;
     $("#myngl-activity-room-thumbs").css('width', activity_room_width + 'px');
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"PlayRoom");
-    setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"PlayRoom");},20000);
   })
 }(jQuery));
 
@@ -61,7 +60,10 @@ var activity_room = (function ($) {
               });
             }
           }
-        }
+        },
+				complete: function(jqxhr, status){
+          setTimeout(function(){activity_room.message()},10000);
+        },
       });
     }
   }

@@ -7,7 +7,7 @@ var player;
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lobby");
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_lobby');
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'attending_myngl');
-    update_status_interval = setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lobby");},20000);
+    myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Lobby");
 
     if (jQuery.cookie('done_lobby_video_'+Drupal.settings.myngl_id) !='1') {
       $(".branded ul li#lounge").removeClass('inactive');

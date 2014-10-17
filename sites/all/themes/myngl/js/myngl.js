@@ -1,8 +1,6 @@
-var event_ends_interval_id = null;
-
 (function ($) {
   $(document).ready( function() {
-    event_ends_interval_id =  setInterval(function(){myngl.event_ends();}, 20000);
+    myngl.event_ends();
 
     $("#terms-overlay-link").click(function() {
       myngl.overlay('terms-overlay', 500, 750);
@@ -129,12 +127,14 @@ var myngl = (function($) {
       $.ajax({
         type: "GET",
         url: "/myngl-event/update-status/" + myngl_id + "/" + user_id + "/" + status,
-        success: function(data) {}
+        success: function(data) {},
+        complete: function(jqxhr, status){
+            setTimeout(function(){myngl.update_participant_status(myngl_id, user_id, status)},20000);
+          },
       });
     },
     event_ends: function (){
       if (Drupal.settings.myngl_id == undefined || window.location.href.indexOf("exit") > -1) {
-        clearInterval(event_ends_interval_id);
         return false;
       }
       $.ajax({
@@ -146,7 +146,10 @@ var myngl = (function($) {
             window.location="/myngl-event/" + Drupal.settings.myngl_id +"/exit";
             //consolel.log(data);
           }
-        }
+        },
+        complete: function(jqxhr, status){
+            setTimeout(function(){myngl.event_ends()},10000);
+        },
       });
       return false;
     },

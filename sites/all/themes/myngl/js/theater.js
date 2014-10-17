@@ -38,10 +38,9 @@ var main_youtube_player = null;
     $("#additional-videos").css('width', k);
 
     myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");
-    setInterval(function(){myngl.update_participant_status(Drupal.settings.myngl_id, Drupal.settings.user_id,"Theater");},20000);
     myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'visiting_theate');
     $('li#theater').removeClass("inactive").addClass("active");
-    setInterval(function() { theater.message(); }, 3000);
+     theater.message();
 
     $("iframe.media-ustream-player").width(852).height(479).attr('id','iframe-movie');
     $("iframe.media-youtube-player").width(852).height(479).attr('id','iframe-movie');
@@ -265,6 +264,9 @@ var theater = (function ($) {
               });
             }
           }
+        },
+        complete: function(jqxhr, status){
+          setTimeout(function(){theater.message()},5000);
         }
       });
     }

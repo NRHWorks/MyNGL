@@ -2,6 +2,8 @@ var group_chat_last_message_ids = [];
 var id_of_showing_invitee_info = -1;
 var id_of_hovered_invitee_info = -1;
 
+var waiting_group_chat_update = 0;
+
 function slot_taken(left_array, min,max){
   var index = 0;
   while (index < left_array.length){
@@ -20,9 +22,9 @@ function sortNumber(a,b) {
 
 (function ($) {
   $(document).ready( function() {
-    setInterval(function() { chat.get_message(); }, 4000);
-    setInterval(function() { chat.solo_fetch(); }, 4000);
-    setInterval(function() { chat.group_fetch(); }, 4000);
+    //setInterval(function() { chat.get_message(); }, 4000);
+    chat.solo_fetch();
+    chat.group_fetch();
     $('form#social-area-chat-list').submit(function(event){chat.name_list_submit(event);});
   });
 })(jQuery);
@@ -250,7 +252,7 @@ var chat = (function ($) {
       });
       return false;
     },
-
+    /*  i think theese two functions are replaced by solo fetch and solo post
     get_message : function() {
       if ($("#myngl-event-chat").is(':visible')) {
         var myngl_id = Drupal.settings.myngl_id;
@@ -281,7 +283,7 @@ var chat = (function ($) {
         }
         return false;
       },
-
+      */
       solo_post : function(to_uid) {
         myngl.add_rewards_points(Drupal.settings.myngl_id, Drupal.settings.user_id, 'sending_ct_msg');
         var myngl_id = Drupal.settings.myngl_id;
@@ -342,6 +344,9 @@ var chat = (function ($) {
         $.ajax({
           type: "GET",
           url: url,
+          complete: function(jqxhr, status){
+            setTimeout(function(){chat.group_fetch()},4000);
+          },
           success: function (data) {
             /*
               data = array(
@@ -354,6 +359,7 @@ var chat = (function ($) {
               1. what chat room this user is in
               2. for each chat room the use is in, what users are also in the chat room.
             */
+            waiting_group_chat_update = my_group_chats.length;
             var my_group_chats = chat.group_fetch_my_group_chats(data);
 
             for(var i = 0; i < my_group_chats.length; i ++){
@@ -422,6 +428,8 @@ var chat = (function ($) {
         return chat;
       },
       group_fetch_success : function(data, chat_id, users){
+
+
         var c = chat.preprocess_group_fetch_data(data, chat_id, users);
 
 
@@ -461,6 +469,7 @@ var chat = (function ($) {
               { scrollTop: $('#myngl-event-group-chat-' + c.chat_id + ' .myngl-event-group-chat-messages')[0].scrollHeight}, 10);
           }
         }
+
 
       },
       /*  being refactored
@@ -526,6 +535,7 @@ var chat = (function ($) {
 
       // New Solo fetch
       solo_fetch : function () {
+        console.log("solo fetching!");
         var myngl_id = Drupal.settings.myngl_id;
         var user_id = Drupal.settings.user_id;
         var url = "/chats/solo/" + myngl_id + "_" + user_id + ".json?time="+ (new Date().getTime());
@@ -534,6 +544,9 @@ var chat = (function ($) {
           type: "GET",
           dataType: "json",
           url: url,
+          complete: function(jqxhr, status){
+            setTimeout(function(){chat.solo_fetch()},4000);
+          },
           success: function (data) {
             data.forEach( function(entry) {
               if (entry.to_user_id != user_id) {
