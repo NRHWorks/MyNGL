@@ -334,7 +334,14 @@ function myngl_myngl_theme() {
 
   $items['myngl_invitation_email'] =  array(
                           'template' => 'myngl-invitation-email',
-                          'variables' => array ('myngl_id' => null, 'invitee' => null, 'friend' => null, 'banner' => null, 'gift_image' => null, 'title' => null,  'text' => null, 'date_index' =>null),
+                          'variables' => array ('myngl_id' => null,
+                                                'invitee' => null,
+                                                'friend' => null,
+                                                'banner' => null,
+                                                'gift_image' => null,
+                                                'title' => null,
+                                                'text' => null,
+                                                'date_index' =>null),
                         );
 
   $items['overlay_myngl_event_detail'] = array(
@@ -640,7 +647,7 @@ function myngl_myngl_upcoming_overlay($uid) {
 
       $event_end_time = myngl_timing_strtotime( $invitee_collection->field_invitee_rsvp_date['und'][0]['value']) +
                         $myngl->field_event_length['und'][0]['value'] * 60;
-      if ($event_end_time > time() || $myngl->field_show_pov_and_ugc_borders['und'][0]['value'] == 1){
+      if ($event_end_time > time() /*|| $myngl->field_show_pov_and_ugc_borders['und'][0]['value'] == 1*/){
         $myngl_brand = array(
                       'myngl' => $myngl,
                       'date' => $invitee_collection->field_invitee_rsvp_date['und'][0]['value'],
@@ -684,7 +691,9 @@ function myngl_myngl_overlay_change_date($form, &$form_state, $k, $myngl_id, $us
   $dates = array();
 
   foreach ($myngl->field_myngl_dates['und'] as $d) :
-    $dates[$d['value']] = myngl_timing_long_date($d['value']);
+    if (myngl_timing_strtotime($d['value']) > time()){
+      $dates[$d['value']] = myngl_timing_long_date($d['value']);
+    }
   endforeach;
 
   $form['date'] = array(
@@ -1964,10 +1973,61 @@ function myngl_myngl_confirm_add_invitee_submit($form_id, &$form_state) {
     $invitee_id = $k;
   }
 
+  $result = db_query("SELECT entity_id
+                      FROM field_data_field_invitee_user_account
+                      WHERE field_invitee_user_account_uid = :uid",
+                      array(":uid" => $user->uid));
 
-  // 0 is invitation index. eventually this need to be the same as inviter's rsvp date (or not?)
 
-  myngl_myngl_send_invitation($node->nid, $invitee_id, 0, FALSE, TRUE);
+  $fcids = array();
+  foreach ($result as $r){
+    $fcids[]= $r->entity_id;
+  }
+
+  $found = false;
+  $index = 0;
+  while(!$found && $index < count($fcids)){
+
+    $this_fcid = $fcids[$index];
+
+
+    $fc = db_query("SELECT field_myngl_invitees_value
+                    FROM field_data_field_myngl_invitees
+                    WHERE entity_id = :eid
+                    AND field_myngl_invitees_value = :fcid LIMIT 1",
+                    array(":eid"=> $v['myngl_nid'],
+                          ":fcid"=>$this_fcid));
+
+    if ($fc->rowCount()!=0){
+
+      $rsvp_date = db_query("SELECT field_invitee_rsvp_date_value
+                             FROM field_data_field_invitee_rsvp_date
+                             WHERE entity_id =:eid LIMIT 1",
+                             array(":eid"=>$this_fcid))->fetchField();
+
+
+      $date_index = db_query("SELECT delta
+                      FROM field_data_field_myngl_dates
+                      WHERE entity_id = :nid
+                      AND field_myngl_dates_value = :date
+                      LIMIT 1",
+                      array(
+                        ":nid" => $v['myngl_nid'],
+                        ":date"=>$rsvp_date))->fetchField();
+
+      $found = TRUE;
+    }
+
+    $index++;
+  }
+
+  if(!isset($date_index)){
+    $date_index = 0;
+  }
+
+
+
+  myngl_myngl_send_invitation($node->nid, $invitee_id, $date_index, FALSE, TRUE);
   drupal_set_message('An invitation has been sent to '.$v['first_name'].' ('.$v['email']. '), would you like to invite another?');
 }
 
