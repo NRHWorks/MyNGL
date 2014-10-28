@@ -5,7 +5,13 @@ drupal_add_library('system', 'jquery.cookie');
 function myngl_preprocess_html(&$vars) {
 
   if ((arg(0)=='user') && isset($_COOKIE['Drupal_visitor_rsvp_date'])) {
-    drupal_goto('myngl/'.$_COOKIE['Drupal_visitor_rsvp'].'/rsvp/complete');
+    if(arg(1)!= "register"){
+      if (!drupal_is_cli()){
+        //user_cookie_delete('Drupal_visitor_rsvp_date');
+        drupal_goto('myngl/'.$_COOKIE['Drupal_visitor_rsvp'].'/rsvp/complete');
+
+      }
+    }
   }
 
   if (arg(0) == 'myngl-event') {

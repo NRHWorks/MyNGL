@@ -497,7 +497,9 @@ function myngl_myngl_complete($nid) {
         }
       }
     }
-
+    user_cookie_delete('rsvp');
+    user_cookie_delete('rsvp_through_registration');
+    user_cookie_delete('date_index');
     return 'Invitation Not Found';
 }
 

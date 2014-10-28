@@ -26,19 +26,28 @@
   <p><strong><?php print $node->title; ?></strong> will also be presented on the following dates. Please select the date that works best for you:</p>
   <form id="change-date-form" style="margin-top:30px;"
     onsubmit="  myngl.overlay_close();
-                console.log (jQuery('input:radio:checked').attr('count'));
+                console.log (jQuery.cookie('Drupal.visitor.date_index'));
+
                 jQuery.cookie('Drupal.visitor.date_index', null, { path: '/' });
-                jQuery.cookie('Drupal.visitor.date_index', jQuery('input:radio:checked').attr('value'));
-                jQuery.cookie('Drupal.visitor.rsvp_date', jQuery('input:radio:checked').val());
+                 console.log (jQuery.cookie('Drupal.visitor.date_index'));
+                jQuery.cookie('Drupal.visitor.date_index', jQuery('input:radio:checked').attr('value'), { path: '/' });
+                 console.log (jQuery.cookie('Drupal.visitor.date_index'));
+
                 jQuery('#rsvp-confirm-date').html(jQuery('input:radio:checked').siblings('div').html());
                 return false;">
     <?php
+      //jQuery.cookie('Drupal.visitor.rsvp_date', jQuery('input:radio:checked').val(), { path: '/' });
+      // this line above were at line 35 before
       $i = 0;
       foreach ($node->field_myngl_dates['und'] as $delta =>$d) :
         if(myngl_timing_strtotime($d['value'])> time()):
 
           print "<div>";
-          print "<input type='radio' name='change-date-radio' value='".$delta."' count='$i' style='margin-left:60px;margin-right:10px;'>";
+          print "<input type='radio'
+                        name='change-date-radio'
+                        value='".$delta."'
+                        count='$i'
+                        style='margin-left:60px;margin-right:10px;'>";
           //print "<input type='radio' name='change-date-radio' value='".$d['value']."' count='$i' style='margin-left:60px;margin-right:10px;'>";
           print '<div style="font-size: 18px; display: inline;">' . myngl_timing_long_date($d['value']) . '</div><br /><br />';
           print "</div>";
