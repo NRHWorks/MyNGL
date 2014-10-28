@@ -1,6 +1,23 @@
 /**
  * Generic elements.
  */
+
+    .page-node-edit .field-name-field-myngl-invi-email-frm-frien,
+    .page-node-edit .field-name-field-myngl-invitation-email{
+
+      margin-bottom:100px !important;
+
+    }
+
+    .page-node-edit .fieldset-wrapper > .form-wrapper
+    {
+      margin-bottom:40px;
+    }
+
+    fieldset.filter-wrapper .fieldset-wrapper > .form-wrapper{
+      margin-bottom:0px !important;
+    }
+
 body {
   color: #000;
   background: #fff;
