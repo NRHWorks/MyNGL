@@ -1,9 +1,18 @@
 <html>
   <head>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
+    <?php
+      if ($primary_font != "Georgia"){
+        print "<link href='http://fonts.googleapis.com/css?family=" .
+        str_replace(" ", "+", $primary_font).":400italic,700italic,400,700' rel='stylesheet' type='text/css'>";
+      }
+      if ($secondary_font != "Georgia"){
+        //print "<link href='http://fonts.googleapis.com/css?family=" .
+          //str_replace(" ", "+", $secondary_font).":400italic,700italic,400,700' rel='stylesheet' type='text/css'>";
+      }
+    ?>
   </head>
-  <body style="background-color:#e1e1e1; font: 300 14px 'Lato', 'sans-serif';">
+  <body style="background-color:#e1e1e1; font: 300 14px '<?php print $primary_font;?>', 'sans-serif';">
     <div style="width:80%; margin-left:auto; margin-right:auto; background-color:#FFF; padding:25px; overflow:auto;">
       <div style="margin-top:25px; float:left; height:125px;"><img src="http://166.78.241.22/sites/all/themes/myngl/images/logo_small.png" style="width:140px; height:auto;"></div>
       <div style="margin-top:25px; float:right; height:125px;"><img src="<?php print $banner; ?>" style="width:140px; height:auto;"></div>

@@ -341,7 +341,9 @@ function myngl_myngl_theme() {
                                                 'gift_image' => null,
                                                 'title' => null,
                                                 'text' => null,
-                                                'date_index' =>null),
+                                                'date_index' =>null,
+                                                'primary_font'=>null,
+                                                'secondary_font' => null),
                         );
 
   $items['overlay_myngl_event_detail'] = array(
@@ -2093,7 +2095,18 @@ function myngl_myngl_send_invitation($myngl_id, $invitee_id, $date_index = 0, $r
   $ic->save(TRUE);
   $to = $ic->field_invitee_email_address['und'][0]['value'];
   $firstname = $ic->field_invitee_first_name['und'][0]['value'];
-  $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'friend' => $friend, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $email_text,'date_index'=>$date_index));
+  $html = theme('myngl_invitation_email',
+                array('myngl_id' => $myngl_id,
+                      'invitee' => $firstname,
+                      'friend' => $friend,
+                      'banner' => $banner,
+                      'gift_image' => $gift_image,
+                      'title' => $node->title,
+                      'text' => $email_text,
+                      'date_index'=>$date_index,
+                      'primary_font' => $brand->field_primary_font['und'][0]['value'],
+                      'secondary_font' => $brand->field_secondary_font['und'][0]['value'],
+                      ));
   myngl_myngl_sendMail($to, $subject, $html, $alt);
 
   if ($redirect != FALSE) {
@@ -2113,7 +2126,17 @@ function myngl_myngl_resend_invitation($myngl_id, $invitee_id, $date_index = 0, 
   $ic = array_shift(entity_load('field_collection_item', array($node->field_myngl_invitees['und'][$invitee_id]['value'])));
   $to = $ic->field_invitee_email_address['und'][0]['value'];
   $firstname = $ic->field_invitee_first_name['und'][0]['value'];
-  $html = theme('myngl_invitation_email', array('myngl_id' => $myngl_id, 'invitee' => $firstname, 'banner' => $banner, 'gift_image' => $gift_image, 'title' => $node->title, 'text' => $node->field_myngl_invitation_email['und'][0]['value'],'date_index'=>$date_index));
+  $html = theme('myngl_invitation_email',
+                array('myngl_id' => $myngl_id,
+                      'invitee' => $firstname,
+                      'banner' => $banner,
+                      'gift_image' => $gift_image,
+                      'title' => $node->title,
+                      'text' => $node->field_myngl_invitation_email['und'][0]['value'],
+                      'date_index'=>$date_index,
+                      'primary_font' => $brand->field_primary_font['und'][0]['value'],
+                      'secondary_font' => $brand->field_secondary_font['und'][0]['value'],
+                      ));
   myngl_myngl_sendMail($to, $subject, $html, $alt);
 
   if ($redirect != FALSE) {

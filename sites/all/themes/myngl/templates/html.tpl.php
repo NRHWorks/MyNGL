@@ -7,7 +7,10 @@
   <?php print $styles; ?>
   <?php print $scripts; ?>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' rel='stylesheet' type='text/css'>-->
+
+
+
 
   <?php
     if( (ARG(0)=='myngl' && ARG(2) =='confirmed')||ARG(0)== "myngl-event"){
@@ -38,10 +41,16 @@
     $tertiary_color = $brand->field_brand_tertiary_color['und'][0]['rgb'];
 
     $primary_font = $brand->field_primary_font['und'][0]['value'];
-    $primary_font = ($primary_font != NULL)? $primary_font:'georgia';
-
     $secondary_font = $brand->field_secondary_font['und'][0]['value'];
-    $secondary_font = ($secondary_font != NULL)? $secondary_font:'lato';
+
+    if ($primary_font != "Georgia"){
+      print "<link href='http://fonts.googleapis.com/css?family=" .
+      str_replace(" ", "+", $primary_font).":400italic,700italic,400,700' rel='stylesheet' type='text/css'>";
+    }
+    if ($secondary_font != "Georgia"){
+      print "<link href='http://fonts.googleapis.com/css?family=" .
+        str_replace(" ", "+", $secondary_font).":400italic,700italic,400,700' rel='stylesheet' type='text/css'>";
+    }
   ?>
   <style>
 
@@ -165,7 +174,7 @@
     .downloads-element .file-download a,
     #myngl-theater-downloads h1,
     #help-title{
-      font-family:<?php print $primary_font;?> !important;
+      font-family:'<?php print $primary_font;?>' !important;
     }
 
     #reward-wrapper .field-collection-item-field-reward .redeem-button,
@@ -177,7 +186,7 @@
     #reason-to-myngl,
     .downloads-element .field-name-field-title,
     .activity-room-thumb .field-name-field-title{
-       font-family:<?php print $secondary_font;?> !important;
+       font-family:'<?php print $secondary_font;?>' !important;
     }
 
 
