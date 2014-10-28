@@ -35,11 +35,13 @@
     <?php
       $i = 0;
       foreach ($node->field_myngl_dates['und'] as $d) :
-        print "<div>";
-        print "<input type='radio' name='change-date-radio' value='".$d['value']."' count='$i' style='margin-left:60px;margin-right:10px;'>";
-        print '<div style="font-size: 18px; display: inline;">' . myngl_timing_long_date($d['value']) . '</div><br /><br />';
-        print "</div>";
-        $i++;
+        if(myngl_timing_strtotime($d['value'])> time()):
+          print "<div>";
+          print "<input type='radio' name='change-date-radio' value='".$d['value']."' count='$i' style='margin-left:60px;margin-right:10px;'>";
+          print '<div style="font-size: 18px; display: inline;">' . myngl_timing_long_date($d['value']) . '</div><br /><br />';
+          print "</div>";
+          $i++;
+        endif;
       endforeach;
     ?>
     <input type="submit" value="SUBMIT" style="font-size:24px; margin-left: 240px;"/>

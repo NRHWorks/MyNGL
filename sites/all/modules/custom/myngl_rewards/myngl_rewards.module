@@ -43,7 +43,7 @@ function myngl_rewards_menu() {
     'title' => 'Rewards',
     'page callback' => 'myngl_rewards_invitee_redeem_export',
     'page arguments' => array(1),
-    'access callback' => TRUE,
+    'access arguments' => array('edit any myngl content'),
     'type' => MENU_LOCAL_TASK,
   );
 
